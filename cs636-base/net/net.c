@@ -327,7 +327,9 @@ process	netin (
 			continue;
 	
 		    case ETH_IPv6:			/* Handle IPv6	*/
-			freebuf((char *)pkt);
+			ipv6_in();
+            //TODO: add a return value and check maybe
+            freebuf((char *)pkt);
 			continue;
 
 		    default:	/* Ignore all other incoming packets	*/
