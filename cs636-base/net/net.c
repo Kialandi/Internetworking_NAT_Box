@@ -66,7 +66,9 @@ void	net_init (void)
 
 	/* Ask the user for a Bing ID */
 
-	found = FALSE;
+	found = TRUE;
+    bingid = 51; //group bing ID
+
 	while (!found) {
 		printf("\nEnter a bing ID between 0 and 255: ");
 		nchars = read(CONSOLE, buffer, 5);
@@ -92,7 +94,10 @@ void	net_init (void)
 
 	/* Ask the user what to run */
 
-	found = FALSE;
+	found = TRUE;
+    host = TRUE;
+    ifprime = 0;
+
 	while (!found) {
 		printf("\nEnter n for nat box or hX for host on interface X: ");
 		nchars = read(CONSOLE, buffer, 30);
@@ -327,9 +332,8 @@ process	netin (
 			continue;
 	
 		    case ETH_IPv6:			/* Handle IPv6	*/
-			ipv6_in();
+			ipv6_in(pkt);
             //TODO: add a return value and check maybe
-            freebuf((char *)pkt);
 			continue;
 
 		    default:	/* Ignore all other incoming packets	*/
