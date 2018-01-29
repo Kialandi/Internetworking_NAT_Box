@@ -1,3 +1,4 @@
+#include <xinu.h>
 /* icmpv6.h - definintions for the Internet Control Message Protocol */
 
 /*
@@ -39,12 +40,12 @@
 #define PVT3        200
 #define PVT4        201
 
-extern struct icmpv6{
+typedef struct{
                          /*header*/
     uint32 type;
     uint32 code;
     uint32 checksum;
                          /*begin payload*/
     byte payload[MAX_PAYLOAD];
-};
+}icmpv6;
 
