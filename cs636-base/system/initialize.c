@@ -20,7 +20,6 @@ local	process startup(void);	/* Process to finish startup tasks	*/
 struct	procent	proctab[NPROC];	/* Process table			*/
 struct	sentry	semtab[NSEM];	/* Semaphore table			*/
 struct	memblk	memlist;	/* List of free memory blocks		*/
-
 /* Active system status */
 
 int	prcount;		/* Total number of live processes	*/
@@ -45,10 +44,10 @@ pid32	currpid;		/* ID of currently executing process	*/
  */
 
 void	nulluser()
-{	
+{
 	struct	memblk	*memptr;	/* Ptr to memory block		*/
 	uint32	free_mem;		/* Total amount of free memory	*/
-	
+
 	/* Initialize the system */
 
 	sysinit();
@@ -118,7 +117,7 @@ local process	startup(void)
 		sprintf(str, "%d.%d.%d.%d",
 			(ipaddr>>24)&0xff, (ipaddr>>16)&0xff,
 			(ipaddr>>8)&0xff,        ipaddr&0xff);
-	
+
 		kprintf("Obtained IP address  %s   (0x%08x)\n", str,
 								ipaddr);
 	}
@@ -150,7 +149,6 @@ static	void	sysinit()
 	int32	i;
 	struct	procent	*prptr;		/* Ptr to process table entry	*/
 	struct	sentry	*semptr;	/* Ptr to semaphore table entry	*/
-
 	/* Platform Specific Initialization */
 
 	platinit();
@@ -163,9 +161,9 @@ static	void	sysinit()
 	/* Initialize the interrupt vectors */
 
 	initevec();
-	
+
 	/* Initialize free memory list */
-	
+
 	meminit();
 
 	/* Initialize system variables */
@@ -178,6 +176,7 @@ static	void	sysinit()
 
 	Defer.ndefers = 0;
 
+
 	/* Initialize process table entries free */
 
 	for (i = 0; i < NPROC; i++) {
@@ -188,7 +187,7 @@ static	void	sysinit()
 		prptr->prprio = 0;
 	}
 
-	/* Initialize the Null process entry */	
+	/* Initialize the Null process entry */
 
 	prptr = &proctab[NULLPROC];
 	prptr->prstate = PR_CURR;
@@ -198,7 +197,7 @@ static	void	sysinit()
 	prptr->prstklen = NULLSTK;
 	prptr->prstkptr = 0;
 	currpid = NULLPROC;
-	
+
 	/* Initialize semaphores */
 
 	for (i = 0; i < NSEM; i++) {
@@ -223,6 +222,7 @@ static	void	sysinit()
 	for (i = 0; i < NDEVS; i++) {
 		init(i);
 	}
+
 	return;
 }
 

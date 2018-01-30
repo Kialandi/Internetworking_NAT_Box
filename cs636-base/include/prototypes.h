@@ -1,3 +1,10 @@
+/*in ICMPv6*/
+
+
+/* in file checksumv6.c*/
+
+uint32 checksumv6(void* message, int32 messagelenth);
+
 /* in file addargs.c */
 extern	status	addargs(pid32, int32, int32[], int32,char *, void *);
 

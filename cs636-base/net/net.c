@@ -207,8 +207,8 @@ void	net_init (void)
 	if (tindex >= NMACADDRS) {
 		panic("net_init: no MAC address match\n");
 	}
-        
-        
+
+
 	if (host) {
 		printf("\nRunning host on %s\n", if_tab[ifprime].if_name);
 		if_tab[ifprime].if_state = IF_UP;
@@ -221,7 +221,7 @@ void	net_init (void)
 	}
 
 	/* Othernet 1 */
-	
+
 	ifptr = &if_tab[1];
 	ifptr->if_macucast[0] = 0x11;
 	ifptr->if_macucast[1] = 0xff & (uid >> 24);
@@ -236,14 +236,14 @@ void	net_init (void)
 	ifptr->if_macbcast[3] = 0xff;
 	ifptr->if_macbcast[4] = 0xff;
 	ifptr->if_macbcast[5] = 0xff & bingid;
-        
+
         if (ifptr->if_state == IF_UP) {
             control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)ifptr->if_macucast, 0);
             control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)ifptr->if_macbcast, 0);
         }
 
 	/* Othernet 2 */
-	
+
 	ifptr = &if_tab[2];
 	ifptr->if_macucast[0] = 0x21;
 	ifptr->if_macucast[1] = 0xff & (uid >> 24);
@@ -270,7 +270,7 @@ void	net_init (void)
 	/*	demultiplexes them to the correct interface		*/
 
 	resume(create(rawin, 4096, 8000, "raw_input", 0));
-	
+
 	for (iface=0; iface<NIFACES; iface++) {
 		sprintf(pname, "net%d_input", iface);
 		resume(create(netin, 4196, 5000, pname, 1, iface));
@@ -325,9 +325,8 @@ process	netin (
 		    case ETH_IP:			/* Handle IPv4	*/
             freebuf((char *)pkt);
 			continue;
-	
+
 		    case ETH_IPv6:			/* Handle IPv6	*/
-			ipv6_in();
             //TODO: add a return value and check maybe
             freebuf((char *)pkt);
 			continue;
@@ -391,7 +390,7 @@ process	rawin (void) {
 			}
 
 			/* Check interface queue; drop packet if full	*/
-									
+
 			if (semcount(ifptr->if_sem) >= IF_QUEUESIZE) {
 				kprintf("rawin: queue overflow on %s\n",
 					if_tab[iface].if_name);
@@ -430,7 +429,7 @@ process	rawin (void) {
 			}
 
 			/* Check interface queue; drop packet if full	*/
-									
+
 			if (semcount(ifptr->if_sem) >= IF_QUEUESIZE) {
 				kprintf("rawin: queue overflow on %s\n",
 					if_tab[iface].if_name);
@@ -477,7 +476,7 @@ void 	eth_ntoh(
 }
 
 /*------------------------------------------------------------------------
- * getport  -  Retrieve a random port number 
+ * getport  -  Retrieve a random port number
  *------------------------------------------------------------------------
  */
 uint16 	getport(void)

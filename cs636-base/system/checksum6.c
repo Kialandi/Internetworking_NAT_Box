@@ -9,6 +9,9 @@
  *
  */
 
+
+// check to see if host or netbyte order is backward
+
 uint32 checksumv6(void* message, int32 messagelength){
 
     char* datagram = (char*) message;
@@ -18,7 +21,7 @@ uint32 checksumv6(void* message, int32 messagelength){
         uint32 segment2;
         memcpy(&segment1, datagram+i, 2);
         memcpy(&segment2, datagram+(i+1), 2);
-        checksum = ntohs(segment1+segment2);
+        checksum = ntohs(segment1+segment2); // network to host
         // carry over
         // greater than 2^16
         if (checksum > 0xffff)
@@ -33,6 +36,6 @@ uint32 checksumv6(void* message, int32 messagelength){
             checksum -=0xffff;
         }
 
-    return htons(~checksum);
+    return htons(~checksum); //host to network
 }
 

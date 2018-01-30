@@ -18,8 +18,14 @@
  *
  * */
 
+// check icmpsize
+// make correct size
+// network byte order
+//
+#define  IPLEN 16
 
-#define MAX_PAYLOAD (64)*(1000)
+
+#define MAX_PAYLOAD 1472
 #define DESTUNREACH 1
 #define PKT_BIG     2
 #define TIME_EX     3
@@ -41,11 +47,81 @@
 #define PVT4        201
 
 typedef struct{
-                         /*header*/
-    uint32 type;
-    uint32 code;
-    uint32 checksum;
-                         /*begin payload*/
+    unsigned int type;
+    unsigned int length;
+    unsigned int prefixlength;
+    unsigned int L:1;
+    unsigned int A:1;
+    unsigned int res:6;
+    uint32 validlifetime;
+    uint32 preferredlifetime;
+    byte res2[8];
+    byte prefix[16];
+}
+
+typedef struct{
+    unsigned int type;
+    unsigned int length;
+    byte address[16];
+}lladdress;
+
+typedef struct{
+    unsigned int type;
+    unsigned int length;
+    byte options[length];
+}options;
+
+typedef struct{
+    unsigned int type;
+    unsigned int code;
+    unsigned short checksum;
+    byte reserved[];
     byte payload[MAX_PAYLOAD];
-}icmpv6;
+    options opt;
+}icmpv6general;
+
+typedef struct{
+    unsigned int type;
+    unsigned int code;
+    unsigned short checksum;
+    unsigned int reserved: 32;
+    options opt;
+}rsolicit;
+
+typedef struct{
+    unsigned int type;
+    unsigned int char code;
+    unsigned short checksum;
+    unsigned int  curhoplim;
+    unsigned int M: 1;
+    unsigned int O: 1;
+    unsigned int reserved: 6;
+    unsigned int routerlifetime;
+    uint32 reachabletime;
+    uint32 retranstimer;
+    options opt;
+}radvertisement;
+
+
+typedef struct{
+    unsigned int type;
+    unsigned int code;
+    unsigned short checksum;
+    byte reserved[4];
+    byte ipaddr[16];
+    options opt;
+}nsolicit;
+
+typedef struct{
+    unsigned int type;
+    unsigned int code;
+    unsigned short checksum;
+    unsigned int R: 1;
+    unsigned int S: 1;
+    unsigned int O: 1;
+    unsigned int res: 29;
+    byte ipaddr[16];
+    options opt;
+}nadvert;
+
 
