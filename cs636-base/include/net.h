@@ -77,3 +77,5 @@ extern	int32	ifprime;	/* Primary interface.  For a host, the	*/
 extern	bool8	host;		/* TRUE if this node is running as a	*/
 				/*   host; FALSE if acting as a NAT box	*/
 extern	int32	bingid;		/* User's bing ID			*/
+
+extern void print_addr(byte* addr, int32 len);
