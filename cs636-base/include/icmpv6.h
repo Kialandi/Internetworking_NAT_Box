@@ -47,12 +47,12 @@
 #define PVT4        201
 
 typedef struct{
-    unsigned int type;
-    unsigned int length;
-    unsigned int prefixlength;
-    unsigned int L:1;
-    unsigned int A:1;
-    unsigned int res:6;
+    uint32 type;
+    uint32 length;
+    uint32 prefixlength;
+    uint32 L:1;
+    uint32 A:1;
+    uint32 res:6;
     uint32 validlifetime;
     uint32 preferredlifetime;
     byte res2[8];
@@ -60,68 +60,68 @@ typedef struct{
 }
 
 typedef struct{
-    unsigned int type;
-    unsigned int length;
+    uint32 type;
+    uint32 length;
     byte address[16];
 }lladdress;
 
 typedef struct{
-    unsigned int type;
-    unsigned int length;
-    byte options[length];
-}options;
+    uint32 type;
+    uint32 length;
+    byte icmpopt[length];
+}icmpopt;
 
 typedef struct{
-    unsigned int type;
-    unsigned int code;
-    unsigned short checksum;
+    uint32 type;
+    uint32 code;
+    uint16 checksum;
     byte reserved[];
     byte payload[MAX_PAYLOAD];
-    options opt;
+    icmpopt opt;
 }icmpv6general;
 
 typedef struct{
-    unsigned int type;
-    unsigned int code;
-    unsigned short checksum;
-    unsigned int reserved: 32;
-    options opt;
+    uint32 type;
+    uint32 code;
+    uint16 checksum;
+    uint32 reserved: 32;
+    icmpopt opt;
 }rsolicit;
 
 typedef struct{
-    unsigned int type;
-    unsigned int char code;
-    unsigned short checksum;
-    unsigned int  curhoplim;
-    unsigned int M: 1;
-    unsigned int O: 1;
-    unsigned int reserved: 6;
-    unsigned int routerlifetime;
+    uint32 type;
+    uint32 code;
+    uint16 checksum;
+    uint32  curhoplim;
+    uint32 M: 1;
+    uint32 O: 1;
+    uint32 reserved: 6;
+    uint32 routerlifetime;
     uint32 reachabletime;
     uint32 retranstimer;
-    options opt;
+    icmpopt opt;
 }radvertisement;
 
 
 typedef struct{
-    unsigned int type;
-    unsigned int code;
-    unsigned short checksum;
+    uint32 type;
+    uint32 code;
+    uint16 checksum;
     byte reserved[4];
     byte ipaddr[16];
-    options opt;
+    icmpopt opt;
 }nsolicit;
 
 typedef struct{
-    unsigned int type;
-    unsigned int code;
-    unsigned short checksum;
-    unsigned int R: 1;
-    unsigned int S: 1;
-    unsigned int O: 1;
-    unsigned int res: 29;
+    uint32 type;
+    uint32 code;
+    uint16 checksum;
+    uint32 R: 1;
+    uint32 S: 1;
+    uint32 O: 1;
+    uint32 res: 29;
     byte ipaddr[16];
-    options opt;
+    icmpopt opt;
 }nadvert;
 
 
