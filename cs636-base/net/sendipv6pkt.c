@@ -12,7 +12,7 @@ void    fillEthernet(struct netpacket * pkt) {
     pkt->net_dst[5] = 0x02;
 
     memcpy(&pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
-    pkt->net_type = ETH_IPv6;
+    pkt->net_type = htons(ETH_IPv6);
 
     //TODO: Not sure if we need to do anything with these
     pkt->net_ethcrc = 0;
@@ -24,9 +24,9 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->info[1] = 0x00;
     pkt->info[2] = 0x00;
     pkt->info[3] = 0x00;
-    pkt->payload_len = IPV6_HDR_LEN + ICMPSIZE;
+    pkt->payload_len = htons(IPV6_HDR_LEN + ICMPSIZE);
     pkt->next_header = IPV6_ICMP;
-    pkt->hop_limit = 25; //TODO: not sure what this should default as
+    pkt->hop_limit = 255; //TODO: not sure whether to use htons
     memcpy(&pkt->src, link_local, IPV6_ASIZE);
     pkt->dest[0] = 0xff;
     pkt->dest[1] = 0x02;
