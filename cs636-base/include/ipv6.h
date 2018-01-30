@@ -3,7 +3,7 @@
 #define	ALL_NODES	    0xff020000000000000000000000000001	/* All Node link-local */
 #define ALL_ROUTERS	    0xff020000000000000000000000000002  /* All Routers link-local */
 
-#define	IPV6_ICMP		1		/* ICMP protocol type for IP 	*/
+#define	IPV6_ICMP		58		/* ICMP protocol type for IP 	*/
 #define	IPV6_UDP		17		/* UDP protocol type for IP 	*/
 
 #define	IPV6_ASIZE	    16		/* Bytes in an IP address	*/
