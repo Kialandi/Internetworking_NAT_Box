@@ -5,6 +5,12 @@
 
 uint32 checksumv6(void* message, int32 messagelenth);
 
+extern  void    print_addr(byte *, int32);
+extern  syscall bootipv6(void);
+extern  void    ipv6_in(struct netpacket *);
+extern  status  sendipv6pkt(void); //add parameters eventually
+extern  void    print6(struct netpacket *);
+
 /* in file addargs.c */
 extern	status	addargs(pid32, int32, int32[], int32,char *, void *);
 
