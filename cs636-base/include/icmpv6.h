@@ -1,4 +1,3 @@
-#include <xinu.h>
 /* icmpv6.h - definintions for the Internet Control Message Protocol */
 
 /*
@@ -35,7 +34,7 @@
 
 /*solicitation*/
 
-#define ROUTERS     133
+#define ROUTERS     0x133
 #define ROUTERA     134
 #define NEIGHBS     135
 #define NEIGHBA     136
@@ -46,7 +45,7 @@
 #define PVT3        200
 #define PVT4        201
 
-typedef struct{
+typedef struct idk{//TODO: Ask dylan what to name this
     uint32 type;
     uint32 length;
     uint32 prefixlength;
@@ -57,38 +56,38 @@ typedef struct{
     uint32 preferredlifetime;
     byte res2[8];
     byte prefix[16];
-}
+}idk;
 
-typedef struct{
+typedef struct lladdress{
     uint32 type;
     uint32 length;
     byte address[16];
 }lladdress;
 
-typedef struct{
+typedef struct icmpopt{
     uint32 type;
     uint32 length;
-    byte icmpopt[length];
+    byte icmpopt[16];//length];TODO: what's length here dylan?
 }icmpopt;
 
-typedef struct{
+typedef struct icmpv6general{
     uint32 type;
     uint32 code;
     uint16 checksum;
-    byte reserved[];
+    byte reserved[16];//TODO: what's length here dylan?
     byte payload[MAX_PAYLOAD];
     icmpopt opt;
 }icmpv6general;
 
-typedef struct{
+typedef struct rsolicit{
     uint32 type;
     uint32 code;
     uint16 checksum;
     uint32 reserved: 32;
-    icmpopt opt;
+    //icmpopt opt;
 }rsolicit;
 
-typedef struct{
+typedef struct radvertisement{
     uint32 type;
     uint32 code;
     uint16 checksum;
@@ -103,7 +102,7 @@ typedef struct{
 }radvertisement;
 
 
-typedef struct{
+typedef struct nsolicit{
     uint32 type;
     uint32 code;
     uint16 checksum;
@@ -112,7 +111,7 @@ typedef struct{
     icmpopt opt;
 }nsolicit;
 
-typedef struct{
+typedef struct nadvert{
     uint32 type;
     uint32 code;
     uint16 checksum;

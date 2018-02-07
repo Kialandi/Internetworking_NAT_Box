@@ -12,7 +12,7 @@
 
 // check to see if host or netbyte order is backward
 
-uint32 checksumv6(void* message, int32 messagelength){
+uint32 checksumv6(void * message, uint32 messagelength){
 
     char* datagram = (char*) message;
     uint32 checksum = 0;

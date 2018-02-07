@@ -19,7 +19,7 @@ process	main(void)
 
 	recvclr();
     bootipv6();
-    print_addr(link_local, IPV6_ASIZE);
+    //print_addr(link_local, IPV6_ASIZE);
     resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */

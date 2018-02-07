@@ -29,6 +29,7 @@
 #include <udp.h>
 #include <dhcp.h>
 #include <icmp.h>
+#include <icmpv6.h>
 #include <tftp.h>
 #include <name.h>
 #include <shell.h>

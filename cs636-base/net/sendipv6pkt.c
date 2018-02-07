@@ -4,6 +4,7 @@
 //int32 charToHex(byte *, char *);
 
 void    fillEthernet(struct netpacket * pkt) {
+    kprintf("Filling ether hdr\n");
     pkt->net_dst[0] = 0x33;
     pkt->net_dst[1] = 0x33;
     pkt->net_dst[2] = 0x00;
@@ -20,6 +21,7 @@ void    fillEthernet(struct netpacket * pkt) {
 }
 
 void    fillIPdatagram(struct base_header * pkt) {
+    kprintf("Filling ip hdr\n");
     pkt->info[0] = 0x60;
     pkt->info[1] = 0x00;
     pkt->info[2] = 0x00;
@@ -33,23 +35,31 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->dest[15] = 0x02;
 }
 
-void    fillICMP() {
-    return;
+void    fillICMP(struct rsolicit * pkt) {
+    kprintf("Filling icmp hdr\n");
+    pkt->type = htons(ROUTERS);
+    pkt->code = 0;
+    //TODO: Need to change this to calculate checksum over the pseudo hdr
+    pkt->checksum = checksumv6((void *) pkt, 64);
+    pkt->reserved = 0;
 }
 
 status  sendipv6pkt() {//byte[] destination, uint16 message) {
     struct netpacket * packet;
     if (ipv6bootstrap) {
         kprintf("bootstrapping for ipv6\n");
-        packet = (struct netpacket *) getmem(PACKLEN);
-        memset((char *) packet, NULLCH, PACKLEN);
+        uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
+        packet = (struct netpacket *) getbuf(len);//change this 
+        memset((char *) packet, NULLCH, len);
 
         fillEthernet(packet);
         fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
-        fillICMP((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
+        fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN));
         
         write(ETHER0, (char *) packet, PACKLEN);
+        kprintf("Sending router solicitation\n");
         ipv6bootstrap = 0;
+        freebuf((char *) packet);
     }
     else {
         //normal packet sending
