@@ -64,7 +64,9 @@ void    fillICMP(struct rsolicit * pkt) {
     pkt->reserved = 0;
     void * pseudo = makePseudoHdr(pkt);
     //TODO: Need to change this to calculate checksum over the pseudo hdr
-    pkt->checksum = htons(checksumv6(pseudo, PSEUDOLEN));
+    uint16 sum = checksumv6(pseudo, PSEUDOLEN);
+    kprintf("checksum: %d\n", sum);
+    pkt->checksum = htons(sum);
     freebuf(pseudo);
 }
 
@@ -103,11 +105,11 @@ void    fillEthernet(struct netpacket * pkt) {
     pkt->net_dst[3] = 0x00;
     pkt->net_dst[4] = 0x00;
     pkt->net_dst[5] = 0x02;
-
+    
+    print_addr(if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     memcpy(&pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     pkt->net_type = htons(ETH_IPv6);
 
-    //TODO: Not sure if we need to do anything with these
     pkt->net_ethcrc = 0;
     pkt->net_iface = 0;
 }
@@ -120,7 +122,7 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->info[3] = 0x00;
     pkt->payload_len = htons(IPV6_HDR_LEN + ICMPSIZE);
     pkt->next_header = IPV6_ICMP;
-    pkt->hop_limit = 255; //TODO: not sure whether to use htons
+    pkt->hop_limit = 255;
     memcpy(&pkt->src, link_local, IPV6_ASIZE);
     pkt->dest[0] = 0xff;
     pkt->dest[1] = 0x02;

@@ -15,27 +15,23 @@
 uint32 checksumv6(void * message, uint32 messagelength){
     kprintf("len in checksumv6: %d\n", messagelength);
     char* datagram = (char*) message;
+    if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
+    
     uint32 checksum = 0;
-    for (int32 i = 0; i+1<messagelength; i+=2){
-        uint32 segment1;
-        uint32 segment2;
-        memcpy(&segment1, datagram+i, 2);
-        memcpy(&segment2, datagram+(i+1), 2);
-        checksum = ntohs(segment1+segment2); // network to host
+    uint32 segment1;
+    for (int32 i = 0; i + 1 < messagelength; i += 2){
+
+        memcpy(&segment1, datagram + i, 2);
+        checksum += ntohs(segment1); // network to host
         // carry over
         // greater than 2^16
-        if (checksum > 0xffff)
-            checksum -=0xffff;
     }
+    //TODO: account for odd length
 
-    if (messagelength % 16 != 0){
-        uint32 remainder;
-        memcpy(&remainder, datagram-messagelength, 1);
-        checksum += ntohs(remainder);
-        if (checksum >0xffff)
-            checksum -=0xffff;
-        }
+    //TODO: overflow
+    checksum += (checksum >> 16);
+    checksum = 0xffff & checksum;
 
-    return ~checksum; //host to network
+    return (uint16) (0xffff & ~checksum); //host to network
 }
 
