@@ -23,7 +23,7 @@
 //
 #define  IPLEN 16
 
-
+#define ICMPSIZE    sizeof(rsolicit)
 #define MAX_PAYLOAD 1472
 #define DESTUNREACH 1
 #define PKT_BIG     2
@@ -34,7 +34,7 @@
 
 /*solicitation*/
 
-#define ROUTERS     0x133
+#define ROUTERS     0x85    //translates to 133
 #define ROUTERA     134
 #define NEIGHBS     135
 #define NEIGHBA     136
@@ -44,6 +44,15 @@
 #define ECHOREP     129
 #define PVT3        200
 #define PVT4        201
+
+typedef struct pseudoHdr{
+    byte    src[IPV6_ASIZE];
+    byte    dest[IPV6_ASIZE];
+    uint32  len;
+    uint32  zero : 24;
+    byte    next_header;
+}pseudoHdr;
+
 
 typedef struct idk{//TODO: Ask dylan what to name this
     uint32 type;
@@ -80,10 +89,10 @@ typedef struct icmpv6general{
 }icmpv6general;
 
 typedef struct rsolicit{
-    uint32 type;
-    uint32 code;
+    byte type;
+    byte code;
     uint16 checksum;
-    uint32 reserved: 32;
+    uint32 reserved;
     //icmpopt opt;
 }rsolicit;
 

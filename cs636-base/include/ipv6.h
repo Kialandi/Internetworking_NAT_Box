@@ -9,7 +9,6 @@
 #define	IPV6_ASIZE	    16		/* Bytes in an IP address	*/
 #define	IPV6_HDR_LEN	40		/* Bytes in an IP header	*/
 #define IPV6_VH		    0x45 	/* IP version and hdr length 	*/
-#define ICMPSIZE        64
 
 struct base_header {
     //4bit    version;

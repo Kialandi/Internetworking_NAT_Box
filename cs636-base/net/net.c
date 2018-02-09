@@ -324,12 +324,10 @@ process	netin (
 		switch (pkt->net_type) {
 
 		    case ETH_ARP:			/* Handle ARP	*/
-			kprintf("Got ARP pkt\n");
             freebuf((char *)pkt);
 			continue;
 
 		    case ETH_IP:			/* Handle IPv4	*/
-			kprintf("Got ipv4 pkt\n");
             freebuf((char *)pkt);
 			continue;
 

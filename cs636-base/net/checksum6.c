@@ -13,7 +13,7 @@
 // check to see if host or netbyte order is backward
 
 uint32 checksumv6(void * message, uint32 messagelength){
-
+    kprintf("len in checksumv6: %d\n", messagelength);
     char* datagram = (char*) message;
     uint32 checksum = 0;
     for (int32 i = 0; i+1<messagelength; i+=2){
@@ -36,6 +36,6 @@ uint32 checksumv6(void * message, uint32 messagelength){
             checksum -=0xffff;
         }
 
-    return htons(~checksum); //host to network
+    return ~checksum; //host to network
 }
 
