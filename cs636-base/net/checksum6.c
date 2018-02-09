@@ -13,7 +13,6 @@
 // check to see if host or netbyte order is backward
 
 uint32 checksumv6(void * message, uint32 messagelength){
-    kprintf("len in checksumv6: %d\n", messagelength);
     char* datagram = (char*) message;
     if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
     

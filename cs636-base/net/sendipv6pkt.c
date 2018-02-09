@@ -12,13 +12,15 @@ void    fillIPdatagram(struct base_header *);
 void *  makePseudoHdr(struct rsolicit * pkt) {
     struct pseudoHdr * pseudo = (struct pseudoHdr *) getbuf(PSEUDOLEN);
     memset((char *) pseudo, NULLCH, PSEUDOLEN);
-    memcpy(pseudo->src, link_local, IPV6_ASIZE);
+    memcpy(&pseudo->src, link_local, IPV6_ASIZE);
 
     pseudo->dest[0] = 0xff;
     pseudo->dest[1] = 0x02;
     pseudo->dest[15] = 0x02;
-    pseudo->len = ICMPSIZE; //not sure about this, ask dylan
+    pseudo->len = htons(ICMPSIZE); //not sure about this, ask dylan
     pseudo->next_header = IPV6_ICMP;
+    kprintf("pseudo: len: %d\n", ntohs(pseudo->len));
+    kprintf("pseudo: next: 0x%X\n", ntohs(pseudo->next_header));
     void * ptr = (void *) ((char *) pseudo + sizeof(pseudoHdr));
     memcpy(ptr, pkt, ICMPSIZE);
     return pseudo;
@@ -32,9 +34,8 @@ void    fillICMP(struct rsolicit * pkt) {
     pkt->checksum = 0;
     pkt->reserved = 0;
     void * pseudo = makePseudoHdr(pkt);
-    //TODO: Need to change this to calculate checksum over the pseudo hdr
+    
     uint16 sum = checksumv6(pseudo, PSEUDOLEN);
-    kprintf("checksum: %d\n", sum);
     pkt->checksum = htons(sum);
     freebuf(pseudo);
 }
@@ -75,7 +76,6 @@ void    fillEthernet(struct netpacket * pkt) {
     pkt->net_dst[4] = 0x00;
     pkt->net_dst[5] = 0x02;
     
-    print_addr(if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     memcpy(&pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     pkt->net_type = htons(ETH_IPv6);
 
@@ -89,7 +89,7 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->info[1] = 0x00;
     pkt->info[2] = 0x00;
     pkt->info[3] = 0x00;
-    pkt->payload_len = htons(IPV6_HDR_LEN + ICMPSIZE);
+    pkt->payload_len = htons(ICMPSIZE);
     pkt->next_header = IPV6_ICMP;
     pkt->hop_limit = 255;
     memcpy(&pkt->src, link_local, IPV6_ASIZE);

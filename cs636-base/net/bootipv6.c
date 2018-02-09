@@ -5,7 +5,6 @@ void get_snm_addr(byte *);
 void get_mac_snm(byte *);
 
 syscall bootipv6() {
-    printf("MAC ADDR:\n");
     //print_addr(if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     
     //initialize link-local unicast, SNM, and MAC SNM
@@ -58,7 +57,7 @@ void  get_link_local(byte* mac) {
     //printf("test\n");
     memcpy(res + 8, temp, 8);
 
-    //printf("res test:\n");
+    //printf("Computed Link Local:\n");
     //print_addr(res, IPV6_ASIZE);
     memcpy(link_local, res, IPV6_ASIZE);
 }
