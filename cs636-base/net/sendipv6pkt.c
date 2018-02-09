@@ -8,37 +8,6 @@
 void    fillEthernet(struct netpacket *);
 void    fillIPdatagram(struct base_header *);
 
-uint32 cksum(void * buf, int32 buflen) {
-	kprintf("cksum len: %d\n", buflen);
-    int32	scount;			/* Number of 16-bit values buf	*/
-	uint32	cksum;			/* Checksum being computed	*/
-	uint16	*sptr;			/* Walks along buffer		*/
-	uint16	word;			/* One 16-bit word		*/
-
-	/* Walk along buffer and sum all 16-bit values */
-
-    scount = buflen >> 1;		/* Divide by 2 and round down	*/
-    sptr = (uint16 *)buf;
-    cksum = 0;
-    kprintf("before loop scount: %d\n", scount);
-    for (; scount > 0; scount--) {
-        kprintf("scount in loop: %d\n", scount);
-        word = (uint32) *sptr++;
-        kprintf("trap here?\n");
-        cksum += ntohs(word);
-        kprintf("or here\n");
-    }
-    kprintf("cksum loop\n");
-    /* If buffer lenght is odd, add last byte */
-
-    if ( (buflen & 0x01) !=0 ) {
-        cksum += (uint32) (*((char *)sptr) << 8);
-    }
-    cksum += (cksum >> 16);
-    cksum = 0xffff & ~cksum;
-    kprintf("cksum done\n");
-    return (uint16) (0xffff & cksum);
-}
 
 void *  makePseudoHdr(struct rsolicit * pkt) {
     struct pseudoHdr * pseudo = (struct pseudoHdr *) getbuf(PSEUDOLEN);
