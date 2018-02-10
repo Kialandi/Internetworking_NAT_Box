@@ -12,12 +12,42 @@
 
 // check to see if host or netbyte order is backward
 
-uint32 checksumv6(void * message, uint32 messagelength){
-    char* datagram = (char*) message;
-    if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
+uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
+    struct pseudoHdr pseudo;
+    memset(&pseudo, NULLCH, PSEUDOLEN);
+    //memcpy(&pseudo.src, link_local, IPV6_ASIZE);
+
+    pseudo.dest[0] = 0xff;
+    pseudo.dest[1] = 0x02;
+    pseudo.dest[15] = 0x02;
+    pseudo.len = htonl(ICMPSIZE); //not sure about this, ask dylan
+    pseudo.next_header = IPV6_ICMP;
     
-    uint32 checksum = 0;
-    uint32 segment1;
+    memcpy(pseudo.icmppayload, pkt, ICMPSIZE);
+
+    if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
+    uint16 i;
+    uint32 cksum = 0;
+    uint16 * ptr16 = (uint16 *) &pseudo;
+    
+	/* First add all shorts in the pseudo header */
+	for(i = 0; i < messagelength; i = i + 2) {
+		cksum += htons(*ptr16);
+		ptr16++;
+	}
+
+//	ptr16 = (uint16 *)pkt->net_ipdata;
+
+	/* Add all the shorts in the ICMP packet */
+/*	for(i = 0; i < pkt->net_iplen; i = i + 2) {
+		cksum += htons(*ptr16);
+		ptr16++;
+	}
+*/
+	cksum = (uint16)cksum + (cksum >> 16);
+
+	return (uint16)~cksum;
+/*    
     for (int32 i = 0; i + 1 < messagelength; i += 2){
 
         memcpy(&segment1, datagram + i, 2);
@@ -31,6 +61,6 @@ uint32 checksumv6(void * message, uint32 messagelength){
     checksum += (checksum >> 16);
     checksum = 0xffff & checksum;
 
-    return (uint16) (0xffff & ~checksum); //host to network
+    return (uint16) (0xffff & ~checksum); //host to network*/
 }
 

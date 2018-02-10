@@ -23,6 +23,7 @@
 //
 #define  IPLEN 16
 
+#define PSEUDOLEN  sizeof(pseudoHdr) 
 #define ICMPSIZE    sizeof(rsolicit)
 #define MAX_PAYLOAD 1472
 #define DESTUNREACH 1
@@ -44,15 +45,6 @@
 #define ECHOREP     129
 #define PVT3        200
 #define PVT4        201
-
-typedef struct pseudoHdr{
-    byte    src[IPV6_ASIZE];
-    byte    dest[IPV6_ASIZE];
-    uint32  len;
-    uint32  zero : 24;
-    byte    next_header;
-}pseudoHdr;
-
 
 typedef struct idk{//TODO: Ask dylan what to name this
     uint32 type;
@@ -131,5 +123,15 @@ typedef struct nadvert{
     byte ipaddr[16];
     icmpopt opt;
 }nadvert;
+
+
+typedef struct pseudoHdr{
+    byte    src[IPV6_ASIZE];
+    byte    dest[IPV6_ASIZE];
+    uint32  len;
+    byte    zero[3];
+    byte    next_header;
+    byte    icmppayload[ICMPSIZE];
+}pseudoHdr;
 
 

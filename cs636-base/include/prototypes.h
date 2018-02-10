@@ -3,7 +3,7 @@
 
 /* in file checksumv6.c*/
 
-extern  uint32  checksumv6(void *, uint32);
+extern  uint32  checksumv6(struct rsolicit *, uint32);
 
 extern  void    print_addr(byte *, int32);
 extern  syscall bootipv6(void);

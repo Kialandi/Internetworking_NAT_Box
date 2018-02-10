@@ -3,28 +3,60 @@
 void printPacket2(struct netpacket * );
 //int32 charToHex(byte *, char *);
 
-#define PSEUDOLEN  sizeof(pseudoHdr) + ICMPSIZE 
+
 
 void    fillEthernet(struct netpacket *);
 void    fillIPdatagram(struct base_header *);
 
+//uint16	icmp_cksum (
+//		struct	netpacket *pkt	/* Packet buffer pointer	*/
+//		)
+//{
+//	uint32	cksum;	/* 32-bit sum of all shorts	*/
+//	uint16	*ptr16;	/* Pointer to a short		*/
+//	int32	i;	/* Index variable		*/
 
-void *  makePseudoHdr(struct rsolicit * pkt) {
-    struct pseudoHdr * pseudo = (struct pseudoHdr *) getmem(PSEUDOLEN);
-    memset((char *) pseudo, NULLCH, PSEUDOLEN);
-    memcpy(&pseudo->src, link_local, IPV6_ASIZE);
+	/* This is the pseudo header */
+/*	#pragma pack(1)
+	struct	{
+		byte	ipsrc[16];
+		byte	ipdst[16];
+		uint32	icmplen;
+		byte	zero[3];
+		byte	ipnh;
+	} pseudo;
+	#pragma pack()
+*/
+	/* Initialize the pseudo header */
+/*	memset(&pseudo, 0, sizeof(pseudo));
+	memcpy(pseudo.ipsrc, pkt->net_ipsrc, 16);
+	memcpy(pseudo.ipdst, pkt->net_ipdst, 16);
+	pseudo.icmplen = htonl(pkt->net_iplen);
+	pseudo.ipnh = IP_ICMP;
 
-    pseudo->dest[0] = 0xff;
-    pseudo->dest[1] = 0x02;
-    pseudo->dest[15] = 0x02;
-    pseudo->len = htonl(ICMPSIZE); //not sure about this, ask dylan
-    pseudo->next_header = IPV6_ICMP;
-    kprintf("pseudo: len: %d\n", ntohl(pseudo->len));
-    kprintf("pseudo: next: 0x%X\n", pseudo->next_header);
-    void * ptr = (void *) ((char *) pseudo + sizeof(pseudoHdr));
-    memcpy(ptr, pkt, ICMPSIZE);
-    return pseudo;
-}
+	cksum = 0;
+	ptr16 = (uint16 *)&pseudo;
+*/
+	/* First add all shorts in the pseudo header */
+/*	for(i = 0; i < sizeof(pseudo); i = i + 2) {
+		cksum += htons(*ptr16);
+		ptr16++;
+	}
+
+	ptr16 = (uint16 *)pkt->net_ipdata;
+*/
+	/* Add all the shorts in the ICMP packet */
+/*	for(i = 0; i < pkt->net_iplen; i = i + 2) {
+		cksum += htons(*ptr16);
+		ptr16++;
+	}
+
+	cksum = (uint16)cksum + (cksum >> 16);
+
+	return (uint16)~cksum;
+}*/
+
+
 
 void    fillICMP(struct rsolicit * pkt) {
     kprintf("Filling icmp hdr\n");
@@ -34,10 +66,11 @@ void    fillICMP(struct rsolicit * pkt) {
     pkt->code = 0;
     pkt->checksum = 0;
     pkt->reserved = 0;
-    void * pseudo = makePseudoHdr(pkt);
-    uint16 sum = checksumv6(pseudo, PSEUDOLEN);
+    //void * pseudo = makePseudoHdr(pkt);
+    uint16 sum = checksumv6(pkt, PSEUDOLEN);
     pkt->checksum = htons(sum);
-    freemem(pseudo, PSEUDOLEN);
+    kprintf("cksum: %d\n", sum);
+    //freemem(pseudo, PSEUDOLEN);
 }
 
 status  sendipv6pkt() {//byte[] destination, uint16 message) {
@@ -45,8 +78,8 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
     if (ipv6bootstrap) {
         kprintf("bootstrapping for ipv6\n");
 
-        uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
-        packet = (struct netpacket *) getbuf(PACKLEN);//change this 
+        //uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
+        packet = (struct netpacket *) getmem(PACKLEN);//change this 
         memset((char *) packet, NULLCH, PACKLEN);
 
         fillEthernet(packet);
@@ -71,14 +104,22 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
 
 void    fillEthernet(struct netpacket * pkt) {
     kprintf("Filling ether hdr\n");
-    
+     
+    pkt->net_dst[0] = 0xff;
+    pkt->net_dst[1] = 0xff;
+    pkt->net_dst[2] = 0xff;
+    pkt->net_dst[3] = 0xff;
+    pkt->net_dst[4] = 0xff;
+    pkt->net_dst[5] = 0xff;
+
+  /*
     pkt->net_dst[0] = 0x33;
     pkt->net_dst[1] = 0x33;
     pkt->net_dst[2] = 0x00;
     pkt->net_dst[3] = 0x00;
     pkt->net_dst[4] = 0x00;
     pkt->net_dst[5] = 0x02;
-
+*/
     memcpy(&pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     pkt->net_type = htons(ETH_IPv6);
     //pkt->net_ethcrc = 0;
@@ -95,7 +136,7 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->payload_len = htons(ICMPSIZE);
     pkt->next_header = IPV6_ICMP;
     pkt->hop_limit = 255;
-    memcpy(&pkt->src, link_local, IPV6_ASIZE);
+    //memcpy(&pkt->src, link_local, IPV6_ASIZE);
     pkt->dest[0] = 0xff;
     pkt->dest[1] = 0x02;
     pkt->dest[15] = 0x02;
