@@ -337,7 +337,8 @@ process	netin (
 			continue;
 
 		    default:	/* Ignore all other incoming packets	*/
-			freebuf((char *)pkt);
+            kprintf("idk what to do with this bye\n");
+            freebuf((char *)pkt);
 			continue;
 		}
 	}
