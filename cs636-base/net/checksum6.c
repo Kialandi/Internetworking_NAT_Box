@@ -22,17 +22,19 @@ uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
     pseudo.dest[15] = 0x02;
     pseudo.len = htonl(ICMPSIZE); //not sure about this, ask dylan
     pseudo.next_header = IPV6_ICMP;
-    
+
     memcpy(pseudo.icmppayload, pkt, ICMPSIZE);
 
     if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
     uint16 i;
     uint32 cksum = 0;
     uint16 * ptr16 = (uint16 *) &pseudo;
-    
+    uint16 ck;
+
 	/* First add all shorts in the pseudo header */
 	for(i = 0; i < messagelength; i = i + 2) {
-		cksum += htons(*ptr16);
+        ck = (uint32) *ptr16;
+        cksum += ntohs(ck);
 		ptr16++;
 	}
 
@@ -44,10 +46,11 @@ uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
 		ptr16++;
 	}
 */
-	cksum = (uint16)cksum + (cksum >> 16);
+	cksum = cksum + (cksum >> 16);
+    cksum = 0xffff & ~cksum;
 
-	return (uint16)~cksum;
-/*    
+	return (uint16) (0xffff & ~cksum);
+/*
     for (int32 i = 0; i + 1 < messagelength; i += 2){
 
         memcpy(&segment1, datagram + i, 2);
