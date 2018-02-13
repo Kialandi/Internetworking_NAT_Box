@@ -13,10 +13,10 @@
 // check to see if host or netbyte order is backward
 
 uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
-    struct pseudoHdr pseudo;
-    memset(&pseudo, NULLCH, PSEUDOLEN);
+//    struct pseudoHdr pseudo;
+//    memset(&pseudo, NULLCH, PSEUDOLEN);
     //memcpy(&pseudo.src, link_local, IPV6_ASIZE);
-
+/*
     pseudo.dest[0] = 0xff;
     pseudo.dest[1] = 0x02;
     pseudo.dest[15] = 0x02;
@@ -26,15 +26,19 @@ uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
     memcpy(pseudo.icmppayload, pkt, ICMPSIZE);
 
     if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
-    uint16 i;
+  */  uint16 i;
     uint32 cksum = 0;
-    uint16 * ptr16 = (uint16 *) &pseudo;
+    //uint16 * ptr16 = (uint16 *) &pseudo;
+    uint16 * ptr16 = (uint16 *) pkt;
     uint16 ck;
 
 	/* First add all shorts in the pseudo header */
 	for(i = 0; i < messagelength; i = i + 2) {
+        
         ck = (uint32) *ptr16;
+        kprintf("\niter %d: %d\n", i, ck);
         cksum += ntohs(ck);
+        kprintf("\nafter ntohs iter %d: %d\n", i, cksum);
 		ptr16++;
 	}
 

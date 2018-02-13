@@ -104,7 +104,7 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
 
 void    fillEthernet(struct netpacket * pkt) {
     kprintf("Filling ether hdr\n");
-     
+/*     
     pkt->net_dst[0] = 0xff;
     pkt->net_dst[1] = 0xff;
     pkt->net_dst[2] = 0xff;
@@ -112,14 +112,14 @@ void    fillEthernet(struct netpacket * pkt) {
     pkt->net_dst[4] = 0xff;
     pkt->net_dst[5] = 0xff;
 
-  /*
+  */
     pkt->net_dst[0] = 0x33;
     pkt->net_dst[1] = 0x33;
     pkt->net_dst[2] = 0x00;
     pkt->net_dst[3] = 0x00;
     pkt->net_dst[4] = 0x00;
     pkt->net_dst[5] = 0x02;
-*/
+
     memcpy(&pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     pkt->net_type = htons(ETH_IPv6);
     //pkt->net_ethcrc = 0;
