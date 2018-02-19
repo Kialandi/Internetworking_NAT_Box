@@ -90,6 +90,7 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
             kprintf("THE WORLD IS BURNING\n");
         }
         printPacket2(packet);
+	hexdump(packet, PACKLEN);
         ipv6bootstrap = 0;
         //TODO: figure out if packet buffer has to be freed
         //freebuf((char *) packet);
