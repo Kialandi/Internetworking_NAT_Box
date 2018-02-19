@@ -656,22 +656,22 @@ Linker script and memory map
  *fill*         0x000000000011192b        0x1 
  .rodata        0x000000000011192c      0x231 binaries/evec.o
  *fill*         0x0000000000111b5d        0x3 
- .rodata        0x0000000000111b60      0x139 binaries/initialize.o
- *fill*         0x0000000000111c99        0x3 
- .rodata        0x0000000000111c9c       0x20 binaries/kill.o
- .rodata        0x0000000000111cbc       0x3e binaries/meminit.o
- .rodata        0x0000000000111cfa        0xf binaries/panic.o
- *fill*         0x0000000000111d09        0x3 
- .rodata        0x0000000000111d0c       0x20 binaries/pci.o
- .rodata        0x0000000000111d2c       0x1d binaries/ptinit.o
- *fill*         0x0000000000111d49        0x3 
- .rodata        0x0000000000111d4c       0x25 binaries/ptsend.o
- .rodata        0x0000000000111d71       0x22 binaries/quark_pdat.o
- *fill*         0x0000000000111d93        0x1 
- .rodata        0x0000000000111d94       0xb7 binaries/stacktrace.o
- *fill*         0x0000000000111e4b        0x1 
- .rodata        0x0000000000111e4c       0x27 binaries/xdone.o
- *fill*         0x0000000000111e73        0xd 
+ .rodata        0x0000000000111b60      0x13d binaries/initialize.o
+ *fill*         0x0000000000111c9d        0x3 
+ .rodata        0x0000000000111ca0       0x20 binaries/kill.o
+ .rodata        0x0000000000111cc0       0x3e binaries/meminit.o
+ .rodata        0x0000000000111cfe        0xf binaries/panic.o
+ *fill*         0x0000000000111d0d        0x3 
+ .rodata        0x0000000000111d10       0x20 binaries/pci.o
+ .rodata        0x0000000000111d30       0x1d binaries/ptinit.o
+ *fill*         0x0000000000111d4d        0x3 
+ .rodata        0x0000000000111d50       0x25 binaries/ptsend.o
+ .rodata        0x0000000000111d75       0x22 binaries/quark_pdat.o
+ *fill*         0x0000000000111d97        0x1 
+ .rodata        0x0000000000111d98       0xb7 binaries/stacktrace.o
+ *fill*         0x0000000000111e4f        0x1 
+ .rodata        0x0000000000111e50       0x27 binaries/xdone.o
+ *fill*         0x0000000000111e77        0x9 
  .rodata        0x0000000000111e80       0x81 binaries/ctype_.o
                 0x0000000000111e80                _ctype_
  *fill*         0x0000000000111f01        0x3 
