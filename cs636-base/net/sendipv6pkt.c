@@ -79,24 +79,25 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
         kprintf("bootstrapping for ipv6\n");
 
         //uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
-        packet = (struct netpacket *) getmem(PACKLEN);//change this 
-        memset((char *) packet, NULLCH, PACKLEN);
+        packet = (struct netpacket *) getmem(48);//change this 
+        memset((char *) packet, NULLCH, 48);
 
         fillEthernet(packet);
         fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
         fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN));
 
-        if( write(ETHER0, (char *) packet, PACKLEN) == SYSERR) {
+        if( write(ETHER0, (char *) packet, 48) == SYSERR) {
             kprintf("THE WORLD IS BURNING\n");
         }
         printPacket2(packet);
+	hexdump(packet,48);
         ipv6bootstrap = 0;
         //TODO: figure out if packet buffer has to be freed
         //freebuf((char *) packet);
     }
     else {
         //normal packet sending
-        packet = (struct netpacket *) getbuf(PACKLEN);
+        packet = (struct netpacket *) getbuf(48);
     }
     //printPacket(packet);
     return 0;
@@ -139,6 +140,10 @@ void    fillIPdatagram(struct base_header * pkt) {
     //memcpy(&pkt->src, link_local, IPV6_ASIZE);
     pkt->dest[0] = 0xff;
     pkt->dest[1] = 0x02;
+    // something is setting these values
+    for(uint32 i=2; i<15; i++){
+	    pkt->dest[i] = 0x00;
+    }
     pkt->dest[15] = 0x02;
 
 }
