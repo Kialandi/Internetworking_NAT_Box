@@ -13,10 +13,10 @@
 // check to see if host or netbyte order is backward
 
 uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
-//    struct pseudoHdr pseudo;
-//    memset(&pseudo, NULLCH, PSEUDOLEN);
-    //memcpy(&pseudo.src, link_local, IPV6_ASIZE);
-/*
+    struct pseudoHdr pseudo;
+    memset(&pseudo, NULLCH, PSEUDOLEN);
+    //memcpy(&pseudo.src, link_local, IPV6_ASIZE); //unspecified address
+    
     pseudo.dest[0] = 0xff;
     pseudo.dest[1] = 0x02;
     pseudo.dest[15] = 0x02;
@@ -24,21 +24,27 @@ uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
     pseudo.next_header = IPV6_ICMP;
 
     memcpy(pseudo.icmppayload, pkt, ICMPSIZE);
-
-    if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
-  */  uint16 i;
+   
+   /* 
+    kprintf("\bpseudo src\n");
+    print_addr(pseudo.src, IPV6_ASIZE);
+    kprintf("link local\n");
+    print_addr(link_local, IPV6_ASIZE);
+*/
+    //if (messagelength % 2 != 0) { kprintf("odd len\n"); return 0; }
+    uint16 i;
     uint32 cksum = 0;
-    //uint16 * ptr16 = (uint16 *) &pseudo;
-    uint16 * ptr16 = (uint16 *) pkt;
+    uint16 * ptr16 = (uint16 *) &pseudo;
+    //uint16 * ptr16 = (uint16 *) pkt;
     uint16 ck;
 
 	/* First add all shorts in the pseudo header */
 	for(i = 0; i < messagelength; i = i + 2) {
         
         ck = (uint32) *ptr16;
-        kprintf("\niter %d: %d\n", i, ck);
+        //kprintf("\niter %d: %d\n", i, ck);
         cksum += ntohs(ck);
-        kprintf("\nafter ntohs iter %d: %d\n", i, cksum);
+        //kprintf("\nafter ntohs iter %d: %d\n", i, cksum);
 		ptr16++;
 	}
 
@@ -50,10 +56,13 @@ uint32 checksumv6(struct rsolicit * pkt, uint32 messagelength){
 		ptr16++;
 	}
 */
-	cksum = cksum + (cksum >> 16);
+	//uint32 overflow = cksum >> 16;
+    cksum = cksum + (cksum >> 16);
+    //kprintf("\ncksum = %d, overflow: %d\n", cksum, overflow);
     cksum = 0xffff & ~cksum;
 
-	return (uint16) (0xffff & ~cksum);
+   // kprintf("\ncksum2 = %d\n", cksum);
+	return (uint16) cksum;
 /*
     for (int32 i = 0; i + 1 < messagelength; i += 2){
 

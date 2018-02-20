@@ -67,7 +67,7 @@ void	net_init (void)
 	/* Ask the user for a Bing ID */
 
 	found = TRUE;
-    bingid = 51; //group bing ID
+    bingid = 77; //group bing ID
 
 	while (!found) {
 		printf("\nEnter a bing ID between 0 and 255: ");
@@ -338,7 +338,8 @@ process	netin (
 
 		    default:	/* Ignore all other incoming packets	*/
             kprintf("idk what to do with this bye\n");
-            freebuf((char *)pkt);
+			ipv6_in(pkt);
+            //freebuf((char *)pkt);
 			continue;
 		}
 	}

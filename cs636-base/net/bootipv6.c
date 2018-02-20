@@ -19,10 +19,24 @@ syscall bootipv6() {
     
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
+    byte blah[6];
+    blah[0] = 0x33;
+    blah[1] = 0x33;
+    blah[2] = 0x00;
+    blah[3] = 0x00;
+    blah[4] = 0x00;
+    blah[5] = 0x01;
+    control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)blah, 0);
+    
+    blah[5] = 0x02;
+    control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)blah, 0);
     //TODO; Send solicitation message
+    while(1) {
+	    kprintf("Press enter to send another router solicitation\n");
+        read(CONSOLE, NULL, 5);
     ipv6bootstrap = 1;
     sendipv6pkt();
-    
+    }
     //TODO: receive router advertisement -- probably in netin
     //TODO: parse router advertisement -- probably in netin
     //maybe add a wait call here or a timer 

@@ -10,7 +10,8 @@ void    ipv6_in (
     )
 {
     kprintf("OMG I GOT A PACKET!!\n");    
-    print6(pkt);
+    hexdump(pkt, 200);
+    //print6(pkt);
     freebuf((char *) pkt);
     return;
 }

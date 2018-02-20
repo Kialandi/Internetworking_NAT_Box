@@ -3,60 +3,8 @@
 void printPacket2(struct netpacket * );
 //int32 charToHex(byte *, char *);
 
-
-
 void    fillEthernet(struct netpacket *);
 void    fillIPdatagram(struct base_header *);
-
-//uint16	icmp_cksum (
-//		struct	netpacket *pkt	/* Packet buffer pointer	*/
-//		)
-//{
-//	uint32	cksum;	/* 32-bit sum of all shorts	*/
-//	uint16	*ptr16;	/* Pointer to a short		*/
-//	int32	i;	/* Index variable		*/
-
-	/* This is the pseudo header */
-/*	#pragma pack(1)
-	struct	{
-		byte	ipsrc[16];
-		byte	ipdst[16];
-		uint32	icmplen;
-		byte	zero[3];
-		byte	ipnh;
-	} pseudo;
-	#pragma pack()
-*/
-	/* Initialize the pseudo header */
-/*	memset(&pseudo, 0, sizeof(pseudo));
-	memcpy(pseudo.ipsrc, pkt->net_ipsrc, 16);
-	memcpy(pseudo.ipdst, pkt->net_ipdst, 16);
-	pseudo.icmplen = htonl(pkt->net_iplen);
-	pseudo.ipnh = IP_ICMP;
-
-	cksum = 0;
-	ptr16 = (uint16 *)&pseudo;
-*/
-	/* First add all shorts in the pseudo header */
-/*	for(i = 0; i < sizeof(pseudo); i = i + 2) {
-		cksum += htons(*ptr16);
-		ptr16++;
-	}
-
-	ptr16 = (uint16 *)pkt->net_ipdata;
-*/
-	/* Add all the shorts in the ICMP packet */
-/*	for(i = 0; i < pkt->net_iplen; i = i + 2) {
-		cksum += htons(*ptr16);
-		ptr16++;
-	}
-
-	cksum = (uint16)cksum + (cksum >> 16);
-
-	return (uint16)~cksum;
-}*/
-
-
 
 void    fillICMP(struct rsolicit * pkt) {
     kprintf("Filling icmp hdr\n");
@@ -78,19 +26,23 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
     if (ipv6bootstrap) {
         kprintf("bootstrapping for ipv6\n");
 
-        //uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
-        packet = (struct netpacket *) getmem(PACKLEN);//change this 
-        memset((char *) packet, NULLCH, PACKLEN);
+        uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
+        packet = (struct netpacket *) getmem(len);//change this 
+        memset((char *) packet, NULLCH, len);
 
         fillEthernet(packet);
+
         fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
+
         fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN));
 
-        if( write(ETHER0, (char *) packet, PACKLEN) == SYSERR) {
+
+        if( write(ETHER0, (char *) packet, len) == SYSERR) {
             kprintf("THE WORLD IS BURNING\n");
         }
         printPacket2(packet);
         ipv6bootstrap = 0;
+        hexdump(packet, len);
         //TODO: figure out if packet buffer has to be freed
         //freebuf((char *) packet);
     }
@@ -104,15 +56,15 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
 
 void    fillEthernet(struct netpacket * pkt) {
     kprintf("Filling ether hdr\n");
-/*     
+  /*  
     pkt->net_dst[0] = 0xff;
     pkt->net_dst[1] = 0xff;
     pkt->net_dst[2] = 0xff;
     pkt->net_dst[3] = 0xff;
     pkt->net_dst[4] = 0xff;
     pkt->net_dst[5] = 0xff;
-
-  */
+*/
+  
     pkt->net_dst[0] = 0x33;
     pkt->net_dst[1] = 0x33;
     pkt->net_dst[2] = 0x00;
