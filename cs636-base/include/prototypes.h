@@ -1,3 +1,5 @@
+extern void hexdump(char *, int32);
+extern void payload_hexdump(char *, int32);
 /*in ICMPv6*/
 
 
@@ -5,8 +7,9 @@
 
 extern  uint32  checksumv6(struct rsolicit *, uint32);
 
-extern  void    print_addr(byte *, int32);
-extern  syscall bootipv6(void);
+extern  void    print_ipv6_addr(byte *);
+extern  void    print_mac_addr(byte *);
+extern  syscall ipv6_init(void);
 extern  void    ipv6_in(struct netpacket *);
 extern  status  sendipv6pkt(void); //add parameters eventually
 extern  void    print6(struct netpacket *);

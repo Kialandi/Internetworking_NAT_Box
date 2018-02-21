@@ -3,29 +3,19 @@
 #include <xinu.h>
 #include <string.h>
 
-typedef struct{
-                         /*header*/
-    uint32 type;
-    uint32 code;
-    uint32 checksum;
-                         /*begin payload*/
-    byte payload[1500];
-}icmpv6;
-
 process	main(void)
 {
-
 	/* Run the Xinu shell */
 
 	recvclr();
     sleep(1);
-    bootipv6();
+    ipv6_init();
     
     resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */
 
-    	while (TRUE) {
+    while (TRUE) {
 		receive();
 		sleepms(200);
 		kprintf("\n\nMain process recreating shell\n\n");

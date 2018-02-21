@@ -1,7 +1,5 @@
 /* ipv6.h  -  Constants related to Internet Protocol version 6 (IPv6) */
 
-#define	ALL_NODES	    0xff020000000000000000000000000001	/* All Node link-local */
-#define ALL_ROUTERS	    0xff020000000000000000000000000002  /* All Routers link-local */
 
 #define	IPV6_ICMP		0x3A		/* ICMP protocol type for IP 	*/
 #define	IPV6_UDP		17		/* UDP protocol type for IP 	*/
@@ -20,9 +18,12 @@ struct base_header {
     uint8   hop_limit;
     byte    src[IPV6_ASIZE];
     byte    dest[IPV6_ASIZE];
+    //byte    payload[1];
 };
 
 extern byte link_local[];
 extern byte snm_addr[];
 extern byte mac_snm[];
 extern uint8 ipv6bootstrap;
+extern byte allrmulti[];
+extern byte allnmulti[];

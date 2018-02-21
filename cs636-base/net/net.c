@@ -333,13 +333,11 @@ process	netin (
 
 		    case ETH_IPv6:			/* Handle IPv6	*/
 			ipv6_in(pkt);
-            //TODO: add a return value and check maybe
 			continue;
 
 		    default:	/* Ignore all other incoming packets	*/
             kprintf("idk what to do with this bye\n");
-			ipv6_in(pkt);
-            //freebuf((char *)pkt);
+            freebuf((char *)pkt);
 			continue;
 		}
 	}
