@@ -1,7 +1,7 @@
 #include <xinu.h>
 
 void print6(struct netpacket * pkt) {
-    kprintf("Printing incoming packet...\n");
+    kprintf("Printing incoming IPv6 packet...\n");
     kprintf("=========== Printing Ethernet header ===========\n");
     
     kprintf("net_dst: ");

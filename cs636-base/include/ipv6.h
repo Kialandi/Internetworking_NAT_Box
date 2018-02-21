@@ -8,6 +8,8 @@
 #define	IPV6_HDR_LEN	40		/* Bytes in an IP header	*/
 #define IPV6_VH		    0x45 	/* IP version and hdr length 	*/
 
+#define IPV6OUTNBUFS    20      /* number of buffers */
+
 struct base_header {
     //4bit    version;
     //byte    traffic;
@@ -21,9 +23,10 @@ struct base_header {
     //byte    payload[1];
 };
 
-extern byte link_local[];
-extern byte snm_addr[];
-extern byte mac_snm[];
-extern uint8 ipv6bootstrap;
-extern byte allrmulti[];
-extern byte allnmulti[];
+extern byte     link_local[];
+extern byte     snm_addr[];
+extern byte     mac_snm[];
+extern uint8    ipv6bootstrap;
+extern byte     allrmulti[];
+extern byte     allnmulti[];
+extern bpid32   ipv6bufpool;

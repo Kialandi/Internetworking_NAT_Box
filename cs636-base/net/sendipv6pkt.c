@@ -3,6 +3,8 @@
 void    fillEthernet(struct netpacket *);
 void    fillIPdatagram(struct base_header *);
 
+bpid32  ipv6bufpool; //pool of buffers for IPV6
+
 void    fillICMP(struct rsolicit * pkt) {
     pkt->type = ROUTERS;
     
@@ -18,10 +20,10 @@ void    fillICMP(struct rsolicit * pkt) {
 status  sendipv6pkt() {//byte[] destination, uint16 message) {
     struct netpacket * packet;
     if (ipv6bootstrap) {
-        kprintf("bootstrapping for ipv6\n");
+        kprintf("Sending Router Solicitation...\n");
 
         uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
-        packet = (struct netpacket *) getmem(len);//change this 
+        packet = (struct netpacket *) getbuf(ipv6bufpool);
         memset((char *) packet, NULLCH, len);
 
         fillEthernet(packet);
@@ -33,16 +35,16 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
 
         if( write(ETHER0, (char *) packet, len) == SYSERR) {
             kprintf("THE WORLD IS BURNING\n");
-            return 0;
+            kill(getpid());
         }
         ipv6bootstrap = 0;
-        
+
         //TODO: figure out if packet buffer has to be freed
         //freebuf((char *) packet);
     }
     else {
         //normal packet sending
-        packet = (struct netpacket *) getbuf(PACKLEN);
+        packet = (struct netpacket *) getbuf(ipv6bufpool);
     }
     //printPacket(packet);
     return 1;
@@ -65,11 +67,11 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->info[1] = 0x00;
     pkt->info[2] = 0x00;
     pkt->info[3] = 0x00;
-    
+
     pkt->payload_len = htons(ICMPSIZE);
     pkt->next_header = IPV6_ICMP;
     pkt->hop_limit = 255;
-    
+
     //set IP dest addr, assumes src is non-specified (all 0s)
     pkt->dest[0] = 0xff;
     pkt->dest[1] = 0x02;
