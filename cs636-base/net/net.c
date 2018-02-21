@@ -67,7 +67,7 @@ void	net_init (void)
 	/* Ask the user for a Bing ID */
 
 	found = TRUE;
-    bingid = 77; //group bing ID
+    bingid = 51; //group bing ID
 
 	while (!found) {
 		printf("\nEnter a bing ID between 0 and 255: ");
