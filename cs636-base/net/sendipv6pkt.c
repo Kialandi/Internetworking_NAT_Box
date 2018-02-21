@@ -5,16 +5,29 @@ void    fillIPdatagram(struct base_header *);
 
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
+void makePseudoHdr(struct pseudoHdr * pseudo, struct rsolicit * pkt) {
+    memset(pseudo, NULLCH, PSEUDOLEN);
+    
+    pseudo->dest[0] = 0xff;
+    pseudo->dest[1] = 0x02;
+    pseudo->dest[15] = 0x02;
+    pseudo->len = htonl(ICMPSIZE);
+    pseudo->next_header = IPV6_ICMP;
+
+    memcpy(pseudo->icmppayload, pkt, ICMPSIZE);
+}
+
 void    fillICMP(struct rsolicit * pkt) {
     pkt->type = ROUTERS;
     
     //assumed code, checksum, and reserved were all set to 0 before coming in
+    void * pseudo = (void *) getmem(PSEUDOLEN);
+    makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
     
-    //void * pseudo = makePseudoHdr(pkt);
-    
-    uint16 sum = checksumv6(pkt, PSEUDOLEN);
+    uint16 sum = checksumv6(pseudo, PSEUDOLEN);
+    //kprintf("checksum: %d\n", sum);
     pkt->checksum = htons(sum);
-    //freemem(pseudo, PSEUDOLEN);
+    freemem(pseudo, PSEUDOLEN);
 }
 
 status  sendipv6pkt() {//byte[] destination, uint16 message) {
@@ -39,7 +52,7 @@ status  sendipv6pkt() {//byte[] destination, uint16 message) {
         }
         ipv6bootstrap = 0;
 
-        //TODO: figure out if packet buffer has to be freed
+        //TODO: potential race condition if uncommented, ask Comer
         //freebuf((char *) packet);
     }
     else {
@@ -77,41 +90,4 @@ void    fillIPdatagram(struct base_header * pkt) {
     pkt->dest[1] = 0x02;
     pkt->dest[15] = 0x02;
 }
-
-
-/*
-   int32 charToHex(byte * buf, char * string) {
-
-   while (*string != 0) {
-   printf("char: %c\n", *string);
-   if (*string == ':') {
-   string++;
-   continue;
-   }
-   if (*string >= '0' && *string <= '9')
- *buf = (*string - '0') << 4;
- else if (*string >= 'A' && *string <= 'Z')
- *buf = (*string - 'A' + 10) << 4;
- else if (*string >= 'a' && *string <= 'z')
- *buf = (*string - 'a' + 10) << 4;
- else
- return 1;
-
- string++;
-
- if (*string >= '0' && *string <= '9')
- *buf |= *string - '0';
- else if (*string >= 'A' && *string <= 'Z')
- *buf |= *string - 'A' + 10;
- else if (*string >= 'a' && *string <= 'z')
- *buf |= *string - 'a' + 10;
- else
- return 1;
-
- string++;
- buf++;
- }
- return 0;
- }
- */
 

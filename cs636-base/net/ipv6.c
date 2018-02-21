@@ -15,7 +15,7 @@ void get_mac_snm(byte *);
 syscall ipv6_init() {
     ipv6bufpool = mkbufpool(PACKLEN, IPV6OUTNBUFS);
     if (ipv6bufpool == SYSERR) {
-        kprintf("ipv6bootstrap cannot allocate network buffer pool\n");
+        kprintf("ipv6_init cannot allocate network buffer pool\n");
         kill(getpid());
     }
 
@@ -50,13 +50,6 @@ syscall ipv6_init() {
         ipv6bootstrap = 1;
         sendipv6pkt();
     }
-    //TODO: receive router advertisement -- probably in netin
-    //TODO: parse router advertisement -- probably in netin
-    //maybe add a wait call here or a timer 
-
-    //TODO: accept router offer -- only if offer received
-
-    //TODO: remember to use hton for integers going to the network
 
     return OK;
 }
