@@ -93,9 +93,10 @@ typedef struct radvert{
     byte code;
     uint16 checksum;
     uint8  curhoplim;
-    byte M: 1;
-    byte O: 1;
-    byte reserved: 6;
+    //byte M: 1;
+    //byte O: 1;
+    //byte reserved: 6;
+    byte m_o_res;
     uint16 routerlifetime;
     uint32 reachabletime;
     uint32 retranstimer;
