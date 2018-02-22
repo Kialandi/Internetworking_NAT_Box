@@ -18,6 +18,17 @@ void    ipv6_in (
 {
     print6(pkt);
     //TODO: parse the ip packet, probably another demultiplexer
+    
+    if(1) {
+        struct radvert * ad = (struct radvert *) ((char *) (&(pkt->net_payload)) + IPV6_HDR_LEN);
+        payload_hexdump((char *) ad, 150);
+        //validate the advertisement, as per RFC 4861: 6.1.2
+        if (!radvert_valid(ad)) {
+            freebuf((char *) pkt);
+            return;
+        }
+        radvert_handler(ad);
+    }
 
     freebuf((char *) pkt);
     return;

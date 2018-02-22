@@ -88,7 +88,7 @@ typedef struct rsolicit{
     //icmpopt opt;
 }rsolicit;
 
-typedef struct radvertisement{
+typedef struct radvert{
     byte type;
     byte code;
     uint16 checksum;
@@ -100,7 +100,7 @@ typedef struct radvertisement{
     uint32 reachabletime;
     uint32 retranstimer;
     //icmpopt opt;
-}radvertisement;
+}radvert;
 
 
 typedef struct nsolicit{
