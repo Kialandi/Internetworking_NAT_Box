@@ -33,18 +33,19 @@
 #define PVT2        100
 
 
-/*solicitation*/
+/* ICMP Msg types */
 
 #define ROUTERS     0x85    //translates to 133
-#define ROUTERA     134
-#define NEIGHBS     135
-#define NEIGHBA     136
+#define ROUTERA     0x86
+#define NEIGHBS     0x87
+#define NEIGHBA     0x88
 
 /*informational messages */
 #define ECHOREQ     128
 #define ECHOREP     129
 #define PVT3        200
 #define PVT4        201
+
 
 typedef struct idk{//TODO: Ask dylan what to name this
     uint32 type;
@@ -72,12 +73,10 @@ typedef struct icmpopt{
 }icmpopt;
 
 typedef struct icmpv6general{
-    uint32 type;
-    uint32 code;
+    byte type;
+    byte code;
     uint16 checksum;
-    byte reserved[16];//TODO: what's length here dylan?
-    byte payload[MAX_PAYLOAD];
-    icmpopt opt;
+    byte body[0]; //gives easy access to message body
 }icmpv6general;
 
 typedef struct rsolicit{

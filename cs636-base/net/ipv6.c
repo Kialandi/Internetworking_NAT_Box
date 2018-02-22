@@ -17,17 +17,21 @@ void    ipv6_in (
         )
 {
     print6(pkt);
-    //TODO: parse the ip packet, probably another demultiplexer
     
-    if(1) {//make a switch statement
-        struct radvert * ad = (struct radvert *) ((char *) (&(pkt->net_payload)) + IPV6_HDR_LEN);
-        //payload_hexdump((char *) ad, 64);
-        //validate the advertisement, as per RFC 4861: 6.1.2
-        if (!radvert_valid(ad)) {
-            freebuf((char *) pkt);
-            return;
-        }
-        radvert_handler(ad);
+    struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
+    void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
+
+    switch (ipdatagram->next_header) {
+        //TODO: add other cases such as UDP and fragments
+        case IPV6_ICMP:
+            kprintf("ipv6icmp found\n");
+            //payload_hexdump((char *) ad, 64);
+            icmpv6_in((struct icmpv6general *) payload);
+            break;
+
+        default:
+            kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);
+            break;
     }
 
     freebuf((char *) pkt);

@@ -1,10 +1,9 @@
 extern void radvert_handler(struct radvert *);
 extern bool8 radvert_valid(struct radvert *);
+extern void icmpv6_in(struct icmpv6general *);
 
 extern void hexdump(char *, int32);
 extern void payload_hexdump(char *, int32);
-/*in ICMPv6*/
-
 
 /* in file checksumv6.c*/
 

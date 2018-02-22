@@ -1,8 +1,9 @@
 /* ipv6.h  -  Constants related to Internet Protocol version 6 (IPv6) */
 
-
 #define	IPV6_ICMP		0x3A		/* ICMP protocol type for IP 	*/
-#define	IPV6_UDP		17		/* UDP protocol type for IP 	*/
+#define	IPV6_UDP		0x11		/* UDP protocol type for IP 	*/
+#define IPV6_TCP        0x06
+#define IPV6_FRAG       0x2C
 
 #define	IPV6_ASIZE	    16		/* Bytes in an IP address	*/
 #define	IPV6_HDR_LEN	40		/* Bytes in an IP header	*/
