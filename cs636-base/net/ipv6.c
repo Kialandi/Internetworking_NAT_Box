@@ -12,6 +12,18 @@ void get_link_local(byte *);
 void get_snm_addr(byte *);
 void get_mac_snm(byte *);
 
+void    ipv6_in (
+        struct netpacket * pkt
+        )
+{
+    print6(pkt);
+    //TODO: parse the ip packet, probably another demultiplexer
+
+    freebuf((char *) pkt);
+    return;
+}
+
+
 syscall ipv6_init() {
     ipv6bufpool = mkbufpool(PACKLEN, IPV6OUTNBUFS);
     if (ipv6bufpool == SYSERR) {
@@ -24,6 +36,14 @@ syscall ipv6_init() {
     get_snm_addr(link_local);
     get_mac_snm(snm_addr);
 
+    kprintf("\n======================= IPv6 addresses =======================\n\n");
+    kprintf("Link local address : ");
+    print_ipv6_addr(link_local);
+    kprintf("SNM address        : ");
+    print_ipv6_addr(snm_addr);
+    kprintf("MAC SNM address    : ");
+    print_mac_addr(mac_snm);
+    kprintf("\n==============================================================\n");
     //tell hardware to listen to MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
@@ -52,15 +72,6 @@ syscall ipv6_init() {
     }
 
     return OK;
-}
-
-void    ipv6_in (
-        struct netpacket * pkt
-        )
-{
-    print6(pkt);
-    freebuf((char *) pkt);
-    return;
 }
 
 void  get_link_local(byte* mac) {

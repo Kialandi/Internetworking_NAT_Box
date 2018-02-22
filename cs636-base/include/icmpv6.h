@@ -89,17 +89,17 @@ typedef struct rsolicit{
 }rsolicit;
 
 typedef struct radvertisement{
-    uint32 type;
-    uint32 code;
+    byte type;
+    byte code;
     uint16 checksum;
-    uint32  curhoplim;
-    uint32 M: 1;
-    uint32 O: 1;
-    uint32 reserved: 6;
-    uint32 routerlifetime;
+    uint8  curhoplim;
+    byte M: 1;
+    byte O: 1;
+    byte reserved: 6;
+    uint16 routerlifetime;
     uint32 reachabletime;
     uint32 retranstimer;
-    icmpopt opt;
+    //icmpopt opt;
 }radvertisement;
 
 
