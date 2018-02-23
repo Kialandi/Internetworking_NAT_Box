@@ -7,6 +7,7 @@ void icmpv6_in(struct icmpv6general * msg) {
 
         case ROUTERA:
             kprintf("ROUTERA found\n");
+            //TODO: add check for ip hop limit = 255
             if (!radvert_valid((struct radvert *) msg)) {
                 //consider making this return something
                 kprintf("radvert invalid\n");
@@ -17,6 +18,7 @@ void icmpv6_in(struct icmpv6general * msg) {
 
         case ROUTERS:
             kprintf("R Solicit received\n");
+            //TODO: add check for ip hop limit = 255
             if (!rsolicit_valid((struct rsolicit *) msg)) {
                 //consider making this return something
                 kprintf("rsolicit invalid\n");
