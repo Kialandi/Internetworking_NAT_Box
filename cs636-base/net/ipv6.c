@@ -18,14 +18,13 @@ void    ipv6_in (
     print6(pkt);
     
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
     switch (ipdatagram->next_header) {
         //TODO: add other cases such as UDP and fragments
         case IPV6_ICMP:
             kprintf("ipv6icmp found\n");
             //payload_hexdump((char *) ad, 64);
-            icmpv6_in((struct icmpv6general *) payload);
+            icmpv6_in(ipdatagram);
             break;
 
         default:

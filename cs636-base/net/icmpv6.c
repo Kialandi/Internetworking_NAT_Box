@@ -1,14 +1,14 @@
 #include "xinu.h"
 
-void icmpv6_in(struct icmpv6general * msg) {
-    //TODO: figure out what type of msg it is call the appropriate function
-    //validate the advertisement, as per RFC 4861: 6.1.2
-    switch (msg->type) {
+//void icmpv6_in(struct icmpv6general * msg) {
+void icmpv6_in(struct base_header * ipdatagram) {
+    struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
+    //figure out what type of msg it is call the appropriate function
+    switch (msg->type) {
         case ROUTERA:
             kprintf("ROUTERA found\n");
-            //TODO: add check for ip hop limit = 255
-            if (!radvert_valid((struct radvert *) msg)) {
+            if (!radvert_valid(ipdatagram)) {
                 //consider making this return something
                 kprintf("radvert invalid\n");
                 return;
@@ -17,9 +17,8 @@ void icmpv6_in(struct icmpv6general * msg) {
             break;
 
         case ROUTERS:
-            kprintf("R Solicit received\n");
-            //TODO: add check for ip hop limit = 255
-            if (!rsolicit_valid((struct rsolicit *) msg)) {
+            kprintf("RSolicit received\n");
+            if (!rsolicit_valid(ipdatagram)) {
                 //consider making this return something
                 kprintf("rsolicit invalid\n");
                 return;

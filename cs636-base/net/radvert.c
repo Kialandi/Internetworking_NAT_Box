@@ -15,7 +15,7 @@ void radvert_handler(struct radvert * ad) {
     //TODO: handle options, consider using a loop?   
 }
 
-bool8 radvert_valid(struct radvert * ad) {
+bool8 radvert_valid(struct base_header * ipdatagram) {
     //TODO: validate radvert
     return TRUE;
 }

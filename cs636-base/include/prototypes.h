@@ -1,12 +1,12 @@
 extern void radvert_handler(struct radvert *);
 
 //validation functions
-extern bool8 radvert_valid(struct radvert *);
-extern bool8 rsolicit_valid(struct rsolicit *);
+extern bool8 radvert_valid(struct base_header *);
+extern bool8 rsolicit_valid(struct base_header *);
 //TODO: change from void * probably
 extern bool8 cksum_valid(void *, uint32);
 
-extern void icmpv6_in(struct icmpv6general *);
+extern void icmpv6_in(struct base_header *);
 
 extern void hexdump(char *, int32);
 extern void payload_hexdump(char *, int32);

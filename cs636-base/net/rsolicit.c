@@ -11,24 +11,18 @@ void rsolicit_handler(struct rsolicit * ad) {
 
 }
 
-bool8 rsolicit_valid(struct rsolicit * msg) {
+bool8 rsolicit_valid(struct base_header * ipdatagram) {
+    struct rsolicit * msg = (struct rsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
     //TODO: validate radvert
-    //check ip hop limit
     //check icmp code = 0
     //icmp length is 8 or more
     //opt len > 0
     //if ip source unspecified, no source link layer addres option
 
-    if (!cksum_valid(msg))
+    if (!cksum_valid(msg, ipdatagram->payload_len))
         return FALSE;
-
-    typedef struct rsolicit{
-    byte type;
-    byte code;
-    uint16 checksum;
-    uint32 reserved;
-    //icmpopt opt;
-}rsolicit;
+    if (msg->code != 0) 
+        return FALSE;
 
     
 
