@@ -27,7 +27,6 @@ struct base_header {
 extern byte     link_local[];
 extern byte     snm_addr[];
 extern byte     mac_snm[];
-extern uint8    ipv6bootstrap;
 extern byte     allrmulti[];
 extern byte     allnmulti[];
 extern bpid32   ipv6bufpool;

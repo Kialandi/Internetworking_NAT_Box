@@ -7,7 +7,7 @@ bpid32  ipv6bufpool; //pool of buffers for IPV6
 
 void makePseudoHdr(struct pseudoHdr * pseudo, struct rsolicit * pkt) {
     memset(pseudo, NULLCH, PSEUDOLEN);
-    
+
     pseudo->dest[0] = 0xff;
     pseudo->dest[1] = 0x02;
     pseudo->dest[15] = 0x02;
@@ -19,48 +19,51 @@ void makePseudoHdr(struct pseudoHdr * pseudo, struct rsolicit * pkt) {
 
 void    fillICMP(struct rsolicit * pkt) {
     pkt->type = ROUTERS;
-    
+
     //assumed code, checksum, and reserved were all set to 0 before coming in
     void * pseudo = (void *) getmem(PSEUDOLEN);
     makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
-    
+
     uint16 sum = checksumv6(pseudo, PSEUDOLEN);
     //kprintf("checksum: %d\n", sum);
     pkt->checksum = htons(sum);
     freemem(pseudo, PSEUDOLEN);
 }
 
-status  sendipv6pkt() {//byte[] destination, uint16 message) {
+status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 message) {
     struct netpacket * packet;
-    if (ipv6bootstrap) {
-        kprintf("Sending Router Solicitation...\n");
+    switch (type) {
+        case ROUTERS:
+            kprintf("Sending Router Solicitation...\n");
 
-        uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
-        packet = (struct netpacket *) getbuf(ipv6bufpool);
-        memset((char *) packet, NULLCH, len);
+            uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ICMPSIZE;
+            packet = (struct netpacket *) getbuf(ipv6bufpool);
+            memset((char *) packet, NULLCH, len);
 
-        fillEthernet(packet);
+            fillEthernet(packet);
 
-        fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
+            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
 
-        fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN));
+            fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN));
 
 
-        if( write(ETHER0, (char *) packet, len) == SYSERR) {
-            kprintf("THE WORLD IS BURNING\n");
-            kill(getpid());
-        }
-        ipv6bootstrap = 0;
+            if( write(ETHER0, (char *) packet, len) == SYSERR) {
+                kprintf("THE WORLD IS BURNING\n");
+                kill(getpid());
+            }
 
-        //TODO: potential race condition if uncommented, ask Comer
-        //freebuf((char *) packet);
+            //TODO: potential race condition if uncommented, ask Comer
+            //freebuf((char *) packet);
+            return 1;
+
+        case ROUTERA:
+            //normal packet sending
+            packet = (struct netpacket *) getbuf(ipv6bufpool);
+            return 1;
+            //printPacket(packet);
     }
-    else {
-        //normal packet sending
-        packet = (struct netpacket *) getbuf(ipv6bufpool);
-    }
-    //printPacket(packet);
-    return 1;
+    //TODO: figure out the correct status to send back, reaching here is bad
+    return 0;
 }
 
 void    fillEthernet(struct netpacket * pkt) {

@@ -3,7 +3,6 @@
 byte    link_local[IPV6_ASIZE];
 byte    snm_addr[IPV6_ASIZE];
 byte    mac_snm[ETH_ADDR_LEN];
-uint8   ipv6bootstrap = 0;
 byte    allrmulti[IPV6_ASIZE];
 byte    allnmulti[IPV6_ASIZE];
 bpid32  ipv6bufpool;
@@ -82,8 +81,7 @@ syscall ipv6_init() {
     while(1) {
         kprintf("Press enter to send another router solicitation\n");
         read(CONSOLE, NULL, 5);
-        ipv6bootstrap = 1;
-        sendipv6pkt();
+        sendipv6pkt(ROUTERS, NULL);
     }
 
     return OK;

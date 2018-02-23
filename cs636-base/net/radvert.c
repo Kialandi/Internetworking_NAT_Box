@@ -16,5 +16,6 @@ void radvert_handler(struct radvert * ad) {
 }
 
 bool8 radvert_valid(struct radvert * ad) {
+    //TODO: validate radvert
     return TRUE;
 }

@@ -1,5 +1,11 @@
 extern void radvert_handler(struct radvert *);
+
+//validation functions
 extern bool8 radvert_valid(struct radvert *);
+extern bool8 rsolicit_valid(struct rsolicit *);
+//TODO: change from void * probably
+extern bool8 cksum_valid(void *, uint32);
+
 extern void icmpv6_in(struct icmpv6general *);
 
 extern void hexdump(char *, int32);
@@ -13,7 +19,7 @@ extern  void    print_ipv6_addr(byte *);
 extern  void    print_mac_addr(byte *);
 extern  syscall ipv6_init(void);
 extern  void    ipv6_in(struct netpacket *);
-extern  status  sendipv6pkt(void); //add parameters eventually
+extern  status  sendipv6pkt(byte, byte *);
 extern  void    print6(struct netpacket *);
 
 /* in file addargs.c */
