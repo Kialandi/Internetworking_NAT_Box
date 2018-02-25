@@ -51,6 +51,7 @@ uint16 get_router_link_addr(char* option) {
 	kprintf("src link addr: \n");
 	kprintf("0x", router_link_addr);
 }
-bool8 radvert_valid(struct radvert * ad) {
+bool8 radvert_valid(struct base_header * ipdatagram) {
+    //TODO: validate radvert
     return TRUE;
 }

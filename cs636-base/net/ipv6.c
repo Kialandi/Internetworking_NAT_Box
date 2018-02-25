@@ -3,7 +3,6 @@
 byte    link_local[IPV6_ASIZE];
 byte    snm_addr[IPV6_ASIZE];
 byte    mac_snm[ETH_ADDR_LEN];
-uint8   ipv6bootstrap = 0;
 byte    allrmulti[IPV6_ASIZE];
 byte    allnmulti[IPV6_ASIZE];
 bpid32  ipv6bufpool;
@@ -19,15 +18,16 @@ void    ipv6_in (
     print6(pkt);
     
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
-    uint32 payload_len = ntohs(ipdatagram->payload_len);
-    kprintf("ip payload len: %d\n", payload_len);
+    //void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    //uint32 payload_len = ntohs(ipdatagram->payload_len);
+
     switch (ipdatagram->next_header) {
         //TODO: add other cases such as UDP and fragments
         case IPV6_ICMP:
             kprintf("ipv6icmp found\n");
             //payload_hexdump((char *) ad, 64);
-            icmpv6_in((struct icmpv6general *) payload, payload_len);
+            //icmpv6_in((struct icmpv6general *) payload, payload_len);
+            icmpv6_in(ipdatagram);
             break;
 
         default:
@@ -83,8 +83,7 @@ syscall ipv6_init() {
     while(1) {
         kprintf("Press enter to send another router solicitation\n");
         read(CONSOLE, NULL, 5);
-        ipv6bootstrap = 1;
-        sendipv6pkt();
+        sendipv6pkt(ROUTERS, NULL);
     }
 
     return OK;
