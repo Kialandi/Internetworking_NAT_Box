@@ -1,6 +1,6 @@
-extern void radvert_handler(struct radvert *);
+extern void radvert_handler(struct radvert *, uint32 ip_payload_len);
 extern bool8 radvert_valid(struct radvert *);
-extern void icmpv6_in(struct icmpv6general *);
+extern void icmpv6_in(struct icmpv6general *, uint32 ip_payload_len);
 
 extern void hexdump(char *, int32);
 extern void payload_hexdump(char *, int32);

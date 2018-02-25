@@ -20,13 +20,14 @@ void    ipv6_in (
     
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
     void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
-
+    uint32 payload_len = ntohs(ipdatagram->payload_len);
+    kprintf("ip payload len: %d\n", payload_len);
     switch (ipdatagram->next_header) {
         //TODO: add other cases such as UDP and fragments
         case IPV6_ICMP:
             kprintf("ipv6icmp found\n");
             //payload_hexdump((char *) ad, 64);
-            icmpv6_in((struct icmpv6general *) payload);
+            icmpv6_in((struct icmpv6general *) payload, payload_len);
             break;
 
         default:
