@@ -1,4 +1,4 @@
-extern void radvert_handler(struct radvert *);
+extern void radvert_handler(struct radvert *, uint32);
 
 //validation functions
 extern bool8 radvert_valid(struct base_header *);

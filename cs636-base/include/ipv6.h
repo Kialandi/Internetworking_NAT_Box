@@ -31,5 +31,5 @@ extern byte     allrmulti[];
 extern byte     allnmulti[];
 extern bpid32   ipv6bufpool;
 extern byte 	router_link_addr[];
-extern int32	MTU;
-extern byte	Default_Prefix[];
+extern uint32	MTU;
+extern byte	prefix_default[];

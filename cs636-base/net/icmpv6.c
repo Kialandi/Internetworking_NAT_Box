@@ -5,7 +5,8 @@
 //void icmpv6_in(struct icmpv6general * msg, uint32 ip_payload_len) {
 void icmpv6_in(struct base_header * ipdatagram) {
     struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
-
+    uint32 ip_payload_len = ntohs(ipdatagram->payload_len);
+    kprintf("ip_payload_len: %d\n", ip_payload_len);
     //figure out what type of msg it is call the appropriate function
     switch (msg->type) {
         case ROUTERA:
@@ -16,7 +17,7 @@ void icmpv6_in(struct base_header * ipdatagram) {
                 return;
             }
             radvert_handler((struct radvert *) msg, ip_payload_len);
-            break;
+	    break;
 
         case ROUTERS:
             kprintf("RSolicit received\n");
