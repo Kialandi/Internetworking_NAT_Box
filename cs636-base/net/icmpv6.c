@@ -17,7 +17,7 @@ void icmpv6_in(struct base_header * ipdatagram) {
                 return;
             }
             radvert_handler((struct radvert *) msg, ip_payload_len);
-	    //sendipv6pkt(ROUTERA, NULL); // just for testing purpose
+	    sendipv6pkt(ROUTERA, NULL); // just for testing purpose
 	     break;
 
         case ROUTERS:

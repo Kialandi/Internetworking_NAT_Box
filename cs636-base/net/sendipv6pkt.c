@@ -18,10 +18,9 @@ void makePseudoHdr(struct pseudoHdr * pseudo, struct rsolicit * pkt) {
 
     memcpy(pseudo->icmppayload, pkt, ICMPSIZE);
 }
-
+/*
 void    fillICMP(struct rsolicit * pkt) {
-    pkt->type = ROUTERS;
-
+    pkt->type = ROUTERS;  
     //assumed code, checksum, and reserved were all set to 0 before coming in
     void * pseudo = (void *) getmem(PSEUDOLEN);
     makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
@@ -31,7 +30,33 @@ void    fillICMP(struct rsolicit * pkt) {
     pkt->checksum = htons(sum);
     freemem(pseudo, PSEUDOLEN);
 }
+*/
+void    fillICMP(struct rsolicit * pkt, byte type) {
+    if (pkt->type == ROUTERS) {
 
+	    //assumed code, checksum, and reserved were all set to 0 before coming in
+	    void * pseudo = (void *) getmem(PSEUDOLEN);
+	    makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
+
+	    uint16 sum = checksumv6(pseudo, PSEUDOLEN);
+	    //kprintf("checksum: %d\n", sum);
+	    pkt->checksum = htons(sum);
+	    freemem(pseudo, PSEUDOLEN);
+
+    } else if (pkt->type == ROUTERA) {
+	memcpy(pkt, &(radvert_from_router), sizeof(struct radvert));
+        kprintf("test for pkt:\n");
+        payload_dump(pkt, sizeof(struct radvert) + 16);	
+	
+
+    }
+	
+
+
+
+
+
+}
 status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 message) {
     struct netpacket * packet;
     byte dest_mac[ETH_ADDR_LEN];
@@ -55,7 +80,7 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
 	   //fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
             fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), src_ip, dest_ip);
 
-            fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN));
+            fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERS);
 
 
             if( write(ETHER0, (char *) packet, len) == SYSERR) {

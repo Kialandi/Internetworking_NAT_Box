@@ -6,6 +6,8 @@ uint16 get_router_link_addr(char*);
 uint16 get_MTU(char* option);
 struct option_prefix option_prefix_default;
 uint16 get_prefix_default(char* option) ;
+struct radvert radvert_from_router;
+
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("Printing router advertisement payload...\n");
     
@@ -18,6 +20,10 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("routerlifetime: %d\n", ntohs(ad->routerlifetime));
     kprintf("reachabletime: %d\n", ntohl(ad->reachabletime));
     kprintf("retranstimer: %d\n", ntohl(ad->retranstimer));
+     
+     memcpy(&radvert_from_router, ad, sizeof(struct radvert));   
+     kprintf("test for advert_from_router\n");
+     payload_dump((char*) ad, sizeof(struct radvert));
     //TODO: handle options, consider using a loop?   
     uint32 options_len = ip_payload_len - sizeof(struct radvert);
     byte* options = (byte *) ( (char*)ad + sizeof(struct radvert));

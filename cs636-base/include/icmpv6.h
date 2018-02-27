@@ -131,6 +131,8 @@ typedef struct option_prefix{
 
 extern struct option_prefix option_prefix_default; 
 
+extern struct radvert radvert_from_router;
+
 typedef struct nsolicit{
     uint32 type;
     uint32 code;
