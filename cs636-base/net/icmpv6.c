@@ -17,7 +17,8 @@ void icmpv6_in(struct base_header * ipdatagram) {
                 return;
             }
             radvert_handler((struct radvert *) msg, ip_payload_len);
-	    break;
+	    //sendipv6pkt(ROUTERA, NULL); // just for testing purpose
+	     break;
 
         case ROUTERS:
             kprintf("RSolicit received\n");
@@ -34,4 +35,3 @@ void icmpv6_in(struct base_header * ipdatagram) {
             break;
     }
 }
-
