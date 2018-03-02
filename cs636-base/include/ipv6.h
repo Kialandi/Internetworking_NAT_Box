@@ -33,3 +33,9 @@ extern bpid32   ipv6bufpool;
 extern byte 	router_link_addr[];
 extern uint32	MTU;
 extern byte	prefix_default[];
+
+struct prefix_ipv6 {
+    byte ipv6[IPV6_ASIZE];
+    uint8 prefix_length;
+};
+extern struct prefix_ipv6 prefix_ipv6_default;

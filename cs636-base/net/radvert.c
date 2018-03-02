@@ -4,8 +4,10 @@ uint32  MTU;
 byte prefix_default[64];
 uint16 get_router_link_addr(char*);
 uint16 get_MTU(char* option);
-struct option_prefix option_prefix_default;
 uint16 get_prefix_default(char* option) ;
+struct option_prefix option_prefix_default;
+struct prefix_ipv6 prefix_ipv6_default;
+
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("Printing router advertisement payload...\n");
     
@@ -80,11 +82,18 @@ uint16 get_prefix_default(char* option) {
 		
 	uint16 curr_option_len_octets = *(option + 1);  // curr_option_len_octets is in unit of 8 octets.
 	//kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
-	//uint16 option_payload_len = curr_option_len_octets * 8 - 2;
-	memcpy(&option_prefix_default, option, sizeof(struct option_prefix));
+   	//uint16 option_payload_len = curr_option_len_octets * 8 - 2; 
 	byte * ptr = option + 2;
-	uint16 prefix_length = *ptr;
+	uint8 prefix_length = *ptr;
 	kprintf("prefix_length: %d\n", prefix_length);
+        // save prefix and length to prefix_ipv6_default struct
+        memset(&prefix_ipv6_default, NULLCH, sizeof(IPV6_ASIZE)) ;
+        memcpy(&prefix_ipv6_default, option + 16, prefix_length);
+        prefix_ipv6_default.prefix_length = *(option + 2);
+        kprintf("prefix_ipv6_default:\n");
+        payload_hexdump(&prefix_ipv6_default, sizeof(struct prefix_ipv6));
+        // save the whole prefix option   
+	memcpy(&option_prefix_default, option, sizeof(struct option_prefix));
 	kprintf("advertised prefix:");
 	payload_hexdump(&(option_prefix_default.payload), 16);        
        return curr_option_len_octets * 8;
