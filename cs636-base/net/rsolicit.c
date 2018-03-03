@@ -18,14 +18,16 @@ bool8 rsolicit_valid(struct base_header * ipdatagram) {
     //icmp length is 8 or more
     //opt len > 0
     //if ip source unspecified, no source link layer addres option
-    char *st = (void *) msg + ipdatagram->payload_len; // mark start of pseudoheader
-    char *sd = (void *) ipdatagram + 8; // sourcedest
-    char *ps = (void *) ipdatagram + 4; //payload
-    uint32 ps2 = 8 << *ps; //bitshift for payload
-    memset(st, NULLCH, IPV6_HDR_LEN);
-    memcpy(st,sd,(2 * IPV6_HDR_LEN));
-    memcpy((char *) (st + (2 * IPV6_HDR_LEN)), &payset, 1);
-    payload_hexdump(st, (ps - st));
+    char *start = (void *) ipdatagram + ipdatagram->payload_len; // mark start of pseudoheader
+    char *sourcedest = (void *) ipdatagram + 8; // sourcedest
+    char *pld = (void *) ipdatagram + 4; //payload
+    char *code = (void *) ipdatagram + 6;
+    memset(start, NULLCH, 45);
+    memcpy(start , sourcedest, 32);
+    memcpy(start + 34, pld, 2);
+    memcpy(start + 39, code, 1);
+    kprintf("\n \n \n test \n\n\n");
+    payload_hexdump(start, 45);
 
     if (!cksum_valid(msg, ipdatagram->payload_len))
         return FALSE;
