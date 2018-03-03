@@ -2,12 +2,12 @@
 
 void rsolicit_handler(struct rsolicit * ad) {
     kprintf("Printing router solicitation payload...\n");
-    
+
     kprintf("type: 0x%X\n", ad->type);
     kprintf("code: 0x%X\n", ad->code);
     kprintf("checksum: %d\n", ntohs(ad->checksum));
-    
-    //TODO: handle options, consider using a loop?   
+
+    //TODO: handle options, consider using a loop?
 
 }
 
@@ -18,13 +18,21 @@ bool8 rsolicit_valid(struct base_header * ipdatagram) {
     //icmp length is 8 or more
     //opt len > 0
     //if ip source unspecified, no source link layer addres option
+    char *st = (void *) msg + ipdatagram->payload_len; // mark start of pseudoheader
+    char *sd = (void *) ipdatagram + 8; // sourcedest
+    char *ps = (void *) ipdatagram + 4; //payload
+    uint32 ps2 = 8 << *ps; //bitshift for payload
+    memset(st, NULLCH, IPV6_HDR_LEN);
+    memcpy(st,sd,(2 * IPV6_HDR_LEN));
+    memcpy((char *) (st + (2 * IPV6_HDR_LEN)), &payset, 1);
+    payload_hexdump(st, (ps - st));
 
     if (!cksum_valid(msg, ipdatagram->payload_len))
         return FALSE;
-    if (msg->code != 0) 
+    if (msg->code != 0)
         return FALSE;
 
-    
+
 
     return TRUE;
 }
