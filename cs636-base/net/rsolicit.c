@@ -29,9 +29,11 @@ bool8 rsolicit_valid(struct base_header * ipdatagram) {
     kprintf("\n \n \n test \n\n\n");
     payload_hexdump((void *)ipdatagram, PACKLEN);
 
-    if (!cksum_valid(msg, ipdatagram->payload_len))
+    if (!cksum_valid(msg, sizeof(msg)+40))
+        kprintf("\n\n\n testing \n\n\n");
         return TRUE;
     if (msg->code != 0)
+
         return FALSE;
 
 

@@ -23,11 +23,17 @@ uint32 checksumv6(void * pkt, uint32 messagelength){
 
     cksum = cksum + (cksum >> 16);
     cksum = 0xffff & ~cksum;
+    kprintf("\n\n\n cksum: %d \n\n\n", cksum);
 
 	return (uint16) cksum;
 }
 
 bool8 cksum_valid(void * pkt, uint32 len) {
+    if (!checksumv6(pkt, len)){
+        return TRUE;
+    }
+    else{
+        return FALSE;
+    }
     //TODO: validate checksum
-    return TRUE;
 }
