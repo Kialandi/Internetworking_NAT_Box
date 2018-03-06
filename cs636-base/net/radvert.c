@@ -10,7 +10,7 @@ struct prefix_ipv6 prefix_ipv6_default;
 
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("Printing router advertisement payload...\n");
-    
+
     kprintf("type: 0x%X\n", ad->type);
     kprintf("code: 0x%X\n", ad->code);
     kprintf("checksum: %d\n", ntohs(ad->checksum));
@@ -20,38 +20,38 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("routerlifetime: %d\n", ntohs(ad->routerlifetime));
     kprintf("reachabletime: %d\n", ntohl(ad->reachabletime));
     kprintf("retranstimer: %d\n", ntohl(ad->retranstimer));
-    //TODO: handle options, consider using a loop?   
+    //TODO: handle options, consider using a loop?
     uint32 options_len = ip_payload_len - sizeof(struct radvert);
     byte* options = (byte *) ( (char*)ad + sizeof(struct radvert));
     kprintf("options_len: %d\n", options_len);
-    int i = 0; 
+    int i = 0;
     uint16 curr_option_len = 0;
     while(i < options_len) {
-	// read first byte to determine which option		
+	// read first byte to determine which option
 	uint16 option_type = (byte) options[i];
 	kprintf("option_type: %d\n", option_type);
 
 	switch(option_type) {
-		case 1:	
+		case 1:
 			curr_option_len = get_router_link_addr(options + i);
 			break;
 		case 3:
 			curr_option_len = get_prefix_default(options + i);
 			//curr_option_len = 32;
 			break;
-		case 5:	
+		case 5:
 			curr_option_len = get_MTU(options + i);
 			break;
 
 		default:
 			curr_option_len = options_len;   // get out of while loop
 			break;
-       	} 
+       	}
 //	kprintf("curr_option_len: %d\n", curr_option_len);
 	i = i + curr_option_len;
 //	break;
     }
-	    
+
 }
 
 uint16 get_router_link_addr(char* option) {
@@ -59,15 +59,15 @@ uint16 get_router_link_addr(char* option) {
 	uint16 curr_option_len_octets = *(option + 1);  // curr_option_len_octets is in unit of 8 octets.
 	//kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
 	uint16 option_payload_len = curr_option_len_octets * 8 - 2;
-	
-	memcpy(router_link_addr, option + 2, option_payload_len);	
+
+	memcpy(router_link_addr, option + 2, option_payload_len);
 	kprintf("src link addr:");
 	print_mac_addr(router_link_addr);
        return curr_option_len_octets * 8;
 }
 
 uint16 get_MTU(char* option) {
-	
+
 	uint16 curr_option_len_octets = *(option + 1);  // curr_option_len_octets is in unit of 8 octets.
 	//kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
 	//uint16 option_payload_len = curr_option_len_octets * 8 - 2;
@@ -79,10 +79,10 @@ uint16 get_MTU(char* option) {
 }
 
 uint16 get_prefix_default(char* option) {
-		
+
 	uint16 curr_option_len_octets = *(option + 1);  // curr_option_len_octets is in unit of 8 octets.
 	//kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
-   	//uint16 option_payload_len = curr_option_len_octets * 8 - 2; 
+   	//uint16 option_payload_len = curr_option_len_octets * 8 - 2;
 	byte * ptr = option + 2;
 	uint8 prefix_length = *ptr;
 	kprintf("prefix_length: %d\n", prefix_length);
@@ -92,14 +92,27 @@ uint16 get_prefix_default(char* option) {
         prefix_ipv6_default.prefix_length = *(option + 2);
         kprintf("prefix_ipv6_default:\n");
         payload_hexdump(&prefix_ipv6_default, sizeof(struct prefix_ipv6));
-        // save the whole prefix option   
+        // save the whole prefix option
 	memcpy(&option_prefix_default, option, sizeof(struct option_prefix));
 	kprintf("advertised prefix:");
-	payload_hexdump(&(option_prefix_default.payload), 16);        
+	payload_hexdump(&(option_prefix_default.payload), 16);
        return curr_option_len_octets * 8;
 }
 
 bool8 radvert_valid(struct base_header * ipdatagram) {
     //TODO: validate radvert
+    struct radvert  * msg = (struct radvert *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    uint32 pload = ntohs(ipdatagram->payload_len);
+    char *start = (void *) msg + ipdatagram->payload_len; // mark start of pseudoheader
+    char *sourcedest = (void *) ipdatagram + 8; // sourcedest
+    char *pld = (void *) ipdatagram + 4; //payload
+    char *code = (void *) ipdatagram + 6;
+    memset(start, NULLCH, 40);
+    memcpy(start , sourcedest, 32);
+    memcpy(start + 34, pld, 2);
+    memcpy(start + 39, code, 1);
+    if (!cksum_valid(start, msg, pload, 40))
+        kprintf("\n\n\n no dreams only tears \n\n\n");
+        return FALSE;
     return TRUE;
 }
