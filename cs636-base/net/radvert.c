@@ -21,9 +21,6 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("reachabletime: %d\n", ntohl(ad->reachabletime));
     kprintf("retranstimer: %d\n", ntohl(ad->retranstimer));
      
-     memcpy(&radvert_from_router, ad, sizeof(struct radvert));   
-     kprintf("test for advert_from_router\n");
-     payload_dump((char*) ad, sizeof(struct radvert));
     //TODO: handle options, consider using a loop?   
     uint32 options_len = ip_payload_len - sizeof(struct radvert);
     byte* options = (byte *) ( (char*)ad + sizeof(struct radvert));
@@ -96,6 +93,7 @@ uint16 get_prefix_default(char* option) {
         prefix_ipv6_default.prefix_length = *(option + 2);
         kprintf("prefix_ipv6_default:\n");
         payload_hexdump(&prefix_ipv6_default, sizeof(struct prefix_ipv6));
+	kprintf("prefix_length: %d\n", prefix_ipv6_default.prefix_length);
         // save the whole prefix option   
 	memcpy(&option_prefix_default, option, sizeof(struct option_prefix));
 	kprintf("advertised prefix:");
