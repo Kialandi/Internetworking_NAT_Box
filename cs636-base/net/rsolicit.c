@@ -18,6 +18,7 @@ bool8 rsolicit_valid(struct base_header * ipdatagram) {
     //icmp length is 8 or more
     //opt len > 0
     //if ip source unspecified, no source link layer addres option
+    uint32 pload = ntohs(ipdatagram->payload_len);
     char *start = (void *) msg + sizeof(msg); // mark start of pseudoheader
     char *sourcedest = (void *) ipdatagram + 8; // sourcedest
     char *pld = (void *) ipdatagram + 4; //payload
@@ -26,7 +27,7 @@ bool8 rsolicit_valid(struct base_header * ipdatagram) {
     memcpy(start , sourcedest, 32);
     memcpy(start + 34, pld, 2);
     memcpy(start + 39, code, 1);
-    if (!cksum_valid(msg, sizeof(msg)+40))
+    if (!cksum_valid(start, msg, pload, 40 ))
         return FALSE;
     if (msg->code != 0)
         return FALSE;
