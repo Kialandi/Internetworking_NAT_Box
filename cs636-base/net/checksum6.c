@@ -27,7 +27,16 @@ uint32 checksumv6(void * pkt, uint32 messagelength){
 	return (uint16) cksum;
 }
 
-bool8 cksum_valid(void * pkt, uint32 len) {
-    //TODO: validate checksum
-    return TRUE;
+bool8 cksum_valid(void * phead, void * pkt, uint32 len, uint32 pheadlen) {
+    uint16 a = checksumv6(pkt, len);
+    uint16 b = checksumv6(phead, pheadlen);
+    if (!(0xffff & ~(a + b))){
+        kprintf("returning true");
+        return TRUE;
+    }
+    else{
+        kprintf("returning false");
+        return FALSE;
+    }
 }
+    //TODO: validate checksum

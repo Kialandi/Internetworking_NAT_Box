@@ -3,7 +3,7 @@
 extern bool8 radvert_valid(struct base_header *);
 extern bool8 rsolicit_valid(struct base_header *);
 //TODO: change from void * probably
-extern bool8 cksum_valid(void *, uint32);
+extern bool8 cksum_valid(void *,void *, uint32, uint32);
 
 extern void icmpv6_in(struct base_header *);
 
