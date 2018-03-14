@@ -102,6 +102,7 @@ typedef struct radvert{
     //icmpopt opt;
 }radvert;
 
+extern struct radvert radvert_from_router;
 // option of source link addr
 typedef struct option_one{
     byte type; // should be 1
@@ -114,7 +115,7 @@ typedef struct option_MTU{
     byte type; // shoule be 5
     byte length; // should be 1
     byte reserved[4]; // all zeros
-    byte payload[4];  // MTU 
+    uint16 payload;  // MTU 
 }option_MTU;
 
 // option of prefix
@@ -126,12 +127,10 @@ typedef struct option_prefix{
     byte valid_lifetime[4];
     byte preferred_lifetime[4];
     byte reserved[4]; // should be zeros
-    byte payload[14];  // for 64 bite prefix;	
+    byte payload[16];  // for 64 bite prefix;	
 }option_prefix;
 
 extern struct option_prefix option_prefix_default; 
-
-extern struct radvert radvert_from_router;
 
 typedef struct nsolicit{
     uint32 type;

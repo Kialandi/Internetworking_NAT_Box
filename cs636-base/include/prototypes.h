@@ -1,4 +1,3 @@
-extern void radvert_handler(struct radvert *, uint32);
 
 //validation functions
 extern bool8 radvert_valid(struct base_header *);
@@ -19,6 +18,8 @@ extern  void    print_ipv6_addr(byte *);
 extern  void    print_mac_addr(byte *);
 extern  syscall ipv6_init(void);
 extern  void    ipv6_in(struct netpacket *);
+
+extern void radvert_handler(struct radvert *, uint32);
 extern  status  sendipv6pkt(byte, byte *);
 extern  void    print6(struct netpacket *);
 

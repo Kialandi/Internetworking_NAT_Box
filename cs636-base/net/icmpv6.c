@@ -16,9 +16,9 @@ void icmpv6_in(struct base_header * ipdatagram) {
                 kprintf("radvert invalid\n");
                 return;
             }
-            radvert_handler((struct radvert *) msg, ip_payload_len);
+	    radvert_handler((struct radvert *) msg, ip_payload_len);
 	    sendipv6pkt(ROUTERA, NULL); // just for testing purpose
-	     break;
+	    break;
 
         case ROUTERS:
             kprintf("RSolicit received\n");

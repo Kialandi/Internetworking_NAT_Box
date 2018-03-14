@@ -6,6 +6,8 @@ uint16 get_router_link_addr(char*);
 uint16 get_MTU(char* option);
 uint16 get_prefix_default(char* option) ;
 struct option_prefix option_prefix_default;
+struct radvert radvert_from_router;
+
 struct prefix_ipv6 prefix_ipv6_default;
 
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
@@ -20,7 +22,10 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     kprintf("routerlifetime: %d\n", ntohs(ad->routerlifetime));
     kprintf("reachabletime: %d\n", ntohl(ad->reachabletime));
     kprintf("retranstimer: %d\n", ntohl(ad->retranstimer));
-     
+  
+    memcpy(&radvert_from_router, (char*) ad, sizeof(struct radvert));    
+    kprintf("radvert_from_router:\n");
+    payload_hexdump(&radvert_from_router, sizeof(struct radvert));
     //TODO: handle options, consider using a loop?   
     uint32 options_len = ip_payload_len - sizeof(struct radvert);
     byte* options = (byte *) ( (char*)ad + sizeof(struct radvert));
@@ -52,7 +57,7 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
 	i = i + curr_option_len;
 //	break;
     }
-	    
+
 }
 
 uint16 get_router_link_addr(char* option) {
@@ -86,18 +91,18 @@ uint16 get_prefix_default(char* option) {
    	//uint16 option_payload_len = curr_option_len_octets * 8 - 2; 
 	byte * ptr = option + 2;
 	uint8 prefix_length = *ptr;
-	kprintf("prefix_length: %d\n", prefix_length);
+	kprintf("prefix_option_length: %d\n", prefix_length);
         // save prefix and length to prefix_ipv6_default struct
-        memset(&prefix_ipv6_default, NULLCH, sizeof(IPV6_ASIZE)) ;
-        memcpy(&prefix_ipv6_default, option + 16, prefix_length);
+        memset(&prefix_ipv6_default, NULLCH, IPV6_ASIZE) ; 
+        memcpy(&prefix_ipv6_default, option + 16, IPV6_ASIZE);
         prefix_ipv6_default.prefix_length = *(option + 2);
         kprintf("prefix_ipv6_default:\n");
         payload_hexdump(&prefix_ipv6_default, sizeof(struct prefix_ipv6));
 	kprintf("prefix_length: %d\n", prefix_ipv6_default.prefix_length);
         // save the whole prefix option   
 	memcpy(&option_prefix_default, option, sizeof(struct option_prefix));
-	kprintf("advertised prefix:");
-	payload_hexdump(&(option_prefix_default.payload), 16);        
+	//kprintf("advertised prefix option:");
+	//payload_hexdump(&(option_prefix_default.payload), 16);        
        return curr_option_len_octets * 8;
 }
 

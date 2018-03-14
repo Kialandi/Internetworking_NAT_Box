@@ -37,5 +37,5 @@ extern byte	prefix_default[];
 struct prefix_ipv6 {
     byte ipv6[IPV6_ASIZE];
     uint8 prefix_length;
-};
+}prefix_ipv6;
 extern struct prefix_ipv6 prefix_ipv6_default;

@@ -1,10 +1,14 @@
 #include <xinu.h>
+uint8 fill_option_prefix(char* pkt);
+uint8 fill_option_MTU(char* pkt) ;
+uint8 fill_option_one(char* pkt) ;
+void fillOptions(char* pkt, uint8* option_types, uint8 option_types_length);
 
 void fill_dest_ip_all_routers(byte* dest) ;
 void fill_dest_mac_all_router(byte* dest) ;
 void    fillEthernet(struct netpacket *, byte *);
 void    fillIPdatagram(struct base_header *, byte *, byte *);
-
+void 	fillICMP(void *pkt, byte type, uint8* option_types, uint8 option_types_length);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
 void makePseudoHdr(struct pseudoHdr * pseudo, struct rsolicit * pkt) {
@@ -31,9 +35,12 @@ void    fillICMP(struct rsolicit * pkt) {
     freemem(pseudo, PSEUDOLEN);
 }
 */
-void    fillICMP(struct rsolicit * pkt, byte type) {
-    if (pkt->type == ROUTERS) {
+void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_types_length) {
 
+    if (type == ROUTERS){ 
+
+            struct rsolicit * pkt = pkt_icmp;
+    	    pkt->type = type;
 	    //assumed code, checksum, and reserved were all set to 0 before coming in
 	    void * pseudo = (void *) getmem(PSEUDOLEN);
 	    makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
@@ -43,20 +50,16 @@ void    fillICMP(struct rsolicit * pkt, byte type) {
 	    pkt->checksum = htons(sum);
 	    freemem(pseudo, PSEUDOLEN);
 
-    } else if (pkt->type == ROUTERA) {
-	memcpy(pkt, &(radvert_from_router), sizeof(struct radvert));
-        kprintf("test for pkt:\n");
-        payload_dump(pkt, sizeof(struct radvert) + 16);	
+    } else if (type == ROUTERA) {
+	struct radvert * pkt = pkt_icmp;
+	memcpy(pkt, &radvert_from_router, sizeof(struct radvert));
+	pkt->type = type; 
+	fillOptions((char*) pkt + 16,  option_types, option_types_length);
 	
-
-    }
-	
-
-
-
-
+   }
 
 }
+
 status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 message) {
     struct netpacket * packet;
     byte dest_mac[ETH_ADDR_LEN];
@@ -80,7 +83,7 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
 	   //fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN));
             fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), src_ip, dest_ip);
 
-            fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERS);
+            fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERS, NULL, 0);
 
 
             if( write(ETHER0, (char *) packet, len) == SYSERR) {
@@ -93,6 +96,7 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
             return 1;
 
         case ROUTERA:
+	    kprintf("\nSending Router Advertisement...\n");
             //normal packet sending
             packet = (struct netpacket *) getbuf(ipv6bufpool);
             memset((char*) packet, NULLCH, PACKLEN);
@@ -103,10 +107,10 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
 	    fill_dest_ip_all_nodes(dest_ip);
            // kprintf("test dest_ip\n");
 	   // print_ipv6_addr(dest_ip); 
-   	   // kprintf("link_local:\n");
-	   // print_ipv6_addr(link_local);
       
            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, dest_ip);   		 
+ 	   uint8 option_types[3] = {1, 5, 3};
+           fillICMP((struct radvert *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERA, option_types, 3);
 	    return 1;
             //printPacket(packet);
     }
@@ -114,6 +118,57 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
     return 0;
 }
 
+void fillOptions(char* pkt, uint8* option_types, uint8 option_types_length) {
+	uint8 i = 0;
+	uint8 length = 0;
+	while (i < option_types_length) {
+		switch(option_types[i]) {
+			case 1:
+				length = fill_option_one(pkt);
+				kprintf("option_one:\n");
+				payload_hexdump(pkt, length);
+				break;
+			case 5:
+				length = fill_option_MTU(pkt);
+				kprintf("option_MTU:\n");
+			  	payload_hexdump(pkt, length);
+ 				break;
+			case 3:
+				length = fill_option_prefix(pkt);
+				kprintf("option_prefix:\n");
+			  	payload_hexdump(pkt, length);
+				break;
+			default:
+				break;
+
+ 		}
+		pkt = pkt + length;
+		i++;
+       }
+
+}
+
+uint8 fill_option_prefix(char* pkt) {
+	memcpy(pkt, &option_prefix_default, sizeof(option_prefix));
+        return sizeof(struct option_prefix);
+}
+
+uint8 fill_option_MTU(char* pkt) {
+	struct option_MTU * temp = pkt;
+	memset(temp, NULLCH, sizeof(struct option_MTU));
+	temp->type = 0x05;
+	temp->length = 0x01;
+	temp->payload = htons(MTU);
+	return sizeof(struct option_MTU);
+}
+
+uint8 fill_option_one(char* pkt) {
+	struct option_one* temp = pkt;
+	temp->type = 0x01;
+	temp->length = 0x01;
+	memcpy((char*)temp + 2, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
+	return sizeof(struct option_one); // equal to length(1) * 8 bytes
+}
 void fill_dest_ip_all_nodes(byte* dest_ip) {
 	memset(dest_ip, NULLCH, IPV6_HDR_LEN);
 	dest_ip[0] = 0xff;
@@ -176,4 +231,3 @@ void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip) {
     pkt->dest[15] = 0x02;
     */
 }
-
