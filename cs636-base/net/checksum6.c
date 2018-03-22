@@ -23,7 +23,7 @@ uint32 checksumv6(void * pkt, uint32 messagelength){
 
     cksum = cksum + (cksum >> 16);
     cksum = 0xffff & ~cksum;
-
+    printf("CHECKSUM: %d\n", (uint16) cksum);
 	return (uint16) cksum;
 }
 

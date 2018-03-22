@@ -160,7 +160,7 @@ typedef struct pseudoHdr{
     uint32  len;
     byte    zero[3];
     byte    next_header;
-    byte    icmppayload[ICMPSIZE];
+    byte    icmppayload[0];
 }pseudoHdr;
 
 

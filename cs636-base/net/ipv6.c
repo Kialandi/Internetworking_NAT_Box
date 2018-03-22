@@ -79,13 +79,13 @@ syscall ipv6_init() {
     memcpy(allrmulti, buf, IPV6_ASIZE); 
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allrmulti, 0);
 
-    //TODO; Send solicitation message
-    while(1) {
-        kprintf("Press enter to send another router solicitation\n");
-        read(CONSOLE, NULL, 5);
+    if (!host) {
+        kprintf("I'm a router\n");
         sendipv6pkt(ROUTERS, NULL);
     }
-
+    else {
+        kprintf("I'm a host, not sending router solicitation\n");
+    }
     return OK;
 }
 

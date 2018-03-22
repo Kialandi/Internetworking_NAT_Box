@@ -94,8 +94,8 @@ void	net_init (void)
 
 	/* Ask the user what to run */
 
-	found = TRUE;
-    host = TRUE;
+	found = FALSE;
+    //host = TRUE;
     ifprime = 0;
 
 	while (!found) {
