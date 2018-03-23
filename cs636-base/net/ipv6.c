@@ -3,8 +3,10 @@
 byte    link_local[IPV6_ASIZE];
 byte    snm_addr[IPV6_ASIZE];
 byte    mac_snm[ETH_ADDR_LEN];
-byte    allrmulti[IPV6_ASIZE];
-byte    allnmulti[IPV6_ASIZE];
+byte    allrMACmulti[ETH_ADDR_LEN];
+byte    allnMACmulti[ETH_ADDR_LEN];
+byte    allrIPmulti[IPV6_ASIZE];
+byte    allnIPmulti[IPV6_ASIZE];
 bpid32  ipv6bufpool;
 
 void get_link_local(byte *);
@@ -15,7 +17,7 @@ void    ipv6_in (
         struct netpacket * pkt
         )
 {
-    print6(pkt);
+    //print6(pkt);
     
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
     //void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
@@ -63,8 +65,9 @@ syscall ipv6_init() {
     //tell hardware to listen to MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
-    //listen to all router and all node multicast
-    byte buf[6];
+    //listen to all router and all node multicast MAC address
+    byte buf[IPV6_ASIZE];
+    memset(buf, NULLCH, IPV6_ASIZE);
     buf[0] = 0x33;
     buf[1] = 0x33;
     buf[2] = 0x00;
@@ -72,15 +75,38 @@ syscall ipv6_init() {
     buf[4] = 0x00;
     buf[5] = 0x01;
 
-    memcpy(allnmulti, buf, IPV6_ASIZE);
-    control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allnmulti, 0);
+    memcpy(allnMACmulti, buf, ETH_ADDR_LEN);
+    control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allnMACmulti, 0);
 
     buf[5] = 0x02;
-    memcpy(allrmulti, buf, IPV6_ASIZE); 
-    control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allrmulti, 0);
+    memcpy(allrMACmulti, buf, ETH_ADDR_LEN); 
+    
+    //this doesn't solve the problem because the default router is
+    //sending a router advertisement to all nodes
+    if (!host) //only listen if you're not a host
+        control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allrMACmulti, 0);
+
+    //set up global all node/router multicast IP address
+    memset(buf, NULLCH, IPV6_ASIZE);
+    buf[0] = 0xff;
+    buf[1] = 0x02;
+    buf[15] = 0x01;
+    //all nodes
+    memcpy(allnIPmulti, buf, IPV6_ASIZE);
+    
+    //all routers
+    buf[15] = 0x02;
+    memcpy(allrIPmulti, buf, IPV6_ASIZE);
 
     if (!host) {
         kprintf("I'm a router\n");
+        char ch;
+        while(1) {
+            kprintf("Press enter to send a RSOLICIT, c to continue\n");
+            read(CONSOLE, &ch, 5);
+            if (ch == 'c') break;
+            sendipv6pkt(ROUTERS, NULL);
+        }
         sendipv6pkt(ROUTERS, NULL);
     }
     else {

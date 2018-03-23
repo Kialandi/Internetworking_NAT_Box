@@ -119,7 +119,7 @@ bool8 radvert_valid(struct base_header * ipdatagram) {
     memcpy(start + 34, pld, 2);
     memcpy(start + 39, code, 1);
     if (!cksum_valid(start, msg, pload, 40)) {
-        kprintf("\n\n checksum is false \n\n");
+        kprintf("\n\nchecksum is false \n\n");
         return FALSE;
     }
 

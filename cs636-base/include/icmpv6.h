@@ -23,15 +23,15 @@
 //
 #define  IPLEN 16
 
-#define PSEUDOLEN  sizeof(pseudoHdr) 
-#define ICMPSIZE    sizeof(rsolicit)
-#define MAX_PAYLOAD 1472
-#define DESTUNREACH 1
-#define PKT_BIG     2
-#define TIME_EX     3
-#define PVT1        100
-#define PVT2        100
-
+#define PSEUDOLEN       sizeof(pseudoHdr) 
+#define RSOLSIZE        sizeof(rsolicit)
+#define RADVERTSIZE     sizeof(radvert)
+#define MAX_PAYLOAD     1472
+#define DESTUNREACH     1
+#define PKT_BIG         2
+#define TIME_EX         3
+#define PVT1            100
+#define PVT2            100
 
 /* ICMP Msg types */
 

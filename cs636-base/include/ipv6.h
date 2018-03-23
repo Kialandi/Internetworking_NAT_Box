@@ -27,10 +27,12 @@ struct base_header {
 extern byte     link_local[];
 extern byte     snm_addr[];
 extern byte     mac_snm[];
-extern byte     allrmulti[];
-extern byte     allnmulti[];
+extern byte     allrMACmulti[];//All routers MAC
+extern byte     allnMACmulti[];//All nodes MAC
+extern byte     allrIPmulti[];//All routers IP
+extern byte     allnIPmulti[];//All nodes IP
 extern bpid32   ipv6bufpool;
-extern byte 	router_link_addr[];
+extern byte 	router_link_addr[];//router's MAC address?
 extern uint32	MTU;
 extern byte	prefix_default[];
 

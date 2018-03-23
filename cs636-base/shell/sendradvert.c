@@ -10,4 +10,5 @@ shellcmd sendradvert(int nargs, char * args[]) {
     }
     
     sendipv6pkt(ROUTERA, NULL);
+    return 1;
 }

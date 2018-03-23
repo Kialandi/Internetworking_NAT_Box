@@ -10,7 +10,7 @@ void icmpv6_in(struct base_header * ipdatagram) {
     //figure out what type of msg it is call the appropriate function
     switch (msg->type) {
         case ROUTERA:
-            kprintf("ROUTERA found\n");
+            kprintf("RAdvert received\n");
             if (!radvert_valid(ipdatagram)) {
                 //consider making this return something
                 kprintf("radvert invalid\n");
