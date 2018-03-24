@@ -162,16 +162,19 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
 
             uint8 option_types[3] = {1, 5, 3};
             fillICMP((struct radvert *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERA, option_types, 3);
-
+            
+            //TODO: write to oth1 andd oth2 bcast
+            //oth1: 11:ff:ff:ff:ff:33
+            //oth2: 21:ff:ff:ff:ff:33
             if( write(ETHER0, (char *) packet, len) == SYSERR) {
                 kprintf("THE WORLD IS BURNING\n");
                 kill(getpid());
             }
-
+/*
             kprintf("OUTGOING PKT PRINTING\n");
             print6(packet);
             kprintf("OUTGOING PKT PRINTING\n");
-
+*/
             freebuf((char *) packet);
             return 1;
     }
@@ -186,17 +189,17 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
         switch(option_types[i]) {
             case 1:
                 length = fill_option_one(pkt);
-                kprintf("option_one:\n");
+                //kprintf("option_one:\n");
                 payload_hexdump(pkt, length);
                 break;
             case 5:
                 length = fill_option_MTU(pkt);
-                kprintf("option_MTU:\n");
+                //kprintf("option_MTU:\n");
                 payload_hexdump(pkt, length);
                 break;
             case 3:
                 length = fill_option_prefix(pkt);
-                kprintf("option_prefix:\n");
+                //kprintf("option_prefix:\n");
                 payload_hexdump(pkt, length);
                 break;
             default:

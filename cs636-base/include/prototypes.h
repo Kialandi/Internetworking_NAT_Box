@@ -1,4 +1,6 @@
 
+extern struct fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);
+
 //validation functions
 extern bool8 radvert_valid(struct base_header *);
 extern bool8 rsolicit_valid(struct base_header *);

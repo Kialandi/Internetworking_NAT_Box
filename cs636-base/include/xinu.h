@@ -11,6 +11,7 @@
 #include <bufpool.h>
 #include <hpet.h>
 #include <clock.h>
+#include <fwdipv6.h>
 #include <ports.h>
 #include <uart.h>
 #include <tty.h>

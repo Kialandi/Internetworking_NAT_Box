@@ -12,6 +12,11 @@ process	main(void)
     ipv6_init();
     sleep(1);
     
+    kprintf("Number of interfaces: %d\n", NIFACES);
+    int i =0;
+    for (i = 0; i < NIFACES; i++) {
+        kprintf("IFACE name; %s, state: %d\n", if_tab[i].if_name, if_tab[i].if_state);
+    }
     resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */

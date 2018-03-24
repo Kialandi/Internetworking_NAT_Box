@@ -5,6 +5,7 @@
 #define IPV6_TCP        0x06
 #define IPV6_FRAG       0x2C
 
+#define IPV6_ADDRBITS   128
 #define	IPV6_ASIZE	    16		/* Bytes in an IP address	*/
 #define	IPV6_HDR_LEN	40		/* Bytes in an IP header	*/
 #define IPV6_VH		    0x45 	/* IP version and hdr length 	*/
@@ -39,5 +40,6 @@ extern byte	prefix_default[];
 struct prefix_ipv6 {
     byte ipv6[IPV6_ASIZE];
     uint8 prefix_length;
-}prefix_ipv6;
+} prefix_ipv6;
+
 extern struct prefix_ipv6 prefix_ipv6_default;
