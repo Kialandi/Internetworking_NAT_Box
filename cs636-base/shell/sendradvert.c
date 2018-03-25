@@ -9,6 +9,10 @@ shellcmd sendradvert(int nargs, char * args[]) {
         return 0;
     }
     
-    sendipv6pkt(ROUTERA, NULL);
+    if (!host)
+        sendipv6pkt(ROUTERA, if_tab[ifprime].if_macbcast);
+    else 
+        kprintf("Not a NAT box, can't send RADVERTS\n");
+    
     return 1;
 }

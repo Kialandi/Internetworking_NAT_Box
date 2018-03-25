@@ -22,7 +22,7 @@ void    ipv6_in (
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
     //void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
     //uint32 payload_len = ntohs(ipdatagram->payload_len);
-
+    kprintf("received ipv6 pkt from iface: %d\n", pkt->net_iface);
     switch (ipdatagram->next_header) {
         //TODO: add other cases such as UDP and fragments
         case IPV6_ICMP:
@@ -105,12 +105,13 @@ syscall ipv6_init() {
             kprintf("Press enter to send a RSOLICIT, c to continue\n");
             read(CONSOLE, &ch, 5);
             if (ch == 'c') break;
-            sendipv6pkt(ROUTERS, NULL);
+            sendipv6pkt(ROUTERS, allrMACmulti);
         }
-        sendipv6pkt(ROUTERS, NULL);
+        sendipv6pkt(ROUTERS, allrMACmulti);
     }
     else {
-        kprintf("I'm a host, not sending router solicitation\n");
+        kprintf("I'm a host, sending rsol to iface: %d\n", ifprime);
+        sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;
 }

@@ -110,7 +110,7 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
 
 }
 
-status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 message) {
+status  sendipv6pkt(byte type, byte * dest) {
     struct netpacket * packet;
     uint32 len;
     uint16 totalOptLen = 0;
@@ -124,7 +124,8 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
             packet = (struct netpacket *) getbuf(ipv6bufpool);
             memset((char *) packet, NULLCH, len);
 
-            fillEthernet(packet, allrMACmulti);
+            //fillEthernet(packet, allrMACmulti);
+            fillEthernet(packet, dest);
 
             //unspecified address
             byte src_ip[IPV6_ASIZE];

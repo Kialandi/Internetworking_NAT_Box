@@ -17,10 +17,14 @@ void icmpv6_in(struct netpacket * pkt) {
             }
             radvert_handler((struct radvert *) msg, ip_payload_len);
             
-            if (!host) //if nat box, send out updated advert
+            if (!host) {//if nat box, send out updated advert
                 //consider adding a check to see if prefix changed
                 //send to all interfaces
-                sendipv6pkt(ROUTERA, NULL);
+                
+                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
+                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);
+            
+            }
             break;
 
         case ROUTERS:
