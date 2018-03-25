@@ -113,6 +113,8 @@ syscall ipv6_init() {
     }
     else {
         kprintf("Host online... Soliciting router.\n");
+	kprintf("in ipv6_init ifacer macbcast");
+	print_mac_addr(if_tab[ifprime].if_macbcast);
         sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;

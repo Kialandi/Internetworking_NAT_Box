@@ -9,7 +9,8 @@ void rsolicit_handler(struct netpacket * pkt) {
     kprintf("rsolicit from iface: %d\n", iface);
     print_mac_addr(if_tab[iface].if_macbcast);    
     if (!host)//nat box sends out radverts
-        sendipv6pkt(ROUTERA, if_tab[iface].if_macbcast);
+    	sendipv6pkt(ROUTERA, if_tab[iface].if_macbcast);
+    //	sendipv6pkt(ROUTERA, allnMACmulti);
 }
 
 bool8 rsolicit_valid(struct base_header * ipdatagram) {

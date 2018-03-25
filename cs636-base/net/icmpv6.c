@@ -15,6 +15,7 @@ void icmpv6_in(struct netpacket * pkt) {
                 kprintf("radvert invalid, dropping pkt\n");
                 return;
             }
+	    print6(pkt);
             //just process if host
             radvert_handler((struct radvert *) msg, ip_payload_len);
             
@@ -23,8 +24,13 @@ void icmpv6_in(struct netpacket * pkt) {
                 //consider adding a check to see if prefix changed
                 //send to all interfaces
                 kprintf("Broadcasting to iface 1 and 2\n");
+		print_mac_addr(if_tab[1].if_macbcast);
+		kprintf("iface2 broadcast addr:\n");
+		print_mac_addr(if_tab[2].if_macbcast);
                 sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
-                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);
+               // sendipv6pkt(ROUTERA, allnMACmulti);
+		sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);
+		//sendipv6pkt(ROUTERA, allnMACmulti);
             }
             break;
 
