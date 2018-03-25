@@ -22,7 +22,8 @@ void    ipv6_in (
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
     //void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
     //uint32 payload_len = ntohs(ipdatagram->payload_len);
-
+    //kprintf("received ipv6 pkt from iface: %d\n", pkt->net_iface);
+    
     switch (ipdatagram->next_header) {
         //TODO: add other cases such as UDP and fragments
         case IPV6_ICMP:
@@ -99,18 +100,20 @@ syscall ipv6_init() {
     memcpy(allrIPmulti, buf, IPV6_ASIZE);
 
     if (!host) {
-        kprintf("I'm a router\n");
+        kprintf("NAT Box online... Soliciting router.\n");
+        /*
         char ch;
         while(1) {
             kprintf("Press enter to send a RSOLICIT, c to continue\n");
             read(CONSOLE, &ch, 5);
             if (ch == 'c') break;
-            sendipv6pkt(ROUTERS, NULL);
-        }
-        sendipv6pkt(ROUTERS, NULL);
+            sendipv6pkt(ROUTERS, allrMACmulti);
+        }*/
+        sendipv6pkt(ROUTERS, allrMACmulti);
     }
     else {
-        kprintf("I'm a host, not sending router solicitation\n");
+        kprintf("Host online... Soliciting router.\n");
+        sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;
 }

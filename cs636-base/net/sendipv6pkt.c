@@ -110,7 +110,7 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
 
 }
 
-status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 message) {
+status  sendipv6pkt(byte type, byte * dest) {
     struct netpacket * packet;
     uint32 len;
     uint16 totalOptLen = 0;
@@ -124,7 +124,8 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
             packet = (struct netpacket *) getbuf(ipv6bufpool);
             memset((char *) packet, NULLCH, len);
 
-            fillEthernet(packet, allrMACmulti);
+            //fillEthernet(packet, allrMACmulti);
+            fillEthernet(packet, dest);
 
             //unspecified address
             byte src_ip[IPV6_ASIZE];
@@ -161,9 +162,7 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
             memset((char*) packet, NULLCH, len);
             
             fillEthernet(packet, dest);
-            //fillEthernet(packet, allnMACmulti);
             
-            //consider changing IP dest to unspecified
             fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
 
             uint8 option_types[3] = {1, 5, 3};
@@ -241,7 +240,6 @@ uint8 fill_option_one(void * pkt) {
 }
 
 void    fillEthernet(struct netpacket * pkt, byte* dest) {
-
     memcpy(pkt->net_dst, dest, ETH_ADDR_LEN);
     memcpy(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     pkt->net_type = htons(ETH_IPv6);
@@ -259,14 +257,4 @@ void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, ui
 
     memcpy(pkt->src, src_ip, IPV6_ASIZE);
     memcpy(pkt->dest, dest_ip, IPV6_ASIZE); 
-    //kprintf("pkt src:\n");
-    //print_ipv6_addr(&(pkt->src));
-    //kprintf("pkt dest:\n");
-    //print_ipv6_addr(&(pkt->dest));
-    /*
-    //set IP dest addr, assumes src is non-specified (all 0s)
-    pkt->dest[0] = 0xff;
-    pkt->dest[1] = 0x02;
-    pkt->dest[15] = 0x02;
-    */
 }

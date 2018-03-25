@@ -12,10 +12,7 @@ process	main(void)
     ipv6_init();
     sleep(1);
     
-    kprintf("Printing prefix from router\n");
-    print_ipv6_addr(prefix_ipv6_default.ipv6);
-    kprintf("Prefix len: %d\n", prefix_ipv6_default.prefix_length);
-    
+   
     resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */
