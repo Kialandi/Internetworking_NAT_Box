@@ -25,6 +25,8 @@ struct base_header {
     byte    payload[0];//see if this breaks things
 };
 
+extern uint8    hasIPv6Addr;
+extern byte     ipv6_addr[];
 extern byte     link_local[];
 extern byte     snm_addr[];
 extern byte     mac_snm[];
