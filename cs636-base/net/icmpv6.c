@@ -12,28 +12,37 @@ void icmpv6_in(struct netpacket * pkt) {
         case ROUTERA:
             kprintf("icmpv6_in: RAdvert received\n");
             if (!radvert_valid(ipdatagram)) {
-                kprintf("radvert invalid\n");
+                kprintf("radvert invalid, dropping pkt\n");
                 return;
             }
+            //just process if host
             radvert_handler((struct radvert *) msg, ip_payload_len);
             
-            if (!host) {//if nat box, send out updated advert
+            
+            if (!host) {//if nat box, send out updated advert too
                 //consider adding a check to see if prefix changed
                 //send to all interfaces
-                
+                kprintf("Broadcasting to iface 1 and 2\n");
                 sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
                 sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);
-            
             }
             break;
 
         case ROUTERS:
-            kprintf("icmpv6_in: RSolicit received\n");
-            if (!rsolicit_valid(ipdatagram)) {
-                kprintf("rsolicit invalid\n");
+            if (host) {
+                kprintf("Dropping rsol silently...\n");
                 return;
             }
+
+            kprintf("icmpv6_in: RSolicit received\n");
+            
+            if (!rsolicit_valid(ipdatagram)) {
+                kprintf("rsolicit invalid, dropping pkt\n");
+                return;
+            }
+            
             rsolicit_handler(pkt);
+            
             break;
         default:
             kprintf("Unknown ICMP type: %02X\n", msg->type);
