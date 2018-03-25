@@ -1,36 +1,57 @@
 #include <xinu.h>
 
+void print_ipv6_info() {
+    /* Print ipv6 info */
+    kprintf("\n======================= IPv6 addresses =======================\n\n");
+    
+    kprintf("Link local address   : ");
+    print_ipv6_addr(link_local);
+    kprintf("SNM address          : ");
+    print_ipv6_addr(snm_addr);
+    kprintf("MAC SNM address      : ");
+    print_mac_addr(mac_snm);
+    
+    if (hasIPv6Addr) {
+        kprintf("IPv6 unicast address : ");
+        print_ipv6_addr(ipv6_addr);
+    }
+    kprintf("Default interface    : %d\n", ifprime);
+    
+    kprintf("\n==============================================================\n");
+
+}
+
 void print6(struct netpacket * pkt) {
     kprintf("Printing incoming IPv6 packet...\n");
-    kprintf("=========== Printing Ethernet header ===========\n");
+    kprintf("=============== Printing Ethernet header ===============\n");
     
-    kprintf("net_dst: ");
+    kprintf("net_dst : ");
     print_mac_addr(pkt->net_dst);
-    kprintf("net_src: ");
+    kprintf("net_src : ");
     print_mac_addr(pkt->net_src);
     
-    kprintf("net_type: 0x%X <- the router sends this incorrectly i think\n", pkt->net_type);
+    kprintf("net_type: 0x%X\n", pkt->net_type);
     
-    kprintf("========== Printing IPv6 base header ===========\n");
+    kprintf("============== Printing IPv6 base header ===============\n");
 
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
     
-    kprintf("info: 0x%x\n", ipdatagram->info);
-    kprintf("payload_len: %d\n", ntohs(ipdatagram->payload_len));
-    kprintf("next_header: %d\n", ipdatagram->next_header);
-    kprintf("hop_limit: %d\n", ipdatagram->hop_limit);
+    kprintf("info        : 0x%x\n", ipdatagram->info);
+    kprintf("payload_len : %d\n", ntohs(ipdatagram->payload_len));
+    kprintf("next_header : %d\n", ipdatagram->next_header);
+    kprintf("hop_limit   : %d\n", ipdatagram->hop_limit);
     
-    kprintf("ip_src: ");
+    kprintf("ip_src      : ");
     print_ipv6_addr(ipdatagram->src);
    
-    kprintf("ip_dest: ");
+    kprintf("ip_dest     : ");
     print_ipv6_addr(ipdatagram->dest);
    
     char * payload = (char *) ipdatagram + IPV6_HDR_LEN;
-    kprintf("=============== Printing Payload ===============\n");
+    kprintf("=================== Printing Payload ===================\n");
     payload_hexdump(payload, ntohs(ipdatagram->payload_len));
     
-    kprintf("================ End of Payload ================\n");
+    kprintf("==================== End of Payload ====================\n");
     return;
 }
 

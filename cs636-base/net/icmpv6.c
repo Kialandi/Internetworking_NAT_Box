@@ -22,6 +22,8 @@ void icmpv6_in(struct netpacket * pkt) {
             if (!host) {//if nat box, send out updated advert too
                 //consider adding a check to see if prefix changed
                 //send to all interfaces
+                
+                //TODO: change this to specific prefix for each interface
                 kprintf("Broadcasting to iface 1 and 2\n");
                 sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
                 sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);

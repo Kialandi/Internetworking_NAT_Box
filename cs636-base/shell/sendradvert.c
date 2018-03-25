@@ -2,6 +2,10 @@
 #include <stdio.h>
 
 shellcmd sendradvert(int nargs, char * args[]) {
+    if (!hasIPv6Addr) {
+        kprintf("No prefix found. Please solicit first!\n");
+        return 0;
+    }
     printf("Sending radvert...\n");
     if (nargs != 1) {
         //print usage

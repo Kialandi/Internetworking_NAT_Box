@@ -62,7 +62,7 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
         freemem(pseudo, PSEUDOLEN + RSOLSIZE);
 
     } else if (type == ROUTERA) {
-        kprintf("Filling router advert icmp\n");
+        //kprintf("Filling router advert icmp\n");
         struct radvert * pkt = pkt_icmp;
         uint16 totalOptLen = 48;
         
@@ -77,6 +77,7 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
         pkt->code = 0;
         pkt->curhoplim = 255;
         pkt->m_o_res = 0;*/
+        
         //might have to do stuff with code and curhoplimit
         fillOptions((char*) pkt + RADVERTSIZE,  option_types, option_types_length);
         
@@ -117,6 +118,7 @@ status  sendipv6pkt(byte type, byte * dest) {
 
     switch (type) {
         case ROUTERS:
+            
             kprintf("Sending Router Solicitation...\n");
 
             //entire packet length
@@ -153,6 +155,10 @@ status  sendipv6pkt(byte type, byte * dest) {
             return 1;
 
         case ROUTERA:
+            if (host) {
+                kprintf("Hosts cannot send router advertisements!\n");
+                return 0;
+            }
             totalOptLen = 48;
             kprintf("\nSending Router Advertisement...\n");
 
@@ -176,7 +182,7 @@ status  sendipv6pkt(byte type, byte * dest) {
             kprintf("OUTGOING PKT PRINTING\n");
             print6(packet);
             kprintf("OUTGOING PKT PRINTING\n");
-*/  
+  */
             if (!radvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid router advert going out!\n");
             }
@@ -184,7 +190,7 @@ status  sendipv6pkt(byte type, byte * dest) {
             freebuf((char *) packet);
             return 1;
     }
-    //TODO: figure out the correct status to send back, reaching here is bad
+    //reaching here is bad
     return 0;
 }
 
@@ -196,17 +202,17 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
             case 1:
                 length = fill_option_one(pkt);
                 //kprintf("option_one:\n");
-                payload_hexdump(pkt, length);
+                //payload_hexdump(pkt, length);
                 break;
             case 5:
                 length = fill_option_MTU(pkt);
                 //kprintf("option_MTU:\n");
-                payload_hexdump(pkt, length);
+                //payload_hexdump(pkt, length);
                 break;
             case 3:
                 length = fill_option_prefix(pkt);
                 //kprintf("option_prefix:\n");
-                payload_hexdump(pkt, length);
+                //payload_hexdump(pkt, length);
                 break;
             default:
                 break;
@@ -219,6 +225,7 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
 
 uint8 fill_option_prefix(void * pkt) {
     memcpy(pkt, &option_prefix_default, sizeof(option_prefix));
+    //change to the appropriate values based on interface
     return sizeof(struct option_prefix);
 }
 

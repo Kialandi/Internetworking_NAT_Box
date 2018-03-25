@@ -1,5 +1,7 @@
 #include <xinu.h>
 
+uint8   hasIPv6Addr;
+byte    ipv6_addr[IPV6_ASIZE];
 byte    link_local[IPV6_ASIZE];
 byte    snm_addr[IPV6_ASIZE];
 byte    mac_snm[ETH_ADDR_LEN];
@@ -17,13 +19,19 @@ void    ipv6_in (
         struct netpacket * pkt
         )
 {
+    if (match(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN)) {
+        //if source is yourself
+        kprintf("src is yourself, drop\n");
+        freebuf((char *) pkt);
+        return;
+    }
     //print6(pkt);
-    
+
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
     //void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
     //uint32 payload_len = ntohs(ipdatagram->payload_len);
     //kprintf("received ipv6 pkt from iface: %d\n", pkt->net_iface);
-    
+
     switch (ipdatagram->next_header) {
         //TODO: add other cases such as UDP and fragments
         case IPV6_ICMP:
@@ -50,19 +58,26 @@ syscall ipv6_init() {
         kill(getpid());
     }
 
+    //set prefix stuff to 0
+    memset(&option_prefix_default, NULLCH, sizeof(option_prefix));
+
     //initialize link-local unicast, SNM, and MAC SNM
     get_link_local(if_tab[ifprime].if_macucast);
     get_snm_addr(link_local);
     get_mac_snm(snm_addr);
 
-    kprintf("\n======================= IPv6 addresses =======================\n\n");
-    kprintf("Link local address : ");
-    print_ipv6_addr(link_local);
-    kprintf("SNM address        : ");
-    print_ipv6_addr(snm_addr);
-    kprintf("MAC SNM address    : ");
-    print_mac_addr(mac_snm);
-    kprintf("\n==============================================================\n");
+    //no ipv6 address yet
+    hasIPv6Addr = 0;
+    print_ipv6_info(); /*
+                          kprintf("\n======================= IPv6 addresses =======================\n\n");
+                          kprintf("Link local address : ");
+                          print_ipv6_addr(link_local);
+                          kprintf("SNM address        : ");
+                          print_ipv6_addr(snm_addr);
+                          kprintf("MAC SNM address    : ");
+                          print_mac_addr(mac_snm);
+                          kprintf("\n==============================================================\n");
+                          */
     //tell hardware to listen to MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
@@ -81,7 +96,7 @@ syscall ipv6_init() {
 
     buf[5] = 0x02;
     memcpy(allrMACmulti, buf, ETH_ADDR_LEN); 
-    
+
     //this doesn't solve the problem because the default router is
     //sending a router advertisement to all nodes
     if (!host) //only listen if you're not a host
@@ -94,26 +109,27 @@ syscall ipv6_init() {
     buf[15] = 0x01;
     //all nodes
     memcpy(allnIPmulti, buf, IPV6_ASIZE);
-    
+
     //all routers
     buf[15] = 0x02;
     memcpy(allrIPmulti, buf, IPV6_ASIZE);
 
     if (!host) {
-        kprintf("NAT Box online... Soliciting router.\n");
+        kprintf("NAT Box autoconfiguration...\nSending solicitation...\n");
         /*
-        char ch;
-        while(1) {
-            kprintf("Press enter to send a RSOLICIT, c to continue\n");
-            read(CONSOLE, &ch, 5);
-            if (ch == 'c') break;
-            sendipv6pkt(ROUTERS, allrMACmulti);
-        }*/
+           char ch;
+           while(1) {
+           kprintf("Press enter to send a RSOLICIT, c to continue\n");
+           read(CONSOLE, &ch, 5);
+           if (ch == 'c') break;
+           sendipv6pkt(ROUTERS, allrMACmulti);
+           }*/
         sendipv6pkt(ROUTERS, allrMACmulti);
     }
     else {
-        kprintf("Host online... Soliciting router.\n");
-        sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
+        kprintf("Host online... Sending solicitation...\n");
+        sendipv6pkt(ROUTERS, allrMACmulti);
+        //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;
 }
@@ -125,12 +141,12 @@ void  get_link_local(byte* mac) {
     res[0] = 0xFE;
     res[1] = 0x80;
 
-    // insert 0xFFEE in the middle of mac addr
+    // insert 0xFFFE in the middle of mac addr
     byte  temp[8];
     memset(temp, NULLCH, 8);
     memcpy(temp, mac, 3);
     temp[3] = 0xFF;
-    temp[4] = 0xEE;
+    temp[4] = 0xFE;
     memcpy(temp + 5, mac + 3, 3);
 
     // flip the 7th bit

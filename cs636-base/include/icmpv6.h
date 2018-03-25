@@ -130,7 +130,9 @@ typedef struct option_prefix{
     byte payload[16];  // for 64 bite prefix;	
 }option_prefix;
 
-extern struct option_prefix option_prefix_default; 
+extern struct option_prefix option_prefix_default; //prefix from router
+extern struct option_prefix option_prefix_oth1; //prefix for oth1
+extern struct option_prefix option_prefix_oth2; //prefix for oth2
 
 typedef struct nsolicit{
     uint32 type;
