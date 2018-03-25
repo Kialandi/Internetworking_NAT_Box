@@ -1,18 +1,14 @@
 #include "xinu.h"
 
 void rsolicit_handler(struct netpacket * pkt) {
-    struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    struct rsolicit * rsol = (struct rsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
-    kprintf("Printing router solicitation payload...\n");
-
-    kprintf("type: 0x%X\n", rsol->type);
-    kprintf("code: 0x%X\n", rsol->code);
-    kprintf("checksum: %d\n", ntohs(rsol->checksum));
-
-    //TODO: only 1 valid option, source link layer address
-    //check if length is greater than without
+    //struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
+    //struct rsolicit * rsol = (struct rsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    
+    //broadcast router advertisement on the interface it came from
     int16 iface = pkt->net_iface;
-    iface++;
+    kprintf("rsolicit from iface: %d\n", iface);
+    if (!host)//nat box sends out radverts
+        sendipv6pkt(ROUTERA, if_tab[iface].if_macbcast);
 }
 
 bool8 rsolicit_valid(struct base_header * ipdatagram) {
