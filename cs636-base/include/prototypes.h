@@ -1,3 +1,5 @@
+extern uint8 match(byte *, byte *, uint32);
+extern struct fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);
 
 //validation functions
 extern bool8 radvert_valid(struct base_header *);
@@ -5,7 +7,7 @@ extern bool8 rsolicit_valid(struct base_header *);
 //TODO: change from void * probably
 extern bool8 cksum_valid(void *,void *, uint32, uint32);
 
-extern void icmpv6_in(struct base_header *);
+extern void icmpv6_in(struct netpacket *);
 
 extern void hexdump(char *, int32);
 extern void payload_hexdump(char *, int32);
@@ -20,6 +22,8 @@ extern  syscall ipv6_init(void);
 extern  void    ipv6_in(struct netpacket *);
 
 extern void radvert_handler(struct radvert *, uint32);
+extern void rsolicit_handler(struct netpacket *);
+
 extern  status  sendipv6pkt(byte, byte *);
 extern  void    print6(struct netpacket *);
 

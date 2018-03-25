@@ -23,15 +23,15 @@
 //
 #define  IPLEN 16
 
-#define PSEUDOLEN  sizeof(pseudoHdr) 
-#define ICMPSIZE    sizeof(rsolicit)
-#define MAX_PAYLOAD 1472
-#define DESTUNREACH 1
-#define PKT_BIG     2
-#define TIME_EX     3
-#define PVT1        100
-#define PVT2        100
-
+#define PSEUDOLEN       sizeof(pseudoHdr) 
+#define RSOLSIZE        sizeof(rsolicit)
+#define RADVERTSIZE     sizeof(radvert)
+#define MAX_PAYLOAD     1472
+#define DESTUNREACH     1
+#define PKT_BIG         2
+#define TIME_EX         3
+#define PVT1            100
+#define PVT2            100
 
 /* ICMP Msg types */
 
@@ -67,9 +67,9 @@ typedef struct lladdress{
 }lladdress;
 
 typedef struct icmpopt{
-    uint32 type;
-    uint32 length;
-    byte icmpopt[16];//length];TODO: what's length here dylan?
+    byte type;
+    byte length;
+    byte payload[0];//length];TODO: what's length here dylan?
 }icmpopt;
 
 typedef struct icmpv6general{
@@ -84,7 +84,7 @@ typedef struct rsolicit{
     byte code;
     uint16 checksum;
     uint32 reserved;
-    //icmpopt opt;
+    byte opt[0];//easy access to options
 }rsolicit;
 
 typedef struct radvert{
@@ -160,7 +160,7 @@ typedef struct pseudoHdr{
     uint32  len;
     byte    zero[3];
     byte    next_header;
-    byte    icmppayload[ICMPSIZE];
+    byte    icmppayload[0];
 }pseudoHdr;
 
 

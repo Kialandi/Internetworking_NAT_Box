@@ -93,12 +93,11 @@ void	net_init (void)
 	printf("Bing ID is set to %d.\n", bingid);
 
 	/* Ask the user what to run */
+
 	found = FALSE;
-/*
-	found = TRUE;
-    host = TRUE;
+    //host = TRUE;
     ifprime = 0;
-*/
+	
 	while (!found) {
 		printf("\nEnter n for nat box or hX for host on interface X: ");
 		nchars = read(CONSOLE, buffer, 30);
@@ -311,7 +310,6 @@ process	netin (
 		if (ifptr->if_head >= IF_QUEUESIZE) {
 			ifptr->if_head = 0;
 		}
-		kprintf("I am in netin\n");
 		/* Store interface number in packet buffer */
 
 		pkt->net_iface = iface;

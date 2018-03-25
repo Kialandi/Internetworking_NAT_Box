@@ -9,7 +9,7 @@ void print6(struct netpacket * pkt) {
     kprintf("net_src: ");
     print_mac_addr(pkt->net_src);
     
-    kprintf("net_type: 0x%X\n", pkt->net_type);
+    kprintf("net_type: 0x%X <- the router sends this incorrectly i think\n", pkt->net_type);
     
     kprintf("========== Printing IPv6 base header ===========\n");
 
@@ -30,6 +30,7 @@ void print6(struct netpacket * pkt) {
     kprintf("=============== Printing Payload ===============\n");
     payload_hexdump(payload, ntohs(ipdatagram->payload_len));
     
+    kprintf("================ End of Payload ================\n");
     return;
 }
 

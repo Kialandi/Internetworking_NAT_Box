@@ -47,7 +47,7 @@ shellcmd xsh_sendpkt(int nargs, char * args[]) {
         return 1;
     }
 
-    printf("ETH_ADDR_LEN: %d\n", ETH_ADDR_LEN);
+    //printf("ETH_ADDR_LEN: %d\n", ETH_ADDR_LEN);
     //memcpy(&packet->net_dst, args[1], ETH_ADDR_LEN);
 
     memcpy(&packet->net_src, if_tab[0].if_macucast, ETH_ADDR_LEN);
@@ -57,7 +57,7 @@ shellcmd xsh_sendpkt(int nargs, char * args[]) {
 
     //printf("packet size = %d\n", PACKLEN);
     write(ETHER0, (char *) packet, PACKLEN);
-    printPacket(packet);
+    //printPacket(packet);
 
     return 0;
 }
@@ -65,7 +65,7 @@ shellcmd xsh_sendpkt(int nargs, char * args[]) {
 int32 charToHex(byte * buf, char * string) {
 
     while (*string != 0) {
-        printf("char: %c\n", *string);
+        //printf("char: %c\n", *string);
         if (*string == ':') {
             string++;
             continue;
