@@ -11,24 +11,33 @@ void icmpv6_in(struct base_header * ipdatagram) {
     switch (msg->type) {
         case ROUTERA:
             kprintf("ROUTERA found\n");
-            if (!radvert_valid(ipdatagram)) {
+           /*
+	    if (radvert_valid(ipdatagram)) {
                 //consider making this return something
                 kprintf("radvert invalid\n");
                 return;
             }
+	   */
 	    radvert_handler((struct radvert *) msg, ip_payload_len);
-	    sendipv6pkt(ROUTERA, NULL); // just for testing purpose
+	    //sendipv6pkt(ROUTERA, NULL); // just for testing purpose
 	    break;
 
         case ROUTERS:
             kprintf("RSolicit received\n");
-            if (!rsolicit_valid(ipdatagram)) {
+            /*
+	    if (rsolicit_valid(ipdatagram)) {
                 //consider making this return something
                 kprintf("rsolicit invalid\n");
                 return;
             }
+            */
             //TODO: send an advertisement back
-            //sendipv6pkt(ROUTERA, ALLNODES);
+            //sendipv6pkt(ROUTERA, NULL);
+	    while(1) {
+		    kprintf("Press enter to send router advertisement\n");
+		    read(CONSOLE, NULL, 5);
+		    sendipv6pkt(ROUTERA, NULL);
+	    }
             break;
         default:
             kprintf("Unknown ICMP type: %02X\n", msg->type);
