@@ -159,17 +159,16 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RADVERTSIZE + totalOptLen;
             packet = (struct netpacket *) getbuf(ipv6bufpool);
             memset((char*) packet, NULLCH, len);
-
-            fillEthernet(packet, allnMACmulti);
-
+            
+            fillEthernet(packet, dest);
+            //fillEthernet(packet, allnMACmulti);
+            
+            //consider changing IP dest to unspecified
             fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
 
             uint8 option_types[3] = {1, 5, 3};
             fillICMP((struct radvert *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERA, option_types, 3);
             
-            //TODO: write to oth1 andd oth2 bcast
-            //oth1: 11:ff:ff:ff:ff:33
-            //oth2: 21:ff:ff:ff:ff:33
             if( write(ETHER0, (char *) packet, len) == SYSERR) {
                 kprintf("THE WORLD IS BURNING\n");
                 kill(getpid());
@@ -178,7 +177,11 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
             kprintf("OUTGOING PKT PRINTING\n");
             print6(packet);
             kprintf("OUTGOING PKT PRINTING\n");
-*/
+*/  
+            if (!radvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
+                kprintf("Invalid router advert going out!\n");
+            }
+
             freebuf((char *) packet);
             return 1;
     }
