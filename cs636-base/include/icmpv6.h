@@ -67,9 +67,9 @@ typedef struct lladdress{
 }lladdress;
 
 typedef struct icmpopt{
-    uint32 type;
-    uint32 length;
-    byte icmpopt[16];//length];TODO: what's length here dylan?
+    byte type;
+    byte length;
+    byte payload[0];//length];TODO: what's length here dylan?
 }icmpopt;
 
 typedef struct icmpv6general{
@@ -84,7 +84,7 @@ typedef struct rsolicit{
     byte code;
     uint16 checksum;
     uint32 reserved;
-    //icmpopt opt;
+    byte opt[0];//easy access to options
 }rsolicit;
 
 typedef struct radvert{

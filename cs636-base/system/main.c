@@ -12,11 +12,10 @@ process	main(void)
     ipv6_init();
     sleep(1);
     
-    kprintf("Number of interfaces: %d\n", NIFACES);
-    int i =0;
-    for (i = 0; i < NIFACES; i++) {
-        kprintf("IFACE name; %s, state: %d\n", if_tab[i].if_name, if_tab[i].if_state);
-    }
+    kprintf("Printing prefix from router\n");
+    print_ipv6_addr(prefix_ipv6_default.ipv6);
+    kprintf("Prefix len: %d\n", prefix_ipv6_default.prefix_length);
+    
     resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */

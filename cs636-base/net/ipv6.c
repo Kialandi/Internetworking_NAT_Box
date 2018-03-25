@@ -28,8 +28,8 @@ void    ipv6_in (
         case IPV6_ICMP:
             //kprintf("ipv6icmp found\n");
             //payload_hexdump((char *) ad, 64);
-            //icmpv6_in((struct icmpv6general *) payload, payload_len);
-            icmpv6_in(ipdatagram);
+            //icmpv6_in(ipdatagram);
+            icmpv6_in(pkt);
             break;
 
         default:

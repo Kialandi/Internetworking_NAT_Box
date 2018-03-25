@@ -8,6 +8,7 @@ uint16 get_prefix_default(char* option) ;
 struct option_prefix option_prefix_default;
 struct radvert radvert_from_router;
 
+//default router's ipv6 address
 struct prefix_ipv6 prefix_ipv6_default;
 
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
@@ -90,8 +91,8 @@ uint16 get_prefix_default(char* option) {
 	uint16 curr_option_len_octets = *(option + 1);  // curr_option_len_octets is in unit of 8 octets.
 	//kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
    	//uint16 option_payload_len = curr_option_len_octets * 8 - 2;
-	byte * ptr = (byte *) (option + 2);
-	uint8 prefix_length = *ptr;
+//	byte * ptr = (byte *) (option + 2);
+//	uint8 prefix_length = *ptr;
 //	kprintf("prefix_option_length: %d\n", prefix_length);
         // save prefix and length to prefix_ipv6_default struct
         memset(&prefix_ipv6_default, NULLCH, IPV6_ASIZE) ; 
@@ -120,7 +121,6 @@ bool8 radvert_valid(struct base_header * ipdatagram) {
     memcpy(start + 34, pld, 2);
     memcpy(start + 39, code, 1);
     if (!cksum_valid(start, msg, pload, 40)) {
-        kprintf("\n\nchecksum is false \n\n");
         return FALSE;
     }
 

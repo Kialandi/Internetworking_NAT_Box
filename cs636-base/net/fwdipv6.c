@@ -1,8 +1,8 @@
 #include "xinu.h"
 
-uint8 match (byte * a, byte * b) {
+uint8 match (byte * a, byte * b, uint32 len) {
     uint32 i;
-    for (i = 0; i < IPV6_ASIZE; i++) {
+    for (i = 0; i < len; i++) {
         if (a[i] != b[i]) 
             return 0;
     }
@@ -27,7 +27,7 @@ struct fwdTabEntry * getEntry(uint8 len, byte * dest) {
     struct fwdTabEntry * ptr = fwdTab[len];
 
     while(ptr != NULL) {
-        if (match(dest, ptr->prefix)) {
+        if (match(dest, ptr->prefix, IPV6_ASIZE)) {
             return ptr;
         }
         ptr = ptr->next;

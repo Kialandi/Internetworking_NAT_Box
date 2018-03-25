@@ -22,7 +22,7 @@ struct base_header {
     uint8   hop_limit;
     byte    src[IPV6_ASIZE];
     byte    dest[IPV6_ASIZE];
-    //byte    payload[1];
+    byte    payload[0];//see if this breaks things
 };
 
 extern byte     link_local[];

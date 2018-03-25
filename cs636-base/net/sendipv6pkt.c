@@ -140,6 +140,10 @@ status  sendipv6pkt(byte type, byte * dest) {//byte[] destination, uint16 messag
                 kill(getpid());
             }
 
+            if (!rsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
+                kprintf("Invalid router solicitation going out!\n");
+            }
+            
             //kprintf("OUTGOING PKT PRINTING\n");
             //print6(packet);
             //kprintf("OUTGOING PKT PRINTING\n");
