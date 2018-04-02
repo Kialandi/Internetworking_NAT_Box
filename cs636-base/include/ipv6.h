@@ -3,7 +3,9 @@
 #define	IPV6_ICMP		0x3A		/* ICMP protocol type for IP 	*/
 #define	IPV6_UDP		0x11		/* UDP protocol type for IP 	*/
 #define IPV6_TCP        0x06
+#define TCP_HDR_LEN	20
 #define IPV6_FRAG       0x2C
+#define NEXT_HEADER_FRAGMENT 0X2C  /*44 : next header value of ipv6 header to indicate next header is fragment header*/
 
 #define IPV6_ADDRBITS   128
 #define	IPV6_ASIZE	    16		/* Bytes in an IP address	*/
@@ -45,3 +47,21 @@ struct prefix_ipv6 {
 } prefix_ipv6;
 
 extern struct prefix_ipv6 prefix_ipv6_default;
+
+struct fragment_header {
+	byte next_header;
+	byte reserved;
+	//uint13 frag_offset;
+	uint16 frag; // 13 bits for frag_offset, 2 bites for res, 1 bit for M flag
+	//byte M_flag;
+	uint32 identif;		
+};
+
+struct udp_header{
+	uint16 src_port;
+	uint16 dest_port;
+	uint16 udp_len;
+	uint16 udp_checksum;
+
+};
+

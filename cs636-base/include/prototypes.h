@@ -1,3 +1,6 @@
+extern status sendto(byte*, byte, char*, uint32);
+extern void    fillEthernet(struct netpacket *, byte *);
+extern void    fillIPdatagram(struct base_header *, byte *, byte *, uint16, byte);
 extern void print_ipv6_info();
 extern uint8 match(byte *, byte *, uint32);
 extern struct fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);

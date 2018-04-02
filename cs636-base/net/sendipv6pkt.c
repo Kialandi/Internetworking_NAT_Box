@@ -7,7 +7,7 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
 void fill_dest_ip_all_routers(byte* dest) ;
 void fill_dest_mac_all_router(byte* dest) ;
 void    fillEthernet(struct netpacket *, byte *);
-void    fillIPdatagram(struct base_header *, byte *, byte *, uint16);
+void    fillIPdatagram(struct base_header *, byte *, byte *, uint16, byte);
 void 	fillICMP(void *pkt, byte type, uint8* option_types, uint8 option_types_length);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
@@ -133,7 +133,7 @@ status  sendipv6pkt(byte type, byte * dest) {
             byte src_ip[IPV6_ASIZE];
             memset(src_ip, NULLCH, IPV6_ASIZE);
 
-            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), src_ip, allrIPmulti, RSOLSIZE);
+            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), src_ip, allrIPmulti, RSOLSIZE, IPV6_ICMP);
 
             fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERS, NULL, 0);
 
@@ -169,7 +169,7 @@ status  sendipv6pkt(byte type, byte * dest) {
             
             fillEthernet(packet, dest);
             
-            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
+            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, RADVERTSIZE + totalOptLen, IPV6_ICMP);
 
             uint8 option_types[3] = {1, 5, 3};
             fillICMP((struct radvert *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERA, option_types, 3);
@@ -252,14 +252,14 @@ void    fillEthernet(struct netpacket * pkt, byte* dest) {
     pkt->net_type = htons(ETH_IPv6);
 }
 
-void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, uint16 length) {
+void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, uint16 length, byte next_header) {
     pkt->info[0] = 0x60;
     pkt->info[1] = 0x00;
     pkt->info[2] = 0x00;
     pkt->info[3] = 0x00;
 
     pkt->payload_len = htons(length);
-    pkt->next_header = IPV6_ICMP;
+    pkt->next_header = next_header;
     pkt->hop_limit = 255;
 
     memcpy(pkt->src, src_ip, IPV6_ASIZE);

@@ -332,7 +332,8 @@ process	netin (
 			continue;
 
 		    case ETH_IPv6:			/* Handle IPv6	*/
-			kprintf("I AM IN IPV6");
+			kprintf("I AM IN IPV6\n");
+		//	hexdump(pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
 			ipv6_in(pkt);
 			continue;
 

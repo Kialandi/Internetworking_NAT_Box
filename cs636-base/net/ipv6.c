@@ -40,8 +40,11 @@ void    ipv6_in (
             //icmpv6_in(ipdatagram);
             icmpv6_in(pkt);
             break;
-
-        default:
+	case NEXT_HEADER_FRAGMENT:
+		kprintf("A fragment packet received\n");
+		hexdump(pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);		
+        	break;
+	default:
             kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);
             break;
     }
@@ -132,6 +135,10 @@ syscall ipv6_init() {
 	kprintf("in ipv6_init ifacer macbcast");
 	print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
+	kprintf("sendto...........\n");
+	char data[2000];
+	// get dest ipv6	 
+	sendto(allrIPmulti, IPV6_UDP,data, 2000);
     }
     return OK;
 }
