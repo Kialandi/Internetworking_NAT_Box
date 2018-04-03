@@ -95,7 +95,7 @@ syscall ipv6_init() {
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allnMACmulti, 0);
 
     buf[5] = 0x02;
-    memcpy(allrMACmulti, buf, ETH_ADDR_LEN); 
+    memcpy(allrMACmulti, buf, ETH_ADDR_LEN);
 
     //this doesn't solve the problem because the default router is
     //sending a router advertisement to all nodes
@@ -129,6 +129,7 @@ syscall ipv6_init() {
     else {
         kprintf("Host online... Sending solicitation...\n");
         sendipv6pkt(ROUTERS, allrMACmulti);
+        sendipv6pkt(NEIGHBS, allnMACmulti);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;

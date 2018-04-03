@@ -23,9 +23,10 @@
 //
 #define  IPLEN 16
 
-#define PSEUDOLEN       sizeof(pseudoHdr) 
+#define PSEUDOLEN       sizeof(pseudoHdr)
 #define RSOLSIZE        sizeof(rsolicit)
 #define RADVERTSIZE     sizeof(radvert)
+#define NSOLSIZE        sizeof(nsolicit)
 #define MAX_PAYLOAD     1472
 #define DESTUNREACH     1
 #define PKT_BIG         2
@@ -115,19 +116,19 @@ typedef struct option_MTU{
     byte type; // shoule be 5
     byte length; // should be 1
     byte reserved[4]; // all zeros
-    uint16 payload;  // MTU 
+    uint16 payload;  // MTU
 }option_MTU;
 
 // option of prefix
 typedef struct option_prefix{
-    byte type; // should be 0x03; 
+    byte type; // should be 0x03;
     byte length; // shoule be 0x04;
     byte prefix_length; // most time it is 64 bits prefix
-    byte LA_reserved; 
+    byte LA_reserved;
     byte valid_lifetime[4];
     byte preferred_lifetime[4];
     byte reserved[4]; // should be zeros
-    byte payload[16];  // for 64 bite prefix;	
+    byte payload[16];  // for 64 bite prefix;
 }option_prefix;
 
 extern struct option_prefix option_prefix_default; //prefix from router
@@ -135,8 +136,8 @@ extern struct option_prefix option_prefix_oth1; //prefix for oth1
 extern struct option_prefix option_prefix_oth2; //prefix for oth2
 
 typedef struct nsolicit{
-    uint32 type;
-    uint32 code;
+    byte type;
+    byte code;
     uint16 checksum;
     byte reserved[4];
     byte ipaddr[16];
@@ -144,8 +145,8 @@ typedef struct nsolicit{
 }nsolicit;
 
 typedef struct nadvert{
-    uint32 type;
-    uint32 code;
+    byte type;
+    byte code;
     uint16 checksum;
     uint32 R: 1;
     uint32 S: 1;

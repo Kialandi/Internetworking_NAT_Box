@@ -11,12 +11,12 @@ void    fillIPdatagram(struct base_header *, byte *, byte *, uint16);
 void 	fillICMP(void *pkt, byte type, uint8* option_types, uint8 option_types_length);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
-void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest, 
+void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
         void * pkt, int32 pktLen) {
-    
+
     //zero out the buffer
     memset(pseudo, NULLCH, PSEUDOLEN + pktLen);
-    
+
     //copy the src and destination
     memcpy(pseudo->src, src, IPV6_ASIZE);
     memcpy(pseudo->dest, dest, IPV6_ASIZE);
@@ -30,7 +30,7 @@ void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
 
 /*
    void    fillICMP(struct rsolicit * pkt) {
-   pkt->type = ROUTERS;  
+   pkt->type = ROUTERS;
 //assumed code, checksum, and reserved were all set to 0 before coming in
 void * pseudo = (void *) getmem(PSEUDOLEN);
 makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
@@ -43,7 +43,7 @@ freemem(pseudo, PSEUDOLEN);
 */
 void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_types_length) {
 
-    if (type == ROUTERS){ 
+    if (type == ROUTERS){
 
         struct rsolicit * pkt = pkt_icmp;
         pkt->type = type;
@@ -65,10 +65,10 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
         //kprintf("Filling router advert icmp\n");
         struct radvert * pkt = pkt_icmp;
         uint16 totalOptLen = 48;
-        
+
         //copy from default router
         memcpy(pkt, &radvert_from_router, sizeof(struct radvert));
-        
+
         //zero out the checksum after copying
         pkt->checksum = 0;
 
@@ -77,10 +77,10 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
         pkt->code = 0;
         pkt->curhoplim = 255;
         pkt->m_o_res = 0;*/
-        
+
         //might have to do stuff with code and curhoplimit
         fillOptions((char*) pkt + RADVERTSIZE,  option_types, option_types_length);
-        
+
         //assumed code, checksum, and reserved were all set to 0 before coming in
         void * pseudo = (void *) getmem(PSEUDOLEN + RADVERTSIZE + totalOptLen);
 
@@ -96,7 +96,7 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
 
         //memcpy(pkt, &radvert_from_router, sizeof(struct radvert));
 
-        //pkt->type = type; 
+        //pkt->type = type;
         //why is this + 16? shouldn't it be size of radvert?
 
         //use a different length + options
@@ -107,6 +107,26 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
         //uint16 sum = checksumv6(pseudo, PSEUDOLEN);
         //pkt->checksum = htons(sum);
         //freemem(pseudo, PSEUDOLEN);
+    }else if(type == NEIGHBS) {
+
+        struct nsolicit * pkt = pkt_icmp;
+        pkt->type = type;
+        //assumed code, checksum, and reserved were all set to 0 before coming in
+        void * pseudo = (void *) getmem(PSEUDOLEN + NSOLSIZE);
+
+        byte src[IPV6_ASIZE];
+
+        //zero the buffers
+        memset(src, NULLCH, IPV6_ASIZE);
+
+        makePseudoHdr((struct pseudoHdr *) pseudo, src, allnIPmulti, (void *) pkt, NSOLSIZE);
+
+        uint16 sum = checksumv6(pseudo, PSEUDOLEN + NSOLSIZE);
+        uint16 sum2 = checksumv6(option_types, 1);
+        pkt->checksum = htons(sum + sum2);
+        freemem(pseudo, PSEUDOLEN + RSOLSIZE);
+        fill_option_one(&pkt->opt);
+
     }
 
 }
@@ -118,7 +138,7 @@ status  sendipv6pkt(byte type, byte * dest) {
 
     switch (type) {
         case ROUTERS:
-            
+
             kprintf("Sending Router Solicitation...\n");
 
             //entire packet length
@@ -146,7 +166,7 @@ status  sendipv6pkt(byte type, byte * dest) {
             if (!rsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid router solicitation going out!\n");
             }
-            
+
             //kprintf("OUTGOING PKT PRINTING\n");
             //print6(packet);
             //kprintf("OUTGOING PKT PRINTING\n");
@@ -166,14 +186,14 @@ status  sendipv6pkt(byte type, byte * dest) {
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RADVERTSIZE + totalOptLen;
             packet = (struct netpacket *) getbuf(ipv6bufpool);
             memset((char*) packet, NULLCH, len);
-            
+
             fillEthernet(packet, dest);
-            
+
             fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
 
             uint8 option_types[3] = {1, 5, 3};
             fillICMP((struct radvert *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERA, option_types, 3);
-            
+
             if( write(ETHER0, (char *) packet, len) == SYSERR) {
                 kprintf("THE WORLD IS BURNING\n");
                 kill(getpid());
@@ -189,6 +209,32 @@ status  sendipv6pkt(byte type, byte * dest) {
 
             freebuf((char *) packet);
             return 1;
+
+        case NEIGHBS:
+            totalOptLen = 10;
+            kprintf("\n sending neighbor Solicitation \n");
+
+            // get packet length
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
+            packet = (struct netpacket *) getbuf(ipv6bufpool);
+            memset((char*) packet, NULLCH, len);
+
+            fillEthernet(packet, dest);
+            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, NSOLSIZE + totalOptLen);
+
+            uint8 nopt[1] = {1};
+            fillICMP((struct nsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), NEIGHBS, nopt, 1);
+            if( write(ETHER0, (char *) packet, len) == SYSERR) {
+                kprintf("THE WORLD IS BURNING\n");
+                kill(getpid());
+            }
+
+            kprintf("OUTGOING PKT PRINTING\n");
+            print6(packet);
+            kprintf("OUTGOING PKT PRINTING\n");
+           freebuf((char *) packet);
+           return 1;
+
     }
     //reaching here is bad
     return 0;
@@ -223,6 +269,8 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
     }
 }
 
+
+
 uint8 fill_option_prefix(void * pkt) {
     memcpy(pkt, &option_prefix_default, sizeof(option_prefix));
     //change to the appropriate values based on interface
@@ -241,7 +289,7 @@ uint8 fill_option_MTU(void * pkt) {
 uint8 fill_option_one(void * pkt) {
     struct option_one* temp = pkt;
     temp->type = 0x01;
-    temp->length = 0x01;
+    temp->length = 0x10;
     memcpy((char*)temp + 2, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     return sizeof(struct option_one); // equal to length(1) * 8 bytes
 }
@@ -263,5 +311,5 @@ void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, ui
     pkt->hop_limit = 255;
 
     memcpy(pkt->src, src_ip, IPV6_ASIZE);
-    memcpy(pkt->dest, dest_ip, IPV6_ASIZE); 
+    memcpy(pkt->dest, dest_ip, IPV6_ASIZE);
 }
