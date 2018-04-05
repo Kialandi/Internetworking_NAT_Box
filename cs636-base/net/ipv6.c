@@ -129,7 +129,8 @@ syscall ipv6_init() {
     else {
         kprintf("Host online... Sending solicitation...\n");
         sendipv6pkt(ROUTERS, allrMACmulti);
-        sendipv6pkt(NEIGHBS, allnMACmulti);
+        sendipv6pkt(NEIGHBS, if_tab[1].if_macbcast);
+        sendipv6pkt(NEIGHBS, if_tab[2].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;

@@ -1,3 +1,4 @@
+extern int  nsolicit_handler(struct netpacket * pkt);
 extern void print_ipv6_info();
 extern uint8 match(byte *, byte *, uint32);
 extern struct fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);

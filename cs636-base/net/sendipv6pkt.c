@@ -1,9 +1,10 @@
 #include <xinu.h>
+
 uint8 fill_option_prefix(void * pkt);
 uint8 fill_option_MTU(void * pkt) ;
 uint8 fill_option_one(void * pkt) ;
 void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
-
+void create_packet(byte type, byte * etherdest, byte * ipdest, uint32 optlen, unsigned char * optarr);
 void fill_dest_ip_all_routers(byte* dest) ;
 void fill_dest_mac_all_router(byte* dest) ;
 void    fillEthernet(struct netpacket *, byte *);
@@ -111,21 +112,36 @@ void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_t
 
         struct nsolicit * pkt = pkt_icmp;
         pkt->type = type;
+        pkt->checksum = 0;
+        fill_option_one(&pkt->opt);
         //assumed code, checksum, and reserved were all set to 0 before coming in
         void * pseudo = (void *) getmem(PSEUDOLEN + NSOLSIZE);
 
-        byte src[IPV6_ASIZE];
 
-        //zero the buffers
-        memset(src, NULLCH, IPV6_ASIZE);
-
-        makePseudoHdr((struct pseudoHdr *) pseudo, src, allnIPmulti, (void *) pkt, NSOLSIZE);
+        makePseudoHdr((struct pseudoHdr *) pseudo, link_local, if_tab[1].if_macbcast, (void *) pkt, NSOLSIZE);
 
         uint16 sum = checksumv6(pseudo, PSEUDOLEN + NSOLSIZE);
-        uint16 sum2 = checksumv6(option_types, 1);
-        pkt->checksum = htons(sum + sum2);
+        pkt->checksum = htons(sum);
         freemem(pseudo, PSEUDOLEN + RSOLSIZE);
+
+    }else if(type == NEIGHBA) {
+
+        struct nadvert * pkt = pkt_icmp;
+        pkt->type = type;
         fill_option_one(&pkt->opt);
+        if (host){
+            pkt->R = 0;
+        }else if (!host){
+            pkt->R = 1;
+        }
+        pkt->S = 1;
+        pkt->O = 1;
+        //assumed code, checksum, and reserved were all set to 0 before coming in
+        void * pseudo = (void *) getmem(PSEUDOLEN + NSOLSIZE);
+        makePseudoHdr((struct pseudoHdr *) pseudo, link_local, allnIPmulti, (void *) pkt, NSOLSIZE);
+        uint16 sum = checksumv6(pseudo, PSEUDOLEN + NSOLSIZE);
+        pkt->checksum = htons(sum);
+        freemem(pseudo, PSEUDOLEN + RSOLSIZE);
 
     }
 
@@ -214,7 +230,6 @@ status  sendipv6pkt(byte type, byte * dest) {
             totalOptLen = 10;
             kprintf("\n sending neighbor Solicitation \n");
 
-            // get packet length
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
             packet = (struct netpacket *) getbuf(ipv6bufpool);
             memset((char*) packet, NULLCH, len);
@@ -228,12 +243,37 @@ status  sendipv6pkt(byte type, byte * dest) {
                 kprintf("THE WORLD IS BURNING\n");
                 kill(getpid());
             }
-
+            /*
             kprintf("OUTGOING PKT PRINTING\n");
             print6(packet);
             kprintf("OUTGOING PKT PRINTING\n");
+            */
            freebuf((char *) packet);
            return 1;
+        case NEIGHBA:
+            totalOptLen = 10;
+            kprintf("\n sending neighbor Advertisement \n");
+
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
+            packet = (struct netpacket *) getbuf(ipv6bufpool);
+            memset((char*) packet, NULLCH, len);
+
+            fillEthernet(packet, dest);
+            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, NADSIZE + totalOptLen);
+            uint8 nadops[1] = {1};
+            fillICMP((struct nadvert  *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), NEIGHBA, nadops, 1);
+            if( write(ETHER0, (char *) packet, len) == SYSERR) {
+                kprintf("THE WORLD IS BURNING\n");
+                kill(getpid());
+            }
+            /*
+            kprintf("OUTGOING PKT PRINTING\n");
+            print6(packet);
+            kprintf("OUTGOING PKT PRINTING\n");
+            */
+            freebuf((char *) packet);
+            return 1;
+
 
     }
     //reaching here is bad
@@ -268,9 +308,49 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
         i++;
     }
 }
+/*
+void create_packet(byte type, byte * etherdest,byte * ipdest, uint32 optlen, uint8 options){
+    struct netpacket * packet;
+    uint16 totalOptLen = optlen;
+    uint16 tsize = 0;
+    switch(type){
+        case ROUTERS:
+            tsize = RSOLSIZE;
+            break;
+        case ROUTERA:
+            tsize = RADVERTSIZE;
+            break;
+        case NEIGHBA:
+            tsize = NADSIZE;
+            break;
+        case NEIGHBS:
+            tsize = NSOLSIZE;
+            break;
+        default:
+            break;
+    }
+    kprintf("\n sending neighbor Solicitation \n");
+    uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + tsize + totalOptLen;
+    packet = (struct netpacket *) getbuf(ipv6bufpool);
+    memset((char*) packet, NULLCH, len);
 
+    fillEthernet(packet, etherdest);
+    fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, ipdest, tsize  + totalOptLen);
 
+    uint8 nopt[optlen];
+    memcpy(nopt, optarr, optlen);
+    fillICMP((struct nsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), type, options, optlen);
+    if( write(ETHER0, (char *) packet, len) == SYSERR) {
+        kprintf("THE WORLD IS BURNING\n");
+        kill(getpid());
+    }
 
+    kprintf("OUTGOING PKT PRINTING\n");
+    print6(packet);
+    kprintf("OUTGOING PKT PRINTING\n");
+    freebuf((char *) packet);
+}
+*/
 uint8 fill_option_prefix(void * pkt) {
     memcpy(pkt, &option_prefix_default, sizeof(option_prefix));
     //change to the appropriate values based on interface
@@ -289,7 +369,7 @@ uint8 fill_option_MTU(void * pkt) {
 uint8 fill_option_one(void * pkt) {
     struct option_one* temp = pkt;
     temp->type = 0x01;
-    temp->length = 0x10;
+    temp->length = 0x01;
     memcpy((char*)temp + 2, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     return sizeof(struct option_one); // equal to length(1) * 8 bytes
 }

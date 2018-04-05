@@ -27,6 +27,8 @@
 #define RSOLSIZE        sizeof(rsolicit)
 #define RADVERTSIZE     sizeof(radvert)
 #define NSOLSIZE        sizeof(nsolicit)
+#define NADSIZE         sizeof(nadvert)
+#define TEST            sizeof(nsolicit)
 #define MAX_PAYLOAD     1472
 #define DESTUNREACH     1
 #define PKT_BIG         2

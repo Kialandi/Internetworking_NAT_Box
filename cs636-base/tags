@@ -1,0 +1,3045 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+A	include/icmpv6.h	/^    uint32 A:1;$/;"	m	struct:idk
+AMD_BLOCKMOD	include/flash.h	183;"	d
+AMD_CLR_SR	include/flash.h	185;"	d
+AMD_ERASE_CYCLE3	include/flash.h	178;"	d
+AMD_ERASE_CYCLE6	include/flash.h	179;"	d
+AMD_GET_16	include/flash.h	156;"	d
+AMD_GET_8	include/flash.h	144;"	d
+AMD_H_LOCK	include/flash.h	211;"	d
+AMD_LOCK	include/flash.h	184;"	d
+AMD_PROGRAM_CYCLE3	include/flash.h	180;"	d
+AMD_PUT_16	include/flash.h	154;"	d
+AMD_PUT_8	include/flash.h	142;"	d
+AMD_READ	include/flash.h	182;"	d
+AMD_REG_CYCLE1	include/flash.h	188;"	d
+AMD_REG_CYCLE2	include/flash.h	189;"	d
+AMD_RESET	include/flash.h	181;"	d
+AMD_SR_WSMS	include/flash.h	190;"	d
+AMD_S_LOCK	include/flash.h	210;"	d
+AMD_UNLOCK_CYCLE1	include/flash.h	176;"	d
+AMD_UNLOCK_CYCLE2	include/flash.h	177;"	d
+ARP_HALEN	include/arp.h	5;"	d
+ARP_HTYPE	include/arp.h	8;"	d
+ARP_OP_REQ	include/arp.h	11;"	d
+ARP_OP_RPLY	include/arp.h	12;"	d
+ARP_PALEN	include/arp.h	6;"	d
+ARP_PTYPE	include/arp.h	9;"	d
+ARP_RETRY	include/arp.h	16;"	d
+ARP_SIZ	include/arp.h	14;"	d
+ARP_TIMEOUT	include/arp.h	18;"	d
+AR_FREE	include/arp.h	22;"	d
+AR_PENDING	include/arp.h	23;"	d
+AR_RESOLVED	include/arp.h	24;"	d
+BEGIN	config/lex.yy.c	125;"	d	file:
+BIST	include/pci.h	/^	unsigned char	BIST;					\/*   f *\/$/;"	m	struct:pci_config_header
+BLDDIRS	compile/Makefile	/^BLDDIRS	= binaries$/;"	m
+BP_MAXB	include/bufpool.h	8;"	d
+BP_MAXN	include/bufpool.h	13;"	d
+BP_MINB	include/bufpool.h	11;"	d
+BUILDMAKE	compile/Makefile	/^BUILDMAKE	=	$(TOPDIR)\/compile\/bin\/build-make$/;"	m
+CC	compile/Makefile	/^CC		=	${COMPILER_ROOT}gcc$/;"	m
+CC	config/Makefile	/^CC	= ${COMPILER_ROOT}gcc$/;"	m
+CFE_MAX_BLOCK	include/flash.h	24;"	d
+CFE_MIN_BLOCK	include/flash.h	23;"	d
+CFG_READ_OPCODE	system/early_imr.c	23;"	d	file:
+CFG_WRITE_OPCODE	system/early_imr.c	24;"	d	file:
+CFI_COMMAND_SET	include/flash.h	116;"	d
+CFI_DEVICE	include/flash.h	113;"	d
+CFI_DEV_INTERFACE	include/flash.h	118;"	d
+CFI_DEV_SIZE	include/flash.h	117;"	d
+CFI_GET_8	include/flash.h	104;"	d
+CFI_MANUFACTURER	include/flash.h	112;"	d
+CFI_MAX_BUFFER	include/flash.h	119;"	d
+CFI_PUT_8	include/flash.h	102;"	d
+CFI_QUERY_ADDR	include/flash.h	108;"	d
+CFI_QUERY_EXIT	include/flash.h	110;"	d
+CFI_QUERY_MODE	include/flash.h	109;"	d
+CFI_QUERY_STRING	include/flash.h	115;"	d
+CFI_REGION_COUNT	include/flash.h	120;"	d
+CFI_REGION_TAB	include/flash.h	121;"	d
+CFI_SIGNATURE	include/flash.h	114;"	d
+CFLAGS	compile/Makefile	/^CFLAGS  = -march=i586 -m32 -fno-builtin -fno-stack-protector -nostdlib -c -Wall -O0 ${DEFS} ${INCLUDE}$/;"	m
+CFLAGS	config/Makefile	/^CFLAGS	= $/;"	m
+CHAR_BIT	include/limits.h	11;"	d
+CHAR_MAX	include/limits.h	12;"	d
+CHAR_MIN	include/limits.h	13;"	d
+CLKCNTL	include/clock.h	7;"	d
+CLKFREQ	config/conf.h	76;"	d
+CLKFREQ	include/conf.h	76;"	d
+CLKTICKS_PER_SEC	include/clock.h	10;"	d
+CLOCK0	include/clock.h	6;"	d
+CLOCKBASE	include/clock.h	5;"	d
+CLOSE	config/y.tab.c	/^    CLOSE = 269,$/;"	e	enum:yytokentype	file:
+CLOSE	config/y.tab.c	251;"	d	file:
+COLON	config/y.tab.c	/^    COLON = 260,$/;"	e	enum:yytokentype	file:
+COLON	config/y.tab.c	242;"	d	file:
+COMPILER_ROOT	compile/Makefile	/^COMPILER_ROOT	=	\/usr\/bin\/$/;"	m
+COMPILER_ROOT	config/Makefile	/^COMPILER_ROOT	=	\/usr\/bin\/$/;"	m
+CONFC	compile/Makefile	/^CONFC		= $(TOPDIR)\/system\/conf.c$/;"	m
+CONFC	config/y.tab.c	96;"	d	file:
+CONFFILE	compile/Makefile	/^CONFFILE	= $(TOPDIR)\/config\/Configuration$/;"	m
+CONFH	compile/Makefile	/^CONFH		= $(TOPDIR)\/include\/conf.h$/;"	m
+CONFH	config/y.tab.c	97;"	d	file:
+CONFHREF	config/y.tab.c	98;"	d	file:
+CONFIG	config/Makefile	/^CONFIG	= config$/;"	m
+CONFL	compile/Makefile	/^CONFL		= $(TOPDIR)\/config\/config.l$/;"	m
+CONFPGM	compile/Makefile	/^CONFPGM		= $(TOPDIR)\/config\/config$/;"	m
+CONFY	compile/Makefile	/^CONFY		= $(TOPDIR)\/config\/config.y$/;"	m
+CONSOLE	config/conf.h	28;"	d
+CONSOLE	include/conf.h	28;"	d
+CONSOLE_RESET	system/initialize.c	30;"	d	file:
+CONTEXT	include/kernel.h	61;"	d
+CONTROL	config/y.tab.c	/^    CONTROL = 273,$/;"	e	enum:yytokentype	file:
+CONTROL	config/y.tab.c	255;"	d	file:
+CPUID_MAJOR_MASK	system/platinit.c	9;"	d	file:
+CSR	config/y.tab.c	/^    CSR = 264,$/;"	e	enum:yytokentype	file:
+CSR	config/y.tab.c	246;"	d	file:
+DATE_DST_AUTO	include/date.h	22;"	d
+DATE_DST_OFF	include/date.h	20;"	d
+DATE_DST_ON	include/date.h	21;"	d
+DEBUG_ASCII	include/debug.h	3;"	d
+DEBUG_HEX	include/debug.h	4;"	d
+DEFBRK	config/y.tab.c	/^    DEFBRK = 258,$/;"	e	enum:yytokentype	file:
+DEFBRK	config/y.tab.c	240;"	d	file:
+DEFER_START	include/resched.h	5;"	d
+DEFER_STOP	include/resched.h	6;"	d
+DEFS	compile/Makefile	/^DEFS		= 	-DBSDURG -DVERSION=\\""`cat $(VERSIONFILE)`"\\"$/;"	m
+DEFSFILE	compile/Makefile	/^DEFSFILE	=	.defs$/;"	m
+DELAY	include/delay.h	6;"	d
+DEPSFILE	compile/Makefile	/^DEPSFILE	=	.deps$/;"	m
+DESTUNREACH	include/icmpv6.h	33;"	d
+DEVNAMLEN	include/device.h	3;"	d
+DFILL	device/lfs/lfdballoc.c	5;"	d	file:
+DHCP	include/dhcp.h	3;"	d
+DHCP_BOOTFILE_NAME	include/dhcp.h	26;"	d
+DHCP_CLIENT_ID	include/dhcp.h	24;"	d
+DHCP_CLIENT_MACHINE_ID	include/dhcp.h	29;"	d
+DHCP_CLIENT_NET_ID	include/dhcp.h	28;"	d
+DHCP_CLIENT_SYS_ARCH	include/dhcp.h	27;"	d
+DHCP_DNS_SERVER	include/dhcp.h	10;"	d
+DHCP_DOMAIN_NAME	include/dhcp.h	11;"	d
+DHCP_IP_ADDR_LEASE_TIME	include/dhcp.h	14;"	d
+DHCP_MAXIMUM_DHCP_MESSAGE_SIZE	include/dhcp.h	20;"	d
+DHCP_MESSAGE	include/dhcp.h	19;"	d
+DHCP_MESSAGE_END	include/dhcp.h	30;"	d
+DHCP_MESSAGE_TYPE	include/dhcp.h	16;"	d
+DHCP_OPTION_OVERLOAD	include/dhcp.h	15;"	d
+DHCP_PADDING	include/dhcp.h	7;"	d
+DHCP_PARAMETER_REQUEST_LIST	include/dhcp.h	18;"	d
+DHCP_REBINDING_TIME_VALUE	include/dhcp.h	22;"	d
+DHCP_RENEWAL_TIME_VALUE	include/dhcp.h	21;"	d
+DHCP_REQUESTED_IP	include/dhcp.h	13;"	d
+DHCP_RETRY	include/dhcp.h	5;"	d
+DHCP_ROUTER	include/dhcp.h	9;"	d
+DHCP_SERVER_ID	include/dhcp.h	17;"	d
+DHCP_SUBNET_MASK	include/dhcp.h	8;"	d
+DHCP_TFTP_SERVER_NAME	include/dhcp.h	25;"	d
+DHCP_VENDER_OPTIONS	include/dhcp.h	12;"	d
+DHCP_VENDOR_CLASS_ID	include/dhcp.h	23;"	d
+DNSDATASIZ	include/dns.h	9;"	d
+DNSLPORT	include/dns.h	8;"	d
+DNSPORT	include/dns.h	7;"	d
+DNSRETRY	include/dns.h	6;"	d
+DNSTIMEOUT	include/dns.h	5;"	d
+DNS_QC_IN	include/dns.h	42;"	d
+DNS_QT_A	include/dns.h	37;"	d
+DNS_QT_NS	include/dns.h	38;"	d
+DRAM_IMR0H	system/early_imr.c	26;"	d	file:
+DRAM_IMR0L	system/early_imr.c	25;"	d	file:
+DRAM_IMR0RM	system/early_imr.c	27;"	d	file:
+DRAM_IMR0WM	system/early_imr.c	28;"	d	file:
+DRAM_IMR1H	system/early_imr.c	30;"	d	file:
+DRAM_IMR1L	system/early_imr.c	29;"	d	file:
+DRAM_IMR1RM	system/early_imr.c	31;"	d	file:
+DRAM_IMR1WM	system/early_imr.c	32;"	d	file:
+DRAM_IMR3H	system/early_imr.c	34;"	d	file:
+DRAM_IMR3L	system/early_imr.c	33;"	d	file:
+DRAM_IMR3RM	system/early_imr.c	35;"	d	file:
+DRAM_IMR3WM	system/early_imr.c	36;"	d	file:
+DRAM_IMR7H	system/early_imr.c	38;"	d	file:
+DRAM_IMR7L	system/early_imr.c	37;"	d	file:
+DRAM_IMR7RM	system/early_imr.c	39;"	d	file:
+DRAM_IMR7WM	system/early_imr.c	40;"	d	file:
+Date	system/ascdate.c	/^struct dateinfo Date = {0, FALSE, DATE_DST_AUTO,$/;"	v	typeref:struct:dateinfo
+Defer	system/resched.c	/^struct	defer	Defer;$/;"	v	typeref:struct:defer
+ECHO	config/lex.yy.c	603;"	d	file:
+ECHOREP	include/icmpv6.h	48;"	d
+ECHOREQ	include/icmpv6.h	47;"	d
+ELOOP_BUFSIZE	include/ethloop.h	15;"	d
+ELOOP_CTRL_CLRFLAG	include/ethloop.h	20;"	d
+ELOOP_CTRL_GETHOLD	include/ethloop.h	18;"	d
+ELOOP_CTRL_SETFLAG	include/ethloop.h	19;"	d
+ELOOP_FLAG_DROPALL	include/ethloop.h	24;"	d
+ELOOP_FLAG_DROPNXT	include/ethloop.h	23;"	d
+ELOOP_FLAG_HOLDNXT	include/ethloop.h	22;"	d
+ELOOP_LINKHDRSIZE	include/ethloop.h	13;"	d
+ELOOP_MTU	include/ethloop.h	12;"	d
+ELOOP_NBUF	include/ethloop.h	16;"	d
+ELOOP_STATE_ALLOC	include/ethloop.h	27;"	d
+ELOOP_STATE_FREE	include/ethloop.h	26;"	d
+EMPTY	include/queue.h	11;"	d
+EMPTY	lib/fscanf.c	4;"	d	file:
+EOB_ACT_CONTINUE_SCAN	config/lex.yy.c	173;"	d	file:
+EOB_ACT_END_OF_FILE	config/lex.yy.c	174;"	d	file:
+EOB_ACT_LAST_MATCH	config/lex.yy.c	175;"	d	file:
+EOF	include/kernel.h	54;"	d
+EOF	lib/doscan.c	7;"	d	file:
+EOF	lib/fgetc.c	6;"	d	file:
+EOF	lib/fputc.c	9;"	d	file:
+EOF	lib/fscanf.c	7;"	d	file:
+EOF	lib/sscanf.c	3;"	d	file:
+EOI	include/icu.h	9;"	d
+EOI	system/evec.c	34;"	d	file:
+ETHER0	config/conf.h	30;"	d
+ETHER0	include/conf.h	30;"	d
+ETH_ADDR_LEN	include/ether.h	10;"	d
+ETH_ARP	include/net.h	8;"	d
+ETH_BUF_SIZE	include/ether.h	34;"	d
+ETH_CRC_LEN	include/ether.h	29;"	d
+ETH_CTRL_ADD_MCAST	include/ether.h	45;"	d
+ETH_CTRL_GET_MAC	include/ether.h	44;"	d
+ETH_CTRL_REMOVE_MCAST	include/ether.h	46;"	d
+ETH_HDR_LEN	include/ether.h	22;"	d
+ETH_IP	include/net.h	9;"	d
+ETH_IPv6	include/net.h	10;"	d
+ETH_MAX_PKT_LEN	include/ether.h	32;"	d
+ETH_MTU	include/ether.h	27;"	d
+ETH_NUM_MCAST	include/ether.h	50;"	d
+ETH_QUARK_BMR_SWR	include/quark_eth.h	83;"	d
+ETH_QUARK_GMIIAR_CR	include/quark_eth.h	77;"	d
+ETH_QUARK_GMIIAR_GB	include/quark_eth.h	80;"	d
+ETH_QUARK_GMIIAR_GRMASK	include/quark_eth.h	76;"	d
+ETH_QUARK_GMIIAR_GW	include/quark_eth.h	79;"	d
+ETH_QUARK_GMIIAR_PAMASK	include/quark_eth.h	75;"	d
+ETH_QUARK_IER_AIE	include/quark_eth.h	100;"	d
+ETH_QUARK_IER_NIE	include/quark_eth.h	99;"	d
+ETH_QUARK_IER_RIE	include/quark_eth.h	101;"	d
+ETH_QUARK_IER_TIE	include/quark_eth.h	102;"	d
+ETH_QUARK_INIT_DELAY	include/quark_eth.h	147;"	d
+ETH_QUARK_MACCR_ACS	include/quark_eth.h	63;"	d
+ETH_QUARK_MACCR_DC	include/quark_eth.h	64;"	d
+ETH_QUARK_MACCR_DCRS	include/quark_eth.h	55;"	d
+ETH_QUARK_MACCR_DM	include/quark_eth.h	60;"	d
+ETH_QUARK_MACCR_DO	include/quark_eth.h	58;"	d
+ETH_QUARK_MACCR_DR	include/quark_eth.h	62;"	d
+ETH_QUARK_MACCR_IFG40	include/quark_eth.h	52;"	d
+ETH_QUARK_MACCR_IFG64	include/quark_eth.h	53;"	d
+ETH_QUARK_MACCR_IFG80	include/quark_eth.h	51;"	d
+ETH_QUARK_MACCR_IFG88	include/quark_eth.h	50;"	d
+ETH_QUARK_MACCR_IFG96	include/quark_eth.h	49;"	d
+ETH_QUARK_MACCR_IPC	include/quark_eth.h	61;"	d
+ETH_QUARK_MACCR_JD	include/quark_eth.h	45;"	d
+ETH_QUARK_MACCR_JE	include/quark_eth.h	46;"	d
+ETH_QUARK_MACCR_LM	include/quark_eth.h	59;"	d
+ETH_QUARK_MACCR_PE2K	include/quark_eth.h	43;"	d
+ETH_QUARK_MACCR_PRELEN3	include/quark_eth.h	69;"	d
+ETH_QUARK_MACCR_PRELEN5	include/quark_eth.h	68;"	d
+ETH_QUARK_MACCR_PRELEN7	include/quark_eth.h	67;"	d
+ETH_QUARK_MACCR_RE	include/quark_eth.h	66;"	d
+ETH_QUARK_MACCR_RMIISPD10	include/quark_eth.h	56;"	d
+ETH_QUARK_MACCR_RMIISPD100	include/quark_eth.h	57;"	d
+ETH_QUARK_MACCR_TE	include/quark_eth.h	65;"	d
+ETH_QUARK_MACCR_WD	include/quark_eth.h	44;"	d
+ETH_QUARK_MAX_RETRIES	include/quark_eth.h	148;"	d
+ETH_QUARK_MMC_CNTFREEZ	include/quark_eth.h	71;"	d
+ETH_QUARK_MMC_CNTRST	include/quark_eth.h	72;"	d
+ETH_QUARK_OMR_SR	include/quark_eth.h	96;"	d
+ETH_QUARK_OMR_ST	include/quark_eth.h	95;"	d
+ETH_QUARK_OMR_TSF	include/quark_eth.h	94;"	d
+ETH_QUARK_RDCTL1_DIC	include/quark_eth.h	139;"	d
+ETH_QUARK_RDCTL1_RER	include/quark_eth.h	140;"	d
+ETH_QUARK_RDST_ES	include/quark_eth.h	134;"	d
+ETH_QUARK_RDST_FS	include/quark_eth.h	135;"	d
+ETH_QUARK_RDST_FTETH	include/quark_eth.h	137;"	d
+ETH_QUARK_RDST_LS	include/quark_eth.h	136;"	d
+ETH_QUARK_RDST_OWN	include/quark_eth.h	133;"	d
+ETH_QUARK_RX_RING_SIZE	include/quark_eth.h	142;"	d
+ETH_QUARK_SR_AIS	include/quark_eth.h	89;"	d
+ETH_QUARK_SR_MMCI	include/quark_eth.h	86;"	d
+ETH_QUARK_SR_NIS	include/quark_eth.h	88;"	d
+ETH_QUARK_SR_RI	include/quark_eth.h	90;"	d
+ETH_QUARK_SR_TI	include/quark_eth.h	91;"	d
+ETH_QUARK_SR_TS_SUSP	include/quark_eth.h	87;"	d
+ETH_QUARK_TDCS_ES	include/quark_eth.h	119;"	d
+ETH_QUARK_TDCS_FS	include/quark_eth.h	117;"	d
+ETH_QUARK_TDCS_IC	include/quark_eth.h	115;"	d
+ETH_QUARK_TDCS_LS	include/quark_eth.h	116;"	d
+ETH_QUARK_TDCS_OWN	include/quark_eth.h	114;"	d
+ETH_QUARK_TDCS_TER	include/quark_eth.h	118;"	d
+ETH_QUARK_TX_RING_SIZE	include/quark_eth.h	144;"	d
+ETH_STATE_DOWN	include/ether.h	39;"	d
+ETH_STATE_FREE	include/ether.h	38;"	d
+ETH_STATE_UP	include/ether.h	40;"	d
+ETH_TYPE_3C905C	include/ether.h	54;"	d
+ETH_TYPE_E1000E	include/ether.h	55;"	d
+ETH_TYPE_QUARK_ETH	include/ether.h	56;"	d
+ETH_VLAN_LEN	include/ether.h	28;"	d
+EXIT_SUCCESS	config/y.tab.c	409;"	d	file:
+EXIT_SUCCESS	config/y.tab.c	437;"	d	file:
+Eaddr	include/ether.h	/^typedef	unsigned char	Eaddr[ETH_ADDR_LEN];\/* Physical Ethernet address*\/$/;"	t
+FALSE	include/kernel.h	41;"	d
+FILESYS	device/nam/naminit.c	10;"	d	file:
+FLAGS_GRANULARITY	system/meminit.c	34;"	d	file:
+FLAGS_SETTINGS	system/meminit.c	36;"	d	file:
+FLAGS_SIZE	system/meminit.c	35;"	d	file:
+FLASH_AMD_ECS	include/flash.h	127;"	d
+FLASH_AMD_SCS	include/flash.h	125;"	d
+FLASH_BLK_SIZE	include/flash.h	16;"	d
+FLASH_BLOCK	include/flash.h	214;"	d
+FLASH_BLOCK_CLEAN	include/flash.h	19;"	d
+FLASH_BLOCK_DIRTY	include/flash.h	20;"	d
+FLASH_BLOCK_FREE	include/flash.h	18;"	d
+FLASH_BLOCK_SIZE	include/flash.h	31;"	d
+FLASH_ERASE_PREP	include/flash.h	224;"	d
+FLASH_INTEL_ECS	include/flash.h	124;"	d
+FLASH_INTEL_SCS	include/flash.h	126;"	d
+FLASH_LOCK	include/flash.h	221;"	d
+FLASH_LOCKDOWN	include/flash.h	223;"	d
+FLASH_LOCKED	include/flash.h	220;"	d
+FLASH_LOGBLOCK	include/flash.h	215;"	d
+FLASH_MODE	include/flash.h	219;"	d
+FLASH_MTSU_ECS	include/flash.h	129;"	d
+FLASH_MTSU_SCS	include/flash.h	128;"	d
+FLASH_N_BLOCKS	include/flash.h	32;"	d
+FLASH_RESET	include/flash.h	225;"	d
+FLASH_STATUS	include/flash.h	218;"	d
+FLASH_SYNC	include/flash.h	33;"	d
+FLASH_UNLOCK	include/flash.h	222;"	d
+FLASH_WIDEMODE	include/flash.h	36;"	d
+FLEXINT_H	config/lex.yy.c	29;"	d	file:
+FLEX_BETA	config/lex.yy.c	13;"	d	file:
+FLEX_SCANNER	config/lex.yy.c	8;"	d	file:
+F_CTL_DEL	include/file.h	16;"	d
+F_CTL_MKDIR	include/file.h	18;"	d
+F_CTL_RMDIR	include/file.h	19;"	d
+F_CTL_SIZE	include/file.h	20;"	d
+F_CTL_TRUNC	include/file.h	17;"	d
+F_MODE_N	include/file.h	8;"	d
+F_MODE_NO	include/file.h	12;"	d
+F_MODE_O	include/file.h	9;"	d
+F_MODE_R	include/file.h	5;"	d
+F_MODE_RW	include/file.h	7;"	d
+F_MODE_W	include/file.h	6;"	d
+GDT_BYTES	system/start.S	/^#define	GDT_BYTES		(GDT_ENTRIES * GDT_ENTRY_SIZE)$/;"	d
+GDT_ENTRIES	system/start.S	/^#define	GDT_ENTRIES		4$/;"	d
+GDT_ENTRY_SIZE	system/start.S	/^#define	GDT_ENTRY_SIZE		8$/;"	d
+GETC	config/y.tab.c	/^    GETC = 276,$/;"	e	enum:yytokentype	file:
+GETC	config/y.tab.c	258;"	d	file:
+GPET_GC_LRE	include/hpet.h	4;"	d
+HPET_BASE_ADDR	include/hpet.h	34;"	d
+HPET_GC_OE	include/hpet.h	3;"	d
+HPET_GIS_T0	include/hpet.h	6;"	d
+HPET_TXCC_IE	include/hpet.h	9;"	d
+HPET_TXCC_IT	include/hpet.h	8;"	d
+HPET_TXCC_TVS	include/hpet.h	11;"	d
+HPET_TXCC_TYP	include/hpet.h	10;"	d
+ICMP_ECHOREPLY	include/icmp.h	16;"	d
+ICMP_ECHOREQST	include/icmp.h	17;"	d
+ICMP_FREE	include/icmp.h	8;"	d
+ICMP_HDR_LEN	include/icmp.h	12;"	d
+ICMP_QSIZ	include/icmp.h	4;"	d
+ICMP_RECV	include/icmp.h	10;"	d
+ICMP_SLOTS	include/icmp.h	3;"	d
+ICMP_USED	include/icmp.h	9;"	d
+ICU1	include/icu.h	3;"	d
+ICU1	system/evec.c	28;"	d	file:
+ICU2	include/icu.h	4;"	d
+ICU2	system/evec.c	29;"	d	file:
+IDENT	config/y.tab.c	/^    IDENT = 263,$/;"	e	enum:yytokentype	file:
+IDENT	config/y.tab.c	245;"	d	file:
+IDT_BYTES	system/start.S	/^#define	IDT_BYTES		(IDT_ENTRIES * IDT_ENTRY_SIZE)$/;"	d
+IDT_ENTRIES	system/start.S	/^#define	IDT_ENTRIES		256$/;"	d
+IDT_ENTRY_SIZE	system/start.S	/^#define	IDT_ENTRY_SIZE		8$/;"	d
+IFBRK	config/y.tab.c	/^    IFBRK = 259,$/;"	e	enum:yytokentype	file:
+IFBRK	config/y.tab.c	241;"	d	file:
+IF_DOWN	include/net.h	45;"	d
+IF_NLEN	include/net.h	50;"	d
+IF_QUEUESIZE	include/net.h	47;"	d
+IF_UP	include/net.h	44;"	d
+IGDT_INTRG	system/evec.c	38;"	d	file:
+IGDT_TRAPG	system/evec.c	37;"	d	file:
+IMR	include/icu.h	7;"	d
+IMR	system/evec.c	32;"	d	file:
+IMR1	system/evec.c	25;"	d	file:
+IMR2	system/evec.c	26;"	d	file:
+IMR_BASE_ADDR	system/early_imr.c	44;"	d	file:
+IMR_LOCK_BIT	system/early_imr.c	45;"	d	file:
+IMR_MASK	system/early_imr.c	48;"	d	file:
+IMR_NON_SMM_ENABLE	system/early_imr.c	52;"	d	file:
+IMR_READ_ENABLE_ALL	system/early_imr.c	43;"	d	file:
+IMR_SNOOP_NON_SMM_ENABLE	system/early_imr.c	50;"	d	file:
+IMR_WRITE_ENABLE_ALL	system/early_imr.c	42;"	d	file:
+INCLUDE	compile/Makefile	/^INCLUDE		=	-I$(TOPDIR)\/include$/;"	m
+INFILE	config/y.tab.c	99;"	d	file:
+INIT	config/y.tab.c	/^    INIT = 267,$/;"	e	enum:yytokentype	file:
+INIT	config/y.tab.c	249;"	d	file:
+INITIAL	config/lex.yy.c	507;"	d	file:
+INITPRIO	include/process.h	28;"	d
+INITRET	include/process.h	29;"	d
+INITSTK	include/process.h	27;"	d
+INT16_MAX	config/lex.yy.c	71;"	d	file:
+INT16_MIN	config/lex.yy.c	62;"	d	file:
+INT32_MAX	config/lex.yy.c	74;"	d	file:
+INT32_MIN	config/lex.yy.c	65;"	d	file:
+INT8_MAX	config/lex.yy.c	68;"	d	file:
+INT8_MIN	config/lex.yy.c	59;"	d	file:
+INTEGER	config/y.tab.c	/^    INTEGER = 262,$/;"	e	enum:yytokentype	file:
+INTEGER	config/y.tab.c	244;"	d	file:
+INTEL_BLOCKMOD	include/flash.h	171;"	d
+INTEL_CLN_SB_BYTEEN	system/early_imr.c	20;"	d	file:
+INTEL_CLN_SB_CMD_ADDR	system/early_imr.c	14;"	d	file:
+INTEL_CLN_SB_DATA_ADDR	system/early_imr.c	15;"	d	file:
+INTEL_CLN_SB_MCR_SHIFT	system/early_imr.c	17;"	d	file:
+INTEL_CLN_SB_PORT_SHIFT	system/early_imr.c	18;"	d	file:
+INTEL_CLN_SB_REG_SHIFT	system/early_imr.c	19;"	d	file:
+INTEL_CLR_SR	include/flash.h	169;"	d
+INTEL_CONFIRM	include/flash.h	164;"	d
+INTEL_ERASE	include/flash.h	163;"	d
+INTEL_ETH_QUARK_PCI_DID	include/quark_eth.h	5;"	d
+INTEL_ETH_QUARK_PCI_VID	include/quark_eth.h	6;"	d
+INTEL_GET_16	include/flash.h	150;"	d
+INTEL_GET_8	include/flash.h	138;"	d
+INTEL_H_LOCK	include/flash.h	207;"	d
+INTEL_ID_BLS	include/flash.h	203;"	d
+INTEL_ID_DEV	include/flash.h	202;"	d
+INTEL_ID_MFG	include/flash.h	201;"	d
+INTEL_LOCK	include/flash.h	172;"	d
+INTEL_LOCKDOWN	include/flash.h	173;"	d
+INTEL_PROGRAM	include/flash.h	162;"	d
+INTEL_PUT_16	include/flash.h	148;"	d
+INTEL_PUT_8	include/flash.h	136;"	d
+INTEL_QUARK_LEGBR_PCI_DID	include/quark_irq.h	1;"	d
+INTEL_QUARK_LEGBR_PCI_VID	include/quark_irq.h	2;"	d
+INTEL_QUARK_SDIO_PCI_DID	include/sdmc.h	1;"	d
+INTEL_QUARK_SDIO_PCI_VID	include/sdmc.h	2;"	d
+INTEL_QUARK_UART_PCI_DID	include/uart.h	7;"	d
+INTEL_QUARK_UART_PCI_VID	include/uart.h	8;"	d
+INTEL_READ	include/flash.h	161;"	d
+INTEL_READ_ID	include/flash.h	170;"	d
+INTEL_READ_SR	include/flash.h	168;"	d
+INTEL_RESUME	include/flash.h	165;"	d
+INTEL_SR_BLS	include/flash.h	198;"	d
+INTEL_SR_ES	include/flash.h	195;"	d
+INTEL_SR_ESS	include/flash.h	194;"	d
+INTEL_SR_PS	include/flash.h	196;"	d
+INTEL_SR_PSS	include/flash.h	197;"	d
+INTEL_SR_WSMS	include/flash.h	193;"	d
+INTEL_SUSPEND	include/flash.h	167;"	d
+INTEL_S_LOCK	include/flash.h	206;"	d
+INTEL_UNLOCK	include/flash.h	166;"	d
+INTR	config/y.tab.c	/^    INTR = 266,$/;"	e	enum:yytokentype	file:
+INTR	config/y.tab.c	248;"	d	file:
+INT_ENTRY_SIZE	include/interrupt.h	22;"	d
+INT_MAX	include/limits.h	18;"	d
+INT_MIN	include/limits.h	19;"	d
+INT_NEXT_HAND	include/interrupt.h	28;"	d
+IOAPIC_IDX_ADDR	include/apic.h	45;"	d
+IOAPIC_WIN_ADDR	include/apic.h	46;"	d
+IPLEN	include/icmpv6.h	24;"	d
+IPV6OUTNBUFS	include/ipv6.h	13;"	d
+IPV6_ADDRBITS	include/ipv6.h	8;"	d
+IPV6_ASIZE	include/ipv6.h	9;"	d
+IPV6_FRAG	include/ipv6.h	6;"	d
+IPV6_HDR_LEN	include/ipv6.h	10;"	d
+IPV6_ICMP	include/ipv6.h	3;"	d
+IPV6_TCP	include/ipv6.h	5;"	d
+IPV6_UDP	include/ipv6.h	4;"	d
+IPV6_VH	include/ipv6.h	11;"	d
+IP_ALLZEROS	include/ip.h	5;"	d
+IP_ASIZE	include/ip.h	10;"	d
+IP_BCAST	include/ip.h	3;"	d
+IP_HDR_LEN	include/ip.h	11;"	d
+IP_ICMP	include/ip.h	7;"	d
+IP_OQSIZ	include/ip.h	14;"	d
+IP_THIS	include/ip.h	4;"	d
+IP_UDP	include/ip.h	8;"	d
+IP_VH	include/ip.h	12;"	d
+IRQ	config/y.tab.c	/^    IRQ = 265,$/;"	e	enum:yytokentype	file:
+IRQ	config/y.tab.c	247;"	d	file:
+IRQAGENT0_OFFSET	include/quark_irq.h	14;"	d
+IRQAGENT0_VALUE	include/quark_irq.h	19;"	d
+IRQAGENT1_OFFSET	include/quark_irq.h	15;"	d
+IRQAGENT1_VALUE	include/quark_irq.h	20;"	d
+IRQAGENT2_OFFSET	include/quark_irq.h	16;"	d
+IRQAGENT2_VALUE	include/quark_irq.h	21;"	d
+IRQAGENT3_OFFSET	include/quark_irq.h	17;"	d
+IRQAGENT3_VALUE	include/quark_irq.h	22;"	d
+IRQBASE	config/conf.h	73;"	d
+IRQBASE	include/conf.h	73;"	d
+IRQ_ATH_MISC	config/conf.h	75;"	d
+IRQ_ATH_MISC	include/conf.h	75;"	d
+IRQ_TIMER	config/conf.h	74;"	d
+IRQ_TIMER	include/conf.h	74;"	d
+IS	config/y.tab.c	/^    IS = 274,$/;"	e	enum:yytokentype	file:
+IS	config/y.tab.c	256;"	d	file:
+KERNEL_MAX_BLOCK	include/flash.h	26;"	d
+KERNEL_MIN_BLOCK	include/flash.h	25;"	d
+L	include/icmpv6.h	/^    uint32 L:1;$/;"	m	struct:idk
+L1	system/start.S	/^L1:$/;"	l
+LAPIC_BASE_ADDR	include/apic.h	43;"	d
+LA_reserved	include/icmpv6.h	/^    byte LA_reserved;$/;"	m	struct:option_prefix
+LD	compile/Makefile	/^LD		=	${COMPILER_ROOT}ld$/;"	m
+LDFLAGS	compile/Makefile	/^LDFLAGS = -dn -m elf_i386 -Map xinu.map -T $(LDSCRIPT)$/;"	m
+LDSCRIPT	compile/Makefile	/^LDSCRIPT	=	ld.script$/;"	m
+LD_LIST	compile/Makefile	/^LD_LIST = binaries\/start.o $(filter-out binaries\/start.o,$(OBJ_FILES))$/;"	m
+LEX	config/Makefile	/^LEX	= ${COMPILER_ROOT}flex$/;"	m
+LFILE0	config/conf.h	46;"	d
+LFILE0	include/conf.h	46;"	d
+LFILE1	config/conf.h	47;"	d
+LFILE1	include/conf.h	47;"	d
+LFILE2	config/conf.h	48;"	d
+LFILE2	include/conf.h	48;"	d
+LFILE3	config/conf.h	49;"	d
+LFILE3	include/conf.h	49;"	d
+LFILE4	config/conf.h	50;"	d
+LFILE4	include/conf.h	50;"	d
+LFILE5	config/conf.h	51;"	d
+LFILE5	include/conf.h	51;"	d
+LFILESYS	config/conf.h	45;"	d
+LFILESYS	device/nam/naminit.c	14;"	d	file:
+LFILESYS	include/conf.h	45;"	d
+LFLAGS	config/Makefile	/^LFLAGS	= -lfl$/;"	m
+LFS_ID	include/lfilesys.h	80;"	d
+LF_AREA_DIR	include/lfilesys.h	67;"	d
+LF_AREA_IB	include/lfilesys.h	66;"	d
+LF_BLKSIZ	include/lfilesys.h	48;"	d
+LF_CTL_DEL	include/lfilesys.h	174;"	d
+LF_CTL_SIZE	include/lfilesys.h	176;"	d
+LF_CTL_TRUNC	include/lfilesys.h	175;"	d
+LF_DISK_DEV	config/conf.h	78;"	d
+LF_DISK_DEV	include/conf.h	78;"	d
+LF_DISK_DEV	include/lfilesys.h	39;"	d
+LF_DMASK	include/lfilesys.h	63;"	d
+LF_DNULL	include/lfilesys.h	56;"	d
+LF_FREE	include/lfilesys.h	52;"	d
+LF_IBLEN	include/lfilesys.h	57;"	d
+LF_IDATA	include/lfilesys.h	58;"	d
+LF_IMASK	include/lfilesys.h	60;"	d
+LF_INULL	include/lfilesys.h	55;"	d
+LF_MODE_N	include/lfilesys.h	46;"	d
+LF_MODE_O	include/lfilesys.h	45;"	d
+LF_MODE_R	include/lfilesys.h	42;"	d
+LF_MODE_RW	include/lfilesys.h	44;"	d
+LF_MODE_W	include/lfilesys.h	43;"	d
+LF_NAME_LEN	include/lfilesys.h	49;"	d
+LF_NUM_DIR_ENT	include/lfilesys.h	50;"	d
+LF_USED	include/lfilesys.h	53;"	d
+LONG	lib/doscan.c	15;"	d	file:
+LONG_MAX	include/limits.h	22;"	d
+LONG_MIN	include/limits.h	23;"	d
+Lf_data	device/lfs/lfsinit.c	/^struct	lfdata	Lf_data;$/;"	v	typeref:struct:lfdata
+MAKEDEP	compile/Makefile	/^MAKEDEP		=	$(CC) -M -MG$/;"	m
+MAKEXBIN	compile/Makefile	/^MAKEXBIN 	=	$(TOPDIR)\/compile\/bin\/buildxbin$/;"	m
+MAXKEY	include/queue.h	12;"	d
+MAXMARK	include/mark.h	3;"	d
+MAXNAME	config/y.tab.c	100;"	d	file:
+MAXSECONDS	system/sleep.c	5;"	d	file:
+MAXSTR	lib/doprnt.c	5;"	d	file:
+MAXSTR	lib/fdoprnt.c	5;"	d	file:
+MAX_EXT_IRQS	include/interrupt.h	5;"	d
+MAX_IRQ_SHARING	include/interrupt.h	16;"	d
+MAX_LIVE_BLOCKS	include/flash.h	15;"	d
+MAX_PAYLOAD	include/icmpv6.h	32;"	d
+MAX_REGIONS	include/flash.h	37;"	d
+MDELAY	include/delay.h	16;"	d
+MINKEY	include/queue.h	13;"	d
+MINSTK	include/kernel.h	59;"	d
+MKVERS	compile/Makefile	/^MKVERS		=	$(TOPDIR)\/compile\/bin\/mkvers$/;"	m
+MMCONFIG_BASE	system/pci.c	18;"	d	file:
+MMCONFIG_LEN	system/pci.c	19;"	d	file:
+MTU	net/radvert.c	/^uint32  MTU;$/;"	v
+MULTIBOOT_BOOFINFO_MEM	include/multiboot.h	44;"	d
+MULTIBOOT_BOOTINFO_BOOTDEV	include/multiboot.h	47;"	d
+MULTIBOOT_BOOTINFO_CMDLINE	include/multiboot.h	50;"	d
+MULTIBOOT_BOOTINFO_MMAP	include/multiboot.h	56;"	d
+MULTIBOOT_BOOTINFO_MMAP	system/start.S	/^#define MULTIBOOT_BOOTINFO_MMAP	0x00000040	\/* mmap_length mmap_addr valid		*\/$/;"	d
+MULTIBOOT_BOOTINFO_MODS	include/multiboot.h	53;"	d
+MULTIBOOT_HEADER_FLAGS	include/multiboot.h	38;"	d
+MULTIBOOT_HEADER_FLAGS	system/start.S	/^#define	MULTIBOOT_HEADER_FLAGS  0x00010003$/;"	d
+MULTIBOOT_HEADER_MAGIC	include/multiboot.h	35;"	d
+MULTIBOOT_HEADER_MAGIC	system/start.S	/^#define	MULTIBOOT_HEADER_MAGIC  0x1BADB002$/;"	d
+MULTIBOOT_MMAP_TYPE_USABLE	include/multiboot.h	59;"	d
+MULTIBOOT_SIGNATURE	include/multiboot.h	41;"	d
+MULTIBOOT_SIGNATURE	system/start.S	/^#define MULTIBOOT_SIGNATURE	0x2BADB002	\/* Multiboot signature verification	*\/$/;"	d
+NADSIZE	include/icmpv6.h	30;"	d
+NAMESPACE	config/conf.h	31;"	d
+NAMESPACE	include/conf.h	31;"	d
+NBPOOLS	include/bufpool.h	4;"	d
+NDESC	include/process.h	39;"	d
+NDEVS	config/conf.h	66;"	d
+NDEVS	config/y.tab.c	102;"	d	file:
+NDEVS	include/conf.h	66;"	d
+NEIGHBA	include/icmpv6.h	44;"	d
+NEIGHBS	include/icmpv6.h	43;"	d
+NETPRIO	include/net.h	4;"	d
+NETSTK	include/net.h	3;"	d
+NGD	system/meminit.c	33;"	d	file:
+NID	system/evec.c	36;"	d	file:
+NIFACES	include/net.h	39;"	d
+NIL	config/y.tab.c	94;"	d	file:
+NM_MAXLEN	include/name.h	7;"	d
+NM_PRELEN	include/name.h	5;"	d
+NM_REPLLEN	include/name.h	6;"	d
+NNAMES	include/name.h	8;"	d
+NPORTS	include/ports.h	3;"	d
+NPROC	config/conf.h	71;"	d
+NPROC	include/conf.h	71;"	d
+NPROC	include/process.h	6;"	d
+NQENT	include/queue.h	8;"	d
+NSEM	config/conf.h	72;"	d
+NSEM	include/conf.h	72;"	d
+NSEM	include/semaphore.h	4;"	d
+NSOLSIZE	include/icmpv6.h	29;"	d
+NTYPES	config/y.tab.c	103;"	d	file:
+NULL	include/kernel.h	46;"	d
+NULL	lib/doprnt.c	6;"	d	file:
+NULL	lib/doscan.c	8;"	d	file:
+NULL	lib/fdoprnt.c	6;"	d	file:
+NULL	lib/fgets.c	4;"	d	file:
+NULLCH	include/kernel.h	47;"	d
+NULLDEV	config/conf.h	29;"	d
+NULLDEV	include/conf.h	29;"	d
+NULLPROC	include/process.h	23;"	d
+NULLSTK	include/kernel.h	67;"	d
+NULLSTK	system/start.S	/^#define NULLSTK			(8192)		\/* This must match NULLSTK defined in kernel.h 		*\/$/;"	d
+NULLSTR	include/kernel.h	48;"	d
+NVRAM_MAX_BLOCK	include/flash.h	28;"	d
+NVRAM_MIN_BLOCK	include/flash.h	27;"	d
+Neth	config/conf.h	57;"	d
+Neth	include/conf.h	57;"	d
+Nlfl	config/conf.h	63;"	d
+Nlfl	include/conf.h	63;"	d
+Nlfl	include/lfilesys.h	32;"	d
+Nlfs	config/conf.h	62;"	d
+Nlfs	include/conf.h	62;"	d
+Nnam	config/conf.h	64;"	d
+Nnam	include/conf.h	64;"	d
+Nnull	config/conf.h	55;"	d
+Nnull	include/conf.h	55;"	d
+Nram	config/conf.h	59;"	d
+Nram	include/conf.h	59;"	d
+Nrds	config/conf.h	58;"	d
+Nrds	include/conf.h	58;"	d
+Nrds	include/rdisksys.h	4;"	d
+Nrfl	config/conf.h	61;"	d
+Nrfl	include/conf.h	61;"	d
+Nrfl	include/rfilesys.h	4;"	d
+Nrfs	config/conf.h	60;"	d
+Nrfs	include/conf.h	60;"	d
+Nsdmc	include/sdmc.h	5;"	d
+Ntty	config/conf.h	56;"	d
+Ntty	include/conf.h	56;"	d
+Ntty	include/tty.h	10;"	d
+O	include/icmpv6.h	/^    uint32 O: 1;$/;"	m	struct:nadvert
+OBJCOPY	compile/Makefile	/^OBJCOPY		=	${COMPILER_ROOT}objcopy$/;"	m
+OCR	include/icu.h	6;"	d
+OCR	system/evec.c	31;"	d	file:
+OCTAL	config/y.tab.c	/^    OCTAL = 261,$/;"	e	enum:yytokentype	file:
+OCTAL	config/y.tab.c	243;"	d	file:
+OK	include/kernel.h	52;"	d
+ON	config/y.tab.c	/^    ON = 275,$/;"	e	enum:yytokentype	file:
+ON	config/y.tab.c	257;"	d	file:
+OPEN	config/y.tab.c	/^    OPEN = 268,$/;"	e	enum:yytokentype	file:
+OPEN	config/y.tab.c	250;"	d	file:
+OTH_ADDR_LEN	include/net.h	12;"	d
+PABCDRC_OFFSET	include/quark_irq.h	4;"	d
+PABCDRC_VALUE	include/quark_irq.h	7;"	d
+PACKLEN	include/net.h	31;"	d
+PAGE_SIZE	include/memory.h	3;"	d
+PCIE_BYTES_PER_BUS	include/pci.h	15;"	d
+PCIE_BYTES_PER_DEVICE	include/pci.h	13;"	d
+PCIE_BYTES_PER_FUNCTION	include/pci.h	12;"	d
+PCI_BARS_PER_HEADER	include/pci.h	18;"	d
+PCI_BAR_BASE_ADDRESS_MASK	include/pci.h	31;"	d
+PCI_BAR_LOCATABLE_1MB_MASK	include/pci.h	28;"	d
+PCI_BAR_LOCATABLE_64B_MASK	include/pci.h	29;"	d
+PCI_BAR_LOCATABLE_PREFETCH	include/pci.h	30;"	d
+PCI_BAR_REGION_TYPE_IO_MASK	include/pci.h	27;"	d
+PCI_BUS_MASK	include/pci.h	9;"	d
+PCI_BUS_SHIFT	include/pci.h	23;"	d
+PCI_DEVICES_PER_BUS	include/pci.h	7;"	d
+PCI_DEVICE_ID_CLANTON_SB	system/early_imr.c	115;"	d	file:
+PCI_DEV_MASK	include/pci.h	10;"	d
+PCI_DEV_SHIFT	include/pci.h	24;"	d
+PCI_FUNCTIONS_PER_DEVICE	include/pci.h	8;"	d
+PCI_FUNC_MASK	include/pci.h	11;"	d
+PCI_HDR_TYPE_MULTIFCN	include/pci.h	21;"	d
+PCI_HEADER_TYPE0_SIZE	include/pci.h	20;"	d
+PCI_MAX_BUSES	include/pci.h	6;"	d
+PCI_VENDOR_ID_INTEL	system/early_imr.c	114;"	d	file:
+PEFGHRC_OFFSET	include/quark_irq.h	5;"	d
+PEFGHRC_VALUE	include/quark_irq.h	8;"	d
+PKT_BIG	include/icmpv6.h	34;"	d
+PLAT	compile/Makefile	/^PLAT		=	Platform_$(PNAME)$/;"	m
+PNAME	compile/Makefile	/^PNAME		=	galileo$/;"	m
+PNMLEN	include/process.h	22;"	d
+PRECISION	lib/doprnt.c	7;"	d	file:
+PR_CURR	include/process.h	12;"	d
+PR_FREE	include/process.h	11;"	d
+PR_READY	include/process.h	13;"	d
+PR_RECTIM	include/process.h	18;"	d
+PR_RECV	include/process.h	14;"	d
+PR_SLEEP	include/process.h	15;"	d
+PR_SUSP	include/process.h	16;"	d
+PR_WAIT	include/process.h	17;"	d
+PSEUDOLEN	include/icmpv6.h	26;"	d
+PT_ALLOC	include/ports.h	7;"	d
+PT_FREE	include/ports.h	5;"	d
+PT_LIMBO	include/ports.h	6;"	d
+PT_MSGS	include/ports.h	4;"	d
+PUTC	config/y.tab.c	/^    PUTC = 277$/;"	e	enum:yytokentype	file:
+PUTC	config/y.tab.c	259;"	d	file:
+PVT1	include/icmpv6.h	36;"	d
+PVT2	include/icmpv6.h	37;"	d
+PVT3	include/icmpv6.h	49;"	d
+PVT4	include/icmpv6.h	50;"	d
+QUANTUM	include/kernel.h	63;"	d
+QUARK_CONS_BAR_INDEX	system/platinit.c	5;"	d	file:
+QUARK_CONS_PORT	system/platinit.c	4;"	d	file:
+QUARK_CPUID_VALUE	system/platinit.c	7;"	d	file:
+QUARK_MAC1_DESC	include/quark_pdat.h	16;"	d
+QUARK_MAC1_ID	include/quark_pdat.h	9;"	d
+QUARK_MAC2_DESC	include/quark_pdat.h	17;"	d
+QUARK_MAC2_ID	include/quark_pdat.h	10;"	d
+QUARK_MRCPARAMS_DESC	include/quark_pdat.h	15;"	d
+QUARK_MRCPARAMS_ID	include/quark_pdat.h	11;"	d
+QUARK_PDAT_MAGIC	include/quark_pdat.h	4;"	d
+QUARK_PDAT_MEMORY_LOC	include/quark_pdat.h	5;"	d
+QUARK_PLAT_TYPE_DESC	include/quark_pdat.h	14;"	d
+QUARK_PLAT_TYPE_ID	include/quark_pdat.h	8;"	d
+R	include/icmpv6.h	/^    uint32 R: 1;$/;"	m	struct:nadvert
+RADVERTSIZE	include/icmpv6.h	28;"	d
+RAM0	config/conf.h	33;"	d
+RAM0	include/conf.h	33;"	d
+RAND_MAX	include/stdlib.h	8;"	d
+RCBA_MASK	include/quark_irq.h	11;"	d
+RCBA_OFFSET	include/quark_irq.h	10;"	d
+RDISK	config/conf.h	32;"	d
+RDISK	include/conf.h	32;"	d
+RDS_CTL_DEL	include/rdisksys.h	110;"	d
+RDS_CTL_SYNC	include/rdisksys.h	111;"	d
+RD_BLKSIZ	include/rdisksys.h	9;"	d
+RD_BUFFS	include/rdisksys.h	30;"	d
+RD_FREE	include/rdisksys.h	36;"	d
+RD_IDLEN	include/rdisksys.h	29;"	d
+RD_INVALID	include/rdisksys.h	49;"	d
+RD_LOC_PORT	include/rdisksys.h	22;"	d
+RD_MAX_REQ	include/rdisksys.h	136;"	d
+RD_MIN_REQ	include/rdisksys.h	135;"	d
+RD_MSG_CREQ	include/rdisksys.h	129;"	d
+RD_MSG_CRES	include/rdisksys.h	130;"	d
+RD_MSG_DREQ	include/rdisksys.h	132;"	d
+RD_MSG_DRES	include/rdisksys.h	133;"	d
+RD_MSG_HDR	include/rdisksys.h	140;"	d
+RD_MSG_OREQ	include/rdisksys.h	126;"	d
+RD_MSG_ORES	include/rdisksys.h	127;"	d
+RD_MSG_RESPONSE	include/rdisksys.h	118;"	d
+RD_MSG_RREQ	include/rdisksys.h	120;"	d
+RD_MSG_RRES	include/rdisksys.h	121;"	d
+RD_MSG_WREQ	include/rdisksys.h	123;"	d
+RD_MSG_WRES	include/rdisksys.h	124;"	d
+RD_OPEN	include/rdisksys.h	37;"	d
+RD_OP_READ	include/rdisksys.h	42;"	d
+RD_OP_SYNC	include/rdisksys.h	44;"	d
+RD_OP_WRITE	include/rdisksys.h	43;"	d
+RD_PEND	include/rdisksys.h	38;"	d
+RD_PRIO	include/rdisksys.h	32;"	d
+RD_RETRIES	include/rdisksys.h	105;"	d
+RD_SERVER_IP	include/rdisksys.h	14;"	d
+RD_SERVER_PORT	include/rdisksys.h	18;"	d
+RD_STACK	include/rdisksys.h	31;"	d
+RD_TIMEOUT	include/rdisksys.h	106;"	d
+RD_VALID	include/rdisksys.h	48;"	d
+READ	config/y.tab.c	/^    READ = 270,$/;"	e	enum:yytokentype	file:
+READ	config/y.tab.c	252;"	d	file:
+REBUILDFLAGS	compile/Makefile	/^REBUILDFLAGS	=	-s $(TOPDIR)\/system  debug.c		\\$/;"	m
+REGULAR	lib/doscan.c	14;"	d	file:
+REJECT	config/lex.yy.c	495;"	d	file:
+RFILE0	config/conf.h	35;"	d
+RFILE0	include/conf.h	35;"	d
+RFILE1	config/conf.h	36;"	d
+RFILE1	include/conf.h	36;"	d
+RFILE2	config/conf.h	37;"	d
+RFILE2	include/conf.h	37;"	d
+RFILE3	config/conf.h	38;"	d
+RFILE3	include/conf.h	38;"	d
+RFILE4	config/conf.h	39;"	d
+RFILE4	include/conf.h	39;"	d
+RFILE5	config/conf.h	40;"	d
+RFILE5	include/conf.h	40;"	d
+RFILE6	config/conf.h	41;"	d
+RFILE6	include/conf.h	41;"	d
+RFILE7	config/conf.h	42;"	d
+RFILE7	include/conf.h	42;"	d
+RFILE8	config/conf.h	43;"	d
+RFILE8	include/conf.h	43;"	d
+RFILE9	config/conf.h	44;"	d
+RFILE9	include/conf.h	44;"	d
+RFILESYS	config/conf.h	34;"	d
+RFILESYS	device/nam/naminit.c	6;"	d	file:
+RFILESYS	include/conf.h	34;"	d
+RFS_CTL_DEL	include/rfilesys.h	67;"	d
+RFS_CTL_MKDIR	include/rfilesys.h	69;"	d
+RFS_CTL_RMDIR	include/rfilesys.h	70;"	d
+RFS_CTL_SIZE	include/rfilesys.h	71;"	d
+RFS_CTL_TRUNC	include/rfilesys.h	68;"	d
+RF_DATALEN	include/rfilesys.h	10;"	d
+RF_DIRENT_DIR	include/rfilesys.h	322;"	d
+RF_DIRENT_FILE	include/rfilesys.h	321;"	d
+RF_FREE	include/rfilesys.h	46;"	d
+RF_LOC_PORT	include/rfilesys.h	29;"	d
+RF_MAX_REQ	include/rfilesys.h	111;"	d
+RF_MIN_REQ	include/rfilesys.h	110;"	d
+RF_MODE_N	include/rfilesys.h	14;"	d
+RF_MODE_NO	include/rfilesys.h	16;"	d
+RF_MODE_O	include/rfilesys.h	15;"	d
+RF_MODE_R	include/rfilesys.h	11;"	d
+RF_MODE_RW	include/rfilesys.h	13;"	d
+RF_MODE_W	include/rfilesys.h	12;"	d
+RF_MSG_CREQ	include/rfilesys.h	107;"	d
+RF_MSG_CRES	include/rfilesys.h	108;"	d
+RF_MSG_DREQ	include/rfilesys.h	92;"	d
+RF_MSG_DRES	include/rfilesys.h	93;"	d
+RF_MSG_HDR	include/rfilesys.h	115;"	d
+RF_MSG_MREQ	include/rfilesys.h	101;"	d
+RF_MSG_MRES	include/rfilesys.h	102;"	d
+RF_MSG_OREQ	include/rfilesys.h	89;"	d
+RF_MSG_ORES	include/rfilesys.h	90;"	d
+RF_MSG_RESPONSE	include/rfilesys.h	81;"	d
+RF_MSG_RREQ	include/rfilesys.h	83;"	d
+RF_MSG_RRES	include/rfilesys.h	84;"	d
+RF_MSG_SREQ	include/rfilesys.h	98;"	d
+RF_MSG_SRES	include/rfilesys.h	99;"	d
+RF_MSG_TREQ	include/rfilesys.h	95;"	d
+RF_MSG_TRES	include/rfilesys.h	96;"	d
+RF_MSG_WREQ	include/rfilesys.h	86;"	d
+RF_MSG_WRES	include/rfilesys.h	87;"	d
+RF_MSG_XREQ	include/rfilesys.h	104;"	d
+RF_MSG_XRES	include/rfilesys.h	105;"	d
+RF_NAMLEN	include/rfilesys.h	9;"	d
+RF_RETRIES	include/rfilesys.h	62;"	d
+RF_SERVER_IP	include/rfilesys.h	21;"	d
+RF_SERVER_PORT	include/rfilesys.h	25;"	d
+RF_TIMEOUT	include/rfilesys.h	63;"	d
+RF_USED	include/rfilesys.h	47;"	d
+RM_BLKS	include/ramdisk.h	6;"	d
+RM_BLKSIZ	include/ramdisk.h	5;"	d
+ROUTERA	include/icmpv6.h	42;"	d
+ROUTERS	include/icmpv6.h	41;"	d
+RSOLSIZE	include/icmpv6.h	27;"	d
+Ram	device/ram/raminit.c	/^struct	ramdisk	Ram;$/;"	v	typeref:struct:ramdisk
+Rf_data	device/rfs/rfsinit.c	/^struct	rfdata	Rf_data;$/;"	v	typeref:struct:rfdata
+S	include/icmpv6.h	/^    uint32 S: 1;$/;"	m	struct:nadvert
+SB_ID_ESRAM	system/early_imr.c	/^	SB_ID_ESRAM = 0x05,$/;"	e	enum:__anon1	file:
+SB_ID_HUNIT	system/early_imr.c	/^	SB_ID_HUNIT = 0x03,$/;"	e	enum:__anon1	file:
+SB_ID_THERMAL	system/early_imr.c	/^	SB_ID_THERMAL = 0x04,$/;"	e	enum:__anon1	file:
+SCHAR_MAX	include/limits.h	14;"	d
+SCHAR_MIN	include/limits.h	15;"	d
+SDMC_ABT	include/sdmc.h	357;"	d
+SDMC_ACMD41	include/sdmc.h	363;"	d
+SDMC_ACMD41_HCS	include/sdmc.h	322;"	d
+SDMC_ACMD41_S18R	include/sdmc.h	320;"	d
+SDMC_ACMD41_XPC	include/sdmc.h	321;"	d
+SDMC_ACMD51	include/sdmc.h	364;"	d
+SDMC_ACMD6	include/sdmc.h	362;"	d
+SDMC_BLK_GAP_EVENT_SIG_EN	include/sdmc.h	139;"	d
+SDMC_BLK_GAP_EVENT_STAT_EN	include/sdmc.h	123;"	d
+SDMC_BLK_SIZE	include/sdmc.h	368;"	d
+SDMC_BUF_RD_RDY_SIG_EN	include/sdmc.h	142;"	d
+SDMC_BUF_RD_RDY_STAT_EN	include/sdmc.h	126;"	d
+SDMC_BUF_WR_RDY_SIG_EN	include/sdmc.h	141;"	d
+SDMC_BUF_WR_RDY_STAT_EN	include/sdmc.h	125;"	d
+SDMC_CAP_VOLT_SUPPORT_1P8V	include/sdmc.h	225;"	d
+SDMC_CAP_VOLT_SUPPORT_3P0V	include/sdmc.h	224;"	d
+SDMC_CAP_VOLT_SUPPORT_3P3V	include/sdmc.h	223;"	d
+SDMC_CLK_CTL_CLK_GEN_SEL	include/sdmc.h	237;"	d
+SDMC_CLK_CTL_INT_CLK_EN	include/sdmc.h	234;"	d
+SDMC_CLK_CTL_INT_CLK_STABLE	include/sdmc.h	235;"	d
+SDMC_CLK_CTL_SD_CLK_EN	include/sdmc.h	236;"	d
+SDMC_CLK_CTL_SD_FREQ_HIGH_MASK	include/sdmc.h	238;"	d
+SDMC_CMD0	include/sdmc.h	349;"	d
+SDMC_CMD10	include/sdmc.h	355;"	d
+SDMC_CMD12	include/sdmc.h	356;"	d
+SDMC_CMD13	include/sdmc.h	358;"	d
+SDMC_CMD16	include/sdmc.h	359;"	d
+SDMC_CMD17	include/sdmc.h	360;"	d
+SDMC_CMD2	include/sdmc.h	350;"	d
+SDMC_CMD3	include/sdmc.h	351;"	d
+SDMC_CMD55	include/sdmc.h	361;"	d
+SDMC_CMD7	include/sdmc.h	352;"	d
+SDMC_CMD8	include/sdmc.h	353;"	d
+SDMC_CMD9	include/sdmc.h	354;"	d
+SDMC_CMD_CMD_CRC_EN	include/sdmc.h	331;"	d
+SDMC_CMD_CMD_IDX_EN	include/sdmc.h	330;"	d
+SDMC_CMD_CMD_RSP_LG	include/sdmc.h	332;"	d
+SDMC_CMD_CMD_RSP_ST	include/sdmc.h	333;"	d
+SDMC_CMD_CMD_RSP_ST_BSY	include/sdmc.h	334;"	d
+SDMC_CMD_COMP_SIG_EN	include/sdmc.h	137;"	d
+SDMC_CMD_COMP_STAT_EN	include/sdmc.h	121;"	d
+SDMC_CMD_DAT_PRES	include/sdmc.h	329;"	d
+SDMC_CMD_DAT_TRNS	include/sdmc.h	376;"	d
+SDMC_CMD_DELAY	include/sdmc.h	366;"	d
+SDMC_CMD_NO_ERR_RCVY	include/sdmc.h	375;"	d
+SDMC_CMD_NO_FLAGS	include/sdmc.h	374;"	d
+SDMC_CMD_NO_RESP	include/sdmc.h	337;"	d
+SDMC_CMD_R1	include/sdmc.h	338;"	d
+SDMC_CMD_R1b	include/sdmc.h	339;"	d
+SDMC_CMD_R2	include/sdmc.h	340;"	d
+SDMC_CMD_R3	include/sdmc.h	341;"	d
+SDMC_CMD_R4	include/sdmc.h	342;"	d
+SDMC_CMD_R5	include/sdmc.h	343;"	d
+SDMC_CMD_R5b	include/sdmc.h	344;"	d
+SDMC_CMD_R6	include/sdmc.h	345;"	d
+SDMC_CMD_R7	include/sdmc.h	346;"	d
+SDMC_CMD_TYPE_ABT	include/sdmc.h	328;"	d
+SDMC_CMD_TYPE_NML	include/sdmc.h	325;"	d
+SDMC_CMD_TYPE_RSM	include/sdmc.h	327;"	d
+SDMC_CMD_TYPE_SUS	include/sdmc.h	326;"	d
+SDMC_CRD_INS_SIG_EN	include/sdmc.h	143;"	d
+SDMC_CRD_INS_STAT_EN	include/sdmc.h	127;"	d
+SDMC_CRD_INT_SIG_EN	include/sdmc.h	145;"	d
+SDMC_CRD_INT_STAT_EN	include/sdmc.h	129;"	d
+SDMC_CRD_RMV_SIG_EN	include/sdmc.h	144;"	d
+SDMC_CRD_RMV_STAT_EN	include/sdmc.h	128;"	d
+SDMC_DMA_INT_SIG_EN	include/sdmc.h	140;"	d
+SDMC_DMA_INT_STAT_EN	include/sdmc.h	124;"	d
+SDMC_ERR_INT_ADMA_ERR	include/sdmc.h	212;"	d
+SDMC_ERR_INT_ADMA_ERR_SIG_EN	include/sdmc.h	196;"	d
+SDMC_ERR_INT_ADMA_ERR_STAT_EN	include/sdmc.h	180;"	d
+SDMC_ERR_INT_ALL_SIG_EN	include/sdmc.h	200;"	d
+SDMC_ERR_INT_ALL_STAT_EN	include/sdmc.h	184;"	d
+SDMC_ERR_INT_CEATA_ERR	include/sdmc.h	215;"	d
+SDMC_ERR_INT_CEATA_ERR_EN	include/sdmc.h	183;"	d
+SDMC_ERR_INT_CEATA_ERR_SIG_EN	include/sdmc.h	199;"	d
+SDMC_ERR_INT_CMD12_ERR	include/sdmc.h	211;"	d
+SDMC_ERR_INT_CMD12_ERR_SIG_EN	include/sdmc.h	195;"	d
+SDMC_ERR_INT_CMD12_ERR_STAT_EN	include/sdmc.h	179;"	d
+SDMC_ERR_INT_CMD_CRC_ERR	include/sdmc.h	204;"	d
+SDMC_ERR_INT_CMD_CRC_ERR_SIG_EN	include/sdmc.h	188;"	d
+SDMC_ERR_INT_CMD_CRC_ERR_STAT_EN	include/sdmc.h	172;"	d
+SDMC_ERR_INT_CMD_END_BIT_ERR	include/sdmc.h	205;"	d
+SDMC_ERR_INT_CMD_END_BIT_ERR_SIG_EN	include/sdmc.h	189;"	d
+SDMC_ERR_INT_CMD_END_BIT_ERR_STAT_EN	include/sdmc.h	173;"	d
+SDMC_ERR_INT_CMD_INDEX_ERR	include/sdmc.h	206;"	d
+SDMC_ERR_INT_CMD_IND_ERR_SIG_EN	include/sdmc.h	190;"	d
+SDMC_ERR_INT_CMD_IND_ERR_STAT_EN	include/sdmc.h	174;"	d
+SDMC_ERR_INT_CMD_TIMEOUT_ERR	include/sdmc.h	203;"	d
+SDMC_ERR_INT_CMD_TIMEOUT_ERR_SIG_EN	include/sdmc.h	187;"	d
+SDMC_ERR_INT_CMD_TIMEOUT_ERR_STAT_EN	include/sdmc.h	171;"	d
+SDMC_ERR_INT_CUR_LIMIT_ERR	include/sdmc.h	210;"	d
+SDMC_ERR_INT_CUR_LIMIT_ERR_SIG_EN	include/sdmc.h	194;"	d
+SDMC_ERR_INT_CUR_LIMIT_ERR_STAT_EN	include/sdmc.h	178;"	d
+SDMC_ERR_INT_DATA_CRC_ERR	include/sdmc.h	208;"	d
+SDMC_ERR_INT_DATA_CRC_ERR_SIG_EN	include/sdmc.h	192;"	d
+SDMC_ERR_INT_DATA_CRC_ERR_STAT_EN	include/sdmc.h	176;"	d
+SDMC_ERR_INT_DATA_END_BIT_ERR	include/sdmc.h	209;"	d
+SDMC_ERR_INT_DATA_END_BIT_ERR_SIG_EN	include/sdmc.h	193;"	d
+SDMC_ERR_INT_DATA_END_BIT_ERR_STAT_EN	include/sdmc.h	177;"	d
+SDMC_ERR_INT_DATA_TIMEOUT_ERR	include/sdmc.h	207;"	d
+SDMC_ERR_INT_DATA_TIMEOUT_ERR_SIG_EN	include/sdmc.h	191;"	d
+SDMC_ERR_INT_DATA_TIMEOUT_ERR_STAT_EN	include/sdmc.h	175;"	d
+SDMC_ERR_INT_TGT_RSP_ERR	include/sdmc.h	214;"	d
+SDMC_ERR_INT_TGT_RSP_ERR_EN	include/sdmc.h	182;"	d
+SDMC_ERR_INT_TGT_RSP_ERR_SIG_EN	include/sdmc.h	198;"	d
+SDMC_ERR_INT_TUNE_ERR	include/sdmc.h	213;"	d
+SDMC_ERR_INT_TUNE_ERR_SIG_EN	include/sdmc.h	197;"	d
+SDMC_ERR_INT_TUNE_ERR_STAT_EN	include/sdmc.h	181;"	d
+SDMC_HOST_ADMA_32	include/sdmc.h	115;"	d
+SDMC_HOST_ADMA_64	include/sdmc.h	116;"	d
+SDMC_HOST_CARD_DET_SIG	include/sdmc.h	118;"	d
+SDMC_HOST_CARD_DET_TST	include/sdmc.h	117;"	d
+SDMC_HOST_CTL_LED_CTL	include/sdmc.h	112;"	d
+SDMC_HOST_DAT_TX_4BIT	include/sdmc.h	113;"	d
+SDMC_HOST_HS_EN	include/sdmc.h	114;"	d
+SDMC_INT_A_SIG_EN	include/sdmc.h	146;"	d
+SDMC_INT_A_STAT_EN	include/sdmc.h	130;"	d
+SDMC_INT_B_SIG_EN	include/sdmc.h	147;"	d
+SDMC_INT_B_STAT_EN	include/sdmc.h	131;"	d
+SDMC_INT_C_SIG_EN	include/sdmc.h	148;"	d
+SDMC_INT_C_STAT_EN	include/sdmc.h	132;"	d
+SDMC_NML_INT_ALL_SIG_EN	include/sdmc.h	150;"	d
+SDMC_NML_INT_ALL_STAT_EN	include/sdmc.h	134;"	d
+SDMC_NML_INT_BLK_GAP_EVENT	include/sdmc.h	155;"	d
+SDMC_NML_INT_BOOT_CK_RCV	include/sdmc.h	166;"	d
+SDMC_NML_INT_BOOT_TER_INT	include/sdmc.h	167;"	d
+SDMC_NML_INT_BUF_RD_RDY	include/sdmc.h	158;"	d
+SDMC_NML_INT_BUF_WR_RDY	include/sdmc.h	157;"	d
+SDMC_NML_INT_CMD_COMP	include/sdmc.h	153;"	d
+SDMC_NML_INT_CRD_INS	include/sdmc.h	159;"	d
+SDMC_NML_INT_CRD_INT	include/sdmc.h	161;"	d
+SDMC_NML_INT_CRD_RM	include/sdmc.h	160;"	d
+SDMC_NML_INT_DMA_INT	include/sdmc.h	156;"	d
+SDMC_NML_INT_ERR_INT	include/sdmc.h	168;"	d
+SDMC_NML_INT_INT_A	include/sdmc.h	162;"	d
+SDMC_NML_INT_INT_B	include/sdmc.h	163;"	d
+SDMC_NML_INT_INT_C	include/sdmc.h	164;"	d
+SDMC_NML_INT_RE_TUNE	include/sdmc.h	165;"	d
+SDMC_NML_INT_TX_COMP	include/sdmc.h	154;"	d
+SDMC_OCR_MASK	include/sdmc.h	319;"	d
+SDMC_PRE_STATE_CMD_INHIBIT_CMD	include/sdmc.h	228;"	d
+SDMC_PRE_STATE_CMD_INHIBIT_DAT	include/sdmc.h	229;"	d
+SDMC_PRE_STATE_CRD_INS	include/sdmc.h	230;"	d
+SDMC_PRE_STATE_DATA_LN_SIG_LVL	include/sdmc.h	231;"	d
+SDMC_PWR_CTL_HW_RST	include/sdmc.h	245;"	d
+SDMC_PWR_CTL_SD_BUS_PWR	include/sdmc.h	244;"	d
+SDMC_PWR_CTL_SD_BUS_VOL_SEL_1P8V	include/sdmc.h	249;"	d
+SDMC_PWR_CTL_SD_BUS_VOL_SEL_3P0V	include/sdmc.h	248;"	d
+SDMC_PWR_CTL_SD_BUS_VOL_SEL_3P3V	include/sdmc.h	247;"	d
+SDMC_PWR_CTL_SD_BUS_VOL_SEL_CLR	include/sdmc.h	246;"	d
+SDMC_R1_ADDRESS_ERROR	include/sdmc.h	278;"	d
+SDMC_R1_AKE_SEQ_ERROR	include/sdmc.h	259;"	d
+SDMC_R1_ANY_ERROR	include/sdmc.h	280;"	d
+SDMC_R1_APP_CMD	include/sdmc.h	260;"	d
+SDMC_R1_BLOCK_LEN_ERROR	include/sdmc.h	277;"	d
+SDMC_R1_CARD_ECC_DISABLED	include/sdmc.h	264;"	d
+SDMC_R1_CARD_ECC_FAILED	include/sdmc.h	269;"	d
+SDMC_R1_CARD_IS_LOCKED	include/sdmc.h	273;"	d
+SDMC_R1_CC_ERROR	include/sdmc.h	268;"	d
+SDMC_R1_COM_CRC_ERROR	include/sdmc.h	271;"	d
+SDMC_R1_CSD_OVERWRITE	include/sdmc.h	266;"	d
+SDMC_R1_CURRENT_STATE	include/sdmc.h	262;"	d
+SDMC_R1_DATA_STATE	include/sdmc.h	288;"	d
+SDMC_R1_ERASE_PARAM	include/sdmc.h	275;"	d
+SDMC_R1_ERASE_RESET	include/sdmc.h	263;"	d
+SDMC_R1_ERASE_SEQ_ERROR	include/sdmc.h	276;"	d
+SDMC_R1_ERROR	include/sdmc.h	267;"	d
+SDMC_R1_IDENT_STATE	include/sdmc.h	285;"	d
+SDMC_R1_IDLE_STATE	include/sdmc.h	283;"	d
+SDMC_R1_ILLEGAL_COMMAND	include/sdmc.h	270;"	d
+SDMC_R1_LOCK_UNLOCK_FAILED	include/sdmc.h	272;"	d
+SDMC_R1_OUT_OF_RANGE	include/sdmc.h	279;"	d
+SDMC_R1_PRG_STATE	include/sdmc.h	290;"	d
+SDMC_R1_RCV_STATE	include/sdmc.h	289;"	d
+SDMC_R1_READY_FOR_DATA	include/sdmc.h	261;"	d
+SDMC_R1_READY_STATE	include/sdmc.h	284;"	d
+SDMC_R1_TRAN_STATE	include/sdmc.h	287;"	d
+SDMC_R1_WP_ERASE_SKIP	include/sdmc.h	265;"	d
+SDMC_R1_WP_VIOLATION	include/sdmc.h	274;"	d
+SDMC_R3_2P7_2P8	include/sdmc.h	294;"	d
+SDMC_R3_2P8_2P9	include/sdmc.h	295;"	d
+SDMC_R3_2P9_3P0	include/sdmc.h	296;"	d
+SDMC_R3_3P0_3P1	include/sdmc.h	297;"	d
+SDMC_R3_3P1_3P2	include/sdmc.h	298;"	d
+SDMC_R3_3P2_3P3	include/sdmc.h	299;"	d
+SDMC_R3_3P3_3P4	include/sdmc.h	300;"	d
+SDMC_R3_3P4_3P5	include/sdmc.h	301;"	d
+SDMC_R3_3P5_3P6	include/sdmc.h	302;"	d
+SDMC_R3_BUSY	include/sdmc.h	306;"	d
+SDMC_R3_CCS	include/sdmc.h	305;"	d
+SDMC_R3_S18A	include/sdmc.h	303;"	d
+SDMC_R3_UHS_II_STS	include/sdmc.h	304;"	d
+SDMC_R6_AKE_SEQ_ERROR	include/sdmc.h	310;"	d
+SDMC_R6_APP_CMD	include/sdmc.h	311;"	d
+SDMC_R6_COM_CRC_ERROR	include/sdmc.h	316;"	d
+SDMC_R6_CURRENT_STATE	include/sdmc.h	313;"	d
+SDMC_R6_ERROR	include/sdmc.h	314;"	d
+SDMC_R6_ILLEGAL_COMMAND	include/sdmc.h	315;"	d
+SDMC_R6_RCA_MASK	include/sdmc.h	309;"	d
+SDMC_R6_READY_FOR_DATA	include/sdmc.h	312;"	d
+SDMC_RC_NON_RECOVERABLE_ERROR	include/sdmc.h	372;"	d
+SDMC_RC_OK	include/sdmc.h	370;"	d
+SDMC_RC_RECOVERABLE_ERR	include/sdmc.h	371;"	d
+SDMC_RE_TUNE_SIG_EN	include/sdmc.h	149;"	d
+SDMC_RE_TUNE_STAT_EN	include/sdmc.h	133;"	d
+SDMC_SW_RST_ALL	include/sdmc.h	218;"	d
+SDMC_SW_RST_CMD_LN	include/sdmc.h	219;"	d
+SDMC_SW_RST_DAT_LN	include/sdmc.h	220;"	d
+SDMC_TMR_CTL_HIGH	include/sdmc.h	241;"	d
+SDMC_TXM_AUTO_CMD12_EN	include/sdmc.h	254;"	d
+SDMC_TXM_BLK_CNT_EN	include/sdmc.h	253;"	d
+SDMC_TXM_DAT_TX_RD	include/sdmc.h	255;"	d
+SDMC_TXM_DMA_EN	include/sdmc.h	252;"	d
+SDMC_TXM_MB_SEL	include/sdmc.h	256;"	d
+SDMC_TX_COMP_SIG_EN	include/sdmc.h	138;"	d
+SDMC_TX_COMP_STAT_EN	include/sdmc.h	122;"	d
+SECPERDY	include/date.h	43;"	d
+SECPERHR	include/date.h	44;"	d
+SECPERMN	include/date.h	45;"	d
+SEEK	config/y.tab.c	/^    SEEK = 272,$/;"	e	enum:yytokentype	file:
+SEEK	config/y.tab.c	254;"	d	file:
+SFLAGS	compile/Makefile	/^SFLAGS  = ${INCLUDE}$/;"	m
+SHELL_ARGLEN	include/shell.h	9;"	d
+SHELL_BAN0	include/shell.h	16;"	d
+SHELL_BAN1	include/shell.h	17;"	d
+SHELL_BAN2	include/shell.h	18;"	d
+SHELL_BAN3	include/shell.h	19;"	d
+SHELL_BAN4	include/shell.h	20;"	d
+SHELL_BAN5	include/shell.h	21;"	d
+SHELL_BAN6	include/shell.h	22;"	d
+SHELL_BAN7	include/shell.h	23;"	d
+SHELL_BAN8	include/shell.h	24;"	d
+SHELL_BAN9	include/shell.h	25;"	d
+SHELL_BGERRMSG	include/shell.h	37;"	d
+SHELL_BUFLEN	include/shell.h	5;"	d
+SHELL_CMDPRIO	include/shell.h	10;"	d
+SHELL_CMDSTK	include/shell.h	7;"	d
+SHELL_CREATMSG	include/shell.h	33;"	d
+SHELL_ERROR	include/shell.h	63;"	d
+SHELL_EXIT	include/shell.h	64;"	d
+SHELL_EXITMSG	include/shell.h	31;"	d
+SHELL_INERRMSG	include/shell.h	34;"	d
+SHELL_MAXTOK	include/shell.h	6;"	d
+SHELL_OK	include/shell.h	62;"	d
+SHELL_OUTERRMSG	include/shell.h	35;"	d
+SHELL_PROMPT	include/shell.h	29;"	d
+SHELL_STRTMSG	include/shell.h	30;"	d
+SHELL_SYNERRMSG	include/shell.h	32;"	d
+SHORT	lib/doscan.c	13;"	d	file:
+SHRT_MAX	include/limits.h	26;"	d
+SHRT_MIN	include/limits.h	27;"	d
+SH_AMPER	include/shell.h	43;"	d
+SH_BLANK	include/shell.h	44;"	d
+SH_DQUOTE	include/shell.h	47;"	d
+SH_EOF	include/shell.h	42;"	d
+SH_GREATER	include/shell.h	49;"	d
+SH_LESS	include/shell.h	48;"	d
+SH_NEWLINE	include/shell.h	41;"	d
+SH_SQUOTE	include/shell.h	46;"	d
+SH_TAB	include/shell.h	45;"	d
+SH_TOK_AMPER	include/shell.h	53;"	d
+SH_TOK_GREATER	include/shell.h	55;"	d
+SH_TOK_LESS	include/shell.h	54;"	d
+SH_TOK_OTHER	include/shell.h	56;"	d
+SMDC_R1_DIS_STATE	include/sdmc.h	291;"	d
+SMDC_R1_STBY_STATE	include/sdmc.h	286;"	d
+SPC	lib/doscan.c	10;"	d	file:
+STACKMAGIC	include/process.h	58;"	d
+STKDETAIL	system/stacktrace.c	4;"	d	file:
+STP	lib/doscan.c	11;"	d	file:
+SYSERR	include/kernel.h	53;"	d
+SYSERR	lib/fputc.c	6;"	d	file:
+S_FREE	include/semaphore.h	9;"	d
+S_USED	include/semaphore.h	10;"	d
+TC_ECHO	include/tty.h	83;"	d
+TC_ICHARS	include/tty.h	82;"	d
+TC_MODEC	include/tty.h	80;"	d
+TC_MODEK	include/tty.h	81;"	d
+TC_MODER	include/tty.h	79;"	d
+TC_NEXTC	include/tty.h	78;"	d
+TC_NOECHO	include/tty.h	84;"	d
+TEST	include/icmpv6.h	31;"	d
+TESTSTK	include/testsuite.h	38;"	d
+TFTP_ACK	include/tftp.h	7;"	d
+TFTP_DATA	include/tftp.h	6;"	d
+TFTP_ERROR	include/tftp.h	8;"	d
+TFTP_ERROR_ACCESS_VIOLATION	include/tftp.h	13;"	d
+TFTP_ERROR_DISK_FULL	include/tftp.h	14;"	d
+TFTP_ERROR_FILE_EXISTS	include/tftp.h	17;"	d
+TFTP_ERROR_FILE_NOT_FOUND	include/tftp.h	12;"	d
+TFTP_ERROR_ILLEGAL_OP	include/tftp.h	15;"	d
+TFTP_ERROR_NOT_DEFINED	include/tftp.h	11;"	d
+TFTP_ERROR_NO_SUCH_USER	include/tftp.h	18;"	d
+TFTP_ERROR_UNKNOWN_TRANSFER_ID	include/tftp.h	16;"	d
+TFTP_FUNC_MAGIC	include/tftp.h	26;"	d
+TFTP_MAXDATA	include/tftp.h	22;"	d
+TFTP_MAXNAM	include/tftp.h	21;"	d
+TFTP_MAXRETRIES	include/tftp.h	23;"	d
+TFTP_PORT	include/tftp.h	20;"	d
+TFTP_RRQ	include/tftp.h	4;"	d
+TFTP_WAIT	include/tftp.h	24;"	d
+TFTP_WRQ	include/tftp.h	5;"	d
+TIMELPORT	include/date.h	61;"	d
+TIMEOUT	include/kernel.h	55;"	d
+TIMERPORT	include/date.h	60;"	d
+TIMESERVER	include/date.h	64;"	d
+TIMETIMEOUT	include/date.h	67;"	d
+TIMEZONE	include/date.h	53;"	d
+TIME_EX	include/icmpv6.h	35;"	d
+TOPDIR	compile/Makefile	/^TOPDIR		=	..$/;"	m
+TRUE	include/kernel.h	42;"	d
+TRX_MAGIC	include/flash.h	40;"	d
+TY_BACKSP	include/tty.h	63;"	d
+TY_BACKSP2	include/tty.h	64;"	d
+TY_BELL	include/tty.h	65;"	d
+TY_BLANK	include/tty.h	67;"	d
+TY_EBUFLEN	include/tty.h	5;"	d
+TY_EOFCH	include/tty.h	66;"	d
+TY_FULLCH	include/tty.h	74;"	d
+TY_IBUFLEN	include/tty.h	13;"	d
+TY_IMCBREAK	include/tty.h	23;"	d
+TY_IMCOOKED	include/tty.h	22;"	d
+TY_IMRAW	include/tty.h	21;"	d
+TY_KILLCH	include/tty.h	72;"	d
+TY_NEWLINE	include/tty.h	68;"	d
+TY_OBMINSP	include/tty.h	3;"	d
+TY_OBUFLEN	include/tty.h	16;"	d
+TY_OMRAW	include/tty.h	24;"	d
+TY_RETURN	include/tty.h	69;"	d
+TY_STOPCH	include/tty.h	70;"	d
+TY_STRTCH	include/tty.h	71;"	d
+TY_UPARROW	include/tty.h	73;"	d
+UART_BAUD	include/uart.h	3;"	d
+UART_DLL	include/uart.h	40;"	d
+UART_DLM	include/uart.h	42;"	d
+UART_FCR_EFIFO	include/uart.h	69;"	d
+UART_FCR_RRESET	include/uart.h	70;"	d
+UART_FCR_TRESET	include/uart.h	71;"	d
+UART_FCR_TRIG0	include/uart.h	72;"	d
+UART_FCR_TRIG1	include/uart.h	73;"	d
+UART_FCR_TRIG2	include/uart.h	74;"	d
+UART_FCR_TRIG3	include/uart.h	75;"	d
+UART_FIFO_SIZE	include/uart.h	5;"	d
+UART_IER_ELSI	include/uart.h	54;"	d
+UART_IER_EMSI	include/uart.h	55;"	d
+UART_IER_ERBFI	include/uart.h	52;"	d
+UART_IER_ETBEI	include/uart.h	53;"	d
+UART_IIR_IDMASK	include/uart.h	60;"	d
+UART_IIR_IRQ	include/uart.h	59;"	d
+UART_IIR_MSC	include/uart.h	61;"	d
+UART_IIR_RDA	include/uart.h	63;"	d
+UART_IIR_RLSI	include/uart.h	64;"	d
+UART_IIR_RTO	include/uart.h	65;"	d
+UART_IIR_THRE	include/uart.h	62;"	d
+UART_LCR_8N1	include/uart.h	48;"	d
+UART_LCR_DLAB	include/uart.h	47;"	d
+UART_LSR_BI	include/uart.h	87;"	d
+UART_LSR_DR	include/uart.h	86;"	d
+UART_LSR_TEMT	include/uart.h	89;"	d
+UART_LSR_THRE	include/uart.h	88;"	d
+UART_MCR_DTR	include/uart.h	81;"	d
+UART_MCR_LOOP	include/uart.h	82;"	d
+UART_MCR_OUT2	include/uart.h	79;"	d
+UART_MCR_RTS	include/uart.h	80;"	d
+UART_OUT_IDLE	include/uart.h	4;"	d
+UCHAR_MAX	include/limits.h	16;"	d
+UDP_ANYIF	include/udp.h	15;"	d
+UDP_DHCP_CPORT	include/udp.h	6;"	d
+UDP_DHCP_SPORT	include/udp.h	7;"	d
+UDP_FREE	include/udp.h	11;"	d
+UDP_HDR_LEN	include/udp.h	18;"	d
+UDP_QSIZ	include/udp.h	4;"	d
+UDP_RECV	include/udp.h	13;"	d
+UDP_SLOTS	include/udp.h	3;"	d
+UDP_USED	include/udp.h	12;"	d
+UINT16_MAX	config/lex.yy.c	80;"	d	file:
+UINT32_MAX	config/lex.yy.c	83;"	d	file:
+UINT8_MAX	config/lex.yy.c	77;"	d	file:
+UINT_MAX	include/limits.h	20;"	d
+ULONG_MAX	include/limits.h	24;"	d
+USHRT_MAX	include/limits.h	28;"	d
+VERSIONFILE	compile/Makefile	/^VERSIONFILE	=	version$/;"	m
+WRITE	config/y.tab.c	/^    WRITE = 271,$/;"	e	enum:yytokentype	file:
+WRITE	config/y.tab.c	253;"	d	file:
+XINU	compile/Makefile	/^XINU		=	$(TOPDIR)\/compile\/xinu.elf$/;"	m
+XINUBIN	compile/Makefile	/^XINUBIN		=	$(TOPDIR)\/compile\/xinu.bin$/;"	m
+XINUXBIN	compile/Makefile	/^XINUXBIN	=	$(TOPDIR)\/compile\/xinu$/;"	m
+Xtrap	system/intr.S	/^Xtrap:$/;"	l
+YACC	config/Makefile	/^YACC	= ${COMPILER_ROOT}bison -y	# Flag enables yacc-compatible filenames$/;"	m
+YYABORT	config/y.tab.c	713;"	d	file:
+YYACCEPT	config/y.tab.c	712;"	d	file:
+YYBACKUP	config/y.tab.c	719;"	d	file:
+YYBISON	config/y.tab.c	44;"	d	file:
+YYBISON_VERSION	config/y.tab.c	47;"	d	file:
+YYCASE_	config/y.tab.c	1060;"	d	file:
+YYCASE_	config/y.tab.c	1070;"	d	file:
+YYCOPY	config/y.tab.c	501;"	d	file:
+YYCOPY	config/y.tab.c	504;"	d	file:
+YYCOPY_NEEDED	config/y.tab.c	476;"	d	file:
+YYDEBUG	config/y.tab.c	206;"	d	file:
+YYDPRINTF	config/y.tab.c	750;"	d	file:
+YYDPRINTF	config/y.tab.c	865;"	d	file:
+YYEMPTY	config/y.tab.c	709;"	d	file:
+YYEOF	config/y.tab.c	710;"	d	file:
+YYERRCODE	config/y.tab.c	738;"	d	file:
+YYERROR	config/y.tab.c	714;"	d	file:
+YYERROR_VERBOSE	config/y.tab.c	197;"	d	file:
+YYERROR_VERBOSE	config/y.tab.c	198;"	d	file:
+YYERROR_VERBOSE	config/y.tab.c	200;"	d	file:
+YYFINAL	config/y.tab.c	517;"	d	file:
+YYFPRINTF	config/y.tab.c	747;"	d	file:
+YYFREE	config/y.tab.c	447;"	d	file:
+YYINITDEPTH	config/y.tab.c	874;"	d	file:
+YYLAST	config/y.tab.c	519;"	d	file:
+YYMALLOC	config/y.tab.c	441;"	d	file:
+YYMAXDEPTH	config/y.tab.c	885;"	d	file:
+YYMAXUTOK	config/y.tab.c	533;"	d	file:
+YYNNTS	config/y.tab.c	524;"	d	file:
+YYNRULES	config/y.tab.c	526;"	d	file:
+YYNSTATES	config/y.tab.c	528;"	d	file:
+YYNTOKENS	config/y.tab.c	522;"	d	file:
+YYPACT_NINF	config/y.tab.c	608;"	d	file:
+YYPOPSTACK	config/y.tab.c	1185;"	d	file:
+YYPULL	config/y.tab.c	59;"	d	file:
+YYPURE	config/y.tab.c	53;"	d	file:
+YYPUSH	config/y.tab.c	56;"	d	file:
+YYRECOVERING	config/y.tab.c	717;"	d	file:
+YYSIZE_MAXIMUM	config/y.tab.c	320;"	d	file:
+YYSIZE_T	config/y.tab.c	309;"	d	file:
+YYSIZE_T	config/y.tab.c	311;"	d	file:
+YYSIZE_T	config/y.tab.c	314;"	d	file:
+YYSIZE_T	config/y.tab.c	316;"	d	file:
+YYSKELETON_NAME	config/y.tab.c	50;"	d	file:
+YYSTACK_ALLOC	config/y.tab.c	395;"	d	file:
+YYSTACK_ALLOC	config/y.tab.c	399;"	d	file:
+YYSTACK_ALLOC	config/y.tab.c	404;"	d	file:
+YYSTACK_ALLOC	config/y.tab.c	427;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	config/y.tab.c	424;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	config/y.tab.c	430;"	d	file:
+YYSTACK_BYTES	config/y.tab.c	472;"	d	file:
+YYSTACK_FREE	config/y.tab.c	418;"	d	file:
+YYSTACK_FREE	config/y.tab.c	428;"	d	file:
+YYSTACK_GAP_MAXIMUM	config/y.tab.c	468;"	d	file:
+YYSTACK_RELOCATE	config/y.tab.c	483;"	d	file:
+YYSTATE	config/lex.yy.c	132;"	d	file:
+YYSTYPE	config/y.tab.c	/^typedef int YYSTYPE;$/;"	t	file:
+YYSTYPE_IS_DECLARED	config/y.tab.c	265;"	d	file:
+YYSTYPE_IS_TRIVIAL	config/y.tab.c	264;"	d	file:
+YYTABLES_NAME	config/lex.yy.c	1921;"	d	file:
+YYTABLE_NINF	config/y.tab.c	613;"	d	file:
+YYTERROR	config/y.tab.c	737;"	d	file:
+YYTOKENTYPE	config/y.tab.c	214;"	d	file:
+YYTRANSLATE	config/y.tab.c	535;"	d	file:
+YYUNDEFTOK	config/y.tab.c	532;"	d	file:
+YYUSE	config/y.tab.c	363;"	d	file:
+YYUSE	config/y.tab.c	365;"	d	file:
+YY_	config/y.tab.c	326;"	d	file:
+YY_	config/y.tab.c	330;"	d	file:
+YY_ATTRIBUTE	config/y.tab.c	338;"	d	file:
+YY_ATTRIBUTE	config/y.tab.c	340;"	d	file:
+YY_ATTRIBUTE_PURE	config/y.tab.c	345;"	d	file:
+YY_ATTRIBUTE_UNUSED	config/y.tab.c	349;"	d	file:
+YY_AT_BOL	config/lex.yy.c	340;"	d	file:
+YY_BREAK	config/lex.yy.c	682;"	d	file:
+YY_BUFFER_EOF_PENDING	config/lex.yy.c	256;"	d	file:
+YY_BUFFER_NEW	config/lex.yy.c	244;"	d	file:
+YY_BUFFER_NORMAL	config/lex.yy.c	245;"	d	file:
+YY_BUFFER_STATE	config/lex.yy.c	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	typeref:struct:yy_buffer_state	file:
+YY_BUF_SIZE	config/lex.yy.c	149;"	d	file:
+YY_BUF_SIZE	config/lex.yy.c	151;"	d	file:
+YY_CHAR	config/lex.yy.c	/^typedef unsigned char YY_CHAR;$/;"	t	file:
+YY_CURRENT_BUFFER	config/lex.yy.c	272;"	d	file:
+YY_CURRENT_BUFFER_LVALUE	config/lex.yy.c	279;"	d	file:
+YY_DECL	config/lex.yy.c	670;"	d	file:
+YY_DECL_IS_OURS	config/lex.yy.c	666;"	d	file:
+YY_DO_BEFORE_ACTION	config/lex.yy.c	369;"	d	file:
+YY_END_OF_BUFFER	config/lex.yy.c	377;"	d	file:
+YY_END_OF_BUFFER_CHAR	config/lex.yy.c	140;"	d	file:
+YY_EXIT_FAILURE	config/lex.yy.c	1717;"	d	file:
+YY_EXTRA_TYPE	config/lex.yy.c	518;"	d	file:
+YY_FATAL_ERROR	config/lex.yy.c	657;"	d	file:
+YY_FLEX_MAJOR_VERSION	config/lex.yy.c	9;"	d	file:
+YY_FLEX_MINOR_VERSION	config/lex.yy.c	10;"	d	file:
+YY_FLEX_SUBMINOR_VERSION	config/lex.yy.c	11;"	d	file:
+YY_FLUSH_BUFFER	config/lex.yy.c	308;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	config/y.tab.c	370;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	config/y.tab.c	380;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	config/y.tab.c	374;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	config/y.tab.c	381;"	d	file:
+YY_INITIAL_VALUE	config/y.tab.c	377;"	d	file:
+YY_INITIAL_VALUE	config/y.tab.c	384;"	d	file:
+YY_INPUT	config/lex.yy.c	610;"	d	file:
+YY_INT_ALIGNED	config/lex.yy.c	4;"	d	file:
+YY_LESS_LINENO	config/lex.yy.c	177;"	d	file:
+YY_LINENO_REWIND_TO	config/lex.yy.c	178;"	d	file:
+YY_LOCATION_PRINT	config/y.tab.c	758;"	d	file:
+YY_MORE_ADJ	config/lex.yy.c	497;"	d	file:
+YY_NEW_FILE	config/lex.yy.c	138;"	d	file:
+YY_NULL	config/lex.yy.c	112;"	d	file:
+YY_NULLPTR	config/y.tab.c	189;"	d	file:
+YY_NULLPTR	config/y.tab.c	191;"	d	file:
+YY_NUM_RULES	config/lex.yy.c	376;"	d	file:
+YY_READ_BUF_SIZE	config/lex.yy.c	592;"	d	file:
+YY_READ_BUF_SIZE	config/lex.yy.c	594;"	d	file:
+YY_REDUCE_PRINT	config/y.tab.c	855;"	d	file:
+YY_REDUCE_PRINT	config/y.tab.c	868;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	config/lex.yy.c	498;"	d	file:
+YY_RULE_SETUP	config/lex.yy.c	685;"	d	file:
+YY_SC_TO_UI	config/lex.yy.c	119;"	d	file:
+YY_STACK_PRINT	config/y.tab.c	824;"	d	file:
+YY_STACK_PRINT	config/y.tab.c	867;"	d	file:
+YY_START	config/lex.yy.c	131;"	d	file:
+YY_START_STACK_INCR	config/lex.yy.c	652;"	d	file:
+YY_STATE_BUF_SIZE	config/lex.yy.c	157;"	d	file:
+YY_STATE_EOF	config/lex.yy.c	135;"	d	file:
+YY_STRUCT_YY_BUFFER_STATE	config/lex.yy.c	197;"	d	file:
+YY_SYMBOL_PRINT	config/y.tab.c	762;"	d	file:
+YY_SYMBOL_PRINT	config/y.tab.c	866;"	d	file:
+YY_TYPEDEF_YY_BUFFER_STATE	config/lex.yy.c	160;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	config/lex.yy.c	165;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	config/y.tab.c	81;"	d	file:
+YY_USER_ACTION	config/lex.yy.c	677;"	d	file:
+YY_USE_CONST	config/lex.yy.c	100;"	d	file:
+YY_USE_CONST	config/lex.yy.c	93;"	d	file:
+ZONE_CST	include/date.h	50;"	d
+ZONE_EST	include/date.h	49;"	d
+ZONE_MST	include/date.h	51;"	d
+ZONE_PST	include/date.h	52;"	d
+_8259_setirmask	system/evec.c	/^void	_8259_setirmask(void)$/;"	f
+_C	include/ctype.h	12;"	d
+_ETHLOOP_H_	include/ethloop.h	9;"	d
+_FLASH_H_	include/flash.h	12;"	d
+_L	include/ctype.h	8;"	d
+_LIMITS_H_	include/limits.h	9;"	d
+_N	include/ctype.h	9;"	d
+_Noreturn	config/y.tab.c	355;"	d	file:
+_Noreturn	config/y.tab.c	357;"	d	file:
+_P	include/ctype.h	11;"	d
+_S	include/ctype.h	10;"	d
+_U	include/ctype.h	7;"	d
+_X	include/ctype.h	13;"	d
+_Xint0	system/intr.S	/^_Xint0:$/;"	l
+_Xint1	system/intr.S	/^_Xint1:$/;"	l
+_Xint10	system/intr.S	/^_Xint10:$/;"	l
+_Xint11	system/intr.S	/^_Xint11:$/;"	l
+_Xint12	system/intr.S	/^_Xint12:$/;"	l
+_Xint13	system/intr.S	/^_Xint13:$/;"	l
+_Xint14	system/intr.S	/^_Xint14:$/;"	l
+_Xint15	system/intr.S	/^_Xint15:$/;"	l
+_Xint16	system/intr.S	/^_Xint16:$/;"	l
+_Xint17	system/intr.S	/^_Xint17:$/;"	l
+_Xint18	system/intr.S	/^_Xint18:$/;"	l
+_Xint19	system/intr.S	/^_Xint19:$/;"	l
+_Xint2	system/intr.S	/^_Xint2:$/;"	l
+_Xint20	system/intr.S	/^_Xint20:$/;"	l
+_Xint21	system/intr.S	/^_Xint21:$/;"	l
+_Xint22	system/intr.S	/^_Xint22:$/;"	l
+_Xint23	system/intr.S	/^_Xint23:$/;"	l
+_Xint24	system/intr.S	/^_Xint24:$/;"	l
+_Xint25	system/intr.S	/^_Xint25:$/;"	l
+_Xint26	system/intr.S	/^_Xint26:$/;"	l
+_Xint27	system/intr.S	/^_Xint27:$/;"	l
+_Xint28	system/intr.S	/^_Xint28:$/;"	l
+_Xint29	system/intr.S	/^_Xint29:$/;"	l
+_Xint3	system/intr.S	/^_Xint3:$/;"	l
+_Xint30	system/intr.S	/^_Xint30:$/;"	l
+_Xint31	system/intr.S	/^_Xint31:$/;"	l
+_Xint32	system/intr.S	/^_Xint32:$/;"	l
+_Xint33	system/intr.S	/^_Xint33:$/;"	l
+_Xint34	system/intr.S	/^_Xint34:$/;"	l
+_Xint35	system/intr.S	/^_Xint35:$/;"	l
+_Xint36	system/intr.S	/^_Xint36:$/;"	l
+_Xint37	system/intr.S	/^_Xint37:$/;"	l
+_Xint38	system/intr.S	/^_Xint38:$/;"	l
+_Xint39	system/intr.S	/^_Xint39:$/;"	l
+_Xint4	system/intr.S	/^_Xint4:$/;"	l
+_Xint40	system/intr.S	/^_Xint40:$/;"	l
+_Xint41	system/intr.S	/^_Xint41:$/;"	l
+_Xint42	system/intr.S	/^_Xint42:$/;"	l
+_Xint43	system/intr.S	/^_Xint43:$/;"	l
+_Xint44	system/intr.S	/^_Xint44:$/;"	l
+_Xint45	system/intr.S	/^_Xint45:$/;"	l
+_Xint46	system/intr.S	/^_Xint46:$/;"	l
+_Xint5	system/intr.S	/^_Xint5:$/;"	l
+_Xint6	system/intr.S	/^_Xint6:$/;"	l
+_Xint7	system/intr.S	/^_Xint7:$/;"	l
+_Xint8	system/intr.S	/^_Xint8:$/;"	l
+_Xint9	system/intr.S	/^_Xint9:$/;"	l
+__STDC_LIMIT_MACROS	config/lex.yy.c	39;"	d	file:
+___divsi3	system/start.S	/^___divsi3:$/;"	l
+___udivsi3	system/start.S	/^___udivsi3:$/;"	l
+_ctype_	lib/ctype_.c	/^const char _ctype_[] = {$/;"	v
+_doprnt	lib/doprnt.c	/^void	_doprnt($/;"	f
+_doscan	lib/doscan.c	/^int	_doscan($/;"	f
+_extint	system/intr.S	/^_extint:$/;"	l
+_fdoprnt	lib/fdoprnt.c	/^void	_fdoprnt($/;"	f
+_getccl	lib/doscan.c	/^static char	*_getccl($/;"	f	file:
+_innum	lib/doscan.c	/^static int	_innum($/;"	f	file:
+_instr	lib/doscan.c	/^static int	_instr($/;"	f	file:
+_prtX16	lib/doprnt.c	/^static void	_prtX16($/;"	f	file:
+_prtX16	lib/fdoprnt.c	/^static void	_prtX16($/;"	f	file:
+_prtdbl	lib/doprnt.c	/^static void	_prtdbl($/;"	f	file:
+_prtl10	lib/doprnt.c	/^static void		_prtl10($/;"	f	file:
+_prtl10	lib/fdoprnt.c	/^static void	_prtl10($/;"	f	file:
+_prtl16	lib/doprnt.c	/^static void	_prtl16($/;"	f	file:
+_prtl16	lib/fdoprnt.c	/^static void	_prtl16($/;"	f	file:
+_prtl2	lib/doprnt.c	/^static void	_prtl2($/;"	f	file:
+_prtl2	lib/fdoprnt.c	/^static void	_prtl2($/;"	f	file:
+_prtl8	lib/doprnt.c	/^static void	_prtl8($/;"	f	file:
+_prtl8	lib/fdoprnt.c	/^static void	_prtl8($/;"	f	file:
+_ptclear	system/ptclear.c	/^void	_ptclear($/;"	f
+_rtcin	system/start.S	/^_rtcin:	movl	4(%esp), %eax$/;"	l
+_saveint	system/intr.S	/^_saveint:	.long$/;"	l
+_sctab	lib/doscan.c	/^char _sctab[128] = {$/;"	v
+aa	include/dns.h	/^		byte	aa:1;		\/* Authoritative Answer		*\/$/;"	m	struct:dnspkt::__anon12
+abs	lib/abs.c	/^int	abs($/;"	f
+addargs	shell/addargs.c	/^status	addargs($/;"	f
+addattr	config/y.tab.c	/^void	addattr(int tok, int val) {$/;"	f
+addrLen	include/ether.h	/^	uint8	addrLen;	\/* Hardware address length	      	*\/$/;"	m	struct:ethcblk
+address	include/icmpv6.h	/^    byte address[16];$/;"	m	struct:lladdress
+addton	config/y.tab.c	/^int	addton(char *tonid) {$/;"	f
+adma2_support	include/sdmc.h	/^	uint32	adma2_support		:1;	\/* ADMA2 Support			*\/$/;"	m	struct:sdmc_capabilities
+adma_err_stat	include/sdmc.h	/^	uint8	adma_err_stat;		\/* adma error status register 		*\/$/;"	m	struct:sdmc_csreg
+adma_sys_addr	include/sdmc.h	/^	uint32	adma_sys_addr;		\/* adma system address register *\/$/;"	m	struct:sdmc_csreg
+allnIPmulti	net/ipv6.c	/^byte    allnIPmulti[IPV6_ASIZE];$/;"	v
+allnMACmulti	net/ipv6.c	/^byte    allnMACmulti[ETH_ADDR_LEN];$/;"	v
+alloca	config/y.tab.c	402;"	d	file:
+allrIPmulti	net/ipv6.c	/^byte    allrIPmulti[IPV6_ASIZE];$/;"	v
+allrMACmulti	net/ipv6.c	/^byte    allrMACmulti[ETH_ADDR_LEN];$/;"	v
+ancount	include/dns.h	/^	uint16	ancount;		\/* No. of RRs in Answer		*\/$/;"	m	struct:dnspkt
+apm_table	include/multiboot.h	/^	uint32	apm_table;		\/* Address of APM table		*\/$/;"	m	struct:mbootinfo
+apr	include/apic.h	/^	uint32	apr;		\/* Arbitration Priority	*\/$/;"	m	struct:lapic_csreg
+arcount	include/dns.h	/^	uint16	arcount;		\/* No. of RRs in Additional info*\/$/;"	m	struct:dnspkt
+argument	include/sdmc.h	/^	uint32	argument;		\/* argument register 			*\/$/;"	m	struct:sdmc_csreg
+arhaddr	include/arp.h	/^	byte	arhaddr[ARP_HALEN];	\/* Ethernet address of the entry*\/$/;"	m	struct:arpentry
+arp_dmp	shell/xsh_arp.c	/^static	void arp_dmp ()$/;"	f	file:
+arp_ethdst	include/arp.h	/^	byte	arp_ethdst[ETH_ADDR_LEN];\/* Ethernet dest. MAC addr	*\/$/;"	m	struct:arppacket
+arp_ethsrc	include/arp.h	/^	byte	arp_ethsrc[ETH_ADDR_LEN];\/* Ethernet source MAC address *\/$/;"	m	struct:arppacket
+arp_ethtype	include/arp.h	/^	uint16	arp_ethtype;		\/* Ethernet type field		*\/$/;"	m	struct:arppacket
+arp_hlen	include/arp.h	/^	byte	arp_hlen;		\/* ARP hardware address length	*\/$/;"	m	struct:arppacket
+arp_htype	include/arp.h	/^	uint16	arp_htype;		\/* ARP hardware type		*\/$/;"	m	struct:arppacket
+arp_op	include/arp.h	/^	uint16	arp_op;			\/* ARP operation		*\/$/;"	m	struct:arppacket
+arp_plen	include/arp.h	/^	byte	arp_plen;		\/* ARP protocol address length	*\/$/;"	m	struct:arppacket
+arp_ptype	include/arp.h	/^	uint16	arp_ptype;		\/* ARP protocol type		*\/$/;"	m	struct:arppacket
+arp_sndha	include/arp.h	/^	byte	arp_sndha[ARP_HALEN];	\/* ARP sender's Ethernet addr 	*\/$/;"	m	struct:arppacket
+arp_sndpa	include/arp.h	/^	uint32	arp_sndpa;		\/* ARP sender's IP address	*\/$/;"	m	struct:arppacket
+arp_tarha	include/arp.h	/^	byte	arp_tarha[ARP_HALEN];	\/* ARP target's Ethernet addr	*\/$/;"	m	struct:arppacket
+arp_tarpa	include/arp.h	/^	uint32	arp_tarpa;		\/* ARP target's IP address	*\/$/;"	m	struct:arppacket
+arpaddr	include/arp.h	/^	uint32	arpaddr;		\/* IP address of the entry	*\/$/;"	m	struct:arpentry
+arpentry	include/arp.h	/^struct	arpentry {			\/* Entry in the ARP cache	*\/$/;"	s
+arpid	include/arp.h	/^	pid32	arpid;			\/* Waiting process or -1 	*\/$/;"	m	struct:arpentry
+arppacket	include/arp.h	/^struct	arppacket {			\/* ARP packet for IP & Ethernet	*\/$/;"	s
+arstate	include/arp.h	/^	int32	arstate;		\/* State of the entry		*\/$/;"	m	struct:arpentry
+ascdate	system/ascdate.c	/^status	ascdate ($/;"	f
+async_int_support	include/sdmc.h	/^	uint32	async_int_support	:1;	\/* Asynchronous Interrupt Support	*\/$/;"	m	struct:sdmc_capabilities
+atoi	lib/atoi.c	/^int	atoi($/;"	f
+atol	lib/atol.c	/^long	atol($/;"	f
+attempt	include/resched.h	/^	bool8	attempt;	\/* Was resched called during the	*\/$/;"	m	struct:defer
+attr	config/config.y	/^attr:		  CSR number		{ addattr(CSR,    $2);	}$/;"	l
+attr_list	config/config.y	/^attr_list:	\/* nothing *\/$/;"	l
+bars	include/pci.h	/^	unsigned int	bars[PCI_BARS_PER_HEADER];		\/*   10 *\/$/;"	m	struct:pci_config_header
+base	include/flash.h	/^    uint32 base;                 \/**< base address for flash memory       *\/$/;"	m	struct:flash
+base_addr	include/multiboot.h	/^	uint64	base_addr;		\/* Memory region base address	*\/$/;"	m	struct:mbmregion
+base_clock_frequency_sd_clk	include/sdmc.h	/^	uint32	base_clock_frequency_sd_clk:8;	\/* Base Clock Frequency for SD Clock	*\/$/;"	m	struct:sdmc_capabilities
+base_header	include/ipv6.h	/^struct base_header {$/;"	s
+bcastAddress	include/ether.h	/^	uint8	bcastAddress[ETH_ADDR_LEN];\/* MAC broadcast address	*\/$/;"	m	struct:ethcblk
+bcopy	system/start.S	/^bcopy:$/;"	l
+blk_count	include/sdmc.h	/^	uint16	blk_count;		\/* block count register 		*\/$/;"	m	struct:sdmc_csreg
+blk_gap_ctl	include/sdmc.h	/^	uint8	blk_gap_ctl;		\/* block gap control register 		*\/$/;"	m	struct:sdmc_csreg
+blk_size	include/sdmc.h	/^	uint16	blk_size;		\/* block size register 			*\/$/;"	m	struct:sdmc_csreg
+block_size	include/flash.h	/^    uint32 block_size;           \/**< size of block in region             *\/$/;"	m	struct:flash_region
+bmr	include/quark_eth.h	/^	uint32	bmr;		\/* Bus Mode Register			*\/$/;"	m	struct:eth_q_csreg
+body	include/icmpv6.h	/^    byte body[0]; \/\/gives easy access to message body$/;"	m	struct:icmpv6general
+bool8	include/kernel.h	/^typedef	byte	bool8;		\/* Boolean type				*\/$/;"	t
+boot_device	include/multiboot.h	/^	uint32	boot_device;		\/* Boot device containing image	*\/$/;"	m	struct:mbootinfo
+boot_loader_name	include/multiboot.h	/^	uint32	boot_loader_name;	\/* Address of boot loader name	*\/$/;"	m	struct:mbootinfo
+boot_timeout_ctrl	include/sdmc.h	/^	uint32	boot_timeout_ctrl;	\/* boot time-out control register *\/$/;"	m	struct:sdmc_csreg
+bootfile	include/dhcp.h	/^			byte   bootfile[128];	\/* TFTP File name	*\/$/;"	m	struct:dhcpmsg::__anon7::__anon8
+bootinfo	system/meminit.c	/^struct	mbootinfo *bootinfo = (struct mbootinfo *)1;$/;"	v	typeref:struct:mbootinfo
+bootsign	system/meminit.c	/^uint32	bootsign = 1;		\/* Boot signature of the boot loader	*\/$/;"	v
+bpentry	include/bufpool.h	/^struct	bpentry	{		\/* Description of a single buffer pool	*\/$/;"	s
+bpid32	include/kernel.h	/^typedef	int32	bpid32;		\/* buffer pool ID			*\/$/;"	t
+bpnext	include/bufpool.h	/^	struct	bpentry *bpnext;\/* pointer to next free buffer		*\/$/;"	m	struct:bpentry	typeref:struct:bpentry::bpentry
+bpsem	include/bufpool.h	/^	sid32	bpsem;		\/* semaphore that counts buffers	*\/$/;"	m	struct:bpentry
+bpsize	include/bufpool.h	/^	uint32	bpsize;		\/* size of buffers in this pool		*\/$/;"	m	struct:bpentry
+brkcount	config/y.tab.c	/^int	brkcount = 0;			\/* Count of %% separators till now in	*\/$/;"	v
+buf1size	include/quark_eth.h	/^	uint16	buf1size;	\/* Size of buffer 1	*\/$/;"	m	struct:eth_q_rx_desc
+buf1size	include/quark_eth.h	/^	uint16	buf1size;	\/* Size of buffer 1	*\/$/;"	m	struct:eth_q_tx_desc
+buf2size	include/quark_eth.h	/^	uint16	buf2size;	\/* Size of buffer 2	*\/$/;"	m	struct:eth_q_rx_desc
+buf2size	include/quark_eth.h	/^	uint16	buf2size;	\/* Size of buffer 2	*\/$/;"	m	struct:eth_q_tx_desc
+buf_data_port	include/sdmc.h	/^	uint32	buf_data_port;		\/* buffer data port register 		*\/$/;"	m	struct:sdmc_csreg
+buffer	include/ethloop.h	/^    char *buffer[ELOOP_NBUF];   \/**< input buffer                       *\/$/;"	m	struct:ethloop
+buffer	include/flash.h	/^    void *buffer;               \/**< buffer for this block               *\/$/;"	m	struct:flash_block
+buffer	include/uart.h	/^	volatile uint32	buffer;	\/* receive buffer (when read)		*\/$/;"	m	struct:uart_csreg
+buffer1	include/quark_eth.h	/^	uint32	buffer1;	\/* Address of buffer 1	*\/$/;"	m	struct:eth_q_rx_desc
+buffer1	include/quark_eth.h	/^	uint32	buffer1;	\/* Address of buffer 1	*\/$/;"	m	struct:eth_q_tx_desc
+buffer2	include/quark_eth.h	/^	uint32	buffer2;	\/* Address of buffer 2	*\/$/;"	m	struct:eth_q_rx_desc
+buffer2	include/quark_eth.h	/^	uint32	buffer2;	\/* Address of buffer 2	*\/$/;"	m	struct:eth_q_tx_desc
+bufinit	system/bufinit.c	/^status	bufinit(void)$/;"	f
+buftab	system/bufinit.c	/^struct	bpentry	buftab[NBPOOLS];		\/* Buffer pool table	*\/$/;"	v	typeref:struct:bpentry
+byte	include/kernel.h	/^typedef	unsigned char	byte;$/;"	t
+bzero	lib/bzero.c	/^void	bzero($/;"	f
+capabilities	include/sdmc.h	/^	uint32	capabilities;		\/* capabilities register 		*\/$/;"	m	struct:sdmc_csreg
+capabilitiesPtr	include/pci.h	/^	unsigned char	capabilitiesPtr;			\/*   34 *\/$/;"	m	struct:pci_config_header
+capabilities_2	include/sdmc.h	/^	uint32	capabilities_2;		\/* capabilities register 2 		*\/$/;"	m	struct:sdmc_csreg
+cardbusCISPtr	include/pci.h	/^	unsigned int	cardbusCISPtr;				\/*   28 *\/$/;"	m	struct:pci_config_header
+cbuiltin	include/shell.h	/^	bool8	cbuiltin;		\/* Is this a builtin command?	*\/$/;"	m	struct:cmdent
+cfunc	include/shell.h	/^	int32	(*cfunc)(int32,char*[]);\/* Function for command		*\/$/;"	m	struct:cmdent
+charToHex	shell/xsh_sendpkt.c	/^int32 charToHex(byte * buf, char * string) {$/;"	f
+checksum	include/icmpv6.h	/^    uint16 checksum;$/;"	m	struct:icmpv6general
+checksum	include/icmpv6.h	/^    uint16 checksum;$/;"	m	struct:nadvert
+checksum	include/icmpv6.h	/^    uint16 checksum;$/;"	m	struct:nsolicit
+checksum	include/icmpv6.h	/^    uint16 checksum;$/;"	m	struct:radvert
+checksum	include/icmpv6.h	/^    uint16 checksum;$/;"	m	struct:rsolicit
+checksumv6	net/checksum6.c	/^uint32 checksumv6(void * pkt, uint32 messagelength){$/;"	f
+chprio	system/chprio.c	/^pri16	chprio($/;"	f
+cid	include/sdmc.h	/^	char	cid[16];		\/* Card identifier			*\/$/;"	m	struct:sdmcblk
+cksum_valid	net/checksum6.c	/^bool8 cksum_valid(void * phead, void * pkt, uint32 len, uint32 pheadlen) {$/;"	f
+clSize	include/pci.h	/^	unsigned char	clSize;					\/*   c *\/$/;"	m	struct:pci_config_header
+classCode	include/pci.h	/^	unsigned char	classCode;				\/*   b *\/$/;"	m	struct:pci_config_header
+clk_ctl	include/sdmc.h	/^	uint16	clk_ctl;		\/* clock control register 		*\/$/;"	m	struct:sdmc_csreg
+clkdisp	system/clkdisp.S	/^clkdisp:$/;"	l
+clkhandler	system/clkhandler.c	/^void	clkhandler($/;"	f
+clkinit	system/clkinit.c	/^void	clkinit(void)$/;"	f
+clktime	system/clkinit.c	/^uint32	clktime;		\/* Seconds since boot			*\/$/;"	v
+cln_remove_imr	system/early_imr.c	/^static void cln_remove_imr(unsigned char reg_l, unsigned char reg_h,$/;"	f	file:
+cln_remove_imr_boot_params	system/early_imr.c	/^static void cln_remove_imr_boot_params(void)$/;"	f	file:
+cln_remove_imr_bzimage	system/early_imr.c	/^static void cln_remove_imr_bzimage(void)$/;"	f	file:
+cln_remove_imr_grub	system/early_imr.c	/^static void cln_remove_imr_grub(void)$/;"	f	file:
+cln_sb_id	system/early_imr.c	/^}cln_sb_id;$/;"	t	typeref:enum:__anon1	file:
+close	config/y.tab.c	/^	char	close[MAXNAME];		\/* close function name			*\/$/;"	m	struct:dev_ent	file:
+close	system/close.c	/^syscall	close($/;"	f
+cmd	include/sdmc.h	/^	uint16	cmd;			\/* command register 			*\/$/;"	m	struct:sdmc_csreg
+cmd12_err_stat	include/sdmc.h	/^	uint16	cmd12_err_stat;		\/* auto cmd12 error status register 	*\/$/;"	m	struct:sdmc_csreg
+cmd8	include/sdmc.h	/^	uint8	cmd8	:1;		\/* Card supports CMD8			*\/$/;"	m	struct:sdmcblk
+cmd_crc_chk_en	include/sdmc.h	/^	uint16	cmd_crc_chk_en	:1;$/;"	m	struct:sdmc_cmd
+cmd_index	include/sdmc.h	/^	uint16	cmd_index	:6;$/;"	m	struct:sdmc_cmd
+cmd_index_chk_en	include/sdmc.h	/^	uint16	cmd_index_chk_en:1;$/;"	m	struct:sdmc_cmd
+cmd_sem	include/sdmc.h	/^	sid32	cmd_sem;		\/* command semaphore 			*\/$/;"	m	struct:sdmcblk
+cmd_type	include/sdmc.h	/^	uint16	cmd_type	:2;$/;"	m	struct:sdmc_cmd
+cmdent	include/shell.h	/^struct	cmdent	{			\/* Entry in command table	*\/$/;"	s
+cmdline	include/multiboot.h	/^	uint32	cmdline;		\/* Address of command line	*\/$/;"	m	struct:mbootinfo
+cmdtab	shell/shell.c	/^const	struct	cmdent	cmdtab[] = {$/;"	v	typeref:struct:cmdent
+cname	include/shell.h	/^	char	*cname;			\/* Name of command		*\/$/;"	m	struct:cmdent
+code	include/icmpv6.h	/^    byte code;$/;"	m	struct:icmpv6general
+code	include/icmpv6.h	/^    byte code;$/;"	m	struct:nadvert
+code	include/icmpv6.h	/^    byte code;$/;"	m	struct:nsolicit
+code	include/icmpv6.h	/^    byte code;$/;"	m	struct:radvert
+code	include/icmpv6.h	/^    byte code;$/;"	m	struct:rsolicit
+command	include/pci.h	/^	unsigned short	command;				\/*   4 *\/$/;"	m	struct:pci_config_header
+commands	include/flash.h	/^    byte commands;             \/**< command set the interface uses      *\/$/;"	m	struct:flash
+confc	config/y.tab.c	/^FILE	*confc;$/;"	v
+confh	config/y.tab.c	/^FILE	*confh;$/;"	v
+config_atoi	config/y.tab.c	/^int	config_atoi(char *p, int len) {$/;"	f
+config_table	include/multiboot.h	/^	uint32	config_table;		\/* Address of ROM config table	*\/$/;"	m	struct:mbootinfo
+configuration	config/config.y	/^configuration:	devtypes DEFBRK devices$/;"	l
+console_init	system/platinit.c	/^int console_init(void)$/;"	f
+control	config/y.tab.c	/^	char	control[MAXNAME];	\/* control function name		*\/$/;"	m	struct:dev_ent	file:
+control	system/control.c	/^syscall	control($/;"	f
+count	include/ethloop.h	/^    int count;                      \/**< number of packets in buffer        *\/$/;"	m	struct:ethloop
+cpu_is_quark	system/platinit.c	/^int cpu_is_quark(void)$/;"	f
+cpudelay	system/start.S	/^cpudelay:	.long	1$/;"	l
+cpuid	system/start.S	/^cpuid:$/;"	l
+crc	include/flash.h	/^    uint32 crc;                   \/**< 32-bit CRC from flag_vers to EOF    *\/$/;"	m	struct:trx_header
+create	system/create.c	/^pid32	create($/;"	f
+csr	config/y.tab.c	/^	int	csr;			\/* Control Status Register addr		*\/$/;"	m	struct:dev_ent	file:
+csr	include/ether.h	/^	void	*csr;		\/* Control and status regsiter address	*\/$/;"	m	struct:ethcblk
+ctr1000	system/clkinit.c	/^uint32	ctr1000 = 0;		\/* Milliseconds since boot		*\/$/;"	v
+ctrlstat	include/quark_eth.h	/^	uint32	ctrlstat;	\/* Control and status	*\/$/;"	m	struct:eth_q_tx_desc
+ctxsw	system/ctxsw.S	/^ctxsw:$/;"	l
+curhoplim	include/icmpv6.h	/^    uint8  curhoplim;$/;"	m	struct:radvert
+curr_block	include/flash.h	/^    byte curr_block;           \/**< offset of the oldest block stored   *\/$/;"	m	struct:flash
+currpid	system/initialize.c	/^pid32	currpid;		\/* ID of currently executing process	*\/$/;"	v
+d_name	include/rfilesys.h	/^	char	d_name[256];		\/* Name of the file	*\/$/;"	m	struct:rfdirent
+d_type	include/rfilesys.h	/^	byte	d_type;			\/* Type of the file	*\/$/;"	m	struct:rfdirent
+dat_pr_sel	include/sdmc.h	/^	uint16	dat_pr_sel	:2;$/;"	m	struct:sdmc_cmd
+data	include/dns.h	/^	char	data[DNSDATASIZ];	\/* DNS data area		*\/$/;"	m	struct:dnspkt
+data	include/ether.h	/^	byte	data[1];		\/* Packet payload		*\/$/;"	m	struct:etherPkt
+data	include/flash.h	/^    void *data;$/;"	m	struct:file
+dateinfo	include/date.h	/^struct	dateinfo {$/;"	s
+dbid32	include/kernel.h	/^typedef	int32	dbid32;		\/* data block ID (used in file system)	*\/$/;"	t
+dc_bootp	include/dhcp.h	/^		byte	dc_bootp[192];	\/* DHCP bootp area (zero)	*\/$/;"	m	union:dhcpmsg::__anon7
+dc_bop	include/dhcp.h	/^	byte	dc_bop;			\/* DHCP bootp op 1=req 2=reply	*\/$/;"	m	struct:dhcpmsg
+dc_chaddr	include/dhcp.h	/^	byte	dc_chaddr[16];		\/* DHCP client hardware address	*\/$/;"	m	struct:dhcpmsg
+dc_cip	include/dhcp.h	/^	uint32	dc_cip;			\/* DHCP client IP address	*\/$/;"	m	struct:dhcpmsg
+dc_cookie	include/dhcp.h	/^	uint32	dc_cookie;		\/* DHCP cookie			*\/$/;"	m	struct:dhcpmsg
+dc_flags	include/dhcp.h	/^	uint16	dc_flags;		\/* DHCP flags			*\/$/;"	m	struct:dhcpmsg
+dc_gip	include/dhcp.h	/^	uint32	dc_gip;			\/* DHCP gateway IP address	*\/$/;"	m	struct:dhcpmsg
+dc_hlen	include/dhcp.h	/^	byte	dc_hlen;		\/* DHCP hardware address length	*\/$/;"	m	struct:dhcpmsg
+dc_hops	include/dhcp.h	/^	byte	dc_hops;		\/* DHCP hop count		*\/$/;"	m	struct:dhcpmsg
+dc_htype	include/dhcp.h	/^	byte	dc_htype;		\/* DHCP hardware type		*\/$/;"	m	struct:dhcpmsg
+dc_opt	include/dhcp.h	/^	byte	dc_opt[1024];		\/* DHCP options area (large	*\/$/;"	m	struct:dhcpmsg
+dc_secs	include/dhcp.h	/^	uint16	dc_secs;		\/* DHCP seconds			*\/$/;"	m	struct:dhcpmsg
+dc_sip	include/dhcp.h	/^	uint32	dc_sip;			\/* DHCP server IP address	*\/$/;"	m	struct:dhcpmsg
+dc_xid	include/dhcp.h	/^	uint32	dc_xid;			\/* DHCP xid			*\/$/;"	m	struct:dhcpmsg
+dc_yip	include/dhcp.h	/^	uint32	dc_yip;			\/* DHCP your IP address		*\/$/;"	m	struct:dhcpmsg
+debug	include/quark_eth.h	/^	uint32	debug;		\/* Debug Register			*\/$/;"	m	struct:eth_q_csreg
+debug_sel	include/sdmc.h	/^	uint8	debug_sel;		\/* debug selection register *\/$/;"	m	struct:sdmc_csreg
+defer	include/resched.h	/^struct	defer	{$/;"	s
+defevec	system/intr.S	/^defevec:$/;"	l
+delay	system/initialize.c	/^int32	delay(int n)$/;"	f
+dentry	config/conf.h	/^struct	dentry	{$/;"	s
+dentry	include/conf.h	/^struct	dentry	{$/;"	s
+dequeue	system/queue.c	/^pid32	dequeue($/;"	f
+dest	include/icmpv6.h	/^    byte    dest[IPV6_ASIZE];$/;"	m	struct:pseudoHdr
+dest	include/ipv6.h	/^    byte    dest[IPV6_ASIZE];$/;"	m	struct:base_header
+dev	include/ether.h	/^	struct	dentry	*dev;	\/* Address in device switch table	*\/$/;"	m	struct:ethcblk	typeref:struct:ethcblk::dentry
+dev	include/ethloop.h	/^    struct dentry *dev;                    \/**< device table entry                 *\/$/;"	m	struct:ethloop	typeref:struct:ethloop::dentry
+devAddress	include/ether.h	/^	uint8	devAddress[ETH_ADDR_LEN];\/* MAC address 		*\/$/;"	m	struct:ethcblk
+dev_ent	config/y.tab.c	/^struct	dev_ent	{			\/* Entry for a device or device type	*\/$/;"	s	file:
+dev_tlist	config/config.y	/^dev_tlist:	theader attr_list$/;"	l
+devcall	include/kernel.h	/^typedef int32	devcall;	\/* device call declaration		*\/$/;"	t
+device	config/config.y	/^device:		dheader attr_list$/;"	l
+device	include/flash.h	/^    struct dentry *device;             \/**< flash entry in dev structure        *\/$/;"	m	struct:flash	typeref:struct:flash::dentry
+deviceID	include/pci.h	/^	unsigned short	deviceID;				\/*   2 *\/$/;"	m	struct:pci_config_header
+devices	config/config.y	/^devices:	\/* nothing *\/ { doing = "interface types"; }$/;"	l
+devis	config/config.y	/^devis:		IS devisid$/;"	l
+devisid	config/config.y	/^devisid:	IDENT { devisid(yytext); }$/;"	l
+devisid	config/y.tab.c	/^void	devisid(char *tname) {$/;"	f
+devon	config/config.y	/^devon:		ON devonid$/;"	l
+devonid	config/config.y	/^devonid:	IDENT { devonid(yytext); }$/;"	l
+devonid	config/y.tab.c	/^void	devonid(char *onname) {$/;"	f
+devs	config/y.tab.c	/^struct	dev_ent		devs[NDEVS];	\/* Table of all devices			*\/$/;"	v	typeref:struct:dev_ent
+devstab	config/y.tab.c	/^char *devstab[] = {$/;"	v
+devtab	config/conf.c	/^struct	dentry	devtab[NDEVS] =$/;"	v	typeref:struct:dentry
+devtab	system/conf.c	/^struct	dentry	devtab[NDEVS] =$/;"	v	typeref:struct:dentry
+devtype	config/config.y	/^devtype:	tname COLON dev_tlist$/;"	l
+devtypes	config/config.y	/^devtypes:	\/* nothing *\/ { doing = "device definitions"; }$/;"	l
+dfr	include/apic.h	/^	uint32	dfr;		\/* Destination Format	*\/$/;"	m	struct:lapic_csreg
+dhcpmsg	include/dhcp.h	/^struct	dhcpmsg	{$/;"	s
+dheader	config/config.y	/^dheader:	dname devis devon$/;"	l
+did32	include/kernel.h	/^typedef	int32	did32;		\/* device ID				*\/$/;"	t
+disable	system/intr.S	/^disable:$/;"	l
+disk	include/ramdisk.h	/^	char	disk[RM_BLKSIZ * RM_BLKS];$/;"	m	struct:ramdisk
+dll	include/uart.h	33;"	d
+dlm	include/uart.h	34;"	d
+dname	config/config.y	/^dname:		IDENT { newdev(yytext); }$/;"	l
+dns_bldq	net/dns.c	/^uint32	dns_bldq ($/;"	f
+dns_geta	net/dns.c	/^uint32	dns_geta ($/;"	f
+dns_getrname	net/dns.c	/^uint32	dns_getrname ($/;"	f
+dns_q	include/dns.h	/^struct	dns_q {$/;"	s
+dns_rr	include/dns.h	/^struct	dns_rr {$/;"	s
+dnslookup	net/dns.c	/^uint32	dnslookup ($/;"	f
+dnspkt	include/dns.h	/^struct	dnspkt {$/;"	s
+doing	config/y.tab.c	/^char	*doing = "device type declarations";$/;"	v
+dot2ip	net/dot2ip.c	/^uint32	dot2ip ($/;"	f
+drives_addr	include/multiboot.h	/^	uint32	drives_addr;		\/* Address of Drive structures	*\/$/;"	m	struct:mbootinfo
+drives_length	include/multiboot.h	/^	uint32	drives_length;		\/* Size of drives structures	*\/$/;"	m	struct:mbootinfo
+dst	include/ether.h	/^	byte	dst[ETH_ADDR_LEN];	\/* Destination Mac address	*\/$/;"	m	struct:etherPkt
+dt_boot	include/date.h	/^	uint32	dt_boot;		\/* time when system booted	*\/$/;"	m	struct:dateinfo
+dt_bootvalid	include/date.h	/^	bool8	dt_bootvalid;		\/* is dt_boot field valid?	*\/$/;"	m	struct:dateinfo
+dt_daylight	include/date.h	/^	int32	dt_daylight;		\/* whether to compute daylight	*\/$/;"	m	struct:dateinfo
+dt_dnam	include/date.h	/^	char	*dt_dnam[7];		\/* day names			*\/$/;"	m	struct:dateinfo
+dt_mnam	include/date.h	/^	char	*dt_mnam[12];		\/* month names			*\/$/;"	m	struct:dateinfo
+dt_msize	include/date.h	/^	int32	dt_msize[12];		\/* days per month		*\/$/;"	m	struct:dateinfo
+dtypes	config/y.tab.c	/^struct	dev_ent		dtypes[NTYPES];\/* Table of all device types		*\/$/;"	v	typeref:struct:dev_ent
+dvclose	config/conf.h	/^	devcall (*dvclose)(struct dentry *);$/;"	m	struct:dentry
+dvclose	include/conf.h	/^	devcall (*dvclose)(struct dentry *);$/;"	m	struct:dentry
+dvcntl	config/conf.h	/^	devcall (*dvcntl) (struct dentry *, int32, int32, int32);$/;"	m	struct:dentry
+dvcntl	include/conf.h	/^	devcall (*dvcntl) (struct dentry *, int32, int32, int32);$/;"	m	struct:dentry
+dvcsr	config/conf.h	/^	void    *dvcsr;$/;"	m	struct:dentry
+dvcsr	include/conf.h	/^	void    *dvcsr;$/;"	m	struct:dentry
+dvgetc	config/conf.h	/^	devcall (*dvgetc) (struct dentry *);$/;"	m	struct:dentry
+dvgetc	include/conf.h	/^	devcall (*dvgetc) (struct dentry *);$/;"	m	struct:dentry
+dvinit	config/conf.h	/^	devcall (*dvinit) (struct dentry *);$/;"	m	struct:dentry
+dvinit	include/conf.h	/^	devcall (*dvinit) (struct dentry *);$/;"	m	struct:dentry
+dvintr	config/conf.h	/^	void    (*dvintr)(void);$/;"	m	struct:dentry
+dvintr	include/conf.h	/^	void    (*dvintr)(void);$/;"	m	struct:dentry
+dvirq	config/conf.h	/^	byte    dvirq;$/;"	m	struct:dentry
+dvirq	include/conf.h	/^	byte    dvirq;$/;"	m	struct:dentry
+dvminor	config/conf.h	/^	int32   dvminor;$/;"	m	struct:dentry
+dvminor	include/conf.h	/^	int32   dvminor;$/;"	m	struct:dentry
+dvname	config/conf.h	/^	char    *dvname;$/;"	m	struct:dentry
+dvname	include/conf.h	/^	char    *dvname;$/;"	m	struct:dentry
+dvnum	config/conf.h	/^	int32   dvnum;$/;"	m	struct:dentry
+dvnum	include/conf.h	/^	int32   dvnum;$/;"	m	struct:dentry
+dvopen	config/conf.h	/^	devcall (*dvopen) (struct dentry *, char *, char *);$/;"	m	struct:dentry
+dvopen	include/conf.h	/^	devcall (*dvopen) (struct dentry *, char *, char *);$/;"	m	struct:dentry
+dvputc	config/conf.h	/^	devcall (*dvputc) (struct dentry *, char);$/;"	m	struct:dentry
+dvputc	include/conf.h	/^	devcall (*dvputc) (struct dentry *, char);$/;"	m	struct:dentry
+dvread	config/conf.h	/^	devcall (*dvread) (struct dentry *, void *, uint32);$/;"	m	struct:dentry
+dvread	include/conf.h	/^	devcall (*dvread) (struct dentry *, void *, uint32);$/;"	m	struct:dentry
+dvseek	config/conf.h	/^	devcall (*dvseek) (struct dentry *, int32);$/;"	m	struct:dentry
+dvseek	include/conf.h	/^	devcall (*dvseek) (struct dentry *, int32);$/;"	m	struct:dentry
+dvwrite	config/conf.h	/^	devcall (*dvwrite)(struct dentry *, void *, uint32);$/;"	m	struct:dentry
+dvwrite	include/conf.h	/^	devcall (*dvwrite)(struct dentry *, void *, uint32);$/;"	m	struct:dentry
+echoch	device/tty/ttyhandle_in.c	/^local	void	echoch($/;"	f
+ed_mca	include/ether.h	/^    	Eaddr   ed_mca[ETH_NUM_MCAST];\/* Array of multicast addrs 	*\/$/;"	m	struct:ethcblk
+ed_mcc	include/ether.h	/^	int16 	ed_mcc;	 	\/* Count of multicast addresses		*\/$/;"	m	struct:ethcblk
+ed_mcset	include/ether.h	/^	int16 	ed_mcset;       \/* Nonzero => multicast reception set   *\/$/;"	m	struct:ethcblk
+enable	system/intr.S	/^enable:$/;"	l
+encodePCIDevice	system/pci.c	/^static inline uint32 encodePCIDevice($/;"	f	file:
+encodedPCIDevToBus	system/pci.c	/^static inline uint32 encodedPCIDevToBus($/;"	f	file:
+encodedPCIDevToDevice	system/pci.c	/^static inline uint32 encodedPCIDevToDevice($/;"	f	file:
+encodedPCIDevToFunction	system/pci.c	/^static inline uint32 encodedPCIDevToFunction($/;"	f	file:
+enqueue	system/queue.c	/^pid32	enqueue($/;"	f
+eoi	include/apic.h	/^	uint32	eoi;		\/* End of Interrupt	*\/$/;"	m	struct:lapic_csreg
+eputc	device/tty/ttyhandle_in.c	/^local	void	eputc($/;"	f
+erase1	device/tty/ttyhandle_in.c	/^local	void	erase1($/;"	f
+erase_blocks	include/flash.h	/^    struct flash_block erase_blocks[MAX_LIVE_BLOCKS];$/;"	m	struct:flash	typeref:struct:flash::flash_block
+err_int_sig_en	include/sdmc.h	/^	uint16	err_int_sig_en;		\/* error interrupt signal enable register *\/$/;"	m	struct:sdmc_csreg
+err_int_stat_en	include/sdmc.h	/^	uint16	err_int_stat_en;	\/* error interrupt status enable register *\/$/;"	m	struct:sdmc_csreg
+err_int_status	include/sdmc.h	/^	uint16	err_int_status;		\/* error interrupt status register 	*\/$/;"	m	struct:sdmc_csreg
+errors	include/ether.h	/^	uint32	errors;		\/* Number of Ethernet errors 		*\/$/;"	m	struct:ethcblk
+eth_hton	net/net.c	/^void 	eth_hton($/;"	f
+eth_ntoh	net/net.c	/^void 	eth_ntoh($/;"	f
+eth_phy_read	device/eth/ethinit.c	/^uint16	eth_phy_read	($/;"	f
+eth_phy_reset	device/eth/ethinit.c	/^int32	eth_phy_reset	($/;"	f
+eth_phy_write	device/eth/ethinit.c	/^void	eth_phy_write	($/;"	f
+eth_q_csreg	include/quark_eth.h	/^struct eth_q_csreg {$/;"	s
+eth_q_rx_desc	include/quark_eth.h	/^struct eth_q_rx_desc {$/;"	s
+eth_q_tx_desc	include/quark_eth.h	/^struct eth_q_tx_desc {$/;"	s
+ethcblk	include/ether.h	/^struct	ethcblk	{$/;"	s
+ethcontrol	device/eth/ethcontrol.c	/^devcall	ethcontrol ($/;"	f
+ethdispatch	device/eth/ethdispatch.S	/^ethdispatch:$/;"	l
+etherPkt	include/ether.h	/^struct	etherPkt {$/;"	s
+ethertab	device/eth/ethinit.c	/^struct	ethcblk	ethertab[1];$/;"	v	typeref:struct:ethcblk
+ethhandler	device/eth/ethhandler.c	/^void	ethhandler ($/;"	f
+ethinit	device/eth/ethinit.c	/^int32	ethinit ($/;"	f
+ethloop	include/ethloop.h	/^struct ethloop$/;"	s
+ethmcast_add	device/eth/ethmcast.c	/^int32	ethmcast_add	($/;"	f
+ethmcast_remove	device/eth/ethmcast.c	/^int32	ethmcast_remove	($/;"	f
+ethread	device/eth/ethread.c	/^devcall	ethread	($/;"	f
+ethwrite	device/eth/ethwrite.c	/^devcall	ethwrite	($/;"	f
+exchandler	include/stddef.h	/^typedef void exchandler;        \/**< exception procedure                *\/$/;"	t
+exit	system/exit.c	/^void	exit(void)$/;"	f
+expansionROMAddr	include/pci.h	/^	unsigned int	expansionROMAddr;			\/*   30 *\/$/;"	m	struct:pci_config_header
+extended_media_bus_support	include/sdmc.h	/^	uint32	extended_media_bus_support:1;	\/* Extended Media Bus Support		*\/$/;"	m	struct:sdmc_capabilities
+failif	include/testsuite.h	24;"	d
+fcr	include/quark_eth.h	/^	uint32	fcr;		\/* Flow Control Register		*\/$/;"	m	struct:eth_q_csreg
+fcr	include/uart.h	32;"	d
+fgetc	lib/fgetc.c	/^int	fgetc($/;"	f
+fgets	lib/fgets.c	/^char	*fgets($/;"	f
+file	include/flash.h	/^struct file$/;"	s
+fillEthernet	net/sendipv6pkt.c	/^void    fillEthernet(struct netpacket * pkt, byte* dest) {$/;"	f
+fillICMP	net/sendipv6pkt.c	/^void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_types_length) {$/;"	f
+fillIPdatagram	net/sendipv6pkt.c	/^void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, uint16 length) {$/;"	f
+fillOptions	net/sendipv6pkt.c	/^void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {$/;"	f
+fill_option_MTU	net/sendipv6pkt.c	/^uint8 fill_option_MTU(void * pkt) {$/;"	f
+fill_option_one	net/sendipv6pkt.c	/^uint8 fill_option_one(void * pkt) {$/;"	f
+fill_option_prefix	net/sendipv6pkt.c	/^uint8 fill_option_prefix(void * pkt) {$/;"	f
+find_pci_device	system/pci.c	/^int32 find_pci_device($/;"	f
+firstid	include/queue.h	27;"	d
+firstkey	include/queue.h	31;"	d
+flags	include/ethloop.h	/^    byte flags;                    \/**< flags                              *\/$/;"	m	struct:ethloop
+flags	include/multiboot.h	/^	uint32	flags;			\/* Multiboot information flags	*\/$/;"	m	struct:mbootinfo
+flags_vers	include/flash.h	/^    uint32 flags_vers;             \/**< 0-15 flags, 16-31 version           *\/$/;"	m	struct:trx_header
+flash	include/flash.h	/^struct flash$/;"	s
+flash_block	include/flash.h	/^struct flash_block$/;"	s
+flash_region	include/flash.h	/^struct flash_region$/;"	s
+flashbase	include/ether.h	/^	uint32  flashbase;      \/* Flash base from config	       	*\/$/;"	m	struct:ethcblk
+flex_int16_t	config/lex.yy.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
+flex_int16_t	config/lex.yy.c	/^typedef short int flex_int16_t;$/;"	t	file:
+flex_int32_t	config/lex.yy.c	/^typedef int flex_int32_t;$/;"	t	file:
+flex_int32_t	config/lex.yy.c	/^typedef int32_t flex_int32_t;$/;"	t	file:
+flex_int8_t	config/lex.yy.c	/^typedef int8_t flex_int8_t;$/;"	t	file:
+flex_int8_t	config/lex.yy.c	/^typedef signed char flex_int8_t;$/;"	t	file:
+flex_uint16_t	config/lex.yy.c	/^typedef uint16_t flex_uint16_t;$/;"	t	file:
+flex_uint16_t	config/lex.yy.c	/^typedef unsigned short int flex_uint16_t;$/;"	t	file:
+flex_uint32_t	config/lex.yy.c	/^typedef uint32_t flex_uint32_t;$/;"	t	file:
+flex_uint32_t	config/lex.yy.c	/^typedef unsigned int flex_uint32_t;$/;"	t	file:
+flex_uint8_t	config/lex.yy.c	/^typedef uint8_t flex_uint8_t;$/;"	t	file:
+flex_uint8_t	config/lex.yy.c	/^typedef unsigned char flex_uint8_t; $/;"	t	file:
+fmtlist	compile/bin/build-make	/^function fmtlist(n,items,maxl,dname, pfix) {$/;"	f
+force_event_cmd12_err_stat	include/sdmc.h	/^	uint16	force_event_cmd12_err_stat;	\/* force event register for auto cmd12 error status *\/$/;"	m	struct:sdmc_csreg
+force_event_err_int_stat	include/sdmc.h	/^	uint16	force_event_err_int_stat;	\/* force event register for error interrupt status *\/$/;"	m	struct:sdmc_csreg
+fprintf	lib/fprintf.c	/^int	fprintf($/;"	f
+fputc	lib/fputc.c	/^int	fputc($/;"	f
+fputs	lib/fputs.c	/^int	fputs($/;"	f
+freebuf	system/freebuf.c	/^syscall	freebuf($/;"	f
+freemem	system/freemem.c	/^syscall	freemem($/;"	f
+freestk	include/memory.h	16;"	d
+fscanf	lib/fscanf.c	/^int	fscanf($/;"	f
+fwdTab	net/fwdipv6.c	/^struct fwdTabEntry * fwdTab[IPV6_ADDRBITS + 1];$/;"	v	typeref:struct:fwdTabEntry
+fwdTabEntry	include/fwdipv6.h	/^struct	fwdTabEntry {			\/* entry in the forwarding table	*\/$/;"	s
+fwdTabEntry	include/fwdipv6.h	/^} fwdTabEntry;$/;"	v	typeref:struct:fwdTabEntry
+fwdipv6	net/fwdipv6.c	/^void fwdipv6(struct netpacket * pkt, uint32 len) {$/;"	f
+fwdipv6_init	net/fwdipv6.c	/^void fwdipv6_init() {$/;"	f
+gc	include/hpet.h	/^	uint32	gc;	\/* General Configuration	*\/$/;"	m	struct:hpet_csreg
+gcid_l	include/hpet.h	/^	uint32	gcid_l;	\/* General Capab. and ID (lower)*\/$/;"	m	struct:hpet_csreg
+gcid_u	include/hpet.h	/^	uint32	gcid_u;	\/* General Capab. and ID (upper)*\/$/;"	m	struct:hpet_csreg
+gdt	system/start.S	/^gdt:	.space	GDT_BYTES$/;"	l
+gdt1	system/start.S	/^gdt1:$/;"	l
+gdt_copy	system/meminit.c	/^struct sd gdt_copy[NGD] = {$/;"	v	typeref:struct:sd
+gdtr	system/start.S	/^gdtr:	.word	(GDT_BYTES-1)		# sizeof _gdt -1 (in bytes)$/;"	l
+getEntry	net/fwdipv6.c	/^struct fwdTabEntry * getEntry(uint8 len, byte * dest) {$/;"	f
+get_MTU	net/radvert.c	/^uint16 get_MTU(char* option) {$/;"	f
+get_link_local	net/ipv6.c	/^void  get_link_local(byte* mac) {$/;"	f
+get_mac_snm	net/ipv6.c	/^void get_mac_snm(byte* snm_addr) {$/;"	f
+get_prefix_default	net/radvert.c	/^uint16 get_prefix_default(char* option) {$/;"	f
+get_quark_pdat_entry_data_by_desc	system/quark_pdat.c	/^int get_quark_pdat_entry_data_by_desc(const char* entry_desc, char* buf, uint32 size)$/;"	f
+get_quark_pdat_entry_data_by_id	system/quark_pdat.c	/^int get_quark_pdat_entry_data_by_id(uint16 type_id, char* buf, uint32 size)$/;"	f
+get_router_link_addr	net/radvert.c	/^uint16 get_router_link_addr(char* option) {$/;"	f
+get_snm_addr	net/ipv6.c	/^void get_snm_addr(byte* unicast){$/;"	f
+getattrid	config/y.tab.c	/^void	getattrid(char *str) {$/;"	f
+getbasename	compile/bin/build-make	/^function getbasename(gb_path) {$/;"	f
+getbuf	system/getbuf.c	/^char    *getbuf($/;"	f
+getc	config/y.tab.c	/^	char	getc[MAXNAME];		\/* getc function name			*\/$/;"	m	struct:dev_ent	file:
+getc	system/getc.c	/^syscall	getc($/;"	f
+getch	lib/fscanf.c	/^static int	getch($/;"	f	file:
+getchar	lib/getchar.c	/^int	getchar($/;"	f
+getdev	system/getdev.c	/^did32	getdev($/;"	f
+getfirst	system/getitem.c	/^pid32	getfirst($/;"	f
+getitem	system/getitem.c	/^pid32	getitem($/;"	f
+getlast	system/getitem.c	/^pid32	getlast($/;"	f
+getmem	system/getmem.c	/^char  	*getmem($/;"	f
+getpid	system/getpid.c	/^pid32	getpid(void)$/;"	f
+getport	net/net.c	/^uint16 	getport(void)$/;"	f
+getprio	system/getprio.c	/^syscall	getprio($/;"	f
+getstk	system/getstk.c	/^char  	*getstk($/;"	f
+getticks	system/getticks.c	/^uint64  	getticks()$/;"	f
+gettime	system/gettime.c	/^status	gettime($/;"	f
+getutime	system/getutime.c	/^status	getutime($/;"	f
+girmask	system/evec.c	/^uint16	girmask;$/;"	v
+gis	include/hpet.h	/^	uint32	gis;	\/* General Interrupt Status	*\/$/;"	m	struct:hpet_csreg
+gmiiar	include/quark_eth.h	/^	uint32	gmiiar;		\/* GMII Address Register		*\/$/;"	m	struct:eth_q_csreg
+gmiidr	include/quark_eth.h	/^	uint32	gmiidr;		\/* GMII Data Register			*\/$/;"	m	struct:eth_q_csreg
+halt	system/intr.S	/^halt:$/;"	l
+hasIPv6Addr	net/ipv6.c	/^uint8   hasIPv6Addr;$/;"	v
+headerType	include/pci.h	/^	unsigned char	headerType;				\/*   e *\/$/;"	m	struct:pci_config_header
+hexadump	net/hexdump.c	/^void	hexadump	($/;"	f
+hexdump	net/hexdump.c	/^void	hexdump	($/;"	f
+hexdump	system/debug.c	/^void	hexdump($/;"	f
+hexdump_print	system/debug.c	/^static void hexdump_print($/;"	f	file:
+high_speed_support	include/sdmc.h	/^	uint32	high_speed_support	:1;	\/* High Speed Support			*\/$/;"	m	struct:sdmc_capabilities
+hold	include/ethloop.h	/^    char *hold;                 \/**< hold buffer                        *\/$/;"	m	struct:ethloop
+holdlen	include/ethloop.h	/^    int holdlen;                    \/**< length of packet in hold buffer    *\/$/;"	m	struct:ethloop
+hop_limit	include/ipv6.h	/^    uint8   hop_limit;$/;"	m	struct:base_header
+host	net/net.c	/^bool8	host;				\/* Are we operating as a host	*\/$/;"	v
+host_ctl	include/sdmc.h	/^	uint8	host_ctl;		\/* host control register 		*\/$/;"	m	struct:sdmc_csreg
+host_ctrl_2	include/sdmc.h	/^	uint16	host_ctrl_2;		\/* host control 2 register 		*\/$/;"	m	struct:sdmc_csreg
+host_ctrl_ver	include/sdmc.h	/^	uint16	host_ctrl_ver;		\/* host controller version register *\/$/;"	m	struct:sdmc_csreg
+hpet	system/clkinit.c	/^volatile struct hpet_csreg *hpet = (struct hpet_csreg *)$/;"	v	typeref:struct:hpet_csreg
+hpet_csreg	include/hpet.h	/^struct	hpet_csreg {$/;"	s
+hsem	include/ethloop.h	/^    sid32	hsem;                 \/**< number of held packets             *\/$/;"	m	struct:ethloop
+hthr	include/quark_eth.h	/^	uint32	hthr;		\/* Hash Table High Register		*\/$/;"	m	struct:eth_q_csreg
+htlr	include/quark_eth.h	/^	uint32	htlr;		\/* Hash Table Low Register		*\/$/;"	m	struct:eth_q_csreg
+htonl	include/prototypes.h	596;"	d
+htons	include/prototypes.h	595;"	d
+ib2disp	include/lfilesys.h	91;"	d
+ib2sect	include/lfilesys.h	86;"	d
+ib_dba	include/lfilesys.h	/^	dbid32		ib_dba[LF_IBLEN];\/* Ptrs to data blocks indexed	*\/$/;"	m	struct:lfiblk
+ib_next	include/lfilesys.h	/^	ibid32		ib_next;	\/* Address of next index block	*\/$/;"	m	struct:lfiblk
+ib_offset	include/lfilesys.h	/^	uint32		ib_offset;	\/* First data byte of the file	*\/$/;"	m	struct:lfiblk
+ibid32	include/kernel.h	/^typedef	int32	ibid32;		\/* index block ID (used in file system)	*\/$/;"	t
+iccount	include/icmp.h	/^	int32	iccount;		\/* count of packets enqueued	*\/$/;"	m	struct:icmpentry
+ichead	include/icmp.h	/^	int32	ichead;			\/* index of next packet to read	*\/$/;"	m	struct:icmpentry
+icmpentry	include/icmp.h	/^struct	icmpentry {			\/* entry in the ICMP table	*\/$/;"	s
+icmpopt	include/icmpv6.h	/^typedef struct icmpopt{$/;"	s
+icmpopt	include/icmpv6.h	/^}icmpopt;$/;"	t	typeref:struct:icmpopt
+icmppayload	include/icmpv6.h	/^    byte    icmppayload[0];$/;"	m	struct:pseudoHdr
+icmpv6_in	net/icmpv6.c	/^void icmpv6_in(struct netpacket * pkt) {$/;"	f
+icmpv6general	include/icmpv6.h	/^typedef struct icmpv6general{$/;"	s
+icmpv6general	include/icmpv6.h	/^}icmpv6general;$/;"	t	typeref:struct:icmpv6general
+icpid	include/icmp.h	/^	pid32	icpid;			\/* ID of waiting process	*\/$/;"	m	struct:icmpentry
+icqueue	include/icmp.h	/^	struct	netpacket *icqueue[ICMP_QSIZ];\/* circular packet queue	*\/$/;"	m	struct:icmpentry	typeref:struct:icmpentry::netpacket
+icremip	include/icmp.h	/^	uint32	icremip;		\/* remote IP address		*\/$/;"	m	struct:icmpentry
+icstate	include/icmp.h	/^	int32	icstate;		\/* state of entry: free\/used	*\/$/;"	m	struct:icmpentry
+ictail	include/icmp.h	/^	int32	ictail;			\/* index of next slot to insert	*\/$/;"	m	struct:icmpentry
+id	config/config.y	/^id:		IDENT { $$ = 0; getattrid(yytext); }$/;"	l
+id	include/dns.h	/^	uint16	id;			\/* DNS Query ID			*\/$/;"	m	struct:dnspkt
+idk	include/icmpv6.h	/^typedef struct idk{\/\/TODO: Ask dylan what to name this$/;"	s
+idk	include/icmpv6.h	/^}idk;$/;"	t	typeref:struct:idk
+idt	system/evec.c	/^struct __attribute__ ((__packed__)) idt {$/;"	s	file:
+idt	system/start.S	/^idt:	.space	IDT_BYTES       	$/;"	l
+idtr	system/start.S	/^idtr:	.word	(IDT_BYTES-1)		# size of _idt -1 (in bytes)$/;"	l
+ier	include/quark_eth.h	/^	uint32	ier;		\/* Interrupt Enable Register		*\/$/;"	m	struct:eth_q_csreg
+ier	include/uart.h	/^	volatile uint32	ier;	\/* interrupt enable			*\/$/;"	m	struct:uart_csreg
+if_dev	include/net.h	/^	did32	if_dev;		\/* Device ID of the layer2 device used	*\/$/;"	m	struct:ifentry
+if_head	include/net.h	/^	int32	if_head;	\/* next entry in packet queue to remove	*\/$/;"	m	struct:ifentry
+if_macbcast	include/net.h	/^	byte	if_macbcast[ETH_ADDR_LEN]; \/* MAC broadcast address	*\/$/;"	m	struct:ifentry
+if_macucast	include/net.h	/^	byte	if_macucast[ETH_ADDR_LEN]; \/* MAC unicast address	*\/$/;"	m	struct:ifentry
+if_name	include/net.h	/^	char	if_name[IF_NLEN];\/* Name for the interface		*\/$/;"	m	struct:ifentry
+if_queue	include/net.h	/^	struct	netpacket *if_queue[IF_QUEUESIZE]; \/* queue to hold	*\/$/;"	m	struct:ifentry	typeref:struct:ifentry::netpacket
+if_sem	include/net.h	/^	sid32	if_sem;		\/* semaphore counts incoming packets	*\/$/;"	m	struct:ifentry
+if_state	include/net.h	/^	bool8	if_state;	\/* Interface is either up or down	*\/$/;"	m	struct:ifentry
+if_tab	net/net.c	/^struct	ifentry	if_tab[NIFACES];	\/* The network interfaces	*\/$/;"	v	typeref:struct:ifentry
+if_tail	include/net.h	/^	int32	if_tail;	\/* next slot in packet queue to insert	*\/$/;"	m	struct:ifentry
+iface	include/fwdipv6.h	/^    uint8 iface;$/;"	m	struct:fwdTabEntry
+ifentry	include/net.h	/^struct	ifentry	{$/;"	s
+ifprime	net/net.c	/^int32	ifprime;			\/* Primary interface: for a	*\/$/;"	v
+igd_dpl	system/evec.c	/^	unsigned int	igd_dpl : 2;$/;"	m	struct:idt	file:
+igd_hoffset	system/evec.c	/^	unsigned short	igd_hoffset;$/;"	m	struct:idt	file:
+igd_loffset	system/evec.c	/^	unsigned short	igd_loffset;$/;"	m	struct:idt	file:
+igd_mbz	system/evec.c	/^	unsigned int	igd_mbz : 3;$/;"	m	struct:idt	file:
+igd_present	system/evec.c	/^	unsigned int	igd_present : 1;$/;"	m	struct:idt	file:
+igd_rsvd	system/evec.c	/^	unsigned int	igd_rsvd : 5;$/;"	m	struct:idt	file:
+igd_segsel	system/evec.c	/^	unsigned short	igd_segsel;$/;"	m	struct:idt	file:
+igd_type	system/evec.c	/^	unsigned int	igd_type : 5;$/;"	m	struct:idt	file:
+iir	include/uart.h	/^	volatile uint32	iir;	\/* interrupt identification (when read)	*\/$/;"	m	struct:uart_csreg
+imr	include/quark_eth.h	/^	uint32	imr;		\/* Interrupt Mask Register		*\/$/;"	m	struct:eth_q_csreg
+inPool	include/ether.h	/^	int16	inPool;		\/* Buffer pool ID for input buffers 	*\/$/;"	m	struct:ethcblk
+inames	system/evec.c	/^char *inames[] = {$/;"	v
+inb	system/start.S	/^inb:	movl	4(%esp), %edx$/;"	l
+index	include/ethloop.h	/^    int index;                  \/**< index of first packet in buffer    *\/$/;"	m	struct:ethloop
+info	include/ipv6.h	/^    byte    info[4];$/;"	m	struct:base_header
+init	config/y.tab.c	/^	char	init[MAXNAME];		\/* init function name			*\/$/;"	m	struct:dev_ent	file:
+init	system/init.c	/^syscall	init($/;"	f
+initevec	system/evec.c	/^int32	initevec()$/;"	f
+inl	system/start.S	/^inl:	movl	4(%esp), %edx$/;"	l
+insert	system/insert.c	/^status	insert($/;"	f
+insertNewFwdTabEntry	net/fwdipv6.c	/^struct fwdTabEntry * insertNewFwdTabEntry(uint8 index, uint8 interface, byte * nextHop) {$/;"	f
+insertd	system/insertd.c	/^status	insertd(			\/* Assumes interrupts disabled	*\/$/;"	f
+insw	system/start.S	/^insw:$/;"	l
+int16	include/kernel.h	/^typedef	short		int16;$/;"	t
+int32	include/kernel.h	/^typedef	int		int32;$/;"	t
+int_actions	system/evec.c	/^struct	int_entry int_actions[MAX_EXT_IRQS];$/;"	v	typeref:struct:int_entry
+int_arg	include/interrupt.h	/^	int32	int_arg;	\/* Argument to pass to the handler	*\/$/;"	m	struct:int_info
+int_dispatch	system/evec.c	/^void	int_dispatch ($/;"	f
+int_entry	include/interrupt.h	/^struct int_entry {$/;"	s
+int_handler	include/interrupt.h	/^	void	(*int_handler) (int32); \/* Address of a handler to call	*\/$/;"	m	struct:int_info
+int_info	include/interrupt.h	/^struct int_info {$/;"	s
+int_items	include/interrupt.h	/^	struct	int_info int_items[MAX_IRQ_SHARING+1];$/;"	m	struct:int_entry	typeref:struct:int_entry::int_info
+intel_cln_early_sb_probe	system/early_imr.c	/^static int intel_cln_early_sb_probe(void)$/;"	f	file:
+intel_cln_early_sb_read_reg	system/early_imr.c	/^void intel_cln_early_sb_read_reg(cln_sb_id id, unsigned char cmd,$/;"	f
+intel_cln_early_sb_write_reg	system/early_imr.c	/^void intel_cln_early_sb_write_reg(cln_sb_id id, unsigned char cmd,$/;"	f
+interrupt	include/kernel.h	/^typedef	void	interrupt;	\/* interrupt procedure			*\/$/;"	t
+interruptLine	include/pci.h	/^	unsigned char	interruptLine;				\/*   3c *\/$/;"	m	struct:pci_config_header
+interruptPin	include/pci.h	/^	unsigned char	interruptPin;				\/*   3d *\/$/;"	m	struct:pci_config_header
+intmask	include/kernel.h	/^typedef	uint32	intmask;	\/* saved interrupt mask			*\/$/;"	t
+intr	config/y.tab.c	/^	char	intr[MAXNAME];		\/* interrupt function name		*\/$/;"	m	struct:dev_ent	file:
+inw	system/start.S	/^inw:	movl	4(%esp), %edx$/;"	l
+ioapic_irq2vec	system/evec.c	/^int32	ioapic_irq2vec ($/;"	f
+iobase	include/ether.h	/^	uint32	iobase;		\/* I\/O base from config			*\/$/;"	m	struct:ethcblk
+ioerr	system/ioerr.c	/^devcall	ioerr(void)$/;"	f
+ionull	system/ionull.c	/^devcall	ionull(void)$/;"	f
+ipaddr	include/icmpv6.h	/^    byte ipaddr[16];$/;"	m	struct:nadvert
+ipaddr	include/icmpv6.h	/^    byte ipaddr[16];$/;"	m	struct:nsolicit
+ipv6	include/ipv6.h	/^    byte ipv6[IPV6_ASIZE];$/;"	m	struct:prefix_ipv6
+ipv6_addr	net/ipv6.c	/^byte    ipv6_addr[IPV6_ASIZE];$/;"	v
+ipv6_in	net/ipv6.c	/^void    ipv6_in ($/;"	f
+ipv6_init	net/ipv6.c	/^syscall ipv6_init() {$/;"	f
+ipv6bufpool	net/ipv6.c	/^bpid32  ipv6bufpool;$/;"	v
+ipv6bufpool	net/sendipv6pkt.c	/^bpid32  ipv6bufpool; \/\/pool of buffers for IPV6$/;"	v
+ipv6info	shell/ipv6info.c	/^shellcmd ipv6info(int nargs, char *args[]) {$/;"	f
+iqbuf	include/ip.h	/^	struct	netpacket *iqbuf[IP_OQSIZ];\/* Circular packet queue	*\/$/;"	m	struct:iqentry	typeref:struct:iqentry::netpacket
+iqentry	include/ip.h	/^struct	iqentry	{$/;"	s
+iqhead	include/ip.h	/^	int32	iqhead;			\/* Index of next packet to send	*\/$/;"	m	struct:iqentry
+iqsem	include/ip.h	/^	sid32	iqsem;			\/* Semaphore that counts pkts	*\/$/;"	m	struct:iqentry
+iqtail	include/ip.h	/^	int32	iqtail;			\/* Index of next free slot	*\/$/;"	m	struct:iqentry
+ir	include/quark_eth.h	/^	uint32	ir;		\/* Interrupt Register			*\/$/;"	m	struct:eth_q_csreg
+irq	config/y.tab.c	/^	int	irq;			\/* interrupt request			*\/$/;"	m	struct:dev_ent	file:
+irr	include/apic.h	/^	  uint32 irr;$/;"	m	struct:lapic_csreg::__anon11
+irr	include/apic.h	/^	}	irr[8];		\/* Intr. Request Regs	*\/$/;"	m	struct:lapic_csreg	typeref:struct:lapic_csreg::__anon11
+isalnum	include/ctype.h	24;"	d
+isalpha	include/ctype.h	17;"	d
+isascii	include/ctype.h	27;"	d
+isbaddev	include/device.h	7;"	d
+isbadpid	include/process.h	33;"	d
+isbadport	include/ports.h	29;"	d
+isbadqid	include/queue.h	36;"	d
+isbadsem	include/semaphore.h	22;"	d
+iscntrl	include/ctype.h	26;"	d
+isdigit	include/ctype.h	20;"	d
+isem	include/ether.h	/^	sid32	isem;		\/* Semaphore for Ethernet input		*\/$/;"	m	struct:ethcblk
+isempty	include/queue.h	29;"	d
+iseof	include/ctype.h	33;"	d
+isleap	include/date.h	42;"	d
+islower	include/ctype.h	19;"	d
+isomitted	compile/bin/build-make	/^function isomitted(io_fname) {$/;"	f
+ison	config/y.tab.c	/^	char	ison[MAXNAME];		\/* Name is "on" XXX			*\/$/;"	m	struct:dev_ent	file:
+isprint	include/ctype.h	25;"	d
+ispunct	include/ctype.h	23;"	d
+isr	include/apic.h	/^	  uint32 isr;$/;"	m	struct:lapic_csreg::__anon9
+isr	include/apic.h	/^	}	isr[8];		\/* In-Service Registers	*\/$/;"	m	struct:lapic_csreg	typeref:struct:lapic_csreg::__anon9
+isspace	include/ctype.h	22;"	d
+istart	include/ether.h	/^	uint16	istart;		\/* Index of next packet in the ring     *\/$/;"	m	struct:ethcblk
+isupper	include/ctype.h	18;"	d
+isxdigit	include/ctype.h	21;"	d
+kgetc	system/kprintf.c	/^syscall kgetc(void)$/;"	f
+kill	system/kill.c	/^syscall	kill($/;"	f
+kprintf	system/kprintf.c	/^syscall kprintf(char *fmt, ...)$/;"	f
+kputc	system/kprintf.c	/^syscall kputc(byte c)	\/* Character to write	*\/$/;"	f
+labs	lib/labs.c	/^long	labs($/;"	f
+lapic	system/evec.c	/^volatile struct lapic_csreg *lapic = (struct lapic_csreg *)$/;"	v	typeref:struct:lapic_csreg
+lapic_csreg	include/apic.h	/^struct	lapic_csreg {$/;"	s
+lapic_id	include/apic.h	/^	uint32	lapic_id;	\/* LAPIC ID		*\/$/;"	m	struct:lapic_csreg
+lapic_ver	include/apic.h	/^	uint32	lapic_ver;	\/* LAPIC version	*\/$/;"	m	struct:lapic_csreg
+lastid	include/queue.h	28;"	d
+lastkey	include/queue.h	32;"	d
+latencyTimer	include/pci.h	/^	unsigned char	latencyTimer;				\/*   d *\/$/;"	m	struct:pci_config_header
+lcr	include/uart.h	/^	volatile uint32	lcr;	\/* line control register		*\/$/;"	m	struct:uart_csreg
+ld_ilist	include/lfilesys.h	/^	ibid32	ld_ilist;		\/* ID of first i-block for file	*\/$/;"	m	struct:ldentry
+ld_name	include/lfilesys.h	/^	char	ld_name[LF_NAME_LEN];	\/* Null-terminated file name	*\/$/;"	m	struct:ldentry
+ld_size	include/lfilesys.h	/^	uint32	ld_size;		\/* Curr. size of file in bytes	*\/$/;"	m	struct:ldentry
+ldentry	include/lfilesys.h	/^struct	ldentry	{			\/* Description of entry for one	*\/$/;"	s
+ldr	include/apic.h	/^	uint32	ldr;		\/* Local Destination	*\/$/;"	m	struct:lapic_csreg
+len	include/flash.h	/^    uint32 len;                   \/**< Length of file including header     *\/$/;"	m	struct:trx_header
+len	include/flash.h	/^    uint32 len;$/;"	m	struct:file
+len	include/icmpv6.h	/^    uint32  len;$/;"	m	struct:pseudoHdr
+length	include/icmpv6.h	/^    byte length; \/\/ should be 1$/;"	m	struct:option_MTU
+length	include/icmpv6.h	/^    byte length; \/\/ shoule be 0x04;$/;"	m	struct:option_prefix
+length	include/icmpv6.h	/^    byte length;$/;"	m	struct:icmpopt
+length	include/icmpv6.h	/^    byte length;$/;"	m	struct:option_one
+length	include/icmpv6.h	/^    uint32 length;$/;"	m	struct:idk
+length	include/icmpv6.h	/^    uint32 length;$/;"	m	struct:lladdress
+length	include/multiboot.h	/^	uint64	length;			\/* Memory region length		*\/$/;"	m	struct:mbmregion
+lexan	shell/lexan.c	/^int32	lexan ($/;"	f
+lf_dir	include/lfilesys.h	/^	struct	lfdir	lf_dir;		\/* In-memory copy of directory	*\/$/;"	m	struct:lfdata	typeref:struct:lfdata::lfdir
+lf_dirdirty	include/lfilesys.h	/^	bool8	lf_dirdirty;		\/* Has the directory changed?	*\/$/;"	m	struct:lfdata
+lf_dirpresent	include/lfilesys.h	/^	bool8	lf_dirpresent;		\/* True when directory is in	*\/$/;"	m	struct:lfdata
+lf_dskdev	include/lfilesys.h	/^	did32	lf_dskdev;		\/* Device ID of disk to use	*\/$/;"	m	struct:lfdata
+lf_mutex	include/lfilesys.h	/^	sid32	lf_mutex;		\/* Mutex for the directory and	*\/$/;"	m	struct:lfdata
+lf_nextdb	include/lfilesys.h	/^	dbid32	lf_nextdb;		\/* Next data block on the list	*\/$/;"	m	struct:lfdbfree
+lf_unused	include/lfilesys.h	/^	char	lf_unused[LF_BLKSIZ - sizeof(dbid32)];$/;"	m	struct:lfdbfree
+lfbyte	include/lfilesys.h	/^	char	*lfbyte;		\/* Ptr to byte in lfdblock or	*\/$/;"	m	struct:lflcblk
+lfd_allones	include/lfilesys.h	/^	uint32	lfd_allones;		\/* All 1 bits			*\/$/;"	m	struct:lfdir
+lfd_allzeros	include/lfilesys.h	/^	uint32	lfd_allzeros;		\/* All 0 bits			*\/$/;"	m	struct:lfdir
+lfd_dfree	include/lfilesys.h	/^	dbid32	lfd_dfree;		\/* List of free d-blocks on disk*\/$/;"	m	struct:lfdir
+lfd_files	include/lfilesys.h	/^	struct	ldentry lfd_files[LF_NUM_DIR_ENT]; \/* Set of files	*\/$/;"	m	struct:lfdir	typeref:struct:lfdir::ldentry
+lfd_fsysid	include/lfilesys.h	/^	uint32	lfd_fsysid;		\/* File system ID		*\/$/;"	m	struct:lfdir
+lfd_ifree	include/lfilesys.h	/^	ibid32	lfd_ifree;		\/* List of free i-blocks on disk*\/$/;"	m	struct:lfdir
+lfd_nfiles	include/lfilesys.h	/^	int32	lfd_nfiles;		\/* Current number of files	*\/$/;"	m	struct:lfdir
+lfd_revid	include/lfilesys.h	/^	uint32	lfd_revid;		\/* fsysid in reverse byte order	*\/$/;"	m	struct:lfdir
+lfd_subvers	include/lfilesys.h	/^	int16	lfd_subvers;		\/* File system subversion	*\/$/;"	m	struct:lfdir
+lfd_vers	include/lfilesys.h	/^	int16	lfd_vers;		\/* File system version		*\/$/;"	m	struct:lfdir
+lfdata	include/lfilesys.h	/^struct	lfdata	{			\/* Local file system data	*\/$/;"	s
+lfdballoc	device/lfs/lfdballoc.c	/^dbid32	lfdballoc ($/;"	f
+lfdbdirty	include/lfilesys.h	/^	bool8	lfdbdirty;		\/* Has lfdblock changed?	*\/$/;"	m	struct:lflcblk
+lfdbfree	device/lfs/lfdbfree.c	/^status	lfdbfree($/;"	f
+lfdbfree	include/lfilesys.h	/^struct	lfdbfree {$/;"	s
+lfdblock	include/lfilesys.h	/^	char	lfdblock[LF_BLKSIZ];	\/* In-mem copy of current data	*\/$/;"	m	struct:lflcblk
+lfdev	include/lfilesys.h	/^	did32	lfdev;			\/* Device ID of this device	*\/$/;"	m	struct:lflcblk
+lfdir	include/lfilesys.h	/^struct	lfdir	{			\/* Entire directory on disk	*\/$/;"	s
+lfdirptr	include/lfilesys.h	/^	struct	ldentry	*lfdirptr;	\/* Ptr to file's entry in the	*\/$/;"	m	struct:lflcblk	typeref:struct:lflcblk::ldentry
+lfdnum	include/lfilesys.h	/^	dbid32	lfdnum;			\/* Number of current data block	*\/$/;"	m	struct:lflcblk
+lfflush	device/lfs/lfflush.c	/^status	lfflush ($/;"	f
+lfgetmode	device/lfs/lfgetmode.c	/^int32	lfgetmode ($/;"	f
+lfiballoc	device/lfs/lfiballoc.c	/^ibid32	lfiballoc (void)$/;"	f
+lfibclear	device/lfs/lfibclear.c	/^void	lfibclear($/;"	f
+lfibdirty	include/lfilesys.h	/^	bool8	lfibdirty;		\/* Has lfiblock changed?	*\/$/;"	m	struct:lflcblk
+lfibget	device/lfs/lfibget.c	/^void	lfibget($/;"	f
+lfiblk	include/lfilesys.h	/^struct	lfiblk		{		\/* Format of index block	*\/$/;"	s
+lfiblock	include/lfilesys.h	/^	struct	lfiblk	lfiblock;	\/* In-mem copy of current index	*\/$/;"	m	struct:lflcblk	typeref:struct:lflcblk::lfiblk
+lfibput	device/lfs/lfibput.c	/^status	lfibput($/;"	f
+lfinum	include/lfilesys.h	/^	ibid32	lfinum;			\/* ID of current index block in	*\/$/;"	m	struct:lflcblk
+lflcblk	include/lfilesys.h	/^struct	lflcblk	{			\/* Local file control block	*\/$/;"	s
+lflclose	device/lfs/lflclose.c	/^devcall	lflclose ($/;"	f
+lflcontrol	device/lfs/lflcontrol.c	/^devcall	lflcontrol ($/;"	f
+lflgetc	device/lfs/lflgetc.c	/^devcall	lflgetc ($/;"	f
+lflinit	device/lfs/lflinit.c	/^devcall	lflinit ($/;"	f
+lflputc	device/lfs/lflputc.c	/^devcall	lflputc ($/;"	f
+lflread	device/lfs/lflread.c	/^devcall	lflread ($/;"	f
+lflseek	device/lfs/lflseek.c	/^devcall	lflseek ($/;"	f
+lfltab	device/lfs/lflinit.c	/^struct	lflcblk	lfltab[Nlfl];		\/* Pseudo-device control blocks	*\/$/;"	v	typeref:struct:lflcblk
+lflwrite	device/lfs/lflwrite.c	/^devcall	lflwrite ($/;"	f
+lfmode	include/lfilesys.h	/^	int32	lfmode;			\/* Mode (read\/write\/both)	*\/$/;"	m	struct:lflcblk
+lfmutex	include/lfilesys.h	/^	sid32	lfmutex;		\/* Mutex for this file		*\/$/;"	m	struct:lflcblk
+lfname	include/lfilesys.h	/^	char	lfname[LF_NAME_LEN];	\/* Name of the file		*\/$/;"	m	struct:lflcblk
+lfpos	include/lfilesys.h	/^	uint32	lfpos;			\/* Byte position of next byte	*\/$/;"	m	struct:lflcblk
+lfscheck	device/lfs/lfscheck.c	/^status	lfscheck ($/;"	f
+lfsckfmt	device/lfs/lfsckfmt.c	/^status	lfsckfmt ($/;"	f
+lfscreate	device/lfs/lfscreate.c	/^status	lfscreate ($/;"	f
+lfsetup	device/lfs/lfsetup.c	/^status	lfsetup ($/;"	f
+lfsinit	device/lfs/lfsinit.c	/^devcall	lfsinit ($/;"	f
+lfsopen	device/lfs/lfsopen.c	/^devcall	lfsopen ($/;"	f
+lfstate	include/lfilesys.h	/^	byte	lfstate;		\/* Is entry free or used	*\/$/;"	m	struct:lflcblk
+lftruncate	device/lfs/lftruncate.c	/^status	lftruncate ($/;"	f
+lidt	system/start.S	/^lidt:$/;"	l
+linectr	config/y.tab.c	/^int	linectr = 1;$/;"	v
+link_local	net/ipv6.c	/^byte    link_local[IPV6_ASIZE];$/;"	v
+lladdress	include/icmpv6.h	/^typedef struct lladdress{$/;"	s
+lladdress	include/icmpv6.h	/^}lladdress;$/;"	t	typeref:struct:lladdress
+local	include/kernel.h	37;"	d
+lock	include/flash.h	/^    sid32	lock;             \/**< lock for execution flash operations *\/$/;"	m	struct:flash
+log_size	include/flash.h	/^    uint32 log_size;             \/**< size of logical disk blocks         *\/$/;"	m	struct:flash
+lsr	include/uart.h	/^	volatile uint32	lsr;	\/* line status register			*\/$/;"	m	struct:uart_csreg
+ltim2utim	include/date.h	58;"	d
+m_o_res	include/icmpv6.h	/^    byte m_o_res;$/;"	m	struct:radvert
+mac_snm	net/ipv6.c	/^byte    mac_snm[ETH_ADDR_LEN];$/;"	v
+macaddr0h	include/quark_eth.h	/^	uint32	macaddr0h;	\/* MAC Address0 High Register		*\/$/;"	m	struct:eth_q_csreg
+macaddr0l	include/quark_eth.h	/^	uint32	macaddr0l;	\/* MAC Address0 Low Register		*\/$/;"	m	struct:eth_q_csreg
+maccr	include/quark_eth.h	/^	uint32	maccr;		\/* MAC Configuration Register		*\/$/;"	m	struct:eth_q_csreg
+macff	include/quark_eth.h	/^	uint32	macff;		\/* MAC Frame Filter Register		*\/$/;"	m	struct:eth_q_csreg
+magic	include/flash.h	/^    uint32 magic;                 \/**< "HDR0"                              *\/$/;"	m	struct:trx_header
+main	config/y.tab.c	/^int main(int argc, char **argv) {$/;"	f
+main	system/main.c	/^process	main(void)$/;"	f
+makePseudoHdr	net/sendipv6pkt.c	/^void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,$/;"	f
+mark	system/mark.c	/^status	mark($/;"	f
+markinit	system/mark.c	/^void	markinit(void)$/;"	f
+marks	system/mark.c	/^int32	*marks[MAXMARK];		\/* Pointers to marked locations	*\/$/;"	v
+match	net/fwdipv6.c	/^uint8 match (byte * a, byte * b, uint32 len) {$/;"	f
+maxLatency	include/pci.h	/^	unsigned char	maxLatency;				\/*   3f *\/$/;"	m	struct:pci_config_header
+max_block_length	include/sdmc.h	/^	uint32	max_block_length	:2;	\/* Max Block Length			*\/$/;"	m	struct:sdmc_capabilities
+max_cur_cap	include/sdmc.h	/^	uint32	max_cur_cap;		\/* maximum current capabilities register *\/$/;"	m	struct:sdmc_csreg
+maxheap	system/meminit.c	/^void	*maxheap;		\/* Highest valid heap address		*\/$/;"	v
+mbmregion	include/multiboot.h	/^struct mbmregion {$/;"	s
+mbootheader	system/start.S	/^mbootheader:  				# Beginning of multiboot header, embedded in ELF header$/;"	l
+mbootinfo	include/multiboot.h	/^struct mbootinfo {$/;"	s
+mcr	include/uart.h	/^	volatile uint32	mcr;	\/* modem control register		*\/$/;"	m	struct:uart_csreg
+mcv_l	include/hpet.h	/^	uint32	mcv_l;	\/* Main Counter Value (lower)	*\/$/;"	m	struct:hpet_csreg
+mcv_u	include/hpet.h	/^	uint32	mcv_u;	\/* Main Counter Value (upper)	*\/$/;"	m	struct:hpet_csreg
+mem_lower	include/multiboot.h	/^	uint32	mem_lower;		\/* Memory in KB below 1M	*\/$/;"	m	struct:mbootinfo
+mem_upper	include/multiboot.h	/^	uint32	mem_upper;		\/* Memory in KB above 1M	*\/$/;"	m	struct:mbootinfo
+membase	include/ether.h	/^    	uint32	membase; 	\/* Memory base for device from config	*\/$/;"	m	struct:ethcblk
+memblk	include/memory.h	/^struct	memblk	{			\/* See roundmb & truncmb	*\/$/;"	s
+memcmp	lib/memcmp.c	/^int	memcmp($/;"	f
+memcpy	lib/memcpy.c	/^void	*memcpy($/;"	f
+meminit	system/meminit.c	/^void	meminit(void) {$/;"	f
+memlist	system/initialize.c	/^struct	memblk	memlist;	\/* List of free memory blocks		*\/$/;"	v	typeref:struct:memblk
+memmark	include/mark.h	/^typedef	int32	memmark[1];	\/* Declare a memory mark to be an array	*\/$/;"	t
+memset	lib/memset.c	/^void	*memset($/;"	f
+message	include/stddef.h	/^typedef int message;            \/**< message passing content            *\/$/;"	t
+minGrant	include/pci.h	/^	unsigned char	minGrant;				\/*   3e *\/$/;"	m	struct:pci_config_header
+minheap	system/meminit.c	/^void	*minheap;		\/* Start of heap			*\/$/;"	v
+minor	config/y.tab.c	/^	int	minor;			\/* In a device, the minor device	*\/$/;"	m	struct:dev_ent	file:
+mkbufpool	system/mkbufpool.c	/^bpid32	mkbufpool($/;"	f
+mkmutex	system/mark.c	/^sid32	mkmutex;			\/* Mutual exclusion semaphore	*\/$/;"	v
+mlength	include/memory.h	/^	uint32	mlength;		\/* Size of blk (includes memblk)*\/$/;"	m	struct:memblk
+mmap_addr	include/multiboot.h	/^	uint32	mmap_addr;		\/* Address of the mmap regios	*\/$/;"	m	struct:mbootinfo
+mmap_length	include/multiboot.h	/^	uint32	mmap_length;		\/* Length(bytes) of mmap region	*\/$/;"	m	struct:mbootinfo
+mmap_search_done	system/start.S	/^mmap_search_done:$/;"	l
+mmap_search_next_sgmt	system/start.S	/^mmap_search_next_sgmt:$/;"	l
+mmap_search_no_overlap	system/start.S	/^mmap_search_no_overlap:$/;"	l
+mmap_search_start	system/start.S	/^mmap_search_start:$/;"	l
+mmccr	include/quark_eth.h	/^	uint32  mmccr;		\/* MAC Management Counter Cntl Register	*\/$/;"	m	struct:eth_q_csreg
+mmcrvcir	include/quark_eth.h	/^	uint32  mmcrvcir;	\/* MMC Receive Interrupt Register	*\/$/;"	m	struct:eth_q_csreg
+mmctxir	include/quark_eth.h	/^	uint32  mmctxir;	\/* MMC Transmit Interrupt Register	*\/$/;"	m	struct:eth_q_csreg
+mnext	include/memory.h	/^	struct	memblk	*mnext;		\/* Ptr to next free memory blk	*\/$/;"	m	struct:memblk	typeref:struct:memblk::memblk
+mode	include/flash.h	/^    byte mode;                 \/**< current mode of flash               *\/$/;"	m	struct:flash
+mods_addr	include/multiboot.h	/^	uint32	mods_addr;		\/* Address to the module info	*\/$/;"	m	struct:mbootinfo
+mods_count	include/multiboot.h	/^	uint32	mods_count;		\/* No. of modules loaded	*\/$/;"	m	struct:mbootinfo
+mount	device/nam/mount.c	/^syscall	mount($/;"	f
+msr	include/uart.h	/^	volatile uint32	msr;	\/* modem status register		*\/$/;"	m	struct:uart_csreg
+mtu	include/ether.h	/^	uint16	mtu;	    	\/* Maximum transmission unit (payload)  *\/$/;"	m	struct:ethcblk
+nadvert	include/icmpv6.h	/^typedef struct nadvert{$/;"	s
+nadvert	include/icmpv6.h	/^}nadvert;$/;"	t	typeref:struct:nadvert
+namcpy	device/nam/nammap.c	/^status	namcpy($/;"	f
+name	config/y.tab.c	/^	char	name[MAXNAME];		\/* device name (unused in a type)	*\/$/;"	m	struct:dev_ent	file:
+name	include/flash.h	/^    char *name;$/;"	m	struct:file
+name	include/testsuite.h	/^    char	*name;		\/* Name of test case			*\/$/;"	m	struct:testcase
+nametab	device/nam/naminit.c	/^struct	nmentry	nametab[NNAMES];	\/* Table of name mappings	*\/$/;"	v	typeref:struct:nmentry
+naminit	device/nam/naminit.c	/^status	naminit(void)$/;"	f
+namlen	device/nam/mount.c	/^int32	namlen($/;"	f
+nammap	device/nam/nammap.c	/^devcall	nammap($/;"	f
+namopen	device/nam/namopen.c	/^devcall	namopen($/;"	f
+namrepl	device/nam/nammap.c	/^did32	namrepl($/;"	f
+nblocks	include/flash.h	/^    uint32 nblocks;              \/**< number of blocks within region      *\/$/;"	m	struct:flash_region
+nbpools	system/bufinit.c	/^bpid32	nbpools;$/;"	v
+ncmd	shell/shell.c	/^uint32	ncmd = sizeof(cmdtab) \/ sizeof(struct cmdent);$/;"	v
+ndefers	include/resched.h	/^	int32	ndefers;	\/* Number of outstanding defers 	*\/$/;"	m	struct:defer
+ndevice	include/name.h	/^	did32	ndevice;		\/* Device descriptor for prefix	*\/$/;"	m	struct:nmentry
+ndevs	config/y.tab.c	/^int	ndevs = 0;			\/* Number of devices found		*\/$/;"	v
+net_dst	include/net.h	/^	byte	net_dst[ETH_ADDR_LEN];	\/* Destination MAC address	*\/$/;"	m	struct:netpacket
+net_ethcrc	include/net.h	/^	uint32	net_ethcrc;		\/* Ethernet CRC			*\/$/;"	m	struct:netpacket
+net_iface	include/net.h	/^	int16	net_iface;		\/* Interface over which the	*\/$/;"	m	struct:netpacket
+net_init	net/net.c	/^void	net_init (void)$/;"	f
+net_payload	include/net.h	/^	byte	net_payload[1500];	\/* Packet payload		*\/$/;"	m	struct:netpacket
+net_src	include/net.h	/^	byte	net_src[ETH_ADDR_LEN];	\/* Source MAC address		*\/$/;"	m	struct:netpacket
+net_type	include/net.h	/^	uint16	net_type;		\/* Layer 2 type field		*\/$/;"	m	struct:netpacket
+netbufpool	net/net.c	/^bpid32	netbufpool;			\/* IP of network buffer pool	*\/$/;"	v
+netin	net/net.c	/^process	netin ($/;"	f
+netpacket	include/net.h	/^struct	netpacket	{$/;"	s
+netportseed	net/net.c	/^uint64	netportseed;			\/* Used to generate a random	*\/$/;"	v
+newdev	config/y.tab.c	/^void	newdev(char *name) {$/;"	f
+newpid	system/create.c	/^local	pid32	newpid(void)$/;"	f
+newqueue	system/newqueue.c	/^qid16	newqueue(void)$/;"	f
+newsem	system/semcreate.c	/^local	sid32	newsem(void)$/;"	f
+newtype	config/y.tab.c	/^int	newtype(char *name) {$/;"	f
+next	include/fwdipv6.h	/^    struct fwdTabEntry * next;$/;"	m	struct:fwdTabEntry	typeref:struct:fwdTabEntry::fwdTabEntry
+nextHop	include/fwdipv6.h	/^    byte nextHop[6];\/\/[ETH_ADDR_LEN]; \/\/maybe change depending on iface$/;"	m	struct:fwdTabEntry
+next_header	include/icmpv6.h	/^    byte    next_header;$/;"	m	struct:pseudoHdr
+next_header	include/ipv6.h	/^    byte    next_header;$/;"	m	struct:base_header
+nitems	include/interrupt.h	/^	int32	nitems;$/;"	m	struct:int_entry
+nlog_blocks	include/flash.h	/^    uint32 nlog_blocks;          \/**< number of logical blocks on disk    *\/$/;"	m	struct:flash
+nmarks	system/mark.c	/^int32	nmarks;				\/* Number of marked locations	*\/$/;"	v
+nmentry	include/name.h	/^struct	nmentry	{			\/* Definition of prefix table	*\/$/;"	s
+nml_int_status	include/sdmc.h	/^	uint16	nml_int_status;		\/* normal interrupt status register 	*\/$/;"	m	struct:sdmc_csreg
+nnames	device/nam/naminit.c	/^int32	nnames;				\/* Number of entries allocated	*\/$/;"	v
+nonempty	include/queue.h	30;"	d
+notmarked	include/mark.h	16;"	d
+nout	include/ethloop.h	/^    uint32 nout;                      \/**< number of packets written          *\/$/;"	m	struct:ethloop
+nprefix	include/name.h	/^	char	nprefix[NM_PRELEN];	\/* Null-terminated prefix	*\/$/;"	m	struct:nmentry
+nregions	include/flash.h	/^    uint16 nregions;            \/**< number of regions on device         *\/$/;"	m	struct:flash
+nreplace	include/name.h	/^	char	nreplace[NM_REPLLEN];	\/* Null-terminated replacement	*\/$/;"	m	struct:nmentry
+nrm_int_sig_en	include/sdmc.h	/^	uint16	nrm_int_sig_en;		\/* normal interrupt signal enable register *\/$/;"	m	struct:sdmc_csreg
+nrm_int_status_en	include/sdmc.h	/^	uint16	nrm_int_status_en;	\/* normal interrupt status enable 	*\/$/;"	m	struct:sdmc_csreg
+nscount	include/dns.h	/^	uint16	nscount;		\/* No of Name Server RRs	*\/$/;"	m	struct:dnspkt
+nsolicit	include/icmpv6.h	/^typedef struct nsolicit{$/;"	s
+nsolicit	include/icmpv6.h	/^}nsolicit;$/;"	t	typeref:struct:nsolicit
+ntim2xtim	include/date.h	15;"	d
+ntohl	include/prototypes.h	599;"	d
+ntohs	include/prototypes.h	598;"	d
+ntypes	config/y.tab.c	/^int	ntypes	= 0;			\/* Number of device types found		*\/$/;"	v
+nulluser	system/initialize.c	/^void	nulluser()$/;"	f
+number	config/config.y	/^number:		INTEGER { $$ = config_atoi(yytext, yyleng); }$/;"	l
+offsetof	include/pci.h	34;"	d
+offsets	include/flash.h	/^    uint32 offsets[3];            \/**< Partition offsets from header start *\/$/;"	m	struct:trx_header
+omr	include/quark_eth.h	/^	uint32	omr;		\/* Operation Mode Register		*\/$/;"	m	struct:eth_q_csreg
+opcode	include/dns.h	/^		byte	opcode:4;	\/* Operation Code		*\/$/;"	m	struct:dnspkt::__anon12
+open	config/y.tab.c	/^	char	open[MAXNAME];		\/* open function name			*\/$/;"	m	struct:dev_ent	file:
+open	system/open.c	/^syscall	open($/;"	f
+opt	include/icmpv6.h	/^    byte opt[0];\/\/easy access to options$/;"	m	struct:rsolicit
+opt	include/icmpv6.h	/^    icmpopt opt;$/;"	m	struct:nadvert
+opt	include/icmpv6.h	/^    icmpopt opt;$/;"	m	struct:nsolicit
+option_MTU	include/icmpv6.h	/^typedef struct option_MTU{$/;"	s
+option_MTU	include/icmpv6.h	/^}option_MTU;$/;"	t	typeref:struct:option_MTU
+option_one	include/icmpv6.h	/^typedef struct option_one{$/;"	s
+option_one	include/icmpv6.h	/^}option_one;$/;"	t	typeref:struct:option_one
+option_prefix	include/icmpv6.h	/^typedef struct option_prefix{$/;"	s
+option_prefix	include/icmpv6.h	/^}option_prefix;$/;"	t	typeref:struct:option_prefix
+option_prefix_default	net/radvert.c	/^struct option_prefix option_prefix_default;$/;"	v	typeref:struct:option_prefix
+option_prefix_oth1	net/radvert.c	/^struct option_prefix option_prefix_oth1;$/;"	v	typeref:struct:option_prefix
+option_prefix_oth2	net/radvert.c	/^struct option_prefix option_prefix_oth2;$/;"	v	typeref:struct:option_prefix
+osem	include/ether.h	/^	sid32	osem; 		\/* Semaphore for Ethernet output	*\/$/;"	m	struct:ethcblk
+outPool	include/ether.h	/^	int16	outPool;	\/* Buffer pool ID for output buffers	*\/$/;"	m	struct:ethcblk
+outb	system/start.S	/^outb:	movl	4(%esp), %edx$/;"	l
+outl	system/start.S	/^outl:	movl	4(%esp), %edx$/;"	l
+outsw	system/start.S	/^outsw:$/;"	l
+outw	system/start.S	/^outw:	movl	4(%esp), %edx$/;"	l
+packetdump	net/net.c	/^int32	packetdump = 0;			\/* 0 => off, 1 => print each	*\/$/;"	v
+panic	system/panic.c	/^void	panic ($/;"	f
+parseval	shell/xsh_memdump.c	/^static	uint32	parseval($/;"	f	file:
+pause	system/intr.S	/^pause:$/;"	l
+payload	include/icmpv6.h	/^    byte payload[0];\/\/length];TODO: what's length here dylan?$/;"	m	struct:icmpopt
+payload	include/icmpv6.h	/^    byte payload[16];  \/\/ for 64 bite prefix;$/;"	m	struct:option_prefix
+payload	include/icmpv6.h	/^    byte payload[6];$/;"	m	struct:option_one
+payload	include/icmpv6.h	/^    uint16 payload;  \/\/ MTU$/;"	m	struct:option_MTU
+payload	include/ipv6.h	/^    byte    payload[0];\/\/see if this breaks things$/;"	m	struct:base_header
+payload_hexdump	net/print6.c	/^void payload_hexdump(char * p, int32 len) {$/;"	f
+payload_len	include/ipv6.h	/^    uint16  payload_len;$/;"	m	struct:base_header
+pci_config_header	include/pci.h	/^struct __attribute__ ((__packed__)) pci_config_header {$/;"	s
+pci_get_dev_mmio_base_addr	system/pci.c	/^int32 pci_get_dev_mmio_base_addr($/;"	f
+pci_init	system/pci.c	/^int32	pci_init(void)$/;"	f
+pci_read_config_byte	system/pci.c	/^int32 pci_read_config_byte($/;"	f
+pci_read_config_dword	system/pci.c	/^int pci_read_config_dword($/;"	f
+pci_read_config_word	system/pci.c	/^int pci_read_config_word($/;"	f
+pci_set_ivec	system/pci.c	/^int32	pci_set_ivec ($/;"	f
+pci_write_config_byte	system/pci.c	/^int pci_write_config_byte($/;"	f
+pci_write_config_dword	system/pci.c	/^int pci_write_config_dword($/;"	f
+pci_write_config_word	system/pci.c	/^int pci_write_config_word($/;"	f
+pcidev	include/ether.h	/^	uint32	pcidev;		\/* PCI device number			*\/$/;"	m	struct:ethcblk
+pdat_entry_desc	include/quark_pdat.h	/^	char	pdat_entry_desc[10];  \/* Description string of the platform entry *\/$/;"	m	struct:quark_pdat_entry
+pdat_entry_id	include/quark_pdat.h	/^	uint16	pdat_entry_id;        \/* Type identifier for the platform data entry *\/$/;"	m	struct:quark_pdat_entry
+pdat_entry_len	include/quark_pdat.h	/^	uint16	pdat_entry_len;       \/* Length in bytes of the platform entry (not including the entry header) *\/$/;"	m	struct:quark_pdat_entry
+pdat_entry_ver	include/quark_pdat.h	/^	uint16	pdat_entry_ver;       \/* Version of the platform entry *\/$/;"	m	struct:quark_pdat_entry
+pdump	net/pdump.c	/^void	pdump(struct  netpacket *pptr)$/;"	f
+pdumph	net/pdump.c	/^void	pdumph(struct  netpacket *pptr)$/;"	f
+phy	include/ether.h	/^	struct	dentry	*phy;	\/* physical eth device for Tx DMA 	*\/$/;"	m	struct:ethcblk	typeref:struct:ethcblk::dentry
+pid32	include/kernel.h	/^typedef	int32	pid32;		\/* process ID				*\/$/;"	t
+pktlen	include/ethloop.h	/^    int pktlen[ELOOP_NBUF];         \/**< length of packet in buffer         *\/$/;"	m	struct:ethloop
+platinit	system/platinit.c	/^void	platinit()$/;"	f
+poolid	include/ethloop.h	/^    int poolid;                     \/**< poolid for the buffer pool         *\/$/;"	m	struct:ethloop
+porttab	system/ptinit.c	/^struct	ptentry	porttab[NPORTS];	\/* Port table			*\/$/;"	v	typeref:struct:ptentry
+ppr	include/apic.h	/^	uint32	ppr;		\/* Processor Priority	*\/$/;"	m	struct:lapic_csreg
+prcount	system/initialize.c	/^int	prcount;		\/* Total number of live processes	*\/$/;"	v
+prdesc	include/process.h	/^	int16	prdesc[NDESC];	\/* Device descriptors for process	*\/$/;"	m	struct:procent
+pre_state	include/sdmc.h	/^	uint32	pre_state;		\/* present state register 		*\/$/;"	m	struct:sdmc_csreg
+preempt	system/clkinit.c	/^uint32	preempt;		\/* Preemption counter			*\/$/;"	v
+preferred_lifetime	include/icmpv6.h	/^    byte preferred_lifetime[4];$/;"	m	struct:option_prefix
+preferredlifetime	include/icmpv6.h	/^    uint32 preferredlifetime;$/;"	m	struct:idk
+prefix	include/fwdipv6.h	/^    byte prefix[16];\/\/max of 128 bits for ipv6 addresses$/;"	m	struct:fwdTabEntry
+prefix	include/icmpv6.h	/^    byte prefix[16];$/;"	m	struct:idk
+prefix_default	net/radvert.c	/^byte prefix_default[64];$/;"	v
+prefix_ipv6	include/ipv6.h	/^struct prefix_ipv6 {$/;"	s
+prefix_ipv6	include/ipv6.h	/^} prefix_ipv6;$/;"	v	typeref:struct:prefix_ipv6
+prefix_ipv6_default	net/radvert.c	/^struct prefix_ipv6 prefix_ipv6_default;$/;"	v	typeref:struct:prefix_ipv6
+prefix_length	include/icmpv6.h	/^    byte prefix_length; \/\/ most time it is 64 bits prefix$/;"	m	struct:option_prefix
+prefix_length	include/ipv6.h	/^    uint8 prefix_length;$/;"	m	struct:prefix_ipv6
+prefixlength	include/icmpv6.h	/^    uint32 prefixlength;$/;"	m	struct:idk
+preset_value_0	include/sdmc.h	/^	uint16	preset_value_0;		\/* initialization preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_1	include/sdmc.h	/^	uint16	preset_value_1;		\/* default speed preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_2	include/sdmc.h	/^	uint16	preset_value_2;		\/* high speed preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_3	include/sdmc.h	/^	uint16	preset_value_3;		\/* sdr12 preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_4	include/sdmc.h	/^	uint16	preset_value_4;		\/* sdr25 preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_5	include/sdmc.h	/^	uint16	preset_value_5;		\/* sdr50 preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_6	include/sdmc.h	/^	uint16	preset_value_6;		\/* sdr104 preset values register *\/$/;"	m	struct:sdmc_csreg
+preset_value_7	include/sdmc.h	/^	uint16	preset_value_7;		\/* ddr50 preset values register *\/$/;"	m	struct:sdmc_csreg
+prhasmsg	include/process.h	/^	bool8	prhasmsg;	\/* Nonzero iff msg is valid		*\/$/;"	m	struct:procent
+pri16	include/kernel.h	/^typedef	int16	pri16;		\/* process priority			*\/$/;"	t
+print6	net/print6.c	/^void print6(struct netpacket * pkt) {$/;"	f
+printFreeList	shell/xsh_memstat.c	/^static void printFreeList(void)$/;"	f	file:
+printMemUse	shell/xsh_memstat.c	/^static void printMemUse(void)$/;"	f	file:
+printPacket	shell/xsh_sendpkt.c	/^void printPacket(struct netpacket * packet) {$/;"	f
+print_ipv6_addr	net/print6.c	/^void print_ipv6_addr(byte* addr){$/;"	f
+print_ipv6_info	net/print6.c	/^void print_ipv6_info() {$/;"	f
+print_mac_addr	net/print6.c	/^void print_mac_addr(byte* addr) {$/;"	f
+printf	lib/printf.c	/^int	printf($/;"	f
+prmsg	include/process.h	/^	umsg32	prmsg;		\/* Message sent to this process		*\/$/;"	m	struct:procent
+prname	include/process.h	/^	char	prname[PNMLEN];	\/* Process name				*\/$/;"	m	struct:procent
+procent	include/process.h	/^struct procent {		\/* Entry in the process table		*\/$/;"	s
+process	include/kernel.h	/^typedef int32	process;	\/* top-level function of a process	*\/$/;"	t
+proctab	system/initialize.c	/^struct	procent	proctab[NPROC];	\/* Process table			*\/$/;"	v	typeref:struct:procent
+progIF	include/pci.h	/^	unsigned char	progIF;					\/*   9 *\/$/;"	m	struct:pci_config_header
+proms	include/ether.h	/^	int16 	proms; 		\/* Nonzero => promiscuous mode 		*\/$/;"	m	struct:ethcblk
+prparent	include/process.h	/^	pid32	prparent;	\/* ID of the creating process		*\/$/;"	m	struct:procent
+prprio	include/process.h	/^	pri16	prprio;		\/* Process priority			*\/$/;"	m	struct:procent
+prsem	include/process.h	/^	sid32	prsem;		\/* Semaphore on which process waits	*\/$/;"	m	struct:procent
+prstate	include/process.h	/^	uint16	prstate;	\/* Process state: PR_CURR, etc.		*\/$/;"	m	struct:procent
+prstkbase	include/process.h	/^	char	*prstkbase;	\/* Base of run time stack		*\/$/;"	m	struct:procent
+prstklen	include/process.h	/^	uint32	prstklen;	\/* Stack length in bytes		*\/$/;"	m	struct:procent
+prstkptr	include/process.h	/^	char	*prstkptr;	\/* Saved stack pointer			*\/$/;"	m	struct:procent
+pseudoHdr	include/icmpv6.h	/^typedef struct pseudoHdr{$/;"	s
+pseudoHdr	include/icmpv6.h	/^}pseudoHdr;$/;"	t	typeref:struct:pseudoHdr
+ptcount	system/ptcount.c	/^int32	ptcount($/;"	f
+ptcreate	system/ptcreate.c	/^syscall	ptcreate($/;"	f
+ptdelete	system/ptdelete.c	/^syscall	ptdelete($/;"	f
+ptentry	include/ports.h	/^struct	ptentry	{			\/* Entry in the port table	*\/$/;"	s
+ptfree	system/ptinit.c	/^struct	ptnode	*ptfree;		\/* List of free message nodes	*\/$/;"	v	typeref:struct:ptnode
+pthead	include/ports.h	/^	struct	ptnode	*pthead;	\/* List of message pointers	*\/$/;"	m	struct:ptentry	typeref:struct:ptentry::ptnode
+ptinit	system/ptinit.c	/^syscall	ptinit($/;"	f
+ptmaxcnt	include/ports.h	/^	uint16	ptmaxcnt;		\/* Max messages to be queued	*\/$/;"	m	struct:ptentry
+ptmsg	include/ports.h	/^	uint32	ptmsg;			\/* A one-word message		*\/$/;"	m	struct:ptnode
+ptnext	include/ports.h	/^	struct	ptnode	*ptnext;	\/* Pointer to next node on list	*\/$/;"	m	struct:ptnode	typeref:struct:ptnode::ptnode
+ptnextid	system/ptinit.c	/^int32	ptnextid;			\/* Next table entry to try	*\/$/;"	v
+ptnode	include/ports.h	/^struct	ptnode	{			\/* Node on list of messages 	*\/$/;"	s
+ptrecv	system/ptrecv.c	/^uint32	ptrecv($/;"	f
+ptreset	system/ptreset.c	/^syscall	ptreset($/;"	f
+ptrsem	include/ports.h	/^	sid32	ptrsem;			\/* Receiver semaphore		*\/$/;"	m	struct:ptentry
+ptsend	system/ptsend.c	/^syscall	ptsend($/;"	f
+ptseq	include/ports.h	/^	int32	ptseq;			\/* Sequence changed at creation	*\/$/;"	m	struct:ptentry
+ptssem	include/ports.h	/^	sid32	ptssem;			\/* Sender semaphore		*\/$/;"	m	struct:ptentry
+ptstate	include/ports.h	/^	uint16	ptstate;		\/* Port state (FREE\/LIMBO\/ALLOC)*\/$/;"	m	struct:ptentry
+pttail	include/ports.h	/^	struct	ptnode	*pttail;	\/* Tail of message list		*\/$/;"	m	struct:ptentry	typeref:struct:ptentry::ptnode
+putc	config/y.tab.c	/^	char	putc[MAXNAME];		\/* putc function name			*\/$/;"	m	struct:dev_ent	file:
+putc	system/putc.c	/^syscall	putc($/;"	f
+putchar	lib/putchar.c	/^int	putchar($/;"	f
+pwr_ctl	include/sdmc.h	/^	uint8	pwr_ctl;		\/* power control register 		*\/$/;"	m	struct:sdmc_csreg
+qclass	include/dns.h	/^	uint16	*qclass;		\/* Question Class		*\/$/;"	m	struct:dns_q
+qentry	include/queue.h	/^struct	qentry	{		\/* One per process plus two per list	*\/$/;"	s
+qid16	include/kernel.h	/^typedef	int16	qid16;		\/* queue ID				*\/$/;"	t
+qkey	include/queue.h	/^	int32	qkey;		\/* Key on which the queue is ordered	*\/$/;"	m	struct:qentry
+qname	include/dns.h	/^	char	*qname;			\/* Domain Name in the query	*\/$/;"	m	struct:dns_q
+qnext	include/queue.h	/^	qid16	qnext;		\/* Index of next process or tail	*\/$/;"	m	struct:qentry
+qprev	include/queue.h	/^	qid16	qprev;		\/* Index of previous process or head	*\/$/;"	m	struct:qentry
+qr	include/dns.h	/^		byte	qr:1;		\/* Query=0, Response=1		*\/$/;"	m	struct:dnspkt::__anon12
+qs1	lib/qsort.c	/^static void	qs1($/;"	f	file:
+qscmp	lib/qsort.c	/^static int (*qscmp) (char *, char *);$/;"	v	file:
+qses	lib/qsort.c	/^static int qses;$/;"	v	file:
+qsexc	lib/qsort.c	/^static void	qsexc($/;"	f	file:
+qsort	lib/qsort.c	/^void	qsort($/;"	f
+qstexc	lib/qsort.c	/^static void	qstexc($/;"	f	file:
+qtype	include/dns.h	/^	uint16	*qtype;			\/* Question Type		*\/$/;"	m	struct:dns_q
+quark_irq_routing	system/quark_irq.c	/^int32	quark_irq_routing(void)$/;"	f
+quark_pdat_crc	include/quark_pdat.h	/^	uint32	quark_pdat_crc;       \/* CRC value for the platform data (not including the header) *\/$/;"	m	struct:quark_pdat_header
+quark_pdat_entry	include/quark_pdat.h	/^struct quark_pdat_entry {$/;"	s
+quark_pdat_header	include/quark_pdat.h	/^struct quark_pdat_header {$/;"	s
+quark_pdat_len	include/quark_pdat.h	/^	uint32 	quark_pdat_len;       \/* Size in bytes of the platform data (not including the header *\/$/;"	m	struct:quark_pdat_header
+quark_pdat_magic	include/quark_pdat.h	/^	char 	quark_pdat_magic[4];  \/* Platform header signature *\/$/;"	m	struct:quark_pdat_header
+qucount	include/dns.h	/^	uint16	qucount;		\/* No. of Questions		*\/$/;"	m	struct:dnspkt
+queuehead	include/queue.h	25;"	d
+queuetab	system/queue.c	/^struct qentry	queuetab[NQENT];	\/* Table of process queues	*\/$/;"	v	typeref:struct:qentry
+queuetail	include/queue.h	26;"	d
+ra	include/dns.h	/^		byte	ra:1;		\/* Recursion Available		*\/$/;"	m	struct:dnspkt::__anon13
+radvert	include/icmpv6.h	/^typedef struct radvert{$/;"	s
+radvert	include/icmpv6.h	/^}radvert;$/;"	t	typeref:struct:radvert
+radvert_from_router	net/radvert.c	/^struct radvert radvert_from_router;$/;"	v	typeref:struct:radvert
+radvert_handler	net/radvert.c	/^void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {$/;"	f
+radvert_valid	net/radvert.c	/^bool8 radvert_valid(struct base_header * ipdatagram) {$/;"	f
+ramclose	device/ram/ramclose.c	/^devcall	ramclose ($/;"	f
+ramdisk	include/ramdisk.h	/^struct	ramdisk	{$/;"	s
+raminit	device/ram/raminit.c	/^devcall	raminit ($/;"	f
+ramopen	device/ram/ramopen.c	/^devcall	ramopen ($/;"	f
+ramread	device/ram/ramread.c	/^devcall	ramread ($/;"	f
+ramwrite	device/ram/ramwrite.c	/^devcall	ramwrite ($/;"	f
+rand	lib/rand.c	/^int	rand()$/;"	f
+rand_r	lib/rand.c	/^int	rand_r($/;"	f
+rand_seed	lib/rand.c	/^static unsigned int rand_seed = 1;$/;"	v	file:
+rawin	net/net.c	/^process	rawin (void) {$/;"	f
+rbr	include/uart.h	30;"	d
+rca	include/sdmc.h	/^	uint32	rca;			\/* relative card address		*\/$/;"	m	struct:sdmcblk
+rclass	include/dns.h	/^	uint16	*rclass;		\/* Resource Record Class	*\/$/;"	m	struct:dns_rr
+rcode	include/dns.h	/^		byte	rcode:4;	\/* Response Code		*\/$/;"	m	struct:dnspkt::__anon13
+rd	include/dns.h	/^		byte	rd:1;		\/* Recursion Desired		*\/$/;"	m	struct:dnspkt::__anon12
+rd_availsem	include/rdisksys.h	/^	sid32	rd_availsem;		\/* Semaphore ID for avail buffs	*\/$/;"	m	struct:rdscblk
+rd_blk	include/rdisksys.h	/^	uint32	rd_blk;			\/* Block number that was read	*\/$/;"	m	struct:rd_msg_rres
+rd_blk	include/rdisksys.h	/^	uint32	rd_blk;			\/* Block number that was written*\/$/;"	m	struct:rd_msg_wres
+rd_blk	include/rdisksys.h	/^	uint32	rd_blk;			\/* Block number to read		*\/$/;"	m	struct:rd_msg_rreq
+rd_blk	include/rdisksys.h	/^	uint32	rd_blk;			\/* Block number to write	*\/$/;"	m	struct:rd_msg_wreq
+rd_blknum	include/rdisksys.h	/^	uint32	rd_blknum;		\/* Block number of this block	*\/$/;"	m	struct:rdbuff
+rd_block	include/rdisksys.h	/^	char	rd_block[RD_BLKSIZ];	\/* Space to hold one disk block	*\/$/;"	m	struct:rdbuff
+rd_chnext	include/rdisksys.h	/^	struct	rdbuff	*rd_chnext;	\/* Head of cache: next and	*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_chprev	include/rdisksys.h	/^	struct	rdbuff	*rd_chprev;	\/*   previous			*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_comproc	include/rdisksys.h	/^	pid32	rd_comproc;		\/* Process ID of comm. process	*\/$/;"	m	struct:rdscblk
+rd_comruns	include/rdisksys.h	/^	bool8	rd_comruns;		\/* Has comm. process started?	*\/$/;"	m	struct:rdscblk
+rd_ctnext	include/rdisksys.h	/^	struct	rdbuff	*rd_ctnext;	\/* Tail of cache: next (null)	*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_ctprev	include/rdisksys.h	/^	struct	rdbuff	*rd_ctprev;	\/*   and previous		*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_data	include/rdisksys.h	/^	char	rd_data[RD_BLKSIZ];	\/* Array containing one block	*\/$/;"	m	struct:rd_msg_rres
+rd_data	include/rdisksys.h	/^	char	rd_data[RD_BLKSIZ];	\/* Array containing one block	*\/$/;"	m	struct:rd_msg_wreq
+rd_free	include/rdisksys.h	/^	struct	rdbuff	*rd_free;	\/* Pointer to free list		*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_id	include/rdisksys.h	/^	char	rd_id[RD_IDLEN];	\/* Disk ID currently being used	*\/$/;"	m	struct:rdscblk
+rd_loc_port	include/rdisksys.h	/^	uint16	rd_loc_port;		\/* Local (client) UPD port	*\/$/;"	m	struct:rdscblk
+rd_msg_creq	include/rdisksys.h	/^struct	rd_msg_creq	{		\/* Remote file close request	*\/$/;"	s
+rd_msg_cres	include/rdisksys.h	/^struct	rd_msg_cres	{		\/* Remote file close response	*\/$/;"	s
+rd_msg_dreq	include/rdisksys.h	/^struct	rd_msg_dreq	{		\/* Remote file delete request	*\/$/;"	s
+rd_msg_dres	include/rdisksys.h	/^struct	rd_msg_dres	{		\/* Remote file delete response	*\/$/;"	s
+rd_msg_hdr	include/rdisksys.h	/^struct	rd_msg_hdr {			\/* Header fields present in each*\/$/;"	s
+rd_msg_oreq	include/rdisksys.h	/^struct	rd_msg_oreq	{		\/* Remote file open request	*\/$/;"	s
+rd_msg_ores	include/rdisksys.h	/^struct	rd_msg_ores	{		\/* Remote file open response	*\/$/;"	s
+rd_msg_rreq	include/rdisksys.h	/^struct	rd_msg_rreq	{		\/* Remote file read request	*\/$/;"	s
+rd_msg_rres	include/rdisksys.h	/^struct	rd_msg_rres	{		\/* Remote file read reply	*\/$/;"	s
+rd_msg_wreq	include/rdisksys.h	/^struct	rd_msg_wreq	{		\/* Remote file write request	*\/$/;"	s
+rd_msg_wres	include/rdisksys.h	/^struct	rd_msg_wres	{		\/* Remote file write response	*\/$/;"	s
+rd_next	include/rdisksys.h	/^	struct	rdbuff	*rd_next;	\/* Ptr to next node on a list	*\/$/;"	m	struct:rdbuff	typeref:struct:rdbuff::rdbuff
+rd_op	include/rdisksys.h	/^	int32	rd_op;			\/* Operation - read\/write\/sync	*\/$/;"	m	struct:rdbuff
+rd_pid	include/rdisksys.h	/^	pid32	rd_pid;			\/* Process that initiated a	*\/$/;"	m	struct:rdbuff
+rd_prev	include/rdisksys.h	/^	struct	rdbuff	*rd_prev;	\/* Ptr to prev node on a list	*\/$/;"	m	struct:rdbuff	typeref:struct:rdbuff::rdbuff
+rd_refcnt	include/rdisksys.h	/^	int32	rd_refcnt;		\/* Reference count of processes	*\/$/;"	m	struct:rdbuff
+rd_registered	include/rdisksys.h	/^	bool8	rd_registered;		\/* Has UDP port been registered?*\/$/;"	m	struct:rdscblk
+rd_reqsem	include/rdisksys.h	/^	sid32	rd_reqsem;		\/* Semaphore ID for requests	*\/$/;"	m	struct:rdscblk
+rd_rhnext	include/rdisksys.h	/^	struct	rdbuff	*rd_rhnext;	\/* Head of request queue: next	*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_rhprev	include/rdisksys.h	/^	struct	rdbuff	*rd_rhprev;	\/*   and previous		*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_rtnext	include/rdisksys.h	/^	struct	rdbuff	*rd_rtnext;	\/* Tail of request queue: next	*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_rtprev	include/rdisksys.h	/^	struct	rdbuff	*rd_rtprev;	\/*   (null) and previous	*\/$/;"	m	struct:rdscblk	typeref:struct:rdscblk::rdbuff
+rd_seq	include/rdisksys.h	/^	int32	rd_seq;			\/* Next sequence number to use	*\/$/;"	m	struct:rdscblk
+rd_ser_ip	include/rdisksys.h	/^	uint32	rd_ser_ip;		\/* Server IP address		*\/$/;"	m	struct:rdscblk
+rd_ser_port	include/rdisksys.h	/^	uint16	rd_ser_port;		\/* Server UDP port		*\/$/;"	m	struct:rdscblk
+rd_state	include/rdisksys.h	/^	int32	rd_state;		\/* State of device		*\/$/;"	m	struct:rdscblk
+rd_status	include/rdisksys.h	/^	int32	rd_status;		\/* Is buffer currently valid?	*\/$/;"	m	struct:rdbuff
+rd_udpslot	include/rdisksys.h	/^	int32	rd_udpslot;		\/* Registered UDP slot		*\/$/;"	m	struct:rdscblk
+rdata	include/dns.h	/^	char	*rdata;			\/* Resource Record Data area	*\/$/;"	m	struct:dns_rr
+rdbuff	include/rdisksys.h	/^struct	rdbuff	{			\/* Request list node		*\/$/;"	s
+rdctl1	include/quark_eth.h	130;"	d
+rdctl2	include/quark_eth.h	131;"	d
+rdla	include/quark_eth.h	/^	uint32	rdla;		\/* Receive Descriptor List Addr		*\/$/;"	m	struct:eth_q_csreg
+rdlen	include/dns.h	/^	uint16	*rdlen;			\/* Resource Record RD Length	*\/$/;"	m	struct:dns_rr
+rdsbufalloc	device/rds/rdsbufalloc.c	/^struct rdbuff *rdsbufalloc ($/;"	f
+rdscblk	include/rdisksys.h	/^struct	rdscblk	{$/;"	s
+rdsclose	device/rds/rdsclose.c	/^devcall	rdsclose ($/;"	f
+rdscomm	device/rds/rdscomm.c	/^status	rdscomm ($/;"	f
+rdscontrol	device/rds/rdscontrol.c	/^devcall	rdscontrol ($/;"	f
+rdsinit	device/rds/rdsinit.c	/^devcall	rdsinit ($/;"	f
+rdsopen	device/rds/rdsopen.c	/^devcall	rdsopen ($/;"	f
+rdsprocess	device/rds/rdsprocess.c	/^void	rdsprocess ($/;"	f
+rdsread	device/rds/rdsread.c	/^devcall	rdsread ($/;"	f
+rdstab	device/rds/rdsinit.c	/^struct	rdscblk	rdstab[Nrds];$/;"	v	typeref:struct:rdscblk
+rdswrite	device/rds/rdswrite.c	/^devcall	rdswrite ($/;"	f
+reachabletime	include/icmpv6.h	/^    uint32 reachabletime;$/;"	m	struct:radvert
+read	config/y.tab.c	/^	char	read[MAXNAME];		\/* read function name			*\/$/;"	m	struct:dev_ent	file:
+read	system/read.c	/^syscall	read($/;"	f
+ready	system/ready.c	/^status	ready($/;"	f
+readylist	system/ready.c	/^qid16	readylist;			\/* Index of ready list		*\/$/;"	v
+receive	system/receive.c	/^umsg32	receive(void)$/;"	f
+recvclr	system/recvclr.c	/^umsg32	recvclr(void)$/;"	f
+recvtime	system/recvtime.c	/^umsg32	recvtime($/;"	f
+regAddress_MMConfig	system/pci.c	/^static inline void *regAddress_MMConfig($/;"	f	file:
+region_size	include/flash.h	/^    uint32 region_size;          \/**< size of region in bytes             *\/$/;"	m	struct:flash_region
+region_start	include/flash.h	/^    uint32 region_start;         \/**< beginning of region in memory       *\/$/;"	m	struct:flash_region
+regions	include/flash.h	/^    struct flash_region regions[MAX_REGIONS];     \/**< region info.      *\/$/;"	m	struct:flash	typeref:struct:flash::flash_region
+remove_irm_protections	system/early_imr.c	/^int remove_irm_protections(void)$/;"	f
+res	include/apic.h	/^	  uint32 res[3];$/;"	m	struct:lapic_csreg::__anon10
+res	include/apic.h	/^	  uint32 res[3];$/;"	m	struct:lapic_csreg::__anon11
+res	include/apic.h	/^	  uint32 res[3];$/;"	m	struct:lapic_csreg::__anon9
+res	include/icmpv6.h	/^    uint32 res: 29;$/;"	m	struct:nadvert
+res	include/icmpv6.h	/^    uint32 res:6;$/;"	m	struct:idk
+res1	include/apic.h	/^	uint32	res1[8];$/;"	m	struct:lapic_csreg
+res1	include/hpet.h	/^	uint32	res1[2];$/;"	m	struct:hpet_csreg
+res1	include/quark_eth.h	/^	uint32	res1[4];	\/* Skipped Addresses			*\/$/;"	m	struct:eth_q_csreg
+res10	include/apic.h	/^	uint32	res10[3];$/;"	m	struct:lapic_csreg
+res11	include/apic.h	/^	uint32	res11[3];$/;"	m	struct:lapic_csreg
+res2	include/apic.h	/^	uint32	res2[3];$/;"	m	struct:lapic_csreg
+res2	include/hpet.h	/^	uint32	res2[3];$/;"	m	struct:hpet_csreg
+res2	include/icmpv6.h	/^    byte res2[8];$/;"	m	struct:idk
+res2	include/quark_eth.h	/^	uint32  res2[46];$/;"	m	struct:eth_q_csreg
+res3	include/apic.h	/^	uint32	res3[19];$/;"	m	struct:lapic_csreg
+res3	include/hpet.h	/^	uint32	res3[51];$/;"	m	struct:hpet_csreg
+res3	include/quark_eth.h	/^	uint32	res3[957];	\/* Skipped Addresses			*\/$/;"	m	struct:eth_q_csreg
+res4	include/apic.h	/^	uint32	res4[3];$/;"	m	struct:lapic_csreg
+res4	include/hpet.h	/^	uint32	res4[2];$/;"	m	struct:hpet_csreg
+res5	include/apic.h	/^	uint32	res5[3];$/;"	m	struct:lapic_csreg
+res6	include/apic.h	/^	uint32	res6[3];$/;"	m	struct:lapic_csreg
+res7	include/apic.h	/^	uint32	res7[3];$/;"	m	struct:lapic_csreg
+res8	include/apic.h	/^	uint32	res8[3];$/;"	m	struct:lapic_csreg
+res9	include/apic.h	/^	uint32	res9[3];$/;"	m	struct:lapic_csreg
+resched	system/resched.c	/^void	resched(void)		\/* Assumes interrupts are disabled	*\/$/;"	f
+resched_cntl	system/resched.c	/^status	resched_cntl(		\/* Assumes interrupts are disabled	*\/$/;"	f
+reserved	include/icmpv6.h	/^    byte reserved[4]; \/\/ all zeros$/;"	m	struct:option_MTU
+reserved	include/icmpv6.h	/^    byte reserved[4]; \/\/ should be zeros$/;"	m	struct:option_prefix
+reserved	include/icmpv6.h	/^    byte reserved[4];$/;"	m	struct:nsolicit
+reserved	include/icmpv6.h	/^    uint32 reserved;$/;"	m	struct:rsolicit
+reserved0	include/pci.h	/^	unsigned char	reserved0;				\/*   35 *\/$/;"	m	struct:pci_config_header
+reserved1	include/pci.h	/^	unsigned char	reserved1;				\/*   36 *\/$/;"	m	struct:pci_config_header
+reserved2	include/pci.h	/^	unsigned char	reserved2;				\/*   37 *\/$/;"	m	struct:pci_config_header
+reserved3	include/pci.h	/^	unsigned int	reserved3;				\/*   38 *\/$/;"	m	struct:pci_config_header
+resp_type_sel	include/sdmc.h	/^	uint16	resp_type_sel	:2;$/;"	m	struct:sdmc_cmd
+response0	include/sdmc.h	/^	uint32	response0;		\/* response register 0 			*\/$/;"	m	struct:sdmc_csreg
+response2	include/sdmc.h	/^	uint32	response2;		\/* response register 2 			*\/$/;"	m	struct:sdmc_csreg
+response4	include/sdmc.h	/^	uint32	response4;		\/* response register 4 			*\/$/;"	m	struct:sdmc_csreg
+response6	include/sdmc.h	/^	uint32	response6;		\/* response register 6 			*\/$/;"	m	struct:sdmc_csreg
+restore	system/intr.S	/^restore:$/;"	l
+resume	system/resume.c	/^pri16	resume($/;"	f
+retranstimer	include/icmpv6.h	/^    uint32 retranstimer;$/;"	m	struct:radvert
+revID	include/pci.h	/^	unsigned char	revID;					\/*   8 *\/$/;"	m	struct:pci_config_header
+rf_data	include/rfilesys.h	/^	char	rf_data[RF_DATALEN];	\/* Array containing data from	*\/$/;"	m	struct:rf_msg_rres
+rf_data	include/rfilesys.h	/^	char	rf_data[RF_DATALEN];	\/* Array containing data to be	*\/$/;"	m	struct:rf_msg_wreq
+rf_len	include/rfilesys.h	/^	uint32	rf_len;			\/* Number of bytes that follow	*\/$/;"	m	struct:rf_msg_rres
+rf_len	include/rfilesys.h	/^	uint32	rf_len;			\/* Number of bytes to read	*\/$/;"	m	struct:rf_msg_rreq
+rf_len	include/rfilesys.h	/^	uint32	rf_len;			\/* Number of bytes written	*\/$/;"	m	struct:rf_msg_wres
+rf_len	include/rfilesys.h	/^	uint32	rf_len;			\/* Number of valid bytes in	*\/$/;"	m	struct:rf_msg_wreq
+rf_loc_port	include/rfilesys.h	/^	uint16	rf_loc_port;		\/* Local (client) UPD port	*\/$/;"	m	struct:rfdata
+rf_mode	include/rfilesys.h	/^	int32	rf_mode;		\/* Xinu mode bits		*\/$/;"	m	struct:rf_msg_oreq
+rf_mode	include/rfilesys.h	/^	int32	rf_mode;		\/* Xinu mode bits		*\/$/;"	m	struct:rf_msg_ores
+rf_msg_creq	include/rfilesys.h	/^struct	rf_msg_creq	{		\/* Remote file close request	*\/$/;"	s
+rf_msg_cres	include/rfilesys.h	/^struct	rf_msg_cres	{		\/* Remote file close response	*\/$/;"	s
+rf_msg_dreq	include/rfilesys.h	/^struct	rf_msg_dreq	{		\/* Remote file delete request	*\/$/;"	s
+rf_msg_dres	include/rfilesys.h	/^struct	rf_msg_dres	{		\/* Remote file delete response	*\/$/;"	s
+rf_msg_hdr	include/rfilesys.h	/^struct	rf_msg_hdr {			\/* Header fields present in each*\/$/;"	s
+rf_msg_mreq	include/rfilesys.h	/^struct	rf_msg_mreq	{		\/* Remote file mkdir request	*\/$/;"	s
+rf_msg_mres	include/rfilesys.h	/^struct	rf_msg_mres	{		\/* Remote file mkdir response	*\/$/;"	s
+rf_msg_oreq	include/rfilesys.h	/^struct	rf_msg_oreq	{		\/* Remote file open request	*\/$/;"	s
+rf_msg_ores	include/rfilesys.h	/^struct	rf_msg_ores	{		\/* Remote file open response	*\/$/;"	s
+rf_msg_rreq	include/rfilesys.h	/^struct	rf_msg_rreq	{		\/* Remote file read request	*\/$/;"	s
+rf_msg_rres	include/rfilesys.h	/^struct	rf_msg_rres	{		\/* Remote file read reply	*\/$/;"	s
+rf_msg_sreq	include/rfilesys.h	/^struct	rf_msg_sreq	{		\/* Remote file size request	*\/$/;"	s
+rf_msg_sres	include/rfilesys.h	/^struct	rf_msg_sres	{		\/* Remote file status response	*\/$/;"	s
+rf_msg_treq	include/rfilesys.h	/^struct	rf_msg_treq	{		\/* Remote file truncate request	*\/$/;"	s
+rf_msg_tres	include/rfilesys.h	/^struct	rf_msg_tres	{		\/* Remote file truncate response*\/$/;"	s
+rf_msg_wreq	include/rfilesys.h	/^struct	rf_msg_wreq	{		\/* Remote file write request	*\/$/;"	s
+rf_msg_wres	include/rfilesys.h	/^struct	rf_msg_wres	{		\/* Remote file write response	*\/$/;"	s
+rf_msg_xreq	include/rfilesys.h	/^struct	rf_msg_xreq	{		\/* Remote file rmdir request	*\/$/;"	s
+rf_msg_xres	include/rfilesys.h	/^struct	rf_msg_xres	{		\/* Remote file rmdir response	*\/$/;"	s
+rf_mutex	include/rfilesys.h	/^	sid32	rf_mutex;		\/* Mutual exclusion for access	*\/$/;"	m	struct:rfdata
+rf_pos	include/rfilesys.h	/^	uint32	rf_pos;			\/* Original position in file	*\/$/;"	m	struct:rf_msg_wres
+rf_pos	include/rfilesys.h	/^	uint32	rf_pos;			\/* Position in file		*\/$/;"	m	struct:rf_msg_rres
+rf_pos	include/rfilesys.h	/^	uint32	rf_pos;			\/* Position in file		*\/$/;"	m	struct:rf_msg_wreq
+rf_pos	include/rfilesys.h	/^	uint32	rf_pos;			\/* Position in file to read	*\/$/;"	m	struct:rf_msg_rreq
+rf_registered	include/rfilesys.h	/^	bool8	rf_registered;		\/* Has UDP port been registered?*\/$/;"	m	struct:rfdata
+rf_seq	include/rfilesys.h	/^	int32	rf_seq;			\/* Next sequence number to use	*\/$/;"	m	struct:rfdata
+rf_ser_ip	include/rfilesys.h	/^	uint32	rf_ser_ip;		\/* Server IP address		*\/$/;"	m	struct:rfdata
+rf_ser_port	include/rfilesys.h	/^	uint16	rf_ser_port;		\/* Server UDP port		*\/$/;"	m	struct:rfdata
+rf_size	include/rfilesys.h	/^	uint32	rf_size;		\/* Size of file in bytes	*\/$/;"	m	struct:rf_msg_sres
+rf_udp_slot	include/rfilesys.h	/^	int32	rf_udp_slot;		\/* UDP slot to use		*\/$/;"	m	struct:rfdata
+rfdata	include/rfilesys.h	/^struct	rfdata	{$/;"	s
+rfdev	include/rfilesys.h	/^	int32	rfdev;			\/* Device number of this dev.	*\/$/;"	m	struct:rflcblk
+rfdirent	include/rfilesys.h	/^struct	rfdirent	{$/;"	s
+rflcblk	include/rfilesys.h	/^struct	rflcblk	{$/;"	s
+rflclose	device/rfs/rflclose.c	/^devcall	rflclose ($/;"	f
+rflgetc	device/rfs/rflgetc.c	/^devcall	rflgetc($/;"	f
+rflinit	device/rfs/rflinit.c	/^devcall	rflinit($/;"	f
+rflputc	device/rfs/rflputc.c	/^devcall	rflputc($/;"	f
+rflread	device/rfs/rflread.c	/^devcall	rflread ($/;"	f
+rflseek	device/rfs/rflseek.c	/^devcall	rflseek ($/;"	f
+rfltab	device/rfs/rflinit.c	/^struct	rflcblk	rfltab[Nrfl];		\/* Remote file control blocks	*\/$/;"	v	typeref:struct:rflcblk
+rflwrite	device/rfs/rflwrite.c	/^devcall	rflwrite ($/;"	f
+rfmode	include/rfilesys.h	/^	uint32	rfmode;			\/* Mode: read access, write	*\/$/;"	m	struct:rflcblk
+rfname	include/rfilesys.h	/^	char	rfname[RF_NAMLEN];	\/* Name of the file		*\/$/;"	m	struct:rflcblk
+rfpos	include/rfilesys.h	/^	uint32	rfpos;			\/* Current file position	*\/$/;"	m	struct:rflcblk
+rfscomm	device/rfs/rfscomm.c	/^int32	rfscomm ($/;"	f
+rfscontrol	device/rfs/rfscontrol.c	/^devcall	rfscontrol ($/;"	f
+rfsgetmode	device/rfs/rfsgetmode.c	/^int32	rfsgetmode ($/;"	f
+rfsinit	device/rfs/rfsinit.c	/^devcall	rfsinit($/;"	f
+rfsndmsg	device/rfs/rfsndmsg.c	/^status	rfsndmsg ($/;"	f
+rfsopen	device/rfs/rfsopen.c	/^devcall	rfsopen ($/;"	f
+rfstate	include/rfilesys.h	/^	int32	rfstate;		\/* Entry is free or used	*\/$/;"	m	struct:rflcblk
+rname	include/dns.h	/^	char	*rname;			\/* Domain Name			*\/$/;"	m	struct:dns_rr
+roundmb	include/memory.h	9;"	d
+router_link_addr	net/radvert.c	/^byte router_link_addr[ETH_ADDR_LEN];$/;"	v
+routerlifetime	include/icmpv6.h	/^    uint16 routerlifetime;$/;"	m	struct:radvert
+rpdr	include/quark_eth.h	/^	uint32	rpdr;		\/* Receive Poll Demand Register		*\/$/;"	m	struct:eth_q_csreg
+rrd	include/apic.h	/^	uint32	rrd;		\/* Remote Read		*\/$/;"	m	struct:lapic_csreg
+rsolicit	include/icmpv6.h	/^typedef struct rsolicit{$/;"	s
+rsolicit	include/icmpv6.h	/^}rsolicit;$/;"	t	typeref:struct:rsolicit
+rsolicit_handler	net/rsolicit.c	/^void rsolicit_handler(struct netpacket * pkt) {$/;"	f
+rsolicit_valid	net/rsolicit.c	/^bool8 rsolicit_valid(struct base_header * ipdatagram) {$/;"	f
+rsvd	include/sdmc.h	/^	uint16	rsvd		:2;$/;"	m	struct:sdmc_cmd
+rsvd	include/sdmc.h	/^	uint8	rsvd	:6;$/;"	m	struct:sdmcblk
+rsvd1	include/sdmc.h	/^	byte	rsvd1[4];$/;"	m	struct:sdmc_csreg
+rsvd2	include/sdmc.h	/^	byte	rsvd2[3];$/;"	m	struct:sdmc_csreg
+rsvd3	include/sdmc.h	/^	byte	rsvd3[4];$/;"	m	struct:sdmc_csreg
+rsvd4	include/sdmc.h	/^	byte	rsvd4[107];$/;"	m	struct:sdmc_csreg
+rsvd4	include/sdmc.h	/^	uint32	rsvd4			:1;	\/* RSVD4				*\/$/;"	m	struct:sdmc_capabilities
+rsvd5	include/sdmc.h	/^	byte	rsvd5[12];$/;"	m	struct:sdmc_csreg
+rsvd5	include/sdmc.h	/^	uint32	rsvd5			:1;	\/* RSVD5				*\/$/;"	m	struct:sdmc_capabilities
+rsvd6	include/sdmc.h	/^	byte	rsvd6[11];$/;"	m	struct:sdmc_csreg
+rsvd6	include/sdmc.h	/^	uint32	rsvd6			:1;	\/* RSVD6				*\/$/;"	m	struct:sdmc_capabilities
+rtype	include/dns.h	/^	uint16	*rtype;			\/* Resource Record Type		*\/$/;"	m	struct:dns_rr
+rxBufs	include/ether.h	/^	void    *rxBufs; 	\/* Ptr to Rx packet buffers in memory	*\/$/;"	m	struct:ethcblk
+rxHead	include/ether.h	/^	uint32	rxHead;		\/* Index of current head of Rx ring	*\/$/;"	m	struct:ethcblk
+rxIrq	include/ether.h	/^	uint32	rxIrq;		\/* Count of Rx interrupt requests       *\/$/;"	m	struct:ethcblk
+rxRing	include/ether.h	/^	void    *rxRing;	\/* Ptr to array of recv ring descriptors*\/$/;"	m	struct:ethcblk
+rxRingSize	include/ether.h	/^	uint32	rxRingSize;	\/* Size of Rx ring descriptor array	*\/$/;"	m	struct:ethcblk
+rxTail	include/ether.h	/^	uint32	rxTail;		\/* Index of current tail of Rx ring	*\/$/;"	m	struct:ethcblk
+saveattrid	config/y.tab.c	/^char	saveattrid[MAXNAME];		\/* Holds the IDENT from an attribute	*\/$/;"	v
+sb_pcidev	system/early_imr.c	/^static uint32 sb_pcidev;$/;"	v	file:
+sbzero	system/start.S	/^sbzero:$/;"	l
+scanf	include/stdio.h	10;"	d
+scount	include/semaphore.h	/^	int32	scount;		\/* Count for the semaphore		*\/$/;"	m	struct:sentry
+scr	include/uart.h	/^	volatile uint32	scr;	\/* scratch register			*\/$/;"	m	struct:uart_csreg
+sd	system/meminit.c	/^struct __attribute__ ((__packed__)) sd {$/;"	s	file:
+sd_access	system/meminit.c	/^	unsigned char   sd_access;$/;"	m	struct:sd	file:
+sd_hibase	system/meminit.c	/^	unsigned char	sd_hibase;$/;"	m	struct:sd	file:
+sd_hilim_fl	system/meminit.c	/^	unsigned char	sd_hilim_fl;$/;"	m	struct:sd	file:
+sd_lobase	system/meminit.c	/^	unsigned short	sd_lobase;$/;"	m	struct:sd	file:
+sd_lolimit	system/meminit.c	/^	unsigned short	sd_lolimit;$/;"	m	struct:sd	file:
+sd_midbase	system/meminit.c	/^	unsigned char	sd_midbase;$/;"	m	struct:sd	file:
+sdio	include/sdmc.h	/^	uint8	sdio	:1;		\/* Card is an SDIO card			*\/$/;"	m	struct:sdmcblk
+sdma_support	include/sdmc.h	/^	uint32	sdma_support		:1;	\/* SDMA Support				*\/$/;"	m	struct:sdmc_capabilities
+sdmc_capabilities	include/sdmc.h	/^struct sdmc_capabilities {$/;"	s
+sdmc_cmd	include/sdmc.h	/^struct sdmc_cmd {$/;"	s
+sdmc_csreg	include/sdmc.h	/^struct sdmc_csreg {$/;"	s
+sdmcblk	include/sdmc.h	/^struct sdmcblk {$/;"	s
+seek	config/y.tab.c	/^	char	seek[MAXNAME];		\/* seek function name			*\/$/;"	m	struct:dev_ent	file:
+seek	system/seek.c	/^syscall	seek($/;"	f
+sem	include/ethloop.h	/^    sid32	sem;              \/**< number of packets in buffer        *\/$/;"	m	struct:ethloop
+semcount	system/semcount.c	/^syscall semcount($/;"	f
+semcreate	system/semcreate.c	/^sid32	semcreate($/;"	f
+semdelete	system/semdelete.c	/^syscall	semdelete($/;"	f
+semreset	system/semreset.c	/^syscall	semreset($/;"	f
+semtab	system/initialize.c	/^struct	sentry	semtab[NSEM];	\/* Semaphore table			*\/$/;"	v	typeref:struct:sentry
+send	system/send.c	/^syscall	send($/;"	f
+sendipv6pkt	net/sendipv6pkt.c	/^status  sendipv6pkt(byte type, byte * dest) {$/;"	f
+sendradvert	shell/sendradvert.c	/^shellcmd sendradvert(int nargs, char * args[]) {$/;"	f
+sendrsolicit	shell/sendrsolicit.c	/^shellcmd sendrsolicit(int nargs, char * args[]) {$/;"	f
+sentry	include/semaphore.h	/^struct	sentry	{$/;"	s
+set_evec	system/evec.c	/^int32	set_evec(uint32 xnum, uint32 handler)$/;"	f
+set_ivec	system/evec.c	/^int	set_ivec ($/;"	f
+setsegs	system/meminit.c	/^void	setsegs()$/;"	f
+sgetch	lib/sscanf.c	/^static int	sgetch($/;"	f	file:
+shared_bus	include/sdmc.h	/^	uint32	shared_bus;		\/* shared bus control register *\/$/;"	m	struct:sdmc_csreg
+shell	shell/shell.c	/^process	shell ($/;"	f
+shellcmd	include/kernel.h	/^typedef int32	shellcmd;	\/* shell command declaration		*\/$/;"	t
+short	config/y.tab.c	280;"	d	file:
+sid32	include/kernel.h	/^typedef	int32	sid32;		\/* semaphore ID				*\/$/;"	t
+signal	system/signal.c	/^syscall	signal($/;"	f
+signaln	system/signaln.c	/^syscall	signaln($/;"	f
+sivr	include/apic.h	/^	uint32	sivr;		\/* Spurious Intr Vector	*\/$/;"	m	struct:lapic_csreg
+size	include/flash.h	/^    uint32 size;                 \/**< size (in bytes) of flash memory     *\/$/;"	m	struct:flash
+size	include/flash.h	/^    uint32 size;                 \/**< size of this block                  *\/$/;"	m	struct:flash_block
+size	include/multiboot.h	/^	uint32	size;			\/* Entry Size			*\/$/;"	m	struct:mbmregion
+skipping	config/lex.yy.c	/^int skipping;$/;"	v
+sleep	system/sleep.c	/^syscall	sleep($/;"	f
+sleepms	system/sleep.c	/^syscall	sleepms($/;"	f
+sleepq	system/clkinit.c	/^qid16	sleepq;			\/* Queue of sleeping processes		*\/$/;"	v
+slot_int_stat	include/sdmc.h	/^	uint16	slot_int_stat;		\/* slot interrupt status register *\/$/;"	m	struct:sdmc_csreg
+slot_type	include/sdmc.h	/^	uint32	slot_type		:2;	\/* Slot Type				*\/$/;"	m	struct:sdmc_capabilities
+sname	include/dhcp.h	/^			byte   sname[64];	\/* TFTP Server Name	*\/$/;"	m	struct:dhcpmsg::__anon7::__anon8
+snm_addr	net/ipv6.c	/^byte    snm_addr[IPV6_ASIZE];$/;"	v
+spi_int_sup	include/sdmc.h	/^	uint8	spi_int_sup;		\/* spi interrupt support register *\/$/;"	m	struct:sdmc_csreg
+sprintf	lib/sprintf.c	/^int	sprintf($/;"	f
+sprntf	lib/sprintf.c	/^static int	sprntf($/;"	f	file:
+spurious_irq15	system/intr.S	/^spurious_irq15:$/;"	l
+spurious_irq7	system/intr.S	/^spurious_irq7:$/;"	l
+squeue	include/semaphore.h	/^	qid16	squeue;		\/* Queue of processes that are waiting	*\/$/;"	m	struct:sentry
+sr	include/quark_eth.h	/^	uint32	sr;		\/* Status Register			*\/$/;"	m	struct:eth_q_csreg
+srand	lib/rand.c	/^void	srand($/;"	f
+src	include/ether.h	/^	byte	src[ETH_ADDR_LEN];	\/* Source Mac address		*\/$/;"	m	struct:etherPkt
+src	include/icmpv6.h	/^    byte    src[IPV6_ASIZE];$/;"	m	struct:pseudoHdr
+src	include/ipv6.h	/^    byte    src[IPV6_ASIZE];$/;"	m	struct:base_header
+sscanf	lib/sscanf.c	/^int	sscanf($/;"	f
+sstate	include/semaphore.h	/^	byte	sstate;		\/* Whether entry is S_FREE or S_USED	*\/$/;"	m	struct:sentry
+stacktrace	system/stacktrace.c	/^syscall stacktrace(int pid)$/;"	f
+start	system/start.S	/^start:$/;"	l
+start_pos	include/flash.h	/^    uint32 start_pos;            \/**< physical position data starts at    *\/$/;"	m	struct:flash_block
+startup	system/initialize.c	/^local process	startup(void)$/;"	f
+state	include/ether.h	/^	byte	state; 		\/* ETH_STATE_... as defined above 	*\/$/;"	m	struct:ethcblk
+state	include/ethloop.h	/^    int state;                      \/**< device state                       *\/$/;"	m	struct:ethloop
+state	include/flash.h	/^    byte state;                \/**< state of this block                 *\/$/;"	m	struct:flash_block
+status	include/kernel.h	/^typedef	int32	status;		\/* returned status value (OK\/SYSERR)	*\/$/;"	t
+status	include/pci.h	/^	unsigned short	status;					\/*   6 *\/$/;"	m	struct:pci_config_header
+status	include/quark_eth.h	/^	uint32	status;		\/* Desc status word	*\/$/;"	m	struct:eth_q_rx_desc
+stderr	include/stdio.h	17;"	d
+stdin	include/stdio.h	15;"	d
+stdout	include/stdio.h	16;"	d
+stop	system/initialize.c	/^int32	stop(char *s)$/;"	f
+strchr	lib/strchr.c	/^char	*strchr($/;"	f
+strcmp	lib/strcmp.c	/^int	strcmp($/;"	f
+strcpy	lib/strcpy.c	/^int	strcpy($/;"	f
+strlen	lib/strlen.c	/^int	strlen($/;"	f
+strncat	lib/strncat.c	/^char	*strncat($/;"	f
+strncmp	lib/strncmp.c	/^int	strncmp($/;"	f
+strncpy	lib/strncpy.c	/^char	*strncpy($/;"	f
+strnlen	lib/strnlen.c	/^int	strnlen($/;"	f
+strrchr	lib/strrchr.c	/^char	*strrchr($/;"	f
+strstr	lib/strstr.c	/^char	*strstr($/;"	f
+subClass	include/pci.h	/^	unsigned char	subClass;				\/*   a *\/$/;"	m	struct:pci_config_header
+subsystemID	include/pci.h	/^	unsigned short	subsystemID;				\/*   2e *\/$/;"	m	struct:pci_config_header
+subsystemVendorID	include/pci.h	/^	unsigned short	subsystemVendorID;			\/*   2c *\/$/;"	m	struct:pci_config_header
+sungetch	lib/sscanf.c	/^static int	sungetch($/;"	f	file:
+suspend	system/suspend.c	/^syscall	suspend($/;"	f
+suspend_resume_support	include/sdmc.h	/^	uint32	suspend_resume_support	:1;	\/* Suspend \/ Resume Support		*\/$/;"	m	struct:sdmc_capabilities
+sw_rst	include/sdmc.h	/^	uint8	sw_rst;			\/* software reset register 		*\/$/;"	m	struct:sdmc_csreg
+syms	include/multiboot.h	/^	uint32	syms[4];		\/* Info regarding ELF sections	*\/$/;"	m	struct:mbootinfo
+sys_adr	include/sdmc.h	/^	uint32	sys_adr;		\/* sdma system address register 	*\/$/;"	m	struct:sdmc_csreg
+sys_bus_support_64b	include/sdmc.h	/^	uint32	sys_bus_support_64b	:1;	\/* 64-bit System Bus Support		*\/$/;"	m	struct:sdmc_capabilities
+syscall	include/kernel.h	/^typedef int32	syscall;	\/* system call declaration		*\/$/;"	t
+sysinit	system/initialize.c	/^static	void	sysinit()$/;"	f	file:
+t0cc_l	include/hpet.h	/^	uint32	t0cc_l;	\/* Timer0 Config and Capab. (l)	*\/$/;"	m	struct:hpet_csreg
+t0cc_u	include/hpet.h	/^	uint32	t0cc_u;	\/* Timer0 Config and Capab. (u)	*\/$/;"	m	struct:hpet_csreg
+t0cv_l	include/hpet.h	/^	uint32	t0cv_l;	\/* Timer0 Comparator (lower)	*\/$/;"	m	struct:hpet_csreg
+t0cv_u	include/hpet.h	/^	uint32	t0cv_u;	\/* Timer0 Comparator (upper)	*\/$/;"	m	struct:hpet_csreg
+tc	include/dns.h	/^		byte	tc:1;		\/* Truncation			*\/$/;"	m	struct:dnspkt::__anon12
+tdla	include/quark_eth.h	/^	uint32	tdla;		\/* Transmit Descriptor List Addr	*\/$/;"	m	struct:eth_q_csreg
+test	include/testsuite.h	/^    process	(*test) (bool8);\/* Test case function			*\/$/;"	m	struct:testcase
+testcase	include/testsuite.h	/^struct	testcase {$/;"	s
+tf_ablk	include/tftp.h	/^	  uint16	tf_ablk;	\/* Block number being acked	*\/$/;"	m	struct:tftp_msg::__anon2::__anon5
+tf_data	include/tftp.h	/^	  char		tf_data[TFTP_MAXDATA]; \/* Actual data		*\/$/;"	m	struct:tftp_msg::__anon2::__anon4
+tf_dblk	include/tftp.h	/^	  uint16	tf_dblk;	\/* Block number of this data	*\/$/;"	m	struct:tftp_msg::__anon2::__anon4
+tf_ercode	include/tftp.h	/^	  uint16	tf_ercode;	\/* Integer error code		*\/$/;"	m	struct:tftp_msg::__anon2::__anon6
+tf_ermsg	include/tftp.h	/^	  char		tf_ermsg[TFTP_MAXDATA]; \/* Error message	*\/$/;"	m	struct:tftp_msg::__anon2::__anon6
+tf_filemode	include/tftp.h	/^	  char	tf_filemode[TFTP_MAXNAM+10]; \/* file name and mode	*\/$/;"	m	struct:tftp_msg::__anon2::__anon3
+tf_opcode	include/tftp.h	/^	uint16		tf_opcode;	\/* One of the opcodes above	*\/$/;"	m	struct:tftp_msg
+tftp_msg	include/tftp.h	/^struct	tftp_msg {$/;"	s
+theader	config/config.y	/^theader:	ON tonid { $$ = $2; }$/;"	l
+thr	include/uart.h	31;"	d
+timeout_clock_frequency	include/sdmc.h	/^	uint32	timeout_clock_frequency	:6;	\/* Timeout Clock Frequency		*\/$/;"	m	struct:sdmc_capabilities
+timeout_clock_unit	include/sdmc.h	/^	uint32	timeout_clock_unit	:1;	\/* Timeout Clock Unit			*\/$/;"	m	struct:sdmc_capabilities
+timeout_ctl	include/sdmc.h	/^	uint8	timeout_ctl;		\/* timeout control register 		*\/$/;"	m	struct:sdmc_csreg
+tindex	config/y.tab.c	/^	int	tindex;			\/* Index in dtypes (unused in a type)	*\/$/;"	m	struct:dev_ent	file:
+tmr	include/apic.h	/^	  uint32 tmr;$/;"	m	struct:lapic_csreg::__anon10
+tmr	include/apic.h	/^	}	tmr[8];		\/* Trigger Mode Regs	*\/$/;"	m	struct:lapic_csreg	typeref:struct:lapic_csreg::__anon10
+tname	config/config.y	/^tname:		IDENT { $$ = newtype(yytext); }$/;"	l
+tname	config/y.tab.c	/^	char	tname[MAXNAME];		\/* Type name				*\/$/;"	m	struct:dev_ent	file:
+toascii	include/ctype.h	31;"	d
+tolower	include/ctype.h	30;"	d
+tonid	config/config.y	/^tonid:		IDENT { $$ = addton(yytext); }$/;"	l
+toupper	include/ctype.h	29;"	d
+tpdr	include/quark_eth.h	/^	uint32	tpdr;		\/* Transmit Poll Demand Register	*\/$/;"	m	struct:eth_q_csreg
+tpr	include/apic.h	/^	uint32	tpr;		\/* Task Proirity	*\/$/;"	m	struct:lapic_csreg
+trap	system/evec.c	/^void	trap ($/;"	f
+truncmb	include/memory.h	10;"	d
+trx_header	include/flash.h	/^struct trx_header$/;"	s
+ttl	include/dns.h	/^	uint32	*ttl;			\/* Resource Record Time-to-Live	*\/$/;"	m	struct:dns_rr
+ttycblk	include/tty.h	/^struct	ttycblk	{			\/* Tty line control block	*\/$/;"	s
+ttycontrol	device/tty/ttycontrol.c	/^devcall	ttycontrol($/;"	f
+ttydispatch	device/tty/ttydispatch.S	/^ttydispatch:$/;"	l
+ttygetc	device/tty/ttygetc.c	/^devcall	ttygetc($/;"	f
+ttyhandle_in	device/tty/ttyhandle_in.c	/^void	ttyhandle_in ($/;"	f
+ttyhandle_out	device/tty/ttyhandle_out.c	/^void	ttyhandle_out($/;"	f
+ttyhandler	device/tty/ttyhandler.c	/^void ttyhandler($/;"	f
+ttyinit	device/tty/ttyinit.c	/^devcall	ttyinit($/;"	f
+ttykickout	device/tty/ttykickout.c	/^void	ttykickout($/;"	f
+ttyputc	device/tty/ttyputc.c	/^devcall	ttyputc($/;"	f
+ttyread	device/tty/ttyread.c	/^devcall	ttyread($/;"	f
+ttytab	device/tty/ttyinit.c	/^struct	ttycblk	ttytab[Ntty];$/;"	v	typeref:struct:ttycblk
+ttywrite	device/tty/ttywrite.c	/^devcall	ttywrite($/;"	f
+txBufs	include/ether.h	/^	void    *txBufs; 	\/* Ptr to Tx packet buffers in memory	*\/$/;"	m	struct:ethcblk
+txHead	include/ether.h	/^	uint32	txHead;		\/* Index of current head of Tx ring	*\/$/;"	m	struct:ethcblk
+txIrq	include/ether.h	/^	uint32	txIrq;		\/* Count of Tx interrupt requests       *\/$/;"	m	struct:ethcblk
+txRing	include/ether.h	/^	void    *txRing; 	\/* Ptr to array of xmit ring descriptors*\/$/;"	m	struct:ethcblk
+txRingSize	include/ether.h	/^	uint32	txRingSize;	\/* Size of Tx ring descriptor array	*\/$/;"	m	struct:ethcblk
+txTail	include/ether.h	/^	uint32	txTail;		\/* Index of current tail of Tx ring	*\/$/;"	m	struct:ethcblk
+tx_mode	include/sdmc.h	/^	uint16	tx_mode;		\/* transfer mode register 		*\/$/;"	m	struct:sdmc_csreg
+tx_sem	include/sdmc.h	/^	sid32	tx_sem;			\/* transfer semaphore			*\/$/;"	m	struct:sdmcblk
+tyebuff	include/tty.h	/^	char	tyebuff[TY_EBUFLEN];	\/* Echo buffer			*\/$/;"	m	struct:ttycblk
+tyecrlf	include/tty.h	/^	bool8	tyecrlf;		\/* Echo CR-LF for newline?	*\/$/;"	m	struct:ttycblk
+tyehead	include/tty.h	/^	char	*tyehead;		\/* Next echo char to xmit	*\/$/;"	m	struct:ttycblk
+tyeof	include/tty.h	/^	bool8	tyeof;			\/* Honor EOF character?		*\/$/;"	m	struct:ttycblk
+tyeofch	include/tty.h	/^	char	tyeofch;		\/* EOF character (usually ^D)	*\/$/;"	m	struct:ttycblk
+tyetail	include/tty.h	/^	char	*tyetail;		\/* Next slot to deposit echo ch	*\/$/;"	m	struct:ttycblk
+tyevis	include/tty.h	/^	bool8	tyevis;			\/* Echo control chars as ^X ?	*\/$/;"	m	struct:ttycblk
+tyibuff	include/tty.h	/^	char	tyibuff[TY_IBUFLEN];	\/* Input buffer (holds one line)*\/$/;"	m	struct:ttycblk
+tyicrlf	include/tty.h	/^	bool8	tyicrlf;		\/* Map '\\r' to '\\n' on input?	*\/$/;"	m	struct:ttycblk
+tyicursor	include/tty.h	/^	int32	tyicursor;		\/* Current cursor position	*\/$/;"	m	struct:ttycblk
+tyieback	include/tty.h	/^	bool8	tyieback;		\/* Do erasing backspace on echo?*\/$/;"	m	struct:ttycblk
+tyiecho	include/tty.h	/^	bool8	tyiecho;		\/* Is input echoed?		*\/$/;"	m	struct:ttycblk
+tyierase	include/tty.h	/^	bool8	tyierase;		\/* Honor erase character?	*\/$/;"	m	struct:ttycblk
+tyierasec	include/tty.h	/^	char	tyierasec;		\/* Primary erase character	*\/$/;"	m	struct:ttycblk
+tyierasec2	include/tty.h	/^	char	tyierasec2;		\/* Alternate erase character	*\/$/;"	m	struct:ttycblk
+tyifullc	include/tty.h	/^	char	tyifullc;		\/* Char to send when input full	*\/$/;"	m	struct:ttycblk
+tyihead	include/tty.h	/^	char	*tyihead;		\/* Next input char to read	*\/$/;"	m	struct:ttycblk
+tyikill	include/tty.h	/^	bool8	tyikill;		\/* Honor line kill character?	*\/$/;"	m	struct:ttycblk
+tyikillc	include/tty.h	/^	char	tyikillc;		\/* Line kill character		*\/$/;"	m	struct:ttycblk
+tyimode	include/tty.h	/^	char	tyimode;		\/* Input mode raw\/cbreak\/cooked	*\/$/;"	m	struct:ttycblk
+tyisem	include/tty.h	/^	sid32	tyisem;			\/* Input semaphore		*\/$/;"	m	struct:ttycblk
+tyitail	include/tty.h	/^	char	*tyitail;		\/* Next slot for arriving char	*\/$/;"	m	struct:ttycblk
+tyobuff	include/tty.h	/^	char	tyobuff[TY_OBUFLEN];	\/* Output buffer		*\/$/;"	m	struct:ttycblk
+tyocrlf	include/tty.h	/^	bool8	tyocrlf;		\/* Output CR\/LF for LF ?	*\/$/;"	m	struct:ttycblk
+tyoflow	include/tty.h	/^	bool8	tyoflow;		\/* Honor ostop\/ostart?		*\/$/;"	m	struct:ttycblk
+tyohead	include/tty.h	/^	char	*tyohead;		\/* Next output char to xmit	*\/$/;"	m	struct:ttycblk
+tyoheld	include/tty.h	/^	bool8	tyoheld;		\/* Output currently being held?	*\/$/;"	m	struct:ttycblk
+tyosem	include/tty.h	/^	sid32	tyosem;			\/* Output semaphore		*\/$/;"	m	struct:ttycblk
+tyostart	include/tty.h	/^	char	tyostart;		\/* Character that starts output	*\/$/;"	m	struct:ttycblk
+tyostop	include/tty.h	/^	char	tyostop;		\/* Character that stops output	*\/$/;"	m	struct:ttycblk
+tyotail	include/tty.h	/^	char	*tyotail;		\/* Next slot for outgoing char	*\/$/;"	m	struct:ttycblk
+type	include/ether.h	/^	byte 	type; 		\/* NIC type_... as defined above 	*\/$/;"	m	struct:ethcblk
+type	include/ether.h	/^	uint16	type;			\/* Ether type field		*\/$/;"	m	struct:etherPkt
+type	include/icmpv6.h	/^    byte type; \/\/ should be 0x03;$/;"	m	struct:option_prefix
+type	include/icmpv6.h	/^    byte type; \/\/ should be 1$/;"	m	struct:option_one
+type	include/icmpv6.h	/^    byte type; \/\/ shoule be 5$/;"	m	struct:option_MTU
+type	include/icmpv6.h	/^    byte type;$/;"	m	struct:icmpopt
+type	include/icmpv6.h	/^    byte type;$/;"	m	struct:icmpv6general
+type	include/icmpv6.h	/^    byte type;$/;"	m	struct:nadvert
+type	include/icmpv6.h	/^    byte type;$/;"	m	struct:nsolicit
+type	include/icmpv6.h	/^    byte type;$/;"	m	struct:radvert
+type	include/icmpv6.h	/^    byte type;$/;"	m	struct:rsolicit
+type	include/icmpv6.h	/^    uint32 type;$/;"	m	struct:idk
+type	include/icmpv6.h	/^    uint32 type;$/;"	m	struct:lladdress
+type	include/multiboot.h	/^	uint32	type;			\/* Memory region type		*\/$/;"	m	struct:mbmregion
+uart_csreg	include/uart.h	/^struct	uart_csreg$/;"	s
+udcount	include/udp.h	/^	int32	udcount;		\/* Count of packets enqueued	*\/$/;"	m	struct:udpentry
+udhead	include/udp.h	/^	int32	udhead;			\/* Index of next packet to read	*\/$/;"	m	struct:udpentry
+udlocport	include/udp.h	/^	uint16	udlocport;		\/* Local protocol port number	*\/$/;"	m	struct:udpentry
+udp_hton	net/udp.c	/^void 	udp_hton($/;"	f
+udp_in	net/udp.c	/^void	udp_in($/;"	f
+udp_init	net/udp.c	/^void	udp_init(void)$/;"	f
+udp_ntoh	net/udp.c	/^void 	udp_ntoh($/;"	f
+udp_recv	net/udp.c	/^int32	udp_recv ($/;"	f
+udp_recvaddr	net/udp.c	/^int32	udp_recvaddr ($/;"	f
+udp_register	net/udp.c	/^uid32	udp_register ($/;"	f
+udp_release	net/udp.c	/^status	udp_release ($/;"	f
+udp_send	net/udp.c	/^status	udp_send ($/;"	f
+udp_sendto	net/udp.c	/^status	udp_sendto ($/;"	f
+udpentry	include/udp.h	/^struct	udpentry {			\/* Entry in the UDP endpoint tbl*\/$/;"	s
+udpid	include/udp.h	/^	pid32	udpid;			\/* ID of waiting process	*\/$/;"	m	struct:udpentry
+udptab	net/udp.c	/^struct	udpentry udptab[UDP_SLOTS];	\/* Table of UDP endpoints	*\/$/;"	v	typeref:struct:udpentry
+udqueue	include/udp.h	/^	struct	netpacket *udqueue[UDP_QSIZ];\/* Circular packet queue	*\/$/;"	m	struct:udpentry	typeref:struct:udpentry::netpacket
+udremip	include/udp.h	/^	uint32	udremip;		\/* Remote IP address (zero	*\/$/;"	m	struct:udpentry
+udremport	include/udp.h	/^	uint16	udremport;		\/* Remote protocol port number	*\/$/;"	m	struct:udpentry
+udstate	include/udp.h	/^	int32	udstate;		\/* State of entry: free\/used	*\/$/;"	m	struct:udpentry
+udtail	include/udp.h	/^	int32	udtail;			\/* Index of next slot to insert	*\/$/;"	m	struct:udpentry
+uid32	include/kernel.h	/^typedef	int32	uid32;		\/* ID for UDP table descriptor		*\/$/;"	t
+uint16	include/kernel.h	/^typedef	unsigned short	uint16;$/;"	t
+uint32	include/kernel.h	/^typedef	unsigned int	uint32;$/;"	t
+uint64	include/kernel.h	/^typedef	unsigned long long uint64;$/;"	t
+uint8	include/kernel.h	/^typedef	unsigned char	uint8;$/;"	t
+umsg32	include/kernel.h	/^typedef	uint32	umsg32;		\/* message passed among processes	*\/$/;"	t
+ungetch	lib/fscanf.c	/^static int	ungetch($/;"	f	file:
+unput	config/lex.yy.c	194;"	d	file:
+unsleep	system/unsleep.c	/^status	unsleep($/;"	f
+userret	system/userret.c	/^void	userret(void)$/;"	f
+utim2ltim	include/date.h	57;"	d
+va_arg	include/stdarg.h	14;"	d
+va_copy	include/stdarg.h	12;"	d
+va_end	include/stdarg.h	15;"	d
+va_list	include/stdarg.h	/^typedef __builtin_va_list va_list;$/;"	t
+va_start	include/stdarg.h	13;"	d
+valid_lifetime	include/icmpv6.h	/^    byte valid_lifetime[4];$/;"	m	struct:option_prefix
+validlifetime	include/icmpv6.h	/^    uint32 validlifetime;$/;"	m	struct:idk
+vbe_control_info	include/multiboot.h	/^	uint32	vbe_control_info;	\/* VBE control info		*\/$/;"	m	struct:mbootinfo
+vbe_interface_len	include/multiboot.h	/^	uint32	vbe_interface_len;	\/* VBE related informarion	*\/$/;"	m	struct:mbootinfo
+vbe_interface_off	include/multiboot.h	/^	uint16	vbe_interface_off;	\/* VBE related information	*\/$/;"	m	struct:mbootinfo
+vbe_interface_seg	include/multiboot.h	/^	uint16	vbe_interface_seg;	\/* VBE related information	*\/$/;"	m	struct:mbootinfo
+vbe_mode	include/multiboot.h	/^	uint16	vbe_mode;		\/* Current Video mode		*\/$/;"	m	struct:mbootinfo
+vbe_mode_info	include/multiboot.h	/^	uint32	vbe_mode_info;		\/* VBE mode info		*\/$/;"	m	struct:mbootinfo
+vendorID	include/pci.h	/^	unsigned short	vendorID;				\/* 0x0 *\/$/;"	m	struct:pci_config_header
+version	include/quark_eth.h	/^	uint32	version;	\/* Version Register			*\/$/;"	m	struct:eth_q_csreg
+vlantag	include/quark_eth.h	/^	uint32	vlantag;	\/* VLAV Tag Register			*\/$/;"	m	struct:eth_q_csreg
+volt_support_1p8v	include/sdmc.h	/^	uint32	volt_support_1p8v	:1;	\/* Voltage Support 1.8V			*\/$/;"	m	struct:sdmc_capabilities
+volt_support_3p0v	include/sdmc.h	/^	uint32	volt_support_3p0v	:1;	\/* Voltage Support 3.0V			*\/$/;"	m	struct:sdmc_capabilities
+volt_support_3p3v	include/sdmc.h	/^	uint32	volt_support_3p3v	:1;	\/* Voltage Support 3.3V			*\/$/;"	m	struct:sdmc_capabilities
+wait	system/wait.c	/^syscall	wait($/;"	f
+wakeup	system/wakeup.c	/^void	wakeup(void)$/;"	f
+wakeup_ctl	include/sdmc.h	/^	uint8	wakeup_ctl;		\/* wakeup control register 		*\/$/;"	m	struct:sdmc_csreg
+write	config/y.tab.c	/^	char	write[MAXNAME];		\/* write function name			*\/$/;"	m	struct:dev_ent	file:
+write	system/write.c	/^syscall	write($/;"	f
+xdone	system/xdone.c	/^void	xdone(void)$/;"	f
+xsh_argecho	shell/xsh_argecho.c	/^shellcmd xsh_argecho(int nargs, char *args[])$/;"	f
+xsh_arp	shell/xsh_arp.c	/^shellcmd xsh_arp(int nargs, char *args[])$/;"	f
+xsh_cat	shell/xsh_cat.c	/^shellcmd xsh_cat(int nargs, char *args[])$/;"	f
+xsh_clear	shell/xsh_clear.c	/^shellcmd xsh_clear(int nargs, char *args[])$/;"	f
+xsh_date	shell/xsh_date.c	/^shellcmd xsh_date(int nargs, char *args[]) {$/;"	f
+xsh_devdump	shell/xsh_devdump.c	/^shellcmd xsh_devdump ($/;"	f
+xsh_echo	shell/xsh_echo.c	/^shellcmd xsh_echo(int nargs, char *args[])$/;"	f
+xsh_exit	shell/xsh_exit.c	/^shellcmd xsh_exit(int nargs, char *args[])$/;"	f
+xsh_help	shell/xsh_help.c	/^shellcmd xsh_help(int nargs, char *args[])$/;"	f
+xsh_kill	shell/xsh_kill.c	/^shellcmd xsh_kill(int nargs, char *args[]) {$/;"	f
+xsh_memdump	shell/xsh_memdump.c	/^shellcmd xsh_memdump(int nargs, char *args[])$/;"	f
+xsh_memstat	shell/xsh_memstat.c	/^shellcmd xsh_memstat(int nargs, char *args[])$/;"	f
+xsh_netinfo	shell/xsh_netinfo.c	/^shellcmd xsh_netinfo(int nargs, char *args[]) {$/;"	f
+xsh_pdump	shell/xsh_pdump.c	/^shellcmd xsh_pdump(int nargs, char *args[])$/;"	f
+xsh_ping	shell/xsh_ping.c	/^shellcmd xsh_ping(int nargs, char *args[])$/;"	f
+xsh_ps	shell/xsh_ps.c	/^shellcmd xsh_ps(int nargs, char *args[])$/;"	f
+xsh_rdstest	shell/xsh_rdstest.c	/^shellcmd xsh_rdstest(int nargs, char *args[])$/;"	f
+xsh_sendpkt	shell/xsh_sendpkt.c	/^shellcmd xsh_sendpkt(int nargs, char * args[]) {$/;"	f
+xsh_sleep	shell/xsh_sleep.c	/^shellcmd xsh_sleep(int nargs, char *args[])$/;"	f
+xsh_sp	shell/xsh_sp.c	/^shellcmd xsh_sp(int nargs, char *args[])$/;"	f
+xsh_udpdump	shell/xsh_udpdump.c	/^shellcmd xsh_udpdump(int nargs, char *args[])$/;"	f
+xsh_udpecho	shell/xsh_udpecho.c	/^shellcmd xsh_udpecho(int nargs, char *args[])$/;"	f
+xsh_udpeserver	shell/xsh_udpserver.c	/^shellcmd xsh_udpeserver(int nargs, char *args[])$/;"	f
+xsh_uptime	shell/xsh_uptime.c	/^shellcmd xsh_uptime(int nargs, char *args[])$/;"	f
+xtim2ntim	include/date.h	16;"	d
+yield	system/yield.c	/^syscall	yield(void)$/;"	f
+yy_accept	config/lex.yy.c	/^static yyconst flex_int16_t yy_accept[60] =$/;"	v	file:
+yy_at_bol	config/lex.yy.c	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:
+yy_base	config/lex.yy.c	/^static yyconst flex_uint16_t yy_base[62] =$/;"	v	file:
+yy_bs_column	config/lex.yy.c	/^    int yy_bs_column; \/**< The column count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_bs_lineno	config/lex.yy.c	/^    int yy_bs_lineno; \/**< The line count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_pos	config/lex.yy.c	/^	char *yy_buf_pos;		\/* current position in input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_size	config/lex.yy.c	/^	yy_size_t yy_buf_size;$/;"	m	struct:yy_buffer_state	file:
+yy_buffer_stack	config/lex.yy.c	/^static YY_BUFFER_STATE * yy_buffer_stack = 0; \/**< Stack as an array. *\/$/;"	v	file:
+yy_buffer_stack_max	config/lex.yy.c	/^static size_t yy_buffer_stack_max = 0; \/**< capacity of stack. *\/$/;"	v	file:
+yy_buffer_stack_top	config/lex.yy.c	/^static size_t yy_buffer_stack_top = 0; \/**< index of top of stack. *\/$/;"	v	file:
+yy_buffer_state	config/lex.yy.c	/^struct yy_buffer_state$/;"	s	file:
+yy_buffer_status	config/lex.yy.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:
+yy_c_buf_p	config/lex.yy.c	/^static char *yy_c_buf_p = (char *) 0;$/;"	v	file:
+yy_ch_buf	config/lex.yy.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_chk	config/lex.yy.c	/^static yyconst flex_int16_t yy_chk[99] =$/;"	v	file:
+yy_create_buffer	config/lex.yy.c	/^    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )$/;"	f
+yy_def	config/lex.yy.c	/^static yyconst flex_int16_t yy_def[62] =$/;"	v	file:
+yy_delete_buffer	config/lex.yy.c	/^    void yy_delete_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_did_buffer_switch_on_eof	config/lex.yy.c	/^static int yy_did_buffer_switch_on_eof;$/;"	v	file:
+yy_ec	config/lex.yy.c	/^static yyconst YY_CHAR yy_ec[256] =$/;"	v	file:
+yy_fatal_error	config/lex.yy.c	/^static void yy_fatal_error (yyconst char* msg )$/;"	f	file:
+yy_fill_buffer	config/lex.yy.c	/^	int yy_fill_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_flex_debug	config/lex.yy.c	/^int yy_flex_debug = 0;$/;"	v
+yy_flex_strlen	config/lex.yy.c	/^static int yy_flex_strlen (yyconst char * s )$/;"	f	file:
+yy_flex_strncpy	config/lex.yy.c	/^static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )$/;"	f	file:
+yy_flush_buffer	config/lex.yy.c	/^    void yy_flush_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_get_next_buffer	config/lex.yy.c	/^static int yy_get_next_buffer (void)$/;"	f	file:
+yy_get_previous_state	config/lex.yy.c	/^    static yy_state_type yy_get_previous_state (void)$/;"	f	file:
+yy_hold_char	config/lex.yy.c	/^static char yy_hold_char;$/;"	v	file:
+yy_init	config/lex.yy.c	/^static int yy_init = 0;		\/* whether we need to initialize *\/$/;"	v	file:
+yy_init_buffer	config/lex.yy.c	/^    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )$/;"	f	file:
+yy_init_globals	config/lex.yy.c	/^static int yy_init_globals (void)$/;"	f	file:
+yy_input_file	config/lex.yy.c	/^	FILE *yy_input_file;$/;"	m	struct:yy_buffer_state	file:
+yy_is_interactive	config/lex.yy.c	/^	int yy_is_interactive;$/;"	m	struct:yy_buffer_state	file:
+yy_is_our_buffer	config/lex.yy.c	/^	int yy_is_our_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_last_accepting_cpos	config/lex.yy.c	/^static char *yy_last_accepting_cpos;$/;"	v	file:
+yy_last_accepting_state	config/lex.yy.c	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
+yy_load_buffer_state	config/lex.yy.c	/^static void yy_load_buffer_state  (void)$/;"	f	file:
+yy_meta	config/lex.yy.c	/^static yyconst YY_CHAR yy_meta[27] =$/;"	v	file:
+yy_n_chars	config/lex.yy.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:
+yy_n_chars	config/lex.yy.c	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
+yy_new_buffer	config/lex.yy.c	318;"	d	file:
+yy_nxt	config/lex.yy.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:
+yy_nxt	config/lex.yy.c	/^static yyconst flex_uint16_t yy_nxt[99] =$/;"	v	file:
+yy_reduce_print	config/y.tab.c	/^yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)$/;"	f	file:
+yy_scan_buffer	config/lex.yy.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f
+yy_scan_bytes	config/lex.yy.c	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )$/;"	f
+yy_scan_string	config/lex.yy.c	/^YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )$/;"	f
+yy_set_bol	config/lex.yy.c	330;"	d	file:
+yy_set_interactive	config/lex.yy.c	320;"	d	file:
+yy_size_t	config/lex.yy.c	/^typedef size_t yy_size_t;$/;"	t	file:
+yy_size_t	config/y.tab.c	/^typedef int yy_size_t;$/;"	t	file:
+yy_stack_print	config/y.tab.c	/^yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)$/;"	f	file:
+yy_start	config/lex.yy.c	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	file:
+yy_state_type	config/lex.yy.c	/^typedef int yy_state_type;$/;"	t	file:
+yy_switch_to_buffer	config/lex.yy.c	/^    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )$/;"	f
+yy_symbol_print	config/y.tab.c	/^yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	file:
+yy_symbol_value_print	config/y.tab.c	/^yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	file:
+yy_trans_info	config/lex.yy.c	/^struct yy_trans_info$/;"	s	file:
+yy_try_NUL_trans	config/lex.yy.c	/^    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )$/;"	f	file:
+yy_verify	config/lex.yy.c	/^	flex_int32_t yy_verify;$/;"	m	struct:yy_trans_info	file:
+yyalloc	config/lex.yy.c	/^void *yyalloc (yy_size_t  size )$/;"	f
+yyalloc	config/y.tab.c	/^union yyalloc$/;"	u	file:
+yychar	config/y.tab.c	/^int yychar;$/;"	v
+yycheck	config/y.tab.c	/^static const yytype_int8 yycheck[] =$/;"	v	file:
+yyclearin	config/y.tab.c	708;"	d	file:
+yyconst	config/lex.yy.c	106;"	d	file:
+yyconst	config/lex.yy.c	108;"	d	file:
+yydebug	config/y.tab.c	/^int yydebug;$/;"	v
+yydefact	config/y.tab.c	/^static const yytype_uint8 yydefact[] =$/;"	v	file:
+yydefgoto	config/y.tab.c	/^static const yytype_int8 yydefgoto[] =$/;"	v	file:
+yydestruct	config/y.tab.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	file:
+yyensure_buffer_stack	config/lex.yy.c	/^static void yyensure_buffer_stack (void)$/;"	f	file:
+yyerrok	config/y.tab.c	707;"	d	file:
+yyerror	config/y.tab.c	/^void yyerror(char *s) {$/;"	f
+yyfree	config/lex.yy.c	/^void yyfree (void * ptr )$/;"	f
+yyget_debug	config/lex.yy.c	/^int yyget_debug  (void)$/;"	f
+yyget_in	config/lex.yy.c	/^FILE *yyget_in  (void)$/;"	f
+yyget_leng	config/lex.yy.c	/^yy_size_t yyget_leng  (void)$/;"	f
+yyget_lineno	config/lex.yy.c	/^int yyget_lineno  (void)$/;"	f
+yyget_out	config/lex.yy.c	/^FILE *yyget_out  (void)$/;"	f
+yyget_text	config/lex.yy.c	/^char *yyget_text  (void)$/;"	f
+yyin	config/lex.yy.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yyinput	config/lex.yy.c	/^    static int yyinput (void)$/;"	f	file:
+yyleng	config/lex.yy.c	/^yy_size_t yyleng;$/;"	v
+yyless	config/lex.yy.c	1728;"	d	file:
+yyless	config/lex.yy.c	1729;"	d	file:
+yyless	config/lex.yy.c	181;"	d	file:
+yylex_destroy	config/lex.yy.c	/^int yylex_destroy  (void)$/;"	f
+yylineno	config/lex.yy.c	/^int yylineno = 1;$/;"	v
+yylval	config/y.tab.c	/^YYSTYPE yylval;$/;"	v
+yymore	config/lex.yy.c	496;"	d	file:
+yynerrs	config/y.tab.c	/^int yynerrs;$/;"	v
+yyout	config/lex.yy.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yypact	config/y.tab.c	/^static const yytype_int8 yypact[] =$/;"	v	file:
+yypact_value_is_default	config/y.tab.c	610;"	d	file:
+yyparse	config/y.tab.c	/^yyparse (void)$/;"	f
+yypgoto	config/y.tab.c	/^static const yytype_int8 yypgoto[] =$/;"	v	file:
+yypop_buffer_state	config/lex.yy.c	/^void yypop_buffer_state (void)$/;"	f
+yypush_buffer_state	config/lex.yy.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer )$/;"	f
+yyr1	config/y.tab.c	/^static const yytype_uint8 yyr1[] =$/;"	v	file:
+yyr2	config/y.tab.c	/^static const yytype_uint8 yyr2[] =$/;"	v	file:
+yyrealloc	config/lex.yy.c	/^void *yyrealloc  (void * ptr, yy_size_t  size )$/;"	f
+yyrestart	config/lex.yy.c	/^    void yyrestart  (FILE * input_file )$/;"	f
+yyrline	config/y.tab.c	/^static const yytype_uint8 yyrline[] =$/;"	v	file:
+yyset_debug	config/lex.yy.c	/^void yyset_debug (int  _bdebug )$/;"	f
+yyset_in	config/lex.yy.c	/^void yyset_in (FILE *  _in_str )$/;"	f
+yyset_lineno	config/lex.yy.c	/^void yyset_lineno (int  _line_number )$/;"	f
+yyset_out	config/lex.yy.c	/^void yyset_out (FILE *  _out_str )$/;"	f
+yyss_alloc	config/y.tab.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:
+yystos	config/y.tab.c	/^static const yytype_uint8 yystos[] =$/;"	v	file:
+yystpcpy	config/y.tab.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	file:
+yystpcpy	config/y.tab.c	909;"	d	file:
+yystrlen	config/y.tab.c	/^yystrlen (const char *yystr)$/;"	f	file:
+yystrlen	config/y.tab.c	893;"	d	file:
+yysyntax_error	config/y.tab.c	/^yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,$/;"	f	file:
+yytable	config/y.tab.c	/^static const yytype_uint8 yytable[] =$/;"	v	file:
+yytable_value_is_error	config/y.tab.c	615;"	d	file:
+yyterminate	config/lex.yy.c	647;"	d	file:
+yytext	config/lex.yy.c	/^char *yytext;$/;"	v
+yytext_ptr	config/lex.yy.c	354;"	d	file:
+yytext_ptr	config/lex.yy.c	356;"	d	file:
+yytname	config/y.tab.c	/^static const char *const yytname[] =$/;"	v	file:
+yytnamerr	config/y.tab.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	file:
+yytokentype	config/y.tab.c	/^  enum yytokentype$/;"	g	file:
+yytoknum	config/y.tab.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	file:
+yytranslate	config/y.tab.c	/^static const yytype_uint8 yytranslate[] =$/;"	v	file:
+yytype_int16	config/y.tab.c	/^typedef YYTYPE_INT16 yytype_int16;$/;"	t	file:
+yytype_int16	config/y.tab.c	/^typedef short int yytype_int16;$/;"	t	file:
+yytype_int8	config/y.tab.c	/^typedef YYTYPE_INT8 yytype_int8;$/;"	t	file:
+yytype_int8	config/y.tab.c	/^typedef signed char yytype_int8;$/;"	t	file:
+yytype_uint16	config/y.tab.c	/^typedef YYTYPE_UINT16 yytype_uint16;$/;"	t	file:
+yytype_uint16	config/y.tab.c	/^typedef unsigned short int yytype_uint16;$/;"	t	file:
+yytype_uint8	config/y.tab.c	/^typedef YYTYPE_UINT8 yytype_uint8;$/;"	t	file:
+yytype_uint8	config/y.tab.c	/^typedef unsigned char yytype_uint8;$/;"	t	file:
+yyunput	config/lex.yy.c	/^    static void yyunput (int c, char * yy_bp )$/;"	f	file:
+yyvs_alloc	config/y.tab.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:
+z	include/dns.h	/^		byte	z:3;		\/* Reserved, must be 0		*\/$/;"	m	struct:dnspkt::__anon13
+zero	include/icmpv6.h	/^    byte    zero[3];$/;"	m	struct:pseudoHdr

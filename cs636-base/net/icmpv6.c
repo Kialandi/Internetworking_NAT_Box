@@ -48,6 +48,13 @@ void icmpv6_in(struct netpacket * pkt) {
             break;
         case NEIGHBS:
             print6(pkt);
+            // kprintf("\n\n received solicitation from neighbor \n\n");
+            nsolicit_handler(pkt);
+            break;
+        case NEIGHBA:
+            kprintf("\n\n nads received \n\n ");
+            //print6(pkt);
+            break;
         default:
             kprintf("Unknown ICMP type: %02X\n", msg->type);
             break;

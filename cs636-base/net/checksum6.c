@@ -1,7 +1,7 @@
 #include <xinu.h>
 
 /*
- * ptr increment in 1 byte  = 16 bits. each increment
+ * ptr increment in 1 byte  = 8 bits. each increment
  * provides one  bit segment.
  *
  * additionally, the one's complement sum is commutative
