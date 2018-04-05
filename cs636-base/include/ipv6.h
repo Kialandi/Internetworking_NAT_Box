@@ -6,6 +6,7 @@
 #define TCP_HDR_LEN	20
 #define IPV6_FRAG       0x2C
 #define NEXT_HEADER_FRAGMENT 0X2C  /*44 : next header value of ipv6 header to indicate next header is fragment header*/
+#define NEXT_HEADER_NONE 0x9E /* indicate real payload is right after this header, no next header any more */
 
 #define IPV6_ADDRBITS   128
 #define	IPV6_ASIZE	    16		/* Bytes in an IP address	*/

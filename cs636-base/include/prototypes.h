@@ -1,4 +1,4 @@
-extern status sendto(byte*, byte, char*, uint32);
+extern status sendto(byte*, byte, char*, uint16);
 extern void    fillEthernet(struct netpacket *, byte *);
 extern void    fillIPdatagram(struct base_header *, byte *, byte *, uint16, byte);
 extern void print_ipv6_info();
