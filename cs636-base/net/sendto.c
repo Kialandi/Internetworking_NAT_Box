@@ -1,4 +1,5 @@
 #include<xinu.h>
+
 uint32 getIdentif();
 uint16 checkLength(uint16 payload_len);
 void writeToInterface(char*  pkt);
@@ -78,7 +79,8 @@ status sendto(byte* dest_ipv6, byte next_header, char* buffer, uint16 buf_len) {
 } 
 
 void fragmentDatagram(){
-	MTU = 1500;// change it later
+//	MTU = 1500;// change it later
+	kprintf("MTU: %d\n", MTU);
 	if (datagram_info.headers_len + datagram_info.payload_len > MTU) {
 		// fragment the datagram into multiple packet
 		 
@@ -114,15 +116,6 @@ void fragmentDatagram(){
 			sendFragment(payload_len_ipv6_header, payload_len, identif, frag_offset, next_header_in_fragment_header, M_flag);
 			frag_offset += payload_len;
 		}	
-
-
-		// copy headers since currently we only have ipv6 base header
-		// insert fragment header
-		// calculate payload length to be a  multiple of 8 bytes.
-		// copy payload
-
-		// fillEthnet header
-		// write to interface
 
  	} else {
 
@@ -231,11 +224,13 @@ char* fillUDPHeader(struct udp_header * udp_header, uint16 src_port, uint16 dest
 }
 
 uint32 getIdentif(){
-	/*
-	srand(time(0));
+	
+	srand(getticks());
 	int32 res = rand();
-	*/
+	
+	/*
 	uint32 res = (uint32) rand();
+	*/
 	kprintf("identif: %d\n", res);
 	return res;
 }

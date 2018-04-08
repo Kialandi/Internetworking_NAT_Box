@@ -135,10 +135,6 @@ syscall ipv6_init() {
 	kprintf("in ipv6_init ifacer macbcast");
 	print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
-	kprintf("sendto...........\n");
-	char data[2000];
-	// get dest ipv6	 
-	sendto(allrIPmulti, IPV6_UDP,data, 2000);
     }
     return OK;
 }
