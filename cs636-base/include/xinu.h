@@ -11,7 +11,6 @@
 #include <bufpool.h>
 #include <hpet.h>
 #include <clock.h>
-#include <fwdipv6.h>
 #include <ports.h>
 #include <uart.h>
 #include <tty.h>
@@ -28,6 +27,8 @@
 #include <datagram.h>
 #include <ip.h>
 #include <arp.h>
+#include <ipv6.h>
+#include <fwdipv6.h>
 #include <udp.h>
 #include <dhcp.h>
 #include <icmp.h>
