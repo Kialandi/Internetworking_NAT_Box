@@ -1,5 +1,6 @@
 
 #define MAXFWDTABENTRIES    50
+#define MAXNATENTRIES    50
 
 //fwd table in charge of figuring out what next hop is
 struct	fwdTabEntry {			/* entry in the forwarding table	*/
@@ -34,4 +35,6 @@ struct natEntry {
 
 extern	struct fwdTabEntry *    fwdTab[];	/* forwarding table	*/
 extern	struct NDCacheEntry *   NDTab[];	/* forwarding table	*/
-extern	struct fwdTabEntry *    natTab[];	/* forwarding table	*/
+extern	struct natEntry        natTab[];	/* forwarding table	*/
+
+

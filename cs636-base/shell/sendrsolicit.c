@@ -2,14 +2,17 @@
 #include <stdio.h>
 
 shellcmd sendrsolicit(int nargs, char * args[]) {
-    printf("Sending rsolicit...\n");
+    kprintf("\n");
     if (nargs != 1) {
         //print usage
         printf("USAGE: sendrsolicit\n");
         return 0;
     }
     
-    sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
+    if (!host) //nat goes to all routers
+        sendipv6pkt(ROUTERS, allrMACmulti);
+    else //hosts go to your own bcast
+        sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     
     return 1;
 }

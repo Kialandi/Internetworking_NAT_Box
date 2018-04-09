@@ -53,7 +53,8 @@ void icmpv6_in(struct netpacket * pkt) {
             
             break;
         default:
-            kprintf("Unknown ICMP type: %02X\n", msg->type);
+            kprintf("Unknown ICMP type: 0x%02X\n", msg->type);
+            print6(pkt);
             break;
     }
 }
