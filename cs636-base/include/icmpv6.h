@@ -23,6 +23,7 @@
 //
 #define  IPLEN 16
 
+#define ECHOSIZE        sizeof(icmpv6echo)
 #define PSEUDOLEN       sizeof(pseudoHdr) 
 #define RSOLSIZE        sizeof(rsolicit)
 #define RADVERTSIZE     sizeof(radvert)
@@ -35,6 +36,7 @@
 
 /* ICMP Msg types */
 
+#define ECHO        0x80    //translates to 128
 #define ROUTERS     0x85    //translates to 133
 #define ROUTERA     0x86
 #define NEIGHBS     0x87
@@ -164,5 +166,14 @@ typedef struct pseudoHdr{
     byte    next_header;
     byte    icmppayload[0];
 }pseudoHdr;
+
+typedef struct icmpv6echo{
+    byte type;
+    byte code;
+    uint16 checksum;
+    uint16 identifier;
+    uint16 seqNumber;
+    byte body[0]; //gives easy access to message body
+} icmpv6echo;
 
 

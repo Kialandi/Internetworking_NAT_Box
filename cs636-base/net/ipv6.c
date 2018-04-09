@@ -25,11 +25,10 @@ void    ipv6_in (
         freebuf((char *) pkt);
         return;
     }
+    //kprintf("Printing incoming ipv6 pkt\n");
     //print6(pkt);
 
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    //void * payload = (void *) ((char *) ipdatagram + IPV6_HDR_LEN);
-    //uint32 payload_len = ntohs(ipdatagram->payload_len);
     //kprintf("received ipv6 pkt from iface: %d\n", pkt->net_iface);
 
     switch (ipdatagram->next_header) {
@@ -37,7 +36,6 @@ void    ipv6_in (
         case IPV6_ICMP:
             //kprintf("ipv6icmp found\n");
             //payload_hexdump((char *) ad, 64);
-            //icmpv6_in(ipdatagram);
             icmpv6_in(pkt);
             break;
 	case NEXT_HEADER_FRAGMENT:
@@ -71,16 +69,8 @@ syscall ipv6_init() {
 
     //no ipv6 address yet
     hasIPv6Addr = 0;
-    print_ipv6_info(); /*
-                          kprintf("\n======================= IPv6 addresses =======================\n\n");
-                          kprintf("Link local address : ");
-                          print_ipv6_addr(link_local);
-                          kprintf("SNM address        : ");
-                          print_ipv6_addr(snm_addr);
-                          kprintf("MAC SNM address    : ");
-                          print_mac_addr(mac_snm);
-                          kprintf("\n==============================================================\n");
-                          */
+    print_ipv6_info(); 
+    
     //tell hardware to listen to MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 

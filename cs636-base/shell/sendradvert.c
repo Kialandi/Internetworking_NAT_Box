@@ -2,11 +2,11 @@
 #include <stdio.h>
 
 shellcmd sendradvert(int nargs, char * args[]) {
+    kprintf("\n");
     if (!hasIPv6Addr) {
         kprintf("No prefix found. Please solicit first!\n");
         return 0;
     }
-    printf("Sending radvert...\n");
     if (nargs != 1) {
         //print usage
         printf("USAGE: sendradvert\n");
@@ -14,6 +14,7 @@ shellcmd sendradvert(int nargs, char * args[]) {
     }
     
     if (!host) {
+        kprintf("NAT: Multicasting to both interfaces\n");
         //broadcast to both interfaces
         sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
         sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);

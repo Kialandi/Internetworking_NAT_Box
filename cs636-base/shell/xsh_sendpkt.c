@@ -2,10 +2,9 @@
 #include <stdio.h>
 
 void printPacket(struct netpacket * );
-int32 charToHex(byte *, char *);
 
 shellcmd xsh_sendpkt(int nargs, char * args[]) {
-    printf("Sending packet...\n");
+    printf("\nSending packet...\n");
     if (nargs != 3) {
         //print usage
         printf("USAGE: sendpkt <destination> <message>\n");
@@ -59,40 +58,6 @@ shellcmd xsh_sendpkt(int nargs, char * args[]) {
     write(ETHER0, (char *) packet, PACKLEN);
     //printPacket(packet);
 
-    return 0;
-}
-
-int32 charToHex(byte * buf, char * string) {
-
-    while (*string != 0) {
-        //printf("char: %c\n", *string);
-        if (*string == ':') {
-            string++;
-            continue;
-        }
-        if (*string >= '0' && *string <= '9')
-            *buf = (*string - '0') << 4;
-        else if (*string >= 'A' && *string <= 'Z')
-            *buf = (*string - 'A' + 10) << 4;
-        else if (*string >= 'a' && *string <= 'z')
-            *buf = (*string - 'a' + 10) << 4;
-        else
-            return 1;
-        
-        string++;
-
-        if (*string >= '0' && *string <= '9')
-            *buf |= *string - '0';
-        else if (*string >= 'A' && *string <= 'Z')
-            *buf |= *string - 'A' + 10;
-        else if (*string >= 'a' && *string <= 'z')
-            *buf |= *string - 'a' + 10;
-        else
-            return 1;
-        
-        string++;
-        buf++;
-    }
     return 0;
 }
 
