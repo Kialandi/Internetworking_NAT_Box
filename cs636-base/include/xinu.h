@@ -23,7 +23,6 @@
 #include <lfilesys.h>
 #include <ether.h>
 #include <net.h>
-#include <ipv6.h>
 #include <datagram.h>
 #include <ip.h>
 #include <arp.h>

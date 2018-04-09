@@ -13,7 +13,7 @@ char* fillUDPHeader(struct udp_header * udp_header, uint16 src_port, uint16 dest
 char*  fillPreFragmentHeader(char* pkt, byte* dest_ipv6, byte next_header);
 
 
-status sendto(byte* dest_ipv6, byte next_header, char* buffer, uint16 buf_len) {
+status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) {
 
 // TODO:construct original packet first.  I am not sure whether it is necessary to construct original packet. The only concern is checksum in UDP or TCP is the checksum of  the fragmented packet or the checksum of the original packet.
 	// check buf_len to decide whether fragment or not 
@@ -29,12 +29,13 @@ status sendto(byte* dest_ipv6, byte next_header, char* buffer, uint16 buf_len) {
 	}
 	kprintf("MTU: %d\n", MTU);
 
-	struct base_header ipv6_header;
-        fillIPdatagram( &ipv6_header, link_local, dest_ipv6, buf_len, next_header);  // assuming buffer already includes upper layer header 
+	struct netpacket netpkt;
+    struct base_header * ipv6_header = (struct base_header *) netpkt.net_payload;
+        fillIPdatagram(&netpkt, link_local, dest_ipv6, buf_len, next_header);  // assuming buffer already includes upper layer header 
 	kprintf("after filling ipv6 header before fragment:\n");
-	payload_hexdump(&ipv6_header, IPV6_HDR_LEN);
+	payload_hexdump((char *) ipv6_header, IPV6_HDR_LEN);
 	
-	fillDatagram(&ipv6_header, IPV6_HDR_LEN, buffer, buf_len);
+	fillDatagram((byte *) ipv6_header, IPV6_HDR_LEN, buffer, buf_len);
 
         fragmentDatagram();
 	//if (MTU > 0 && buf_len > MTU - IPV6_HDR_LEN - pro_hdr_len) { // 20 is IP header len
@@ -76,6 +77,7 @@ status sendto(byte* dest_ipv6, byte next_header, char* buffer, uint16 buf_len) {
 		//sendPacket(dest_ipv6, next_header, buffer, buf_len, FALSE);
 	} 
  */ 
+    return OK;
 } 
 
 void fragmentDatagram(){
@@ -163,12 +165,12 @@ void sendFragment(uint16 payload_len_ipv6_header, uint16 payload_len, uint32 ide
 	char * payload = fillFragmentHeader(frag_header, identif, next_header_in_fragment_header, frag_offset, M_flag);
 
 	// copy payload
-	fillPayload(payload, &datagram.payload, payload_len);
+	fillPayload(payload, (char * ) &datagram.payload, payload_len);
 	
         //TODO: get mac of dest_ipv6
 	
 	// fillEthnet header  
-	fillEthernet((char *)pkt, allrMACmulti); // send to netbox for now
+	fillEthernet(pkt, allrMACmulti); // send to netbox for now
 	kprintf("filling Ethernet header:\n");
 	payload_hexdump((char*)pkt, ETH_HDR_LEN);
 	// write to interface
@@ -242,9 +244,9 @@ char*  fillPreFragmentHeader(char * pkt, byte* dest_ipv6, byte next_header) {
 
        // fill Ethenet header	
  	//fillEthernet((char *)pkt, if_tab[1].if_macbcast);
-	fillEthernet((char *)pkt, allrMACmulti);
+	fillEthernet((struct netpacket *) pkt, allrMACmulti);
        // fill IP header
-        fillIPdatagram((char*)pkt + ETH_HDR_LEN, link_local, dest_ipv6, MTU - ETH_HDR_LEN -IPV6_HDR_LEN, next_header);
+        fillIPdatagram((struct netpacket *) pkt, link_local, dest_ipv6, MTU - ETH_HDR_LEN -IPV6_HDR_LEN, next_header);
 	kprintf("======printing preFragment  header: =========\n");
 	payload_hexdump((char*) pkt, ETH_HDR_LEN + IPV6_HDR_LEN);
 	return (char*) pkt + ETH_HDR_LEN + IPV6_HDR_LEN;	

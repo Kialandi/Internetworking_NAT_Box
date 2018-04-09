@@ -40,7 +40,7 @@ void    ipv6_in (
             break;
 	case NEXT_HEADER_FRAGMENT:
 		kprintf("A fragment packet received\n");
-		hexdump(pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);		
+		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);		
         	break;
 	default:
             kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);

@@ -8,7 +8,7 @@ void    fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
 void    fill_dest_ip_all_routers(byte* dest) ;
 void    fill_dest_mac_all_router(byte* dest) ;
 void    fillEthernet(struct netpacket *, byte *);
-void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16);
+void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16, byte);
 void 	fillICMP(struct netpacket * pkt, byte type, uint8* option_types, uint8 option_types_length);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
@@ -45,7 +45,7 @@ status sendipv6pkt(byte type, byte * dest) {
             memset(src_ip, NULLCH, IPV6_ASIZE);
 
             fillEthernet(packet, dest);
-            fillIPdatagram(packet, src_ip, allrIPmulti, RSOLSIZE);
+            fillIPdatagram(packet, src_ip, allrIPmulti, RSOLSIZE, IPV6_ICMP);
             fillICMP(packet, ROUTERS, NULL, 0);
 
             if (!rsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
@@ -70,7 +70,7 @@ status sendipv6pkt(byte type, byte * dest) {
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RADVERTSIZE + totalOptLen;
 
             fillEthernet(packet, dest);
-            fillIPdatagram(packet, link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
+            fillIPdatagram(packet, link_local, allnIPmulti, RADVERTSIZE + totalOptLen, IPV6_ICMP);
             fillICMP(packet, ROUTERA, option_types, 3);
 
             if (!radvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
@@ -89,7 +89,7 @@ status sendipv6pkt(byte type, byte * dest) {
             //TODO: add fwding table and nat table
             //for now, send to default router
             fillEthernet(packet, router_link_addr);
-            fillIPdatagram(packet, ipv6_addr, dest, ECHOSIZE);
+            fillIPdatagram(packet, ipv6_addr, dest, ECHOSIZE, IPV6_ICMP);
             fillICMP(packet, ECHO, NULL, 0);
             break;
     }
