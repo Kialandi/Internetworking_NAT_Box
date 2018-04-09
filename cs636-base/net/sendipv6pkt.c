@@ -1,22 +1,23 @@
 #include <xinu.h>
-uint8 fill_option_prefix(void * pkt);
-uint8 fill_option_MTU(void * pkt) ;
-uint8 fill_option_one(void * pkt) ;
-void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
 
-void fill_dest_ip_all_routers(byte* dest) ;
-void fill_dest_mac_all_router(byte* dest) ;
+uint8   fill_option_prefix(void * pkt);
+uint8   fill_option_MTU(void * pkt) ;
+uint8   fill_option_one(void * pkt) ;
+void    fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
+
+void    fill_dest_ip_all_routers(byte* dest) ;
+void    fill_dest_mac_all_router(byte* dest) ;
 void    fillEthernet(struct netpacket *, byte *);
-void    fillIPdatagram(struct base_header *, byte *, byte *, uint16);
-void 	fillICMP(void *pkt, byte type, uint8* option_types, uint8 option_types_length);
+void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16);
+void 	fillICMP(struct netpacket * pkt, byte type, uint8* option_types, uint8 option_types_length);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
 void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest, 
         void * pkt, int32 pktLen) {
-    
+
     //zero out the buffer
     memset(pseudo, NULLCH, PSEUDOLEN + pktLen);
-    
+
     //copy the src and destination
     memcpy(pseudo->src, src, IPV6_ASIZE);
     memcpy(pseudo->dest, dest, IPV6_ASIZE);
@@ -28,170 +29,85 @@ void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
     memcpy(pseudo->icmppayload, pkt, pktLen);
 }
 
-/*
-   void    fillICMP(struct rsolicit * pkt) {
-   pkt->type = ROUTERS;  
-//assumed code, checksum, and reserved were all set to 0 before coming in
-void * pseudo = (void *) getmem(PSEUDOLEN);
-makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
-
-uint16 sum = checksumv6(pseudo, PSEUDOLEN);
-//kprintf("checksum: %d\n", sum);
-pkt->checksum = htons(sum);
-freemem(pseudo, PSEUDOLEN);
-}
-*/
-void    fillICMP(void * pkt_icmp, byte type, uint8* option_types, uint8 option_types_length) {
-
-    if (type == ROUTERS){ 
-
-        struct rsolicit * pkt = pkt_icmp;
-        pkt->type = type;
-        //assumed code, checksum, and reserved were all set to 0 before coming in
-        void * pseudo = (void *) getmem(PSEUDOLEN + RSOLSIZE);
-
-        byte src[IPV6_ASIZE];
-
-        //zero the buffers
-        memset(src, NULLCH, IPV6_ASIZE);
-
-        makePseudoHdr((struct pseudoHdr *) pseudo, src, allrIPmulti, (void *) pkt, RSOLSIZE);
-
-        uint16 sum = checksumv6(pseudo, PSEUDOLEN + RSOLSIZE);
-        pkt->checksum = htons(sum);
-        freemem(pseudo, PSEUDOLEN + RSOLSIZE);
-
-    } else if (type == ROUTERA) {
-        //kprintf("Filling router advert icmp\n");
-        struct radvert * pkt = pkt_icmp;
-        uint16 totalOptLen = 48;
-        
-        //copy from default router
-        memcpy(pkt, &radvert_from_router, sizeof(struct radvert));
-        
-        //zero out the checksum after copying
-        pkt->checksum = 0;
-
-        /*
-        pkt->type = type;
-        pkt->code = 0;
-        pkt->curhoplim = 255;
-        pkt->m_o_res = 0;*/
-        
-        //might have to do stuff with code and curhoplimit
-        fillOptions((char*) pkt + RADVERTSIZE,  option_types, option_types_length);
-        
-        //assumed code, checksum, and reserved were all set to 0 before coming in
-        void * pseudo = (void *) getmem(PSEUDOLEN + RADVERTSIZE + totalOptLen);
-
-        //TODO: maybe have to change link local to your brand new ip address?
-        makePseudoHdr((struct pseudoHdr *) pseudo, link_local, allnIPmulti, (void *) pkt, RADVERTSIZE + totalOptLen);
-
-        uint16 sum = checksumv6(pseudo, PSEUDOLEN + RADVERTSIZE + totalOptLen);
-        pkt->checksum = htons(sum);
-        freemem(pseudo, PSEUDOLEN + RADVERTSIZE + totalOptLen);
-
-        //TODO: this is wrong to just copy, src and dest are all different
-        //need to recompute checksum
-
-        //memcpy(pkt, &radvert_from_router, sizeof(struct radvert));
-
-        //pkt->type = type; 
-        //why is this + 16? shouldn't it be size of radvert?
-
-        //use a different length + options
-        //void * pseudo = (void *) getmem(PSEUDOLEN);
-        //makePseudoHdr((struct pseudoHdr *) pseudo, pkt);
-
-        //TODO: pseudo + options
-        //uint16 sum = checksumv6(pseudo, PSEUDOLEN);
-        //pkt->checksum = htons(sum);
-        //freemem(pseudo, PSEUDOLEN);
-    }
-
-}
-
-status  sendipv6pkt(byte type, byte * dest) {
-    struct netpacket * packet;
+status sendipv6pkt(byte type, byte * dest) {
+    struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
+    memset((char *) packet, NULLCH, PACKLEN);
     uint32 len;
-    uint16 totalOptLen = 0;
-
+    
     switch (type) {
         case ROUTERS:
-            
             kprintf("Sending Router Solicitation...\n");
 
             //entire packet length
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RSOLSIZE;
-            packet = (struct netpacket *) getbuf(ipv6bufpool);
-            memset((char *) packet, NULLCH, len);
-
-            //fillEthernet(packet, allrMACmulti);
-            fillEthernet(packet, dest);
-
             //unspecified address
             byte src_ip[IPV6_ASIZE];
             memset(src_ip, NULLCH, IPV6_ASIZE);
 
-            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), src_ip, allrIPmulti, RSOLSIZE);
-
-            fillICMP((struct rsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERS, NULL, 0);
-
-            //fire off packet
-            if( write(ETHER0, (char *) packet, len) == SYSERR) {
-                kprintf("THE WORLD IS BURNING\n");
-                kill(getpid());
-            }
+            fillEthernet(packet, dest);
+            fillIPdatagram(packet, src_ip, allrIPmulti, RSOLSIZE);
+            fillICMP(packet, ROUTERS, NULL, 0);
 
             if (!rsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
-                kprintf("Invalid router solicitation going out!\n");
+                kprintf("Invalid router solicitation constructed, aborting!\n");
+                freebuf((char *) packet);
+                return 0;
             }
-            
-            //kprintf("OUTGOING PKT PRINTING\n");
-            //print6(packet);
-            //kprintf("OUTGOING PKT PRINTING\n");
-
-            freebuf((char *) packet);
-            return 1;
+            break;
 
         case ROUTERA:
             if (host) {
                 kprintf("Hosts cannot send router advertisements!\n");
+                freebuf((char *) packet);
                 return 0;
             }
-            totalOptLen = 48;
-            kprintf("\nSending Router Advertisement...\n");
+            kprintf("Sending Router Advertisement...\n");
+
+            uint16 totalOptLen = 48;
+            uint8 option_types[3] = {1, 5, 3};
 
             //entire packet length
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RADVERTSIZE + totalOptLen;
-            packet = (struct netpacket *) getbuf(ipv6bufpool);
-            memset((char*) packet, NULLCH, len);
-            
+
             fillEthernet(packet, dest);
-            
-            fillIPdatagram((struct base_header *) ((char *) packet + ETH_HDR_LEN), link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
+            fillIPdatagram(packet, link_local, allnIPmulti, RADVERTSIZE + totalOptLen);
+            fillICMP(packet, ROUTERA, option_types, 3);
 
-            uint8 option_types[3] = {1, 5, 3};
-            fillICMP((struct radvert *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN), ROUTERA, option_types, 3);
-            
-            if( write(ETHER0, (char *) packet, len) == SYSERR) {
-                kprintf("THE WORLD IS BURNING\n");
-                kill(getpid());
-            }
-/*
-            kprintf("OUTGOING PKT PRINTING\n");
-            print6(packet);
-            kprintf("OUTGOING PKT PRINTING\n");
-  */
             if (!radvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
-                kprintf("Invalid router advert going out!\n");
+                kprintf("Invalid router advert constructed, aborting!\n");
+                freebuf((char *) packet);
+                return 0;
             }
+            break;
 
-            freebuf((char *) packet);
-            return 1;
+        case ECHO:     
+            kprintf("Sending echo...\n");
+
+            //entire packet length
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + ECHOSIZE;
+
+            //TODO: add fwding table and nat table
+            //for now, send to default router
+            fillEthernet(packet, router_link_addr);
+            fillIPdatagram(packet, ipv6_addr, dest, ECHOSIZE);
+            fillICMP(packet, ECHO, NULL, 0);
+            break;
     }
-    //reaching here is bad
-    return 0;
+
+    //fire off packet
+    if( write(ETHER0, (char *) packet, len) == SYSERR) {
+        kprintf("THE WORLD IS BURNING\n");
+        kill(getpid());
+    }
+
+    if (type == ECHO) {
+       kprintf("OUTGOING PKT PRINTING\n");
+       print6(packet);
+       kprintf("OUTGOING PKT DONE PRINTING\n");
+    }
+
+    freebuf((char *) packet);
+    return 1;
 }
 
 void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
@@ -246,13 +162,15 @@ uint8 fill_option_one(void * pkt) {
     return sizeof(struct option_one); // equal to length(1) * 8 bytes
 }
 
-void    fillEthernet(struct netpacket * pkt, byte* dest) {
+void fillEthernet(struct netpacket * pkt, byte* dest) {
     memcpy(pkt->net_dst, dest, ETH_ADDR_LEN);
     memcpy(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
     pkt->net_type = htons(ETH_IPv6);
 }
 
-void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, uint16 length) {
+void fillIPdatagram(struct netpacket * packet, byte* src_ip, byte* dest_ip, uint16 length) {
+    struct base_header * pkt = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
+
     pkt->info[0] = 0x60;
     pkt->info[1] = 0x00;
     pkt->info[2] = 0x00;
@@ -265,3 +183,53 @@ void    fillIPdatagram(struct base_header * pkt, byte* src_ip, byte* dest_ip, ui
     memcpy(pkt->src, src_ip, IPV6_ASIZE);
     memcpy(pkt->dest, dest_ip, IPV6_ASIZE); 
 }
+
+void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 option_types_length) {
+    struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
+    struct icmpv6general * pkt_icmp = (struct icmpv6general *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
+    pkt_icmp->type = type;
+    
+    uint32 pseudoSize = 0;
+    byte src[IPV6_ASIZE];
+    byte dest[IPV6_ASIZE];
+    memcpy(src, pkt_ip->src, IPV6_ASIZE);
+    memcpy(dest, pkt_ip->dest, IPV6_ASIZE); 
+
+    switch (type) {
+        case ROUTERS: ;//semicolon to get rid of pesky compiler error for labels
+            pseudoSize = PSEUDOLEN + RSOLSIZE;
+            break;
+
+        case ROUTERA: ;
+            uint16 totalOptLen = 48;
+
+            //copy from default router
+            memcpy(pkt_icmp, &radvert_from_router, RADVERTSIZE);
+            //zero out the checksum after copying
+            pkt_icmp->checksum = 0;
+            //handle options
+            fillOptions((char*) pkt_icmp + RADVERTSIZE,  option_types, option_types_length);
+            pseudoSize = PSEUDOLEN + RADVERTSIZE + totalOptLen;
+            break;
+
+        case ECHO: ;
+            struct icmpv6echo * echo_pkt = (struct icmpv6echo *) pkt_icmp;
+            uint16 x = 15;
+            echo_pkt->identifier = htons(x);
+            echo_pkt->seqNumber = htons(x);
+            pseudoSize = PSEUDOLEN + ECHOSIZE;
+            break;
+
+        default:
+            kprintf("fillICMP: invalid type\n");
+            return;
+            break;
+    }
+    //create pseudo header and compute checksum
+    void * pseudo = (void *) getmem(pseudoSize);
+    makePseudoHdr((struct pseudoHdr *) pseudo, src, dest, (void *) pkt_icmp, pseudoSize - PSEUDOLEN);
+    uint16 sum = checksumv6(pseudo, pseudoSize);
+    pkt_icmp->checksum = htons(sum);
+    freemem(pseudo, pseudoSize);
+}
+

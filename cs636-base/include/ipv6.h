@@ -26,7 +26,7 @@ struct base_header {
 };
 
 extern uint8    hasIPv6Addr;
-extern byte     ipv6_addr[];
+extern byte     ipv6_addr[];//you own global ip address
 extern byte     link_local[];
 extern byte     snm_addr[];
 extern byte     mac_snm[];
@@ -35,7 +35,7 @@ extern byte     allnMACmulti[];//All nodes MAC
 extern byte     allrIPmulti[];//All routers IP
 extern byte     allnIPmulti[];//All nodes IP
 extern bpid32   ipv6bufpool;
-extern byte 	router_link_addr[];//router's MAC address?
+extern byte 	router_link_addr[];//default router's MAC address?
 extern uint32	MTU;
 extern byte	prefix_default[];
 

@@ -1,7 +1,10 @@
+extern int32 charToHex(byte*, char *);
+
 extern void print_ipv6_info();
 extern uint8 match(byte *, byte *, uint32);
 extern struct fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);
-
+extern void makePseudoHdr(struct pseudoHdr *, byte *, byte *, void *, int32);
+ 
 //validation functions
 extern bool8 radvert_valid(struct base_header *);
 extern bool8 rsolicit_valid(struct base_header *);
