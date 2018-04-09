@@ -119,7 +119,13 @@ void fragmentDatagram(){
 
  	} else {
 
-		// send the packet
+		// send the packet directly
+
+		// copy datagram to packet
+
+		// fill Ethernet
+	
+		// write to interface
 	}
 	
 
