@@ -11,8 +11,8 @@ shellcmd ipv6info(int nargs, char *args[]) {
 		fprintf(stderr, "%s: no arguments allowed\n", args[0]);
 		return 1;
 	}
-    
+
     print_ipv6_info();
-	
+
     return 0;
 }

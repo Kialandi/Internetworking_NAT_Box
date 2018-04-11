@@ -12,7 +12,7 @@ void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16, byte);
 void 	fillICMP(struct netpacket * pkt, byte type, uint8* option_types, uint8 option_types_length);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
-void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest, 
+void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
         void * pkt, int32 pktLen) {
 
     //zero out the buffer
@@ -33,7 +33,8 @@ status sendipv6pkt(byte type, byte * dest) {
     struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
     memset((char *) packet, NULLCH, PACKLEN);
     uint32 len;
-    
+    uint16 totalOptLen;
+
     switch (type) {
         case ROUTERS:
             kprintf("Sending Router Solicitation...\n");
@@ -62,8 +63,8 @@ status sendipv6pkt(byte type, byte * dest) {
                 return 0;
             }
             kprintf("Sending Router Advertisement...\n");
+            totalOptLen = 48;
 
-            uint16 totalOptLen = 48;
             uint8 option_types[3] = {1, 5, 3};
 
             //entire packet length
@@ -80,7 +81,34 @@ status sendipv6pkt(byte type, byte * dest) {
             }
             break;
 
-        case ECHO:     
+        case NEIGHBS:
+            totalOptLen = 8;
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
+            fillEthernet(packet, dest);
+            fillIPdatagram(packet, link_local, snm_addr, NSOLSIZE + totalOptLen, IPV6_ICMP);
+            uint8 nopt[1] = {1};
+            fillICMP(packet, NEIGHBS, nopt,1);
+            //print6(packet);
+            if( write(ETHER0, (char *) packet, len) == SYSERR ) {
+                kprintf("THE WORLD IS BURNING\n");
+                kill(getpid());
+            }
+            break;
+
+        case NEIGHBA:
+            totalOptLen = 8;
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
+            fillEthernet(packet, dest);
+            fillIPdatagram(packet, link_local, snm_addr, NADSIZE + totalOptLen, IPV6_ICMP);
+            uint8 nadops[1] = {1};
+            fillICMP(packet, NEIGHBA, nadops, 1);
+            if( write(ETHER0, (char *) packet, len) == SYSERR ) {
+                kprintf("THE WORLD IS BURNING\n");
+                kill(getpid());
+            }
+            //print6(packet);
+            break;
+        case ECHO:
             kprintf("Sending echo...\n");
 
             //entire packet length
@@ -181,19 +209,20 @@ void fillIPdatagram(struct netpacket * packet, byte* src_ip, byte* dest_ip, uint
     pkt->hop_limit = 255;
 
     memcpy(pkt->src, src_ip, IPV6_ASIZE);
-    memcpy(pkt->dest, dest_ip, IPV6_ASIZE); 
+    memcpy(pkt->dest, dest_ip, IPV6_ASIZE);
 }
 
 void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 option_types_length) {
     struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
     struct icmpv6general * pkt_icmp = (struct icmpv6general *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
     pkt_icmp->type = type;
-    
+
     uint32 pseudoSize = 0;
     byte src[IPV6_ASIZE];
     byte dest[IPV6_ASIZE];
     memcpy(src, pkt_ip->src, IPV6_ASIZE);
-    memcpy(dest, pkt_ip->dest, IPV6_ASIZE); 
+    memcpy(dest, pkt_ip->dest, IPV6_ASIZE);
+    uint16 totalOptLen;
 
     switch (type) {
         case ROUTERS: ;//semicolon to get rid of pesky compiler error for labels
@@ -201,16 +230,37 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             break;
 
         case ROUTERA: ;
-            uint16 totalOptLen = 48;
+            totalOptLen = 48;
 
             //copy from default router
             memcpy(pkt_icmp, &radvert_from_router, RADVERTSIZE);
             //zero out the checksum after copying
             pkt_icmp->checksum = 0;
             //handle options
-            fillOptions((char*) pkt_icmp + RADVERTSIZE,  option_types, option_types_length);
+            fillOptions((char*) pkt_icmp + RADVERTSIZE,  option_types, totalOptLen);
             pseudoSize = PSEUDOLEN + RADVERTSIZE + totalOptLen;
             break;
+
+        case NEIGHBS: ;
+            totalOptLen = 8;
+            pkt_icmp->type = NEIGHBS;
+            pkt_icmp->code = 0;
+            pkt_icmp->checksum = 0;
+            memcpy((void *) pkt_icmp + 8, src, IPV6_ASIZE);
+            fillOptions((char *) pkt_icmp + NSOLSIZE, option_types, option_types_length);
+            pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;
+            break;
+
+        case NEIGHBA: ;
+            totalOptLen = 8;
+            pkt_icmp->type = NEIGHBA;
+            pkt_icmp->code = 0;
+            pkt_icmp->checksum = 0;
+            memcpy((void *) pkt_icmp + 8, src, IPV6_ASIZE);
+            fillOptions((char*) pkt_icmp + NADSIZE,  option_types, option_types_length);
+            pseudoSize = PSEUDOLEN + NADSIZE + totalOptLen;
+            break;
+
 
         case ECHO: ;
             struct icmpv6echo * echo_pkt = (struct icmpv6echo *) pkt_icmp;

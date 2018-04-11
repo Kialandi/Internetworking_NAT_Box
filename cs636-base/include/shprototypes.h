@@ -1,3 +1,6 @@
+extern  shellcmd    sendnsolicit(int32, char*[]);
+extern  shellcmd    sendnadvert(int32, char *[]);
+extern  shellcmd    sendrsolicit(int32 , char*[]);
 extern  shellcmd    xsh_sendpacket (int32, char *[]);
 /* in file xsh_sendpkt.c */
 extern  shellcmd    xsh_sendpkt (int32, char *[]);
