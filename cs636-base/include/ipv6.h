@@ -13,7 +13,7 @@
 #define	IPV6_HDR_LEN	40		/* Bytes in an IP header	*/
 #define IPV6_VH		    0x45 	/* IP version and hdr length 	*/
 
-#define IPV6OUTNBUFS    20      /* number of buffers */
+#define IPV6OUTNBUFS    40      /* number of buffers */
 
 struct base_header {
     //4bit    version;
@@ -53,7 +53,7 @@ struct fragment_header {
 	byte next_header;
 	byte reserved;
 	//uint13 frag_offset;
-	uint16 frag; // 13 bits for frag_offset, 2 bites for res, 1 bit for M flag
+	uint16 offset; // 13 bits for frag_offset, 2 bites for res, 1 bit for M flag
 	//byte M_flag;
 	uint32 identif;		
 };

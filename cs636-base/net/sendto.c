@@ -30,8 +30,8 @@ status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) 
 	kprintf("MTU: %d\n", MTU);
 
 	struct netpacket netpkt;
-    struct base_header * ipv6_header = (struct base_header *) netpkt.net_payload;
-        fillIPdatagram(&netpkt, link_local, dest_ipv6, buf_len, next_header);  // assuming buffer already includes upper layer header 
+	struct base_header * ipv6_header = (struct base_header *) netpkt.net_payload;
+	fillIPdatagram(&netpkt, link_local, dest_ipv6, buf_len, next_header);  // assuming buffer already includes upper layer header 
 	kprintf("after filling ipv6 header before fragment:\n");
 	payload_hexdump((char *) ipv6_header, IPV6_HDR_LEN);
 	
@@ -239,8 +239,8 @@ uint32 getIdentif(){
 	/*
 	uint32 res = (uint32) rand();
 	*/
-	kprintf("identif: %d\n", res);
-	return res;
+	kprintf("identif: %u\n", (uint32) res);
+	return (uint32) res;
 }
 
 // prefragment header includes Ethernet header and IPV6 header.
@@ -271,7 +271,7 @@ char*  fillFragmentHeader ( struct fragment_header * fragment_header ,uint32 ide
 		frag_offset = frag_offset | 0x0001;	
 	}
 	kprintf("frag_offset:%x\n", frag_offset);
-	fragment_header->frag = htons(frag_offset);
+	fragment_header->offset = htons(frag_offset);
 	kprintf("printing fragment header: \n");
 	payload_hexdump((char*) fragment_header, 8); // for testing
 	return (char*) fragment_header + sizeof(struct fragment_header);

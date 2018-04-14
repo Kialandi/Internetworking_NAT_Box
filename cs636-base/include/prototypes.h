@@ -1,3 +1,4 @@
+extern  status  reassembly(struct netpacket *);
 extern  status  sendto(byte*, byte, byte *, uint16);
 extern  void    fillDatagram(byte* headers, uint16 headers_len, byte*  payload, uint16 payload_len) ;
 extern  void    fillEthernet(struct netpacket *, byte *);

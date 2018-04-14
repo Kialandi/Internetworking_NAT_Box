@@ -43,5 +43,6 @@
 #include <quark_pdat.h>
 #include <quark_irq.h>
 #include <multiboot.h>
+#include <reassembly.h>
 #include <stdio.h>
 #include <string.h>
