@@ -10,6 +10,7 @@ byte    allnMACmulti[ETH_ADDR_LEN];
 byte    allrIPmulti[IPV6_ASIZE];
 byte    allnIPmulti[IPV6_ASIZE];
 bpid32  ipv6bufpool;
+bpid32 	datagram_buf_pool;
 
 void get_link_local(byte *);
 void get_snm_addr(byte *);
@@ -61,8 +62,17 @@ syscall ipv6_init() {
     }
     // make reassembly fragments descriptor buffer pool
   // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )    
-
-
+    
+    // make the datagram buffer pool
+    /*
+    datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
+    if(datagram_buf_pool == SYSERR) {
+	
+        kprintf("ipv6_init cannot allocate ddatagram buffer pool\n");
+        kill(getpid());
+   
+     }
+    */
     //set prefix stuff to 0
     memset(&option_prefix_default, NULLCH, sizeof(option_prefix));
 

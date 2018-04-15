@@ -5,7 +5,7 @@ struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
 uint8 reassembly_tab_size = 0;  // check later
 
 void print_list(struct frag_desc * list);
-bool8  copy_to_datagram(struct reassembly_entry * entry);
+bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram);
 bool8 isLastFragment(struct fragment_header * frag_header);
 struct frag_desc *  initialize_frag_list();
 void insert_node(struct frag_desc * frag_list, struct frag_desc* new_node);
@@ -42,8 +42,10 @@ status reassembly(struct netpacket*  pkt){
 		if (isLastFragment(frag_header) == TRUE) { // If this packet is not last fragment
 
 			kprintf("M flag is 0, this is last fragment");
+			//struct Datagram * datagram = (struct Datagram *) getbuf(datagram_buf_pool);
+			struct Datagram * datagram = (struct Datagram *) getmem(sizeof(struct Datagram));
 			// try check offset matches and copy all the node to one datagram
-			if (copy_to_datagram(entry) == FALSE) {
+			if (copy_to_datagram(entry, datagram) == FALSE) {
 
 				kprintf("offset in frag_list does not match in this formular: offset of current node  + payload_len of current node = offset of next node\n");
 				//TODO: specify types of mismatch
@@ -66,7 +68,7 @@ status reassembly(struct netpacket*  pkt){
 	return 0;
 }
 
-bool8  copy_to_datagram(struct reassembly_entry * entry){
+bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram){
 	struct frag_desc * frag_list = entry -> frag_list;
 	struct frag_desc * temp= frag_list ->next;
 	uint16 payload_len_datagram = 0;  // payload length in datagram
@@ -77,12 +79,12 @@ bool8  copy_to_datagram(struct reassembly_entry * entry){
 			return FALSE;
 		}
 
-		memcpy(datagram.payload +  payload_len_datagram, temp->payload, temp->payload_len);
+		memcpy(datagram->payload +  payload_len_datagram, temp->payload, temp->payload_len);
       		payload_len_datagram += temp->payload_len;
 		temp = temp ->next;
         }  
  	// copy headers to datagram
-	memcpy(datagram.headers, entry->perfrag_headers, entry->headers_len);
+	memcpy(datagram->headers, entry->perfrag_headers, entry->headers_len);
         // TODO: store all the length info in datagram_info
 	return TRUE; 
 }
@@ -206,7 +208,6 @@ void insert_node(struct frag_desc * frag_list, struct frag_desc* new_node) {
 		}
 		kprintf("in while loop\n");
 		if (new_node->offset >= tail->offset + tail->payload_len) {
-			kprintf("I am in insert_node: new node offset > tail offset\n");
 			// insert the node next tail
 			new_node->prev = tail;
 			new_node->next = tail->next;

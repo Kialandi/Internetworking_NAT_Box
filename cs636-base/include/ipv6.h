@@ -14,6 +14,8 @@
 #define IPV6_VH		    0x45 	/* IP version and hdr length 	*/
 
 #define IPV6OUTNBUFS    40      /* number of buffers */
+#define DATAGRAM_ASIZE  98312   
+#define DATAGRAMNBUFS   10	/*number of buffers */ 
 
 struct base_header {
     //4bit    version;
@@ -38,6 +40,7 @@ extern byte     allnMACmulti[];//All nodes MAC
 extern byte     allrIPmulti[];//All routers IP
 extern byte     allnIPmulti[];//All nodes IP
 extern bpid32   ipv6bufpool;
+extern bpid32	datagram_buf_pool;
 extern byte 	router_link_addr[];//default router's MAC address?
 extern uint32	MTU;
 extern byte	prefix_default[];
