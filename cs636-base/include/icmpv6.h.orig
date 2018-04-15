@@ -23,12 +23,17 @@
 //
 #define  IPLEN 16
 
+<<<<<<< HEAD
 #define ECHOSIZE        sizeof(icmpv6echo)
+#define PSEUDOLEN       sizeof(pseudoHdr) 
+=======
 #define PSEUDOLEN       sizeof(pseudoHdr)
+>>>>>>> neigbors
 #define RSOLSIZE        sizeof(rsolicit)
 #define RADVERTSIZE     sizeof(radvert)
-#define NADSIZE         sizeof(nadvert)
 #define NSOLSIZE        sizeof(nsolicit)
+#define NADSIZE         sizeof(nadvert)
+#define TEST            sizeof(nsolicit)
 #define MAX_PAYLOAD     1472
 #define DESTUNREACH     1
 #define PKT_BIG         2
@@ -143,17 +148,20 @@ typedef struct nsolicit{
     byte code;
     uint16 checksum;
     byte reserved[4];
-    byte ipaddr[IPV6_ASIZE];
-    //icmpopt opt;
+    byte ipaddr[16];
+    icmpopt opt;
 }nsolicit;
 
 typedef struct nadvert{
     byte type;
     byte code;
     uint16 checksum;
-    byte mosreserved[4];
-    byte ipaddr[IPV6_ASIZE];
-    //icmpopt opt;
+    uint32 R: 1;
+    uint32 S: 1;
+    uint32 O: 1;
+    uint32 res: 29;
+    byte ipaddr[16];
+    icmpopt opt;
 }nadvert;
 
 

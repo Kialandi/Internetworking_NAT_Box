@@ -68,6 +68,7 @@ void	net_init (void)
 
 	found = TRUE;
     bingid = 51; //group bing ID
+    //bingid = 100; //personal bing ID
 
 	while (!found) {
 		printf("\nEnter a bing ID between 0 and 255: ");
@@ -94,10 +95,10 @@ void	net_init (void)
 
 	/* Ask the user what to run */
 
-	found = TRUE;
-    host = TRUE;
+	found = FALSE;
+    //host = TRUE;
     ifprime = 0;
-
+	
 	while (!found) {
 		printf("\nEnter n for nat box or hX for host on interface X: ");
 		nchars = read(CONSOLE, buffer, 30);
@@ -160,7 +161,6 @@ void	net_init (void)
 		}
 
 		/* Set the state to "down" */
-
 		ifptr->if_state = IF_DOWN;
 
 		if (iface == 0) {
@@ -278,6 +278,7 @@ void	net_init (void)
 
 	for (iface=0; iface<NIFACES; iface++) {
 		sprintf(pname, "net%d_input", iface);
+		kprintf("netin running\n");
 		resume(create(netin, 4196, 5000, pname, 1, iface));
 	}
 
@@ -310,7 +311,6 @@ process	netin (
 		if (ifptr->if_head >= IF_QUEUESIZE) {
 			ifptr->if_head = 0;
 		}
-
 		/* Store interface number in packet buffer */
 
 		pkt->net_iface = iface;
@@ -322,7 +322,7 @@ process	netin (
 		/* Demultiplex on Ethernet type */
 
 		switch (pkt->net_type) {
-
+		kprintf("I AM IN SWITCH");
 		    case ETH_ARP:			/* Handle ARP	*/
             freebuf((char *)pkt);
 			continue;
@@ -332,6 +332,8 @@ process	netin (
 			continue;
 
 		    case ETH_IPv6:			/* Handle IPv6	*/
+			kprintf("I AM IN IPV6\n");
+		//	hexdump(pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
 			ipv6_in(pkt);
 			continue;
 

@@ -23,9 +23,11 @@
 #include <lfilesys.h>
 #include <ether.h>
 #include <net.h>
-#include <ipv6.h>
+#include <datagram.h>
 #include <ip.h>
 #include <arp.h>
+#include <ipv6.h>
+#include <fwdipv6.h>
 #include <udp.h>
 #include <dhcp.h>
 #include <icmp.h>
@@ -41,5 +43,6 @@
 #include <quark_pdat.h>
 #include <quark_irq.h>
 #include <multiboot.h>
+#include <reassembly.h>
 #include <stdio.h>
 #include <string.h>

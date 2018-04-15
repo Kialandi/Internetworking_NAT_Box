@@ -10,7 +10,6 @@ byte    allnMACmulti[ETH_ADDR_LEN];
 byte    allrIPmulti[IPV6_ASIZE];
 byte    allnIPmulti[IPV6_ASIZE];
 bpid32  ipv6bufpool;
-bpid32 	datagram_buf_pool;
 
 void get_link_local(byte *);
 void get_snm_addr(byte *);
@@ -40,9 +39,8 @@ void    ipv6_in (
             icmpv6_in(pkt);
             break;
 	case NEXT_HEADER_FRAGMENT:
-		kprintf("======A fragment packet received========\n");
+		kprintf("A fragment packet received\n");
 		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);		
-		reassembly(pkt);
         	break;
 	default:
             kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);
@@ -60,19 +58,7 @@ syscall ipv6_init() {
         kprintf("ipv6_init cannot allocate network buffer pool\n");
         kill(getpid());
     }
-    // make reassembly fragments descriptor buffer pool
-  // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )    
-    
-    // make the datagram buffer pool
-    /*
-    datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
-    if(datagram_buf_pool == SYSERR) {
-	
-        kprintf("ipv6_init cannot allocate ddatagram buffer pool\n");
-        kill(getpid());
-   
-     }
-    */
+
     //set prefix stuff to 0
     memset(&option_prefix_default, NULLCH, sizeof(option_prefix));
 
@@ -102,7 +88,7 @@ syscall ipv6_init() {
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allnMACmulti, 0);
 
     buf[5] = 0x02;
-    memcpy(allrMACmulti, buf, ETH_ADDR_LEN); 
+    memcpy(allrMACmulti, buf, ETH_ADDR_LEN);
 
     //this doesn't solve the problem because the default router is
     //sending a router advertisement to all nodes
@@ -136,8 +122,13 @@ syscall ipv6_init() {
     else {
         kprintf("Host online... Sending solicitation...\n");
         sendipv6pkt(ROUTERS, allrMACmulti);
+<<<<<<< HEAD
 	kprintf("in ipv6_init ifacer macbcast");
 	print_mac_addr(if_tab[ifprime].if_macbcast);
+=======
+        sendipv6pkt(NEIGHBS, if_tab[1].if_macbcast);
+        sendipv6pkt(NEIGHBS, if_tab[2].if_macbcast);
+>>>>>>> neigbors
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
     }
     return OK;
