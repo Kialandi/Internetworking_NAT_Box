@@ -106,7 +106,7 @@ status sendipv6pkt(byte type, byte * dest) {
                 kprintf("THE WORLD IS BURNING\n");
                 kill(getpid());
             }
-            //print6(packet);
+            print6(packet);
             break;
         case ECHO:
             kprintf("Sending echo...\n");
