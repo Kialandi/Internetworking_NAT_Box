@@ -1,16 +1,18 @@
 #include "xinu.h"
 
 //forwarding table
-struct NDCacheEntry * NDTab[MAXNDENTRY];
+struct NDCacheEntry * NDCache[MAXNDENTRY];
 
 struct NDCacheEntry * lookupNDEntry(byte * ipAddr) {
     struct NDCacheEntry * ptr = NULL;
     int i;
 
     for(i = 0; i < MAXNDENTRY; i++) {
-        if (match(ipAddr, NDTab[i]->ipAddr, IPV6_ASIZE)) {
+        if (match(ipAddr, NDCache[i]->ipAddr, IPV6_ASIZE)) {
             //found an existing entry
-            ptr = NDTab[i];
+            //kprintf("lookupNDEntry: found matching entry\n");
+            ptr = NDCache[i];
+            break;
         }
     }
 
@@ -22,13 +24,14 @@ struct NDCacheEntry * getAvailNDEntry() {
     struct NDCacheEntry * ptr = NULL;
     int i;
     for (i = 0; i < MAXNDENTRY; i++) {
-        if (NDTab[i]->state == NDNOENTRY) {
+        if (NDCache[i]->state == NDNOENTRY) {
+            //kprintf("getAvailNDEntry: found available entry\n");
             //found an available spot
             //zero out the entry just in case race condition
             //TODO: consider not having to do this if things are managed
             //properly
             //maybe have a process that cleans up entries every so often
-            ptr = NDTab[i];
+            ptr = NDCache[i];
             ptr->state = NDPROCESSING;
             break;
         }
@@ -41,10 +44,11 @@ void NDCache_init() {
     int i;
     //initialize all the entries
     for (i = 0; i < MAXNDENTRY; i++) {
-        NDTab[i]->ttl = 0;
-        memset(NDTab[i]->ipAddr, NULLCH, IPV6_ASIZE);
-        memset(NDTab[i]->macAddr, NULLCH, ETH_ADDR_LEN);
-        NDTab[i]->state = NDNOENTRY;
+        NDCache[i] = (struct NDCacheEntry *) getmem(sizeof(NDCacheEntry));
+        NDCache[i]->ttl = 0;
+        memset(NDCache[i]->ipAddr, NULLCH, IPV6_ASIZE);
+        memset(NDCache[i]->macAddr, NULLCH, ETH_ADDR_LEN);
+        NDCache[i]->state = NDNOENTRY;
     }
 }
 
@@ -111,14 +115,14 @@ void printNDTab() {
     int i;
 
     for (i = 0; i < MAXNDENTRY; i++) {
-        if (NDTab[i]->state == NDNOENTRY) {
+        if (NDCache[i]->state == NDNOENTRY) {
             //TODO: change this later to only print relevant entries
             //continue;
         }
-        print_ipv6(NDTab[i]->ipAddr);
+        print_ipv6(NDCache[i]->ipAddr);
         kprintf("     ");
-        print_mac(NDTab[i]->macAddr);
+        print_mac(NDCache[i]->macAddr);
         kprintf("   ");
-        print_state(NDTab[i]->state);
+        print_state(NDCache[i]->state);
     }
 }

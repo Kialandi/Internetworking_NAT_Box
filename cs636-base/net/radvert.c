@@ -15,6 +15,7 @@ struct radvert radvert_from_router;
 struct prefix_ipv6 prefix_ipv6_default;
 
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
+    kprintf("advert ptr: 0x%x\n", ad);
     /*
        kprintf("Printing router advertisement payload...\n");
 

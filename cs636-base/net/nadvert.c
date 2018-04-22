@@ -72,33 +72,48 @@ bool8 nadvert_valid(struct base_header * ipdatagram) {
     //if ip destination address is multicast, the solicited flag is 0
 }
 
+byte * getmac_ad(struct nadvert * advert) {
+    struct icmpopt * opt = (struct icmpopt *) advert->opt;
+    //make sure the option is 01
+    if (opt->type != 1) {
+        kprintf("getmac: Invalid option type\n");
+        return NULL;
+    }
+
+    //skip over opt type and optlen, 2 bytes
+    return opt->payload;
+}
+
 void nadvert_handler(struct netpacket * pkt){
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    struct nadvert * msg = (struct nadvert *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
+    struct NDCacheEntry * entry = lookupNDEntry(ipdatagram->src);
     //assumes the packet has been validated by the time it gets here 
-    if (lookupNDEntry(ipdatagram->src) == NULL) {
+    if (entry == NULL) {
         //entry doesnt exist, make a new one
-        struct NDCacheEntry * entry = getAvailNDEntry();
+        entry = getAvailNDEntry();
+
         if (entry == NULL) {
             kprintf("nadvert_handler: ND table is full, doing nothing\n");
             return;
         }
-        //assume here the entry is available and state is processing
-        entry->ttl = MAXNDTTL;
-        //entry ip address and mac address associated with it from the options
+        //add ipaddr to the entry
         memcpy(entry->ipAddr, ipdatagram->src, IPV6_ASIZE);
-        //byte * mac = getmac(ipdatagram);
-        byte * mac = (byte *) getmem(ETH_ADDR_LEN);
-        memset(mac, NULLCH, ETH_ADDR_LEN);
-
-        if (mac == NULL) {
-            kprintf("nadvert_handler: no link layer address option found!\n");
-            return;
-        }
-
-        memcpy(entry->macAddr, mac, ETH_ADDR_LEN); 
-        entry->state = NDREACHABLE;
-        freemem((char *) mac, ETH_ADDR_LEN);
     }
+    else {
+        //entry does exist
+        //kprintf("nadvert_handler: entry exists, updating!\n");
+    }
+
+    entry->ttl = MAXNDTTL;
+    entry->state = NDREACHABLE;
+    
+    //update new mac address 
+    byte * mac = getmac_ad(msg);
+    if (mac == NULL) {
+        kprintf("nadvert_handler: no link layer address option found!\n");
+        return;
+    }
+    memcpy(entry->macAddr, mac, ETH_ADDR_LEN);
 }

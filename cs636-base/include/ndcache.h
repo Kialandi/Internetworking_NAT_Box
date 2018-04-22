@@ -19,7 +19,6 @@ struct NDCacheEntry {
     byte ipAddr[IPV6_ASIZE];
     byte macAddr[ETH_ADDR_LEN]; 
     uint8 state;
-
 } NDCacheEntry;
 
-extern	struct NDCacheEntry *   NDTab[];	/* forwarding table	*/
+extern	struct  NDCacheEntry *   NDCache[];	/* forwarding table	*/

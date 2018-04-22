@@ -1,4 +1,5 @@
 #include "xinu.h"
+
 bool8 nsolicit_valid(struct base_header * ipdatagram) {
     struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
     if (ipdatagram->hop_limit != 255) 
@@ -71,13 +72,55 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
     
 }
 
+byte * getmac_sol(struct nsolicit * solicit) {
+    struct icmpopt * opt = (struct icmpopt *) solicit->opt;
+    //make sure the option is 01
+    if (opt->type != 1) {
+        kprintf("getmac: Invalid option type\n");
+        return NULL;
+    }
+
+    //skip over opt type and optlen, 2 bytes
+    return opt->payload;
+}
+
 void nsolicit_handler(struct netpacket * pkt){
     struct base_header * ipdatagram = (struct base_header *) pkt->net_payload;
-    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
+
+    struct NDCacheEntry * entry = lookupNDEntry(ipdatagram->src);
+    //assumes the packet has been validated by the time it gets here 
+    if (entry == NULL) {
+        //entry doesnt exist, make a new one
+        entry = getAvailNDEntry();
+
+        if (entry == NULL) {
+            kprintf("nsolicit_handler: ND table is full, doing nothing\n");
+            return;
+        }
+        //add ipaddr to the entry
+        memcpy(entry->ipAddr, ipdatagram->src, IPV6_ASIZE);
+    }
+    else {
+        //entry does exist
+        //kprintf("nsolicit_handler: entry exists, updating!\n");
+    }
+
+    entry->ttl = MAXNDTTL;
+    entry->state = NDREACHABLE;
     
-    //void  * payload = (void *) pkt->net_payload;
-    //void * retarget = 0;
-    //memcpy(retarget, payload + 26, 6);
+    //update new mac address 
+    byte * mac = getmac_sol(msg);
+    if (mac == NULL) {
+        kprintf("nsolicit_handler: no link layer address option found!\n");
+        return;
+    }
+    memcpy(entry->macAddr, mac, ETH_ADDR_LEN);
+
+    
+    
+    
+    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
         //send back to the host requesting it from
         //TODO: check if it's unspecified. if it
@@ -88,6 +131,5 @@ void nsolicit_handler(struct netpacket * pkt){
         //sendipv6pkt(NEIGHBA, payload + 26);
         //sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
         //sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
-    return;
 }
 
