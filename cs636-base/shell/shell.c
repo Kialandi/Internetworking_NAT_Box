@@ -37,6 +37,7 @@ const	struct	cmdent	cmdtab[] = {
     {"sendnsolicit", FALSE, sendnsolicit},
     {"sendnadvert" , FALSE, sendnadvert},
     {"sendecho", FALSE, sendecho},
+    {"printndcache", FALSE, printND},
     {"ipv6info", FALSE, ipv6info},
 	{"?",		FALSE,	xsh_help}
 

@@ -140,6 +140,8 @@ syscall ipv6_init() {
 	print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
     }
+
+    NDCache_init();
     return OK;
 }
 

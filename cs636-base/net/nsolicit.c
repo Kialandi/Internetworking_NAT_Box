@@ -73,7 +73,7 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
 
 void nsolicit_handler(struct netpacket * pkt){
     struct base_header * ipdatagram = (struct base_header *) pkt->net_payload;
-    struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
     
     //void  * payload = (void *) pkt->net_payload;
     //void * retarget = 0;

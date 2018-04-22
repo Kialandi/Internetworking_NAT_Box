@@ -1,3 +1,10 @@
+
+//ND cache functions
+extern  struct  NDCacheEntry * lookupNDEntry(byte *);
+extern  struct  NDCacheEntry * getAvailNDEntry();
+extern  void    NDCache_init();
+extern  void    printNDTab();
+
 extern  status  reassembly(struct netpacket *);
 extern  status  sendto(byte*, byte, byte *, uint16);
 extern  void    fillDatagram(struct Datagram *, byte* headers, uint16 headers_len, byte*  payload, uint16 payload_len) ;

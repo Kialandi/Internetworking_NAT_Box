@@ -73,18 +73,32 @@ bool8 nadvert_valid(struct base_header * ipdatagram) {
 }
 
 void nadvert_handler(struct netpacket * pkt){
-    //void  * payload = (void *) pkt->net_payload;
-    kprintf("TODO: insert nei advert handler\n");
-    //void * retarget = 0;
-    //memcpy(retarget, payload + 26, 6);
+    struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
+    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
-    //send back to the host requesting it from
-    //TODO: check if it's unspecified. if it
-    //sendipv6pkt(NEIGHBA, pkt->net_src, NULL);
-    //sendipv6pkt(NEIGHBA, if_tab[0].if_macbcast, NULL);
+    //assumes the packet has been validated by the time it gets here 
+    if (lookupNDEntry(ipdatagram->src) == NULL) {
+        //entry doesnt exist, make a new one
+        struct NDCacheEntry * entry = getAvailNDEntry();
+        if (entry == NULL) {
+            kprintf("nadvert_handler: ND table is full, doing nothing\n");
+            return;
+        }
+        //assume here the entry is available and state is processing
+        entry->ttl = MAXNDTTL;
+        //entry ip address and mac address associated with it from the options
+        memcpy(entry->ipAddr, ipdatagram->src, IPV6_ASIZE);
+        //byte * mac = getmac(ipdatagram);
+        byte * mac = (byte *) getmem(ETH_ADDR_LEN);
+        memset(mac, NULLCH, ETH_ADDR_LEN);
 
-    //sendipv6pkt(NEIGHBA, payload + 26);
-    //sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
-    //sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
-    return;
+        if (mac == NULL) {
+            kprintf("nadvert_handler: no link layer address option found!\n");
+            return;
+        }
+
+        memcpy(entry->macAddr, mac, ETH_ADDR_LEN); 
+        entry->state = NDREACHABLE;
+        freemem((char *) mac, ETH_ADDR_LEN);
+    }
 }
