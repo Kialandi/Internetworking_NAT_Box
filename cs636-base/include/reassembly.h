@@ -17,6 +17,7 @@ struct reassembly_entry {
 	byte perfrag_headers[80];  // perfragment headers max length, only copy the first header
 	uint16 headers_len; // perfragment headers real length
 	struct frag_desc * frag_list;  // a list of frag_desc 
+	byte next_header_in_fragment_header;  // save next header in fragment header to replace fragment header value 44 (or 0x2c) in perfrag_headers
 };
 
 

@@ -1,4 +1,5 @@
 #include<xinu.h>
+#include<stdlib.h>
 
 uint32 getIdentif();
 uint16 checkLength(uint16 payload_len);
@@ -15,18 +16,17 @@ char*  fillPreFragmentHeader(char* pkt, byte* dest_ipv6, byte next_header);
 
 status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) {
 
-// TODO:construct original packet first.  I am not sure whether it is necessary to construct original packet. The only concern is checksum in UDP or TCP is the checksum of  the fragmented packet or the checksum of the original packet.
-	// check buf_len to decide whether fragment or not 
-	kprintf("I am in sendto.......\n");
-        uint8 pro_hdr_len = 0;
-	switch(next_header) {
-		case IPV6_TCP:
-			pro_hdr_len = TCP_HDR_LEN;
-			break;
-		case IPV6_UDP:
-			pro_hdr_len = UDP_HDR_LEN;
-			break;	
-	}
+//	kprintf("I am in sendto.......\n");
+// The blow is for considering UDP/TCP, but it should be heandled in buffer before comming into this function.
+//        uint8 pro_hdr_len = 0;
+//	switch(next_header) {
+//		case IPV6_TCP:
+//			pro_hdr_len = TCP_HDR_LEN;
+//			break;
+//		case IPV6_UDP:
+//			pro_hdr_len = UDP_HDR_LEN;
+//			break;	
+//	}
 	kprintf("MTU: %d\n", MTU);
 
 	struct netpacket netpkt;
@@ -91,7 +91,7 @@ void fragmentDatagram(struct Datagram * datagram){
 		uint16 frag_offset = 0;
  		byte M_flag = TRUE;
 		// get next_header value in fragment header
-		struct base_header * ipv6_header = (struct base_header *) datagram;
+		struct base_header * ipv6_header = (struct base_header *) (datagram->headers);
 		byte next_header_in_fragment_header = ipv6_header->next_header;
 		kprintf("next header in fragment header: %x\n", next_header_in_fragment_header);
 		
