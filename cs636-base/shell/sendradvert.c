@@ -16,8 +16,8 @@ shellcmd sendradvert(int nargs, char * args[]) {
     if (!host) {
         kprintf("NAT: Multicasting to both interfaces\n");
         //broadcast to both interfaces
-        sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
-        sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);
+        sendipv6pkt(ROUTERA, if_tab[1].if_macbcast, NULL);
+        sendipv6pkt(ROUTERA, if_tab[2].if_macbcast, NULL);
     }
     else
         kprintf("Not a NAT box, can't send RADVERTS\n");

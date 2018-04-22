@@ -85,7 +85,7 @@ syscall ipv6_init() {
     hasIPv6Addr = 0;
     print_ipv6_info(); 
     
-    //tell hardware to listen to MAC SNM
+    //tell hardware to listen to your own MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
     //listen to all router and all node multicast MAC address
@@ -129,16 +129,16 @@ syscall ipv6_init() {
            kprintf("Press enter to send a RSOLICIT, c to continue\n");
            read(CONSOLE, &ch, 5);
            if (ch == 'c') break;
-           sendipv6pkt(ROUTERS, allrMACmulti);
+           sendipv6pkt(ROUTERS, allrMACmulti, NULL);
            }*/
-        sendipv6pkt(ROUTERS, allrMACmulti);
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
     }
     else {
         kprintf("Host online... Sending solicitation...\n");
-        sendipv6pkt(ROUTERS, allrMACmulti);
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
 	kprintf("in ipv6_init ifacer macbcast");
 	print_mac_addr(if_tab[ifprime].if_macbcast);
-        //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast);
+        //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
     }
     return OK;
 }

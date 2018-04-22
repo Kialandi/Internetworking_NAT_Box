@@ -1,8 +1,12 @@
 extern  status  reassembly(struct netpacket *);
 extern  status  sendto(byte*, byte, byte *, uint16);
 extern  void    fillDatagram(struct Datagram *, byte* headers, uint16 headers_len, byte*  payload, uint16 payload_len) ;
+
 // in nsolicit.c
-extern int nsolicit_handler(struct netpacket * pkt);
+extern void nsolicit_handler(struct netpacket * pkt);
+extern bool8 nsolicit_valid(struct base_header * pkt);
+extern void nadvert_handler(struct netpacket * pkt);
+extern bool8 nadvert_valid(struct base_header * pkt);
 
 extern  status  sendto(byte*, byte, byte *, uint16);
 
@@ -15,13 +19,14 @@ extern  int32   charToHex(byte*, char *);
 extern  void    print_ipv6_info();
 extern  uint8   match(byte *, byte *, uint32);
 extern  struct  fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);
-extern  void    makePseudoHdr(struct pseudoHdr *, byte *, byte *, void *, int32);
+extern  void    makePseudoHdr(struct pseudoHdr *, byte *, byte *, void *, uint32);
 
 //validation functions
 extern  bool8   radvert_valid(struct base_header *);
 extern  bool8   rsolicit_valid(struct base_header *);
 //TODO: change from void * probably
 extern  bool8   cksum_valid(void *,void *, uint32, uint32);
+extern  bool8   cksum_valid_1buf(void *, uint32);
 
 extern  void    icmpv6_in(struct netpacket *);
 
@@ -40,7 +45,7 @@ extern  void    ipv6_in(struct netpacket *);
 extern  void    radvert_handler(struct radvert *, uint32);
 extern  void    rsolicit_handler(struct netpacket *);
 
-extern  status  sendipv6pkt(byte, byte *);
+extern  status  sendipv6pkt(byte, byte *, byte *);
 extern  void    print6(struct netpacket *);
 
 /* in file addargs.c */

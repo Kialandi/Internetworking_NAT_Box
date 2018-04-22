@@ -72,7 +72,7 @@ bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datag
 	struct frag_desc * frag_list = entry -> frag_list;
 	struct frag_desc * temp= frag_list ->next;
 	uint16 payload_len_datagram = 0;  // payload length in datagram
-	while( temp != NULL & temp->payload != NULL) {
+	while( temp != NULL && temp->payload != NULL) {
 		if (payload_len_datagram != temp->offset) {
 			kprintf("payload_len_datagram:%u\n", payload_len_datagram);
 			kprintf("offset in the current node: %u\n", temp->offset);

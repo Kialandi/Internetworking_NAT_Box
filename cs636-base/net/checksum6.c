@@ -39,4 +39,15 @@ bool8 cksum_valid(void * phead, void * pkt, uint32 len, uint32 pheadlen) {
         return FALSE;
     }
 }
-    //TODO: validate checksum
+ 
+bool8 cksum_valid_1buf(void * pkt, uint32 len) {
+    uint16 a = checksumv6(pkt, len);
+    if (!(0xffff & ~(a))){
+        //kprintf("cksum_valid: returning true\n");
+        return TRUE;
+    }
+    else{
+        //kprintf("cksum_valid: returning false\n");
+        return FALSE;
+    }
+}

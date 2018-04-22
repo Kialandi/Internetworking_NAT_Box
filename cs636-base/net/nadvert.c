@@ -1,5 +1,6 @@
 #include "xinu.h"
-bool8 nsolicit_valid(struct base_header * ipdatagram) {
+
+bool8 nadvert_valid(struct base_header * ipdatagram) {
     struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
     if (ipdatagram->hop_limit != 255) 
         return FALSE;
@@ -9,7 +10,7 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
         return FALSE;
 
     //this is in bytes
-    int16 opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nsolicit);
+    int16 opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nadvert);
     int16 src_link_layer_opt = 0;
     //check for option lengths
     if (opt_len > 0) {
@@ -26,7 +27,7 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
     }
 
     //reset back to actual length
-    opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nsolicit);
+    opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nadvert);
     byte buf[IPV6_ASIZE];
     memset(buf, NULLCH, IPV6_ASIZE);
 
@@ -66,28 +67,24 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
     freemem((char *) pseudo, pseudoSize);
 
     return TRUE;
-    
-    //TODO: target address cannot be a multcast address
-    
+
+    //target address is not multicast
+    //if ip destination address is multicast, the solicited flag is 0
 }
 
-void nsolicit_handler(struct netpacket * pkt){
-    struct base_header * ipdatagram = (struct base_header *) pkt->net_payload;
-    struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
-    
+void nadvert_handler(struct netpacket * pkt){
     //void  * payload = (void *) pkt->net_payload;
+    kprintf("TODO: insert nei advert handler\n");
     //void * retarget = 0;
     //memcpy(retarget, payload + 26, 6);
 
-        //send back to the host requesting it from
-        //TODO: check if it's unspecified. if it
-        
-        sendipv6pkt(NEIGHBA, pkt->net_src, ipdatagram->src);
-        //sendipv6pkt(NEIGHBA, pkt->net_src, buf);
-        //sendipv6pkt(NEIGHBA, if_tab[0].if_macbcast);
-        //sendipv6pkt(NEIGHBA, payload + 26);
-        //sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
-        //sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
+    //send back to the host requesting it from
+    //TODO: check if it's unspecified. if it
+    //sendipv6pkt(NEIGHBA, pkt->net_src, NULL);
+    //sendipv6pkt(NEIGHBA, if_tab[0].if_macbcast, NULL);
+
+    //sendipv6pkt(NEIGHBA, payload + 26);
+    //sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
+    //sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
     return;
 }
-

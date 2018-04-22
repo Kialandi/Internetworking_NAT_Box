@@ -13,7 +13,7 @@ void 	fillICMP(struct netpacket * pkt, byte type, uint8* option_types, uint8 opt
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
 void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
-        void * pkt, int32 pktLen) {
+        void * pkt, uint32 pktLen) {
 
     //zero out the buffer
     memset(pseudo, NULLCH, PSEUDOLEN + pktLen);
@@ -29,7 +29,7 @@ void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
     memcpy(pseudo->icmppayload, pkt, pktLen);
 }
 
-status sendipv6pkt(byte type, byte * dest) {
+status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
     struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
     memset((char *) packet, NULLCH, PACKLEN);
     uint32 len;
@@ -45,7 +45,7 @@ status sendipv6pkt(byte type, byte * dest) {
             byte src_ip[IPV6_ASIZE];
             memset(src_ip, NULLCH, IPV6_ASIZE);
 
-            fillEthernet(packet, dest);
+            fillEthernet(packet, link_dest);
             fillIPdatagram(packet, src_ip, allrIPmulti, RSOLSIZE, IPV6_ICMP);
             fillICMP(packet, ROUTERS, NULL, 0);
 
@@ -70,8 +70,8 @@ status sendipv6pkt(byte type, byte * dest) {
             //entire packet length
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RADVERTSIZE + totalOptLen;
 
-            fillEthernet(packet, dest);
-            fillIPdatagram(packet, link_local, allnIPmulti, RADVERTSIZE + totalOptLen, IPV6_ICMP);
+            fillEthernet(packet, link_dest);
+            fillIPdatagram(packet, link_local, ip_dest, RADVERTSIZE + totalOptLen, IPV6_ICMP);
             fillICMP(packet, ROUTERA, option_types, 3);
 
             if (!radvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
@@ -82,53 +82,61 @@ status sendipv6pkt(byte type, byte * dest) {
             break;
 
         case NEIGHBS:
+            kprintf("sendipv6pkt: Sending neighbor solicit...\n");
             totalOptLen = 8;
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
-            fillEthernet(packet, dest);
-            fillIPdatagram(packet, link_local, snm_addr, NSOLSIZE + totalOptLen, IPV6_ICMP);
+            fillEthernet(packet, link_dest);
+            //caller has to pass in which dest to use. probably lookup routing
+            //table first
+            fillIPdatagram(packet, link_local, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
             uint8 nopt[1] = {1};
             fillICMP(packet, NEIGHBS, nopt,1);
-            //print6(packet);
-            if( write(ETHER0, (char *) packet, len) == SYSERR ) {
-                kprintf("THE WORLD IS BURNING\n");
-                kill(getpid());
+            
+            if (!nsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
+                kprintf("Invalid neighbor solicit constructed, aborting!\n");
+                freebuf((char *) packet);
+                return 0;
             }
+            
             break;
 
-        case NEIGHBA:
+        case NEIGHBA://should add a case for unsolicited
+            kprintf("sendipv6pkt: Sending neighbor advert...\n");
             totalOptLen = 8;
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
-            fillEthernet(packet, dest);
-            fillIPdatagram(packet, link_local, snm_addr, NADSIZE + totalOptLen, IPV6_ICMP);
+            fillEthernet(packet, link_dest);
+            fillIPdatagram(packet, link_local, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             uint8 nadops[1] = {1};
             fillICMP(packet, NEIGHBA, nadops, 1);
-            if( write(ETHER0, (char *) packet, len) == SYSERR ) {
-                kprintf("THE WORLD IS BURNING\n");
-                kill(getpid());
+            
+            if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
+                kprintf("Invalid neighbor advert constructed, aborting!\n");
+                freebuf((char *) packet);
+                return 0;
             }
-            //print6(packet);
             break;
-        case ECHO:
-            kprintf("Sending echo...\n");
+        
+        case ECHOREQ:
+            kprintf("Sending echo request...\n");
 
             //entire packet length
-            len = ETH_HDR_LEN + IPV6_HDR_LEN + ECHOSIZE;
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + ECHOREQSIZE;
 
             //TODO: add fwding table and nat table
             //for now, send to default router
             fillEthernet(packet, router_link_addr);
-            fillIPdatagram(packet, ipv6_addr, dest, ECHOSIZE, IPV6_ICMP);
-            fillICMP(packet, ECHO, NULL, 0);
+            fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
+            fillICMP(packet, ECHOREQ, NULL, 0);
             break;
     }
-
+    //print6(packet);
     //fire off packet
     if( write(ETHER0, (char *) packet, len) == SYSERR) {
         kprintf("THE WORLD IS BURNING\n");
         kill(getpid());
     }
 
-    if (type == ECHO) {
+    if (type == NEIGHBA || type == ECHOREQ) {
        kprintf("OUTGOING PKT PRINTING\n");
        print6(packet);
        kprintf("OUTGOING PKT DONE PRINTING\n");
@@ -167,12 +175,14 @@ void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
     }
 }
 
+//prefix information options (look at page 20 of RFC 4861)
 uint8 fill_option_prefix(void * pkt) {
     memcpy(pkt, &option_prefix_default, sizeof(option_prefix));
     //change to the appropriate values based on interface
     return sizeof(struct option_prefix);
 }
 
+//MTU option
 uint8 fill_option_MTU(void * pkt) {
     struct option_MTU * temp = pkt;
     memset(temp, NULLCH, sizeof(struct option_MTU));
@@ -182,6 +192,7 @@ uint8 fill_option_MTU(void * pkt) {
     return sizeof(struct option_MTU);
 }
 
+//source link-layer address
 uint8 fill_option_one(void * pkt) {
     struct option_one* temp = pkt;
     temp->type = 0x01;
@@ -193,6 +204,7 @@ uint8 fill_option_one(void * pkt) {
 void fillEthernet(struct netpacket * pkt, byte* dest) {
     memcpy(pkt->net_dst, dest, ETH_ADDR_LEN);
     memcpy(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
+        
     pkt->net_type = htons(ETH_IPv6);
 }
 
@@ -256,18 +268,23 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             pkt_icmp->type = NEIGHBA;
             pkt_icmp->code = 0;
             pkt_icmp->checksum = 0;
-            memcpy((void *) pkt_icmp + 8, src, IPV6_ASIZE);
+            struct nadvert * nadvertptr = (struct nadvert *) pkt_icmp;
+            //set the solicited bit
+            nadvertptr->mosreserved[0] = 64;
+            //if solicited advertisement, have to send address that was in the
+            //original solicitation msg
+            memcpy((void *) pkt_icmp + 8, link_local, IPV6_ASIZE);
             fillOptions((char*) pkt_icmp + NADSIZE,  option_types, option_types_length);
             pseudoSize = PSEUDOLEN + NADSIZE + totalOptLen;
             break;
 
 
-        case ECHO: ;
-            struct icmpv6echo * echo_pkt = (struct icmpv6echo *) pkt_icmp;
+        case ECHOREQ: ;
+            struct icmpv6echoreq * echo_pkt = (struct icmpv6echoreq *) pkt_icmp;
             uint16 x = 15;
             echo_pkt->identifier = htons(x);
             echo_pkt->seqNumber = htons(x);
-            pseudoSize = PSEUDOLEN + ECHOSIZE;
+            pseudoSize = PSEUDOLEN + ECHOREQSIZE;
             break;
 
         default:
