@@ -5,6 +5,7 @@ struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
 uint8 reassembly_tab_size = 0;  // check later
 
 void print_list(struct frag_desc * list);
+void updateDatagramHeaders(char* headers, uint16 payload_len, byte next_header_in_fragment_header);
 bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram);
 bool8 isLastFragment(struct fragment_header * frag_header);
 struct frag_desc *  initialize_frag_list();
@@ -17,7 +18,7 @@ struct reassembly_entry * checkReassemblyTable(byte* src_addr, byte * dest_addr,
 status reassembly(struct netpacket*  pkt){
 
 
-	kprintf("reassembly_tab_size: %d\n", reassembly_tab_size);
+//	kprintf("reassembly_tab_size: %d\n", reassembly_tab_size);
 	
 	// check whether same src addr, dest addr and fragmentation identification
 	struct base_header * ipv6_header = (struct base_header * ) pkt->net_payload;
@@ -29,11 +30,11 @@ status reassembly(struct netpacket*  pkt){
 	struct reassembly_entry * entry = checkReassemblyTable(src_addr, dest_addr, identif);
 
 	if (entry == NULL) {
-		kprintf("frag_list is NULL after check\n");	 
+		//kprintf("frag_list is NULL after check\n");	 
 		appendReaTable(ipv6_header);
         //	print_list(frag_list); 
 	} else {
-		kprintf("frag_list is NOT NULL\n");
+		//kprintf("frag_list is NOT NULL\n");
 		struct frag_desc * frag_list = entry->frag_list;
 		// insert into frag_list in the ascending order of offset		
 		insert_frag_list(frag_list, ipv6_header); 
@@ -41,7 +42,7 @@ status reassembly(struct netpacket*  pkt){
 		print_list(frag_list);
 		if (isLastFragment(frag_header) == TRUE) { // If this packet is not last fragment
 
-			kprintf("M flag is 0, this is last fragment");
+			kprintf("M flag is 0, this is last fragment\n");
 			//struct Datagram * datagram = (struct Datagram *) getbuf(datagram_buf_pool);
 			struct Datagram * datagram = (struct Datagram *) getmem(sizeof(struct Datagram));
 			// try check offset matches and copy all the node to one datagram
@@ -50,9 +51,15 @@ status reassembly(struct netpacket*  pkt){
 				kprintf("offset in frag_list does not match in this formular: offset of current node  + payload_len of current node = offset of next node\n");
 				//TODO: specify types of mismatch
 			} else {
-
-				kprintf("copy successfully to datagram\n"); // TESTING purpose
-
+			
+				kprintf("copy successfully to datagram.\n");
+				kprintf("Printing datagram headers with headers_len:%u\n", datagram->headers_len); // TESTING purpose
+				payload_hexdump((char*)datagram->headers, datagram->headers_len);
+				kprintf("printing datagram payload with payload length: %u\n", datagram->payload_len);
+				byte* len = (byte *) (&(datagram->payload_len));
+				//kprintf("the first byte : 0x%x\n", *len);
+				payload_hexdump((char*)datagram->payload, 32);
+				kprintf("the fisrt 10 bytes of data in payload: %s\n", (char*) datagram->payload);
 			}
 	        }
 
@@ -61,8 +68,6 @@ status reassembly(struct netpacket*  pkt){
 	 }
    	
 // TO DO:
-
-// send to enable sending multiple datagram
 // check whether it has  memory problem	
 // enable specify IPV6 addresss. It can be dealt later. 	
 	return 0;
@@ -85,40 +90,40 @@ bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datag
         }  
  	// copy headers to datagram
 	memcpy(datagram->headers, entry->perfrag_headers, entry->headers_len);
-        // TODO: store all the length info in datagram_info
+	datagram->headers_len = entry->headers_len;  // if headers in datagram containes extentions headers after fragment header, it will be different.
+	datagram->payload_len = payload_len_datagram;
+	// update payload length and next header value in headers of datagram
+	updateDatagramHeaders(datagram->headers, payload_len_datagram, entry->next_header_in_fragment_header);
 	return TRUE; 
+}
+
+void updateDatagramHeaders(char* headers, uint16 payload_len, byte next_header_in_fragment_header) {
+	struct base_header * header = (struct base_header *) headers;
+	//kprintf("header->payload_len: %u and in hex: %x\n", header->payload_len, header->payload_len);
+	header->payload_len = ntohs(payload_len); 
+	//kprintf("header->payload_len: %u and in hex: %x\n", header->payload_len, header->payload_len);
+	// if there are header between ipv6 base header and fragment headers, we have to traverse headers to find a header containing next header value of 0x2c , which is next header value of fragment header
+	switch (header -> next_header) {
+
+		case IPV6_FRAG:
+			header->next_header = next_header_in_fragment_header;
+			break;
+		default:
+			// if it other headers like hop-to-hop header, we have to find the hop-to-hope header start position, cast to hop-to-hop header and check next header value.
+			kprintf("next header value could not found with 0x%x\n", header->next_header);
+			
+
+	}
+
 }
 
 // check M flag whether it is the last fragment with M flag == 0. M flag is the last bit of offset field in fragment_header
 bool8 isLastFragment(struct fragment_header * frag_header){
+//	kprintf("frag_header->offset: %u and in hex: %x\n", frag_header->offset, frag_header->offset);
 	uint16 offset = ntohs(frag_header->offset);
-	// check the last bit -- M flag
-//	kprintf("offset in hex: %x\n", offset);
-//	kprintf("offset & 0x01: %d\n", offset & 0x01);
-//	kprintf("offset & 0x0001 : %x\n", offset & 0x0001);
-//	kprintf("offset in hex:%x\n", offset);
-	/*
-	if (offset & 0x0001 == 0x0) {
-		kprintf("check M flag return true\n");
-	}else {
-	
-		
-		kprintf("check M flag return FALSE\n");
-        }	 
-	kprintf("offset & 1\n");
-	if (offset & 1 == 0) {
-
-		kprintf("check M flag return true\n");
-
-	} else {
-
-
-		kprintf("check M flag return FALSE\n");
-        }
-	*/
-	uint16 res = offset & 0x01;
-
-	return (res == 0)? TRUE : FALSE;  // If equal to 0, it will be last fragment
+	//uint16 res = offset & 0x01;
+	// return (res == 0)? TRUE : FALSE; // This also works
+	return ((offset & 0x01) == 0)? TRUE : FALSE;  // If equal to 0, it will be last fragment
 }
 
 void appendReaTable(byte * ipv6_header) {
@@ -134,6 +139,10 @@ void appendReaTable(byte * ipv6_header) {
 	memcpy(&(entry->src_addr), src_addr, IPV6_ASIZE);
 	memcpy(&(entry->dest_addr), dest_addr, IPV6_ASIZE);
 	entry->identif = identif;
+	entry->next_header_in_fragment_header = frag_header-> next_header;
+	kprintf("next header in fragment header: %x\n", entry->next_header_in_fragment_header);
+	
+	kprintf("identif in fragment header: %u\n", ntohl(frag_header->identif));  // ONLY for demo info purpose
 	// copy perfragment headers of the first packet
 	memcpy(&(entry->perfrag_headers), ipv6_header, headers_len);
 	entry->headers_len = headers_len;		
@@ -146,7 +155,7 @@ void appendReaTable(byte * ipv6_header) {
         entry->frag_list = frag_list;	
        	
 	reassembly_tab_size++;
-	kprintf("I am in append table, table size: %d\n", reassembly_tab_size);
+	//kprintf("I am in append table, table size: %d\n", reassembly_tab_size);
 }
 
 struct frag_desc *  initialize_frag_list() {
@@ -165,11 +174,11 @@ void insert_frag_list(struct frag_desc * frag_list, byte* ipv6_header){
         uint16 offset = ntohs(frag_header->offset);
 	// zero out last bit of offset to remove influence of M flag.         
 	offset = offset & 0xFFFE;
-    	kprintf("inser_frag_list: offset: %u\n", offset); 
+    	//kprintf("inser_frag_list: offset: %u\n", offset); 
 
  	// get payload following after the fragment header and the payload length for this payload  
 	uint16 payload_len_in_header = ntohs(temp_ipv6->payload_len);
-	kprintf("insert_frag_List: payload_len_in_header : %u\n", payload_len_in_header);
+	//kprintf("insert_frag_List: payload_len_in_header : %u\n", payload_len_in_header);
 	uint16 payload_len  = payload_len_in_header - sizeof(struct fragment_header);  // TODO: if there are some other headers between baseheader and fragment header, update this line.
         char* payload_from = (char *) frag_header + sizeof(struct fragment_header);
 
@@ -206,7 +215,6 @@ void insert_node(struct frag_desc * frag_list, struct frag_desc* new_node) {
 		if (count == 3) {
 			break;
 		}
-		kprintf("in while loop\n");
 		if (new_node->offset >= tail->offset + tail->payload_len) {
 			// insert the node next tail
 			new_node->prev = tail;
@@ -228,7 +236,6 @@ void insert_node(struct frag_desc * frag_list, struct frag_desc* new_node) {
 	// Execution reaches here means the current tail is the dummy node or sentinel node of the list
 	// so we should insert the new node after the dummy node
 	if (tail == NULL) {  // in case of no node following the sentinel node
-		kprintf("I am in insert_node: tail == NULL\n");
 		new_node->prev = frag_list;
 		new_node->next = frag_list;
 		frag_list->prev= new_node; 	

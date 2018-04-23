@@ -278,7 +278,6 @@ void	net_init (void)
 
 	for (iface=0; iface<NIFACES; iface++) {
 		sprintf(pname, "net%d_input", iface);
-		kprintf("netin running\n");
 		resume(create(netin, 4196, 5000, pname, 1, iface));
 	}
 
