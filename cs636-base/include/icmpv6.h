@@ -23,7 +23,7 @@
 //
 #define  IPLEN 16
 
-#define ECHOSIZE        sizeof(icmpv6echo)
+#define ECHOREQSIZE     sizeof(icmpv6echoreq)
 #define PSEUDOLEN       sizeof(pseudoHdr)
 #define RSOLSIZE        sizeof(rsolicit)
 #define RADVERTSIZE     sizeof(radvert)
@@ -38,15 +38,14 @@
 
 /* ICMP Msg types */
 
-#define ECHO        0x80    //translates to 128
+#define ECHOREQ     0x80    //translates to 128
+#define ECHORESP    0x81    //translates to 129
 #define ROUTERS     0x85    //translates to 133
 #define ROUTERA     0x86
 #define NEIGHBS     0x87
 #define NEIGHBA     0x88
 
 /*informational messages */
-#define ECHOREQ     128
-#define ECHOREP     129
 #define PVT3        200
 #define PVT4        201
 
@@ -144,7 +143,7 @@ typedef struct nsolicit{
     uint16 checksum;
     byte reserved[4];
     byte ipaddr[IPV6_ASIZE];
-    //icmpopt opt;
+    byte opt[0];//easy access to options
 }nsolicit;
 
 typedef struct nadvert{
@@ -153,7 +152,7 @@ typedef struct nadvert{
     uint16 checksum;
     byte mosreserved[4];
     byte ipaddr[IPV6_ASIZE];
-    //icmpopt opt;
+    byte opt[0];//easy access to options
 }nadvert;
 
 
@@ -166,13 +165,13 @@ typedef struct pseudoHdr{
     byte    icmppayload[0];
 }pseudoHdr;
 
-typedef struct icmpv6echo{
+typedef struct icmpv6echoreq{
     byte type;
     byte code;
     uint16 checksum;
     uint16 identifier;
     uint16 seqNumber;
     byte body[0]; //gives easy access to message body
-} icmpv6echo;
+} icmpv6echoreq;
 
 

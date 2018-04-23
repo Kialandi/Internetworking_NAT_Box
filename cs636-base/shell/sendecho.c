@@ -30,8 +30,8 @@ shellcmd sendecho(int nargs, char * args[]) {
         kprintf("Unknown characters in destination address\n");
         return 1;
     }
-
-    sendipv6pkt(ECHO, dest);
+    //TODO: add the routing table lookup here, given an ip address, return a mac
+    sendipv6pkt(ECHOREQ, router_link_addr, dest);
     
     return 1;
 }

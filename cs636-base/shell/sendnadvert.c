@@ -10,11 +10,11 @@ shellcmd sendnadvert(int nargs, char * args[]) {
     }
      if (!host){ //nat goes to all routers
         //sendipv6pkt(NEIGHBA, allnMACmulti);
-        sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
-        sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
+        sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast, NULL);
+        sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast, NULL);
 
      }else //hosts go to your own bcast
-        sendipv6pkt(NEIGHBA, mac_snm);
+        sendipv6pkt(NEIGHBA, mac_snm, NULL);
      //broadcast to both interfaces
     return 1;
 }

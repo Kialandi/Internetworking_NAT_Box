@@ -1,6 +1,6 @@
 #include "xinu.h"
 
-bool8 nsolicit_valid(struct base_header * ipdatagram) {
+bool8 nadvert_valid(struct base_header * ipdatagram) {
     struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
     if (ipdatagram->hop_limit != 255) 
         return FALSE;
@@ -10,7 +10,7 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
         return FALSE;
 
     //this is in bytes
-    int16 opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nsolicit);
+    int16 opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nadvert);
     int16 src_link_layer_opt = 0;
     //check for option lengths
     if (opt_len > 0) {
@@ -27,7 +27,7 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
     }
 
     //reset back to actual length
-    opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nsolicit);
+    opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nadvert);
     byte buf[IPV6_ASIZE];
     memset(buf, NULLCH, IPV6_ASIZE);
 
@@ -67,13 +67,13 @@ bool8 nsolicit_valid(struct base_header * ipdatagram) {
     freemem((char *) pseudo, pseudoSize);
 
     return TRUE;
-    
-    //TODO: target address cannot be a multcast address
-    
+
+    //target address is not multicast
+    //if ip destination address is multicast, the solicited flag is 0
 }
 
-byte * getmac_sol(struct nsolicit * solicit) {
-    struct icmpopt * opt = (struct icmpopt *) solicit->opt;
+byte * getmac_ad(struct nadvert * advert) {
+    struct icmpopt * opt = (struct icmpopt *) advert->opt;
     //make sure the option is 01
     if (opt->type != 1) {
         kprintf("getmac: Invalid option type\n");
@@ -84,9 +84,9 @@ byte * getmac_sol(struct nsolicit * solicit) {
     return opt->payload;
 }
 
-void nsolicit_handler(struct netpacket * pkt){
-    struct base_header * ipdatagram = (struct base_header *) pkt->net_payload;
-    struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
+void nadvert_handler(struct netpacket * pkt){
+    struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
+    struct nadvert * msg = (struct nadvert *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
     struct NDCacheEntry * entry = lookupNDEntry(ipdatagram->src);
     //assumes the packet has been validated by the time it gets here 
@@ -95,7 +95,7 @@ void nsolicit_handler(struct netpacket * pkt){
         entry = getAvailNDEntry();
 
         if (entry == NULL) {
-            kprintf("nsolicit_handler: ND table is full, doing nothing\n");
+            kprintf("nadvert_handler: ND table is full, doing nothing\n");
             return;
         }
         //add ipaddr to the entry
@@ -103,33 +103,17 @@ void nsolicit_handler(struct netpacket * pkt){
     }
     else {
         //entry does exist
-        //kprintf("nsolicit_handler: entry exists, updating!\n");
+        //kprintf("nadvert_handler: entry exists, updating!\n");
     }
 
     entry->ttl = MAXNDTTL;
     entry->state = NDREACHABLE;
     
     //update new mac address 
-    byte * mac = getmac_sol(msg);
+    byte * mac = getmac_ad(msg);
     if (mac == NULL) {
-        kprintf("nsolicit_handler: no link layer address option found!\n");
+        kprintf("nadvert_handler: no link layer address option found!\n");
         return;
     }
     memcpy(entry->macAddr, mac, ETH_ADDR_LEN);
-
-    
-    
-    
-    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
-
-        //send back to the host requesting it from
-        //TODO: check if it's unspecified. if it
-        
-        sendipv6pkt(NEIGHBA, pkt->net_src, ipdatagram->src);
-        //sendipv6pkt(NEIGHBA, pkt->net_src, buf);
-        //sendipv6pkt(NEIGHBA, if_tab[0].if_macbcast);
-        //sendipv6pkt(NEIGHBA, payload + 26);
-        //sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
-        //sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
 }
-

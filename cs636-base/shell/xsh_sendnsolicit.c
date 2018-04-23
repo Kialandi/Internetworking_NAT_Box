@@ -5,12 +5,12 @@ shellcmd sendnsolicit(int nargs, char * args[]) {
     kprintf("\n");
     if (nargs != 1) {
         //print usage
-        printf("USAGE: sendradvert\n");
+        printf("USAGE: sendnsolicit\n");
         return 0;
     }
-        sendipv6pkt(NEIGHBS, mac_snm);
-        sendipv6pkt(NEIGHBS, if_tab[1].if_macbcast);
-        sendipv6pkt(NEIGHBS, if_tab[2].if_macbcast);
+        sendipv6pkt(NEIGHBS, mac_snm, NULL);
+        sendipv6pkt(NEIGHBS, if_tab[1].if_macbcast, NULL);
+        sendipv6pkt(NEIGHBS, if_tab[2].if_macbcast, NULL);
 
 
  /*

@@ -16,7 +16,7 @@ int32 incPktRW(struct netpacket * pkt) {
     //otherwise, return the default router's ip address
 
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    struct icmpv6echo * msg = (struct icmpv6echo *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    struct icmpv6echoreq * msg = (struct icmpv6echoreq *) ((char *) ipdatagram + IPV6_HDR_LEN);
  
     struct natEntry ptr;
     int i;
@@ -38,12 +38,12 @@ int32 incPktRW(struct netpacket * pkt) {
 
             //recompute checksum
             msg->checksum = 0;
-            void * pseudo = (void *) getmem(PSEUDOLEN + ECHOSIZE);
-            makePseudoHdr((struct pseudoHdr *) pseudo, ipdatagram->src, ipdatagram->dest, (void *) msg, ECHOSIZE);
+            void * pseudo = (void *) getmem(PSEUDOLEN + ECHOREQSIZE);
+            makePseudoHdr((struct pseudoHdr *) pseudo, ipdatagram->src, ipdatagram->dest, (void *) msg, ECHOREQSIZE);
 
-            uint16 sum = checksumv6(pseudo, PSEUDOLEN + ECHOSIZE);
+            uint16 sum = checksumv6(pseudo, PSEUDOLEN + ECHOREQSIZE);
             msg->checksum = htons(sum);
-            freemem(pseudo, PSEUDOLEN + ECHOSIZE);
+            freemem(pseudo, PSEUDOLEN + ECHOREQSIZE);
             
             return ptr.iface;
         }
@@ -56,7 +56,7 @@ int32 incPktRW(struct netpacket * pkt) {
 int32 outPktRW(uint8 interface, struct netpacket * pkt) {
     //for now this is assuming icmp echo
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    struct icmpv6echo * msg = (struct icmpv6echo *) ((char *) ipdatagram + IPV6_HDR_LEN);
+    struct icmpv6echoreq * msg = (struct icmpv6echoreq *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
     struct natEntry ptr;
 
@@ -85,12 +85,12 @@ int32 outPktRW(uint8 interface, struct netpacket * pkt) {
 
     //recompute checksum
     msg->checksum = 0;
-    void * pseudo = (void *) getmem(PSEUDOLEN + ECHOSIZE);
-    makePseudoHdr((struct pseudoHdr *) pseudo, ipdatagram->src, ipdatagram->dest, (void *) msg, ECHOSIZE);
+    void * pseudo = (void *) getmem(PSEUDOLEN + ECHOREQSIZE);
+    makePseudoHdr((struct pseudoHdr *) pseudo, ipdatagram->src, ipdatagram->dest, (void *) msg, ECHOREQSIZE);
 
-    uint16 sum = checksumv6(pseudo, PSEUDOLEN + ECHOSIZE);
+    uint16 sum = checksumv6(pseudo, PSEUDOLEN + ECHOREQSIZE);
     msg->checksum = htons(sum);
-    freemem(pseudo, PSEUDOLEN + ECHOSIZE);
+    freemem(pseudo, PSEUDOLEN + ECHOREQSIZE);
 
     return 0;
 }

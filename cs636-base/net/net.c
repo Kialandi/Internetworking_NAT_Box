@@ -321,7 +321,6 @@ process	netin (
 		/* Demultiplex on Ethernet type */
 
 		switch (pkt->net_type) {
-		kprintf("I AM IN SWITCH");
 		    case ETH_ARP:			/* Handle ARP	*/
             freebuf((char *)pkt);
 			continue;
@@ -331,7 +330,6 @@ process	netin (
 			continue;
 
 		    case ETH_IPv6:			/* Handle IPv6	*/
-			kprintf("I AM IN IPV6\n");
 		//	hexdump(pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
 			ipv6_in(pkt);
 			continue;

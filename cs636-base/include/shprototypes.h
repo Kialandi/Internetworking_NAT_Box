@@ -1,3 +1,4 @@
+extern  shellcmd    printND(int32, char *[]);
 extern  shellcmd    sendnsolicit(int32, char*[]);
 extern  shellcmd    sendnadvert(int32, char *[]);
 extern  shellcmd    sendrsolicit(int32 , char*[]);

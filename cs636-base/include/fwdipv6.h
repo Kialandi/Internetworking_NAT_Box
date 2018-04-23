@@ -13,14 +13,6 @@ struct	fwdTabEntry {			/* entry in the forwarding table	*/
 
 } fwdTabEntry;
 
-//used for neighbour discovery, layer 2 stuff, mac/ethernet
-struct NDCacheEntry {
-    uint8 ttl;
-    byte destIP[IPV6_ASIZE];
-    byte destMAC[ETH_ADDR_LEN]; 
-
-} NDCacheEntry;
-
 //nat table is in charge of packet rewriting
 struct natEntry {
     //ip src, dest, icmp ID, interface
@@ -34,7 +26,7 @@ struct natEntry {
 
 
 extern	struct fwdTabEntry *    fwdTab[];	/* forwarding table	*/
-extern	struct NDCacheEntry *   NDTab[];	/* forwarding table	*/
+
 extern	struct natEntry        natTab[];	/* forwarding table	*/
 
 

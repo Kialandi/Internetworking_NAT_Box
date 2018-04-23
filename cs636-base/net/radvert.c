@@ -15,6 +15,7 @@ struct radvert radvert_from_router;
 struct prefix_ipv6 prefix_ipv6_default;
 
 void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
+    kprintf("advert ptr: 0x%x\n", ad);
     /*
        kprintf("Printing router advertisement payload...\n");
 
@@ -90,7 +91,6 @@ uint16 get_MTU(char* option) {
 }
 
 uint16 get_prefix_default(char* option) {
-
     uint16 curr_option_len_octets = *(option + 1);  // curr_option_len_octets is in unit of 8 octets.
     //kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
     //uint16 option_payload_len = curr_option_len_octets * 8 - 2;

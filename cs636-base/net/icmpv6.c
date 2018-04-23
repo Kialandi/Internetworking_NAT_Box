@@ -15,7 +15,7 @@ void icmpv6_in(struct netpacket * pkt) {
                 kprintf("radvert invalid, dropping pkt\n");
                 return;
             }
-	    print6(pkt);
+            print6(pkt);
             //just process if host
             radvert_handler((struct radvert *) msg, ip_payload_len);
 
@@ -26,13 +26,11 @@ void icmpv6_in(struct netpacket * pkt) {
 
                 //TODO: change this to specific prefix for each interface
                 kprintf("Broadcasting to iface 1 and 2\n");
-		print_mac_addr(if_tab[1].if_macbcast);
-		kprintf("iface2 broadcast addr:\n");
-		print_mac_addr(if_tab[2].if_macbcast);
-                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast);
-               // sendipv6pkt(ROUTERA, allnMACmulti);
-		sendipv6pkt(ROUTERA, if_tab[2].if_macbcast);
-		//sendipv6pkt(ROUTERA, allnMACmulti);
+                print_mac_addr(if_tab[1].if_macbcast);
+                kprintf("iface2 broadcast addr:\n");
+                print_mac_addr(if_tab[2].if_macbcast);
+                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast, NULL);
+                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast, NULL);
             }
             break;
 
@@ -41,28 +39,48 @@ void icmpv6_in(struct netpacket * pkt) {
                 kprintf("Dropping rsol silently...\n");
                 return;
             }
-
             kprintf("icmpv6_in: RSolicit received\n");
-
             if (!rsolicit_valid(ipdatagram)) {
                 kprintf("rsolicit invalid, dropping pkt\n");
                 return;
             }
-
             rsolicit_handler(pkt);
-
             break;
+        
         case NEIGHBS:
+
+            kprintf("icmpv6_in: Neighbor Sol received\n");
+            if (!nsolicit_valid(ipdatagram)) {
+                kprintf("neigh sol invalid, dropping pkt\n");
+                return;
+            }
             print6(pkt);
-            kprintf("\n\n received solicitation from neighbor \n\n");
             nsolicit_handler(pkt);
             break;
+        
         case NEIGHBA:
-            kprintf("\n\n nads received \n\n ");
+            kprintf("icmpv6_in: Neighbor Ad received\n");
+
+            if (!nadvert_valid(ipdatagram)) {
+                kprintf("neigh ad invalid, dropping pkt\n");
+                return;
+            }
+            print6(pkt);
+            nadvert_handler(pkt);
+            break;
+        
+        case ECHOREQ:
+            kprintf("icmpv6_in: Echo Request received\n");
             print6(pkt);
             break;
+        
+        case ECHORESP:
+            kprintf("icmpv6_in: Echo Response received\n");
+            print6(pkt);
+            break;
+
         default:
-            kprintf("Unknown ICMP type: 0x%02X\n", msg->type);
+            kprintf("Unknown ICMP type: 0x%02X, printing packet\n", msg->type);
             print6(pkt);
             break;
     }

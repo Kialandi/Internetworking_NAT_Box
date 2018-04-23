@@ -27,6 +27,7 @@
 #include <ip.h>
 #include <arp.h>
 #include <ipv6.h>
+#include <ndcache.h>
 #include <fwdipv6.h>
 #include <udp.h>
 #include <dhcp.h>
