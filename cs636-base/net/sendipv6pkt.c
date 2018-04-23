@@ -269,8 +269,10 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             pkt_icmp->code = 0;
             pkt_icmp->checksum = 0;
             struct nadvert * nadvertptr = (struct nadvert *) pkt_icmp;
-            //set the solicited bit
-            nadvertptr->mosreserved[0] = 64;
+            //set the solicited and overwrite bits
+            //nadvertptr->mosreserved[0] = 96;
+            nadvertptr->mosreserved[0] = 32;
+
             //if solicited advertisement, have to send address that was in the
             //original solicitation msg
             memcpy((void *) pkt_icmp + 8, link_local, IPV6_ASIZE);
