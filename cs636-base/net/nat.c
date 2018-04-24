@@ -107,3 +107,27 @@ void natTab_init() {
     }
 }
 
+void printNATTab() {
+    kprintf("\nPrinting Forwarding Table\n");
+    kprintf("IPv6 Address                                ");
+    kprintf("Prefix Len      ");
+    kprintf("Next Hop        \n");
+    kprintf("Interface        \n");
+    kprintf("-----------------------------------------  ");
+    kprintf("---------------  ");
+    kprintf("-----------------------------------------  ");
+    kprintf("-----------  \n");
+    int i;
+
+    for (i = 0; i < MAXFWDTABENTRIES; i++) {
+        //done
+        //if (fwdTabPTR[i]->prefixLen == 0) return;
+        print_ipv6(fwdTabPTR[i]->ipAddr);
+        kprintf("     ");
+        kprintf("     %d    ", fwdTabPTR[i]->prefixLen);
+        kprintf("   ");
+        print_ipv6(fwdTabPTR[i]->nextHop);
+        kprintf("     %d    ", fwdTabPTR[i]->iface);
+    }   
+}
+
