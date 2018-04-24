@@ -18,6 +18,7 @@ struct reassembly_entry {
 	uint16 headers_len; // perfragment headers real length
 	struct frag_desc * frag_list;  // a list of frag_desc 
 	byte next_header_in_fragment_header;  // save next header in fragment header to replace fragment header value 44 (or 0x2c) in perfrag_headers
+	uint32 timestamp;  // time stamp in seconds of the first fragment coming in
 };
 
 

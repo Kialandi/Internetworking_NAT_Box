@@ -31,6 +31,7 @@ status reassembly(struct netpacket*  pkt){
 
 	if (entry == NULL) {
 		//kprintf("frag_list is NULL after check\n");	 
+		//TODO: check M Flag if it is zero and offset is not zero, we will drop the packet. since it is part of time out packet.We have removed the entry.
 		appendReaTable(ipv6_header);
         //	print_list(frag_list); 
 	} else {
@@ -53,6 +54,8 @@ status reassembly(struct netpacket*  pkt){
 			} else {
 			
 				kprintf("copy successfully to datagram.\n");
+				// TODO: free up this entry in reassembly queue. It will generate a hole. 
+				removeReaTable(entry);
 				kprintf("Printing datagram headers with headers_len:%u\n", datagram->headers_len); // TESTING purpose
 				payload_hexdump((char*)datagram->headers, datagram->headers_len);
 				kprintf("printing datagram payload with payload length: %u\n", datagram->payload_len);
@@ -71,6 +74,30 @@ status reassembly(struct netpacket*  pkt){
 // check whether it has  memory problem	
 // enable specify IPV6 addresss. It can be dealt later. 	
 	return 0;
+}
+
+void removeReaTable(struct reassembly_entry* entry) {
+	// we will deal with the hole later, currently remove the fragment list 
+
+	free_frag_list(entry->frag_list);
+
+}
+
+void free_frag_list(struct frag_desc * frag_list) {
+	if (frag_list != NULL) {
+		struct frag_desc * node = frag_list-> next;
+		while (node != NULL && node->payload != NULL) {
+			struct frag_desc * next = node -> next;
+			freemem((char*) (node->payload), (uint32) node->payload_len);
+			freemem( (char*)node, sizeof(struct frag_desc));
+			node = next;
+		} 
+		// free the dummy sentinal node
+		if (node != NULL) {
+			freemem( (char*)node, sizeof(struct frag_desc));
+		}
+
+	}
 }
 
 bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram){

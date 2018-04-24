@@ -78,7 +78,9 @@ status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) 
 		//sendPacket(dest_ipv6, next_header, buffer, buf_len, FALSE);
 	} 
  */ 
+    freemem((char*)datagram, sizeof(struct Datagram));
     return OK;
+
 } 
 
 void fragmentDatagram(struct Datagram * datagram){
