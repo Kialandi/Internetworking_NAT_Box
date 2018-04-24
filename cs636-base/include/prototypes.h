@@ -1,4 +1,11 @@
 
+extern  void    printFWDTab();
+extern  void    fwdipv6_init();
+extern  void    printNATTab();
+extern  void    print_ipv6(byte *);
+
+
+
 //ND cache functions
 extern  void    createEntry(uint32, byte *, byte *, uint8);
 extern  struct  NDCacheEntry * lookupNDEntry(byte *);
@@ -26,7 +33,7 @@ extern  int32   charToHex(byte*, char *);
 
 extern  void    print_ipv6_info();
 extern  uint8   match(byte *, byte *, uint32);
-extern  int16   insertNewFwdTabEntry(byte *, uint8, uint8, byte *);
+extern  int16   insertNewFwdTabEntry(byte *, uint8, byte *, uint8);
 extern  void    makePseudoHdr(struct pseudoHdr *, byte *, byte *, void *, uint32);
 
 //validation functions

@@ -142,6 +142,7 @@ syscall ipv6_init() {
     }
 
     NDCache_init();
+    fwdipv6_init();
     return OK;
 }
 

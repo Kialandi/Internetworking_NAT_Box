@@ -15,6 +15,19 @@ void icmpv6_in(struct netpacket * pkt) {
                 kprintf("radvert invalid, dropping pkt\n");
                 return;
             }
+            if (!host) {
+                byte buf[ETH_ADDR_LEN];
+                buf[0] = 0x00;
+                buf[1] = 0x24;
+                buf[2] = 0xC4;
+                buf[3] = 0xDC;
+                buf[4] = 0xCB;
+                buf[5] = 0xC0;
+                if(!match(pkt->net_src, buf, ETH_ADDR_LEN)) {
+                    kprintf("Not from default router, dropping\n");
+                    return;
+                }
+            }
             print6(pkt);
             //just process if host
             radvert_handler((struct radvert *) msg, ip_payload_len);
