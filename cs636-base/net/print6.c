@@ -30,13 +30,15 @@ void print6(struct netpacket * pkt) {
     kprintf("net_src : ");
     print_mac_addr(pkt->net_src);
     
-    kprintf("net_type: 0x%X\n", pkt->net_type);
+    kprintf("net_type: 0x%X\n", ntohs(pkt->net_type));
     
     kprintf("============== Printing IPv6 base header ===============\n");
 
-    struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
+    struct base_header * ipdatagram = (struct base_header *) (pkt->net_payload);
+
+    kprintf("info        : 0x");
+    payload_hexdump((char*)ipdatagram->info, 4);        
     
-    kprintf("info        : 0x%x\n", ipdatagram->info);
     kprintf("payload_len : %d\n", ntohs(ipdatagram->payload_len));
     kprintf("next_header : %d\n", ipdatagram->next_header);
     kprintf("hop_limit   : %d\n", ipdatagram->hop_limit);
