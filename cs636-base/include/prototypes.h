@@ -10,10 +10,10 @@ extern  status  sendto(byte*, byte, byte *, uint16);
 extern  void    fillDatagram(struct Datagram *, byte* headers, uint16 headers_len, byte*  payload, uint16 payload_len) ;
 
 // in nsolicit.c
-extern void nsolicit_handler(struct netpacket * pkt);
-extern bool8 nsolicit_valid(struct base_header * pkt);
-extern void nadvert_handler(struct netpacket * pkt);
-extern bool8 nadvert_valid(struct base_header * pkt);
+extern  void    nsolicit_handler(struct netpacket * pkt);
+extern  bool8   nsolicit_valid(struct base_header * pkt);
+extern  void    nadvert_handler(struct netpacket * pkt);
+extern  bool8   nadvert_valid(struct base_header * pkt);
 
 extern  status  sendto(byte*, byte, byte *, uint16);
 
@@ -25,7 +25,7 @@ extern  int32   charToHex(byte*, char *);
 
 extern  void    print_ipv6_info();
 extern  uint8   match(byte *, byte *, uint32);
-extern  struct  fwdTabEntry * insertNewFwdTabEntry(uint8, uint8, byte *);
+extern  int16   insertNewFwdTabEntry(byte *, uint8, uint8, byte *);
 extern  void    makePseudoHdr(struct pseudoHdr *, byte *, byte *, void *, uint32);
 
 //validation functions

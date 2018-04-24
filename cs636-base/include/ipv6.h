@@ -42,6 +42,7 @@ extern byte     allnIPmulti[];//All nodes IP
 extern bpid32   ipv6bufpool;
 extern bpid32	datagram_buf_pool;
 extern byte 	router_link_addr[];//default router's MAC address?
+extern byte     router_ip_addr[];//default router ip addr
 extern uint32	MTU;
 extern byte	prefix_default[];
 

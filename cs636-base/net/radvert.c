@@ -1,6 +1,8 @@
 #include "xinu.h"
 
 byte router_link_addr[ETH_ADDR_LEN];
+//TODO: add support for this
+byte router_ip_addr[IPV6_ASIZE];
 uint32  MTU;
 byte prefix_default[64];
 uint16 get_router_link_addr(char*);
@@ -32,7 +34,7 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
     memcpy(&radvert_from_router, (char*) ad, sizeof(struct radvert));    
     /*    kprintf("radvert_from_router:\n");
           payload_hexdump((char *) (&radvert_from_router), sizeof(struct radvert));
-          */    //TODO: handle options, consider using a loop?   
+          */   
     uint32 options_len = ip_payload_len - sizeof(struct radvert);
     byte* options = (byte *) ( (char*)ad + sizeof(struct radvert));
     //    kprintf("options_len: %d\n", options_len);
