@@ -1,5 +1,6 @@
 
 //ND cache functions
+extern  void    createEntry(uint32, byte *, byte *, uint8);
 extern  struct  NDCacheEntry * lookupNDEntry(byte *);
 extern  struct  NDCacheEntry * getAvailNDEntry();
 extern  void    NDCache_init();

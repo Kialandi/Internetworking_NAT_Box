@@ -31,10 +31,10 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
        kprintf("reachabletime: %d\n", ntohl(ad->reachabletime));
        kprintf("retranstimer: %d\n", ntohl(ad->retranstimer));
        */
-    memcpy(&radvert_from_router, (char*) ad, sizeof(struct radvert));    
+    memcpy(&radvert_from_router, (char*) ad, sizeof(struct radvert));
     /*    kprintf("radvert_from_router:\n");
           payload_hexdump((char *) (&radvert_from_router), sizeof(struct radvert));
-          */   
+          */
     uint32 options_len = ip_payload_len - sizeof(struct radvert);
     byte* options = (byte *) ( (char*)ad + sizeof(struct radvert));
     //    kprintf("options_len: %d\n", options_len);
@@ -64,7 +64,9 @@ void radvert_handler(struct radvert * ad, uint32 ip_payload_len) {
         //	kprintf("curr_option_len: %d\n", curr_option_len);
         i = i + curr_option_len;
         //	break;
+
     }
+
 
 }
 
@@ -100,23 +102,23 @@ uint16 get_prefix_default(char* option) {
     //	uint8 prefix_length = *ptr;
     //	kprintf("prefix_option_length: %d\n", prefix_length);
     // save prefix and length to prefix_ipv6_default struct
-    memset(&prefix_ipv6_default, NULLCH, IPV6_ASIZE) ; 
+    memset(&prefix_ipv6_default, NULLCH, IPV6_ASIZE) ;
     memcpy(&prefix_ipv6_default, option + 16, IPV6_ASIZE);
     prefix_ipv6_default.prefix_length = *(option + 2);
     //        kprintf("prefix_ipv6_default:\n");
     //        payload_hexdump((char *) (&prefix_ipv6_default), sizeof(struct prefix_ipv6));
     //	kprintf("prefix_length: %d\n", prefix_ipv6_default.prefix_length);
-    // save the whole prefix option   
+    // save the whole prefix option
     memcpy(&option_prefix_default, option, sizeof(struct option_prefix));
     //kprintf("advertised prefix option:");
-    //payload_hexdump(&(option_prefix_default.payload), 16);        
-    
+    //payload_hexdump(&(option_prefix_default.payload), 16);
+
     //set up ipv6 unicast address
     //should be 64 bits of prefix
     memcpy(ipv6_addr, prefix_ipv6_default.ipv6, IPV6_ASIZE);
 
     //copy last 64 bits from link local
-    memcpy(ipv6_addr + 8, &(link_local[8]), 8); 
+    memcpy(ipv6_addr + 8, &(link_local[8]), 8);
     //set flag
     hasIPv6Addr = 1;
     return curr_option_len_octets * 8;

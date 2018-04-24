@@ -46,7 +46,7 @@ void icmpv6_in(struct netpacket * pkt) {
             }
             rsolicit_handler(pkt);
             break;
-        
+
         case NEIGHBS:
 
             kprintf("icmpv6_in: Neighbor Sol received\n");
@@ -57,7 +57,7 @@ void icmpv6_in(struct netpacket * pkt) {
             print6(pkt);
             nsolicit_handler(pkt);
             break;
-        
+
         case NEIGHBA:
             kprintf("icmpv6_in: Neighbor Ad received\n");
 
@@ -68,12 +68,12 @@ void icmpv6_in(struct netpacket * pkt) {
             print6(pkt);
             nadvert_handler(pkt);
             break;
-        
+
         case ECHOREQ:
             kprintf("icmpv6_in: Echo Request received\n");
             print6(pkt);
             break;
-        
+
         case ECHORESP:
             kprintf("icmpv6_in: Echo Response received\n");
             print6(pkt);
