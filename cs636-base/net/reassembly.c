@@ -6,6 +6,7 @@
 
 //void removeReaEntry(struct reassembly_entry* entry);
 void print_list(struct frag_desc * list);
+int16 find_hole();
 void updateDatagramHeaders(char* headers, uint16 payload_len, byte next_header_in_fragment_header);
 bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram);
 bool8 isLastFragment(struct fragment_header * frag_header);
@@ -77,12 +78,9 @@ status reassembly(struct netpacket*  pkt){
 			}
 	        }
 
-
-
 	 }
    	
 // TO DO:
-// check whether it has  memory problem. Only reassembly entry left. Fragment list memory has been freed,
 // enable specify IPV6 addresss. It can be dealt later. 	
 	return 0;
 }
@@ -169,8 +167,13 @@ void appendReaTable(byte * ipv6_header) {
 	byte * src_addr = temp_ipv6->src;
 	byte * dest_addr = temp_ipv6->dest;
 	uint32 identif = ntohl(frag_header->identif);
-
-	struct reassembly_entry * entry = reassembly_table + reassembly_tab_size;
+	
+	int16 hole_index = find_hole();
+	if (hole_index == -1) {
+		kprintf("The reassembly table is full. So we drop the packet.\n");
+		return;
+	}
+	struct reassembly_entry * entry = reassembly_table + hole_index;
 	memcpy(&(entry->src_addr), src_addr, IPV6_ASIZE);
 	memcpy(&(entry->dest_addr), dest_addr, IPV6_ASIZE);
 	entry->identif = identif;
@@ -192,6 +195,21 @@ void appendReaTable(byte * ipv6_header) {
 	kprintf("timestamp: %u\n", entry->timestamp);
 	reassembly_tab_size++;
 	//kprintf("I am in append table, table size: %d\n", reassembly_tab_size);
+}
+
+int16 find_hole() {
+
+	int16 i;
+	for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
+
+		struct reassembly_entry * entry = reassembly_table + i;
+		if (entry->frag_list == NULL && entry->timestamp == 0) { // it is same with only one condition
+			return i;
+		}
+
+	}
+	return -1;
+
 }
 
 struct frag_desc *  initialize_frag_list() {

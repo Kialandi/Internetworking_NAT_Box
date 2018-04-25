@@ -254,4 +254,5 @@ void removeReaEntry(struct reassembly_entry * entry) {
 	}
 	entry->frag_list = NULL;
 	entry->timestamp = 0;
+	reassembly_tab_size--;
 }
