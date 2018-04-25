@@ -6,7 +6,8 @@ uint16 checkLength(uint16 payload_len);
 void writeToInterface(char*  pkt);
 void fillPayload(char* payload, char * buffer, uint32 len);
 void fillPerFragmentHeader(struct Datagram * datagram, char* pkt, uint16 payload_len_ipv6_header);
-void fragmentDatagram();
+//void fragmentDatagram();
+void fragmentDatagram(struct Datagram * datagram, bool8 timeout_flag);
 char* fillFragmentHeader ( struct fragment_header * fragment_header ,uint32 identif, byte next_header, uint16 frag_offset, bool8 M_flag) ;
 void sendFragment(struct Datagram * datagram, uint16 payload_len_ipv6_header, uint16 payload_len, uint32 identif, uint16 frag_offset, byte next_header_in_fragment_header, bool8 M_flag);
 
@@ -14,7 +15,7 @@ char* fillUDPHeader(struct udp_header * udp_header, uint16 src_port, uint16 dest
 char*  fillPreFragmentHeader(char* pkt, byte* dest_ipv6, byte next_header);
 
 
-status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) {
+status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len, bool8 timeout_flag) {
 
 //	kprintf("I am in sendto.......\n");
 // The blow is for considering UDP/TCP, but it should be heandled in buffer before comming into this function.
@@ -39,7 +40,7 @@ status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) 
 	struct Datagram * datagram = (struct Datagram *) getmem(sizeof(struct Datagram));
 	fillDatagram(datagram, (byte *) ipv6_header, IPV6_HDR_LEN, buffer, buf_len);
 
-        fragmentDatagram(datagram);
+        fragmentDatagram(datagram, timeout_flag);
 	//if (MTU > 0 && buf_len > MTU - IPV6_HDR_LEN - pro_hdr_len) { // 20 is IP header len
 	/*
 	if (TRUE) {
@@ -83,7 +84,7 @@ status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len) 
 
 } 
 
-void fragmentDatagram(struct Datagram * datagram){
+void fragmentDatagram(struct Datagram * datagram, bool8 timeout_flag){
 //	MTU = 1500;// change it later
 	kprintf("MTU: %d\n", MTU);
 	if (datagram->headers_len + datagram->payload_len > MTU) {
@@ -120,6 +121,9 @@ void fragmentDatagram(struct Datagram * datagram){
 			//sendPacket(dest_ipv6, next_header, buffer, payload_len, TRUE);
 			sendFragment(datagram, payload_len_ipv6_header, payload_len, identif, frag_offset, next_header_in_fragment_header, M_flag);
 			frag_offset += payload_len;
+			if (timeout_flag == TRUE) {
+				sleep(40);
+			}
 		}	
 
  	} else {

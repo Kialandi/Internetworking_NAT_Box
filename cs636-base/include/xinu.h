@@ -37,6 +37,7 @@
 #include <name.h>
 #include <shell.h>
 #include <date.h>
+#include <reassembly.h>
 #include <prototypes.h>
 #include <delay.h>
 #include <pci.h>
@@ -44,6 +45,5 @@
 #include <quark_pdat.h>
 #include <quark_irq.h>
 #include <multiboot.h>
-#include <reassembly.h>
 #include <stdio.h>
 #include <string.h>

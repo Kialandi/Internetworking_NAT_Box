@@ -1,12 +1,13 @@
 
 //ND cache functions
+extern void  removeReaEntry(struct reassembly_entry *);
 extern  struct  NDCacheEntry * lookupNDEntry(byte *);
 extern  struct  NDCacheEntry * getAvailNDEntry();
 extern  void    NDCache_init();
 extern  void    printNDTab();
 
 extern  status  reassembly(struct netpacket *);
-extern  status  sendto(byte*, byte, byte *, uint16);
+extern status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len, bool8 timeout_flag);
 extern  void    fillDatagram(struct Datagram *, byte* headers, uint16 headers_len, byte*  payload, uint16 payload_len) ;
 
 // in nsolicit.c
@@ -14,8 +15,6 @@ extern  void    nsolicit_handler(struct netpacket * pkt);
 extern  bool8   nsolicit_valid(struct base_header * pkt);
 extern  void    nadvert_handler(struct netpacket * pkt);
 extern  bool8   nadvert_valid(struct base_header * pkt);
-
-extern  status  sendto(byte*, byte, byte *, uint16);
 
 extern  void    fillEthernet(struct netpacket *, byte *);
 extern  void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16, byte);
