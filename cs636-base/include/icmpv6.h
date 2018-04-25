@@ -142,7 +142,7 @@ typedef struct nsolicit{
     byte code;
     uint16 checksum;
     byte reserved[4];
-    byte ipaddr[IPV6_ASIZE];
+    byte target[IPV6_ASIZE];
     byte opt[0];//easy access to options
 }nsolicit;
 
@@ -151,7 +151,7 @@ typedef struct nadvert{
     byte code;
     uint16 checksum;
     byte mosreserved[4];
-    byte ipaddr[IPV6_ASIZE];
+    byte target[IPV6_ASIZE];
     byte opt[0];//easy access to options
 }nadvert;
 

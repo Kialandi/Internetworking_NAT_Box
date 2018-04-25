@@ -151,6 +151,13 @@ syscall ipv6_init() {
     }
 
     NDCache_init();
+    fwdipv6_init();
+
+    if(!host) {
+        //only initialize nat table if you're a NAT box
+        natTab_init();
+    }
+
     return OK;
 }
 

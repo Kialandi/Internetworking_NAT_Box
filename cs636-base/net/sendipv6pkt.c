@@ -88,7 +88,8 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillEthernet(packet, link_dest);
             //caller has to pass in which dest to use. probably lookup routing
             //table first
-            fillIPdatagram(packet, link_local, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
+            //fillIPdatagram(packet, link_local, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
+            fillIPdatagram(packet, ipv6_addr, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
             uint8 nopt[1] = {1};
             fillICMP(packet, NEIGHBS, nopt,1);
             
@@ -102,10 +103,13 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
 
         case NEIGHBA://should add a case for unsolicited
             kprintf("sendipv6pkt: Sending neighbor advert...\n");
-            totalOptLen = 8;
+            //TODO: if solicited, no options
+            //totalOptLen = 8;
+            totalOptLen = 0;
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
             fillEthernet(packet, link_dest);
-            fillIPdatagram(packet, link_local, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
+            //fillIPdatagram(packet, link_local, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
+            fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             uint8 nadops[1] = {1};
             fillICMP(packet, NEIGHBA, nadops, 1);
             
@@ -125,7 +129,9 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             //TODO: add fwding table and nat table
             //for now, send to default router
             fillEthernet(packet, router_link_addr);
-            fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
+            
+            fillIPdatagram(packet, ipv6_addr, ip_dest, ECHOREQSIZE, IPV6_ICMP);
+            //fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
             fillICMP(packet, ECHOREQ, NULL, 0);
             break;
     }
@@ -254,45 +260,63 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             break;
 
         case NEIGHBS: ;
+            struct nsolicit * pkt_icmp_nsol = (struct nsolicit *) pkt_icmp;
             totalOptLen = 8;
-            pkt_icmp->type = NEIGHBS;
-            pkt_icmp->code = 0;
-            pkt_icmp->checksum = 0;
-            memcpy((void *) pkt_icmp + 8, src, IPV6_ASIZE);
-            fillOptions((char *) pkt_icmp + NSOLSIZE, option_types, option_types_length);
+            pkt_icmp_nsol->type = NEIGHBS;
+            pkt_icmp_nsol->code = 0;
+            pkt_icmp_nsol->checksum = 0;
+            //target is any address associated with recipient interface
+            byte bufip[IPV6_ASIZE];
+            memset(bufip, NULLCH, IPV6_ASIZE);
+            bufip[0] = 0xfe;
+            bufip[1] = 0x80;
+
+            bufip[8] = 0x02;
+            bufip[9] = 0x24;
+            bufip[10] = 0xc4;
+            bufip[11] = 0xff;
+
+            bufip[12] = 0xfe;
+            bufip[13] = 0xdc;
+            bufip[14] = 0xcb;
+            bufip[15] = 0xc0;
+
+            memcpy((void *) pkt_icmp_nsol->target, bufip, IPV6_ASIZE);
+            fillOptions((char *) pkt_icmp_nsol->opt, option_types, option_types_length);
             pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;
             break;
 
         case NEIGHBA: ;
-            totalOptLen = 8;
-            pkt_icmp->type = NEIGHBA;
-            pkt_icmp->code = 0;
-            pkt_icmp->checksum = 0;
-            struct nadvert * nadvertptr = (struct nadvert *) pkt_icmp;
-            //set the solicited and overwrite bits
-            //nadvertptr->mosreserved[0] = 96;
-            nadvertptr->mosreserved[0] = 32;
+                      //totalOptLen = 8;
+                      pkt_icmp->type = NEIGHBA;
+                      pkt_icmp->code = 0;
+                      pkt_icmp->checksum = 0;
+                      struct nadvert * nadvertptr = (struct nadvert *) pkt_icmp;
+                      //set the solicited and overwrite bits
+                      //nadvertptr->mosreserved[0] = 96;
+                      nadvertptr->mosreserved[0] = 96;
 
-            //if solicited advertisement, have to send address that was in the
-            //original solicitation msg
-            memcpy((void *) pkt_icmp + 8, link_local, IPV6_ASIZE);
-            fillOptions((char*) pkt_icmp + NADSIZE,  option_types, option_types_length);
-            pseudoSize = PSEUDOLEN + NADSIZE + totalOptLen;
-            break;
+                      //if solicited advertisement, have to send address that was in the
+                      //original solicitation msg
+                      memcpy((void *) nadvertptr->target, ipv6_addr, IPV6_ASIZE);
+                      //memcpy((void *) nadvertptr->target, link_local, IPV6_ASIZE);
+                      //fillOptions((char*) pkt_icmp + NADSIZE,  option_types, option_types_length);
+                      pseudoSize = PSEUDOLEN + NADSIZE;// + totalOptLen;
+                      break;
 
 
         case ECHOREQ: ;
-            struct icmpv6echoreq * echo_pkt = (struct icmpv6echoreq *) pkt_icmp;
-            uint16 x = 15;
-            echo_pkt->identifier = htons(x);
-            echo_pkt->seqNumber = htons(x);
-            pseudoSize = PSEUDOLEN + ECHOREQSIZE;
-            break;
+                      struct icmpv6echoreq * echo_pkt = (struct icmpv6echoreq *) pkt_icmp;
+                      uint16 x = 15;
+                      echo_pkt->identifier = htons(x);
+                      echo_pkt->seqNumber = htons(x);
+                      pseudoSize = PSEUDOLEN + ECHOREQSIZE;
+                      break;
 
         default:
-            kprintf("fillICMP: invalid type\n");
-            return;
-            break;
+                      kprintf("fillICMP: invalid type\n");
+                      return;
+                      break;
     }
     //create pseudo header and compute checksum
     void * pseudo = (void *) getmem(pseudoSize);

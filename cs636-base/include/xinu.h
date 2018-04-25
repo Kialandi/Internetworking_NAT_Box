@@ -29,6 +29,7 @@
 #include <ipv6.h>
 #include <ndcache.h>
 #include <fwdipv6.h>
+#include <nat.h>
 #include <udp.h>
 #include <dhcp.h>
 #include <icmp.h>
