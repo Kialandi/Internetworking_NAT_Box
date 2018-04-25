@@ -15,6 +15,10 @@ bpid32 	datagram_buf_pool;
 struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
 uint8 reassembly_tab_size = 0;  // check later
 
+//TODO: make this general with negotiation
+//band aid
+void solicitrouter();
+//band aid
 void get_link_local(byte *);
 void get_snm_addr(byte *);
 void get_mac_snm(byte *);
@@ -47,7 +51,7 @@ void    ipv6_in (
             break;
 	case NEXT_HEADER_FRAGMENT:
 		kprintf("======A fragment packet received========\n");
-		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);		
+		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
 		reassembly(pkt);
         	break;
 	default:
@@ -67,8 +71,8 @@ syscall ipv6_init() {
         kill(getpid());
     }
     // make reassembly fragments descriptor buffer pool
-  // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )    
-    
+  // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )
+
     // make the datagram buffer pool
     /*
     datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
@@ -78,10 +82,10 @@ syscall ipv6_init() {
     for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
 	reassembly_table[i].frag_list = NULL;
 	reassembly_table[i].timestamp = 0;
-    } 
+    }
     // make a thread check reassembly table every REASSEMBLY_MAC_TIME * 2
-    resume(create((void*) check_reassembly_time_out_task, 2048, 30, "reassembly_time_out_task", 0));    
-    
+    resume(create((void*) check_reassembly_time_out_task, 2048, 30, "reassembly_time_out_task", 0));
+
     //set prefix stuff to 0
     memset(&option_prefix_default, NULLCH, sizeof(option_prefix));
 
@@ -92,8 +96,8 @@ syscall ipv6_init() {
 
     //no ipv6 address yet
     hasIPv6Addr = 0;
-    print_ipv6_info(); 
-    
+    print_ipv6_info();
+
     //tell hardware to listen to your own MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
@@ -111,7 +115,7 @@ syscall ipv6_init() {
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allnMACmulti, 0);
 
     buf[5] = 0x02;
-    memcpy(allrMACmulti, buf, ETH_ADDR_LEN); 
+    memcpy(allrMACmulti, buf, ETH_ADDR_LEN);
 
     //this doesn't solve the problem because the default router is
     //sending a router advertisement to all nodes
@@ -145,6 +149,7 @@ syscall ipv6_init() {
     else {
         kprintf("Host online... Sending solicitation...\n");
         sendipv6pkt(ROUTERS, allrMACmulti, NULL);
+        solicitrouter();
 	kprintf("in ipv6_init ifacer macbcast");
 	print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
@@ -224,19 +229,19 @@ void check_reassembly_time_out(){
 		struct reassembly_entry * entry = reassembly_table + i;
 		if (entry->frag_list != NULL && entry->timestamp != 0) {
 			kprintf("clktime now: %u\n", clktime);
-			kprintf("entry timestamp: %u\n", entry->timestamp);	
+			kprintf("entry timestamp: %u\n", entry->timestamp);
 			if (clktime - entry->timestamp >= REASSEMBLY_MAX_TIME) {
 				removeReaEntry(entry);
 			}
-	
+
 		}
-	
+
         }
 
 }
 
 void removeReaEntry(struct reassembly_entry * entry) {
-	// we will deal with the hole later, currently remove the fragment list 
+	// we will deal with the hole later, currently remove the fragment list
 	struct frag_desc * frag_list = entry->frag_list;
 	if (frag_list != NULL) {
 		struct frag_desc * node = frag_list-> next;
@@ -245,7 +250,7 @@ void removeReaEntry(struct reassembly_entry * entry) {
 			freemem((char*) (node->payload), (uint32) node->payload_len);
 			freemem( (char*)node, sizeof(struct frag_desc));
 			node = next;
-		} 
+		}
 		// free the dummy sentinal node
 		if (node != NULL) {
 			freemem( (char*)node, sizeof(struct frag_desc));
@@ -255,4 +260,32 @@ void removeReaEntry(struct reassembly_entry * entry) {
 	entry->frag_list = NULL;
 	entry->timestamp = 0;
 	reassembly_tab_size--;
+}
+void solicitrouter(){
+
+    byte bufmac[ETH_ADDR_LEN];
+    bufmac[0] = 0x33;
+    bufmac[1] = 0x33;
+    bufmac[2] = 0xfe;
+    bufmac[3] = 0xdc;
+    bufmac[4] = 0xcb;
+    bufmac[5] = 0xc0;
+
+    byte bufip[IPV6_ASIZE];
+    memset(bufip, NULLCH, IPV6_ASIZE);
+    bufip[0] = 0xfe;
+    bufip[1] = 0x80;
+
+    bufip[8] = 0x02;
+    bufip[9] = 0x24;
+    bufip[10] = 0xc4;
+    bufip[11] = 0xff;
+
+    bufip[12] = 0xfe;
+    bufip[13] = 0xdc;
+    bufip[14] = 0xcb;
+    bufip[15] = 0xc0;
+
+    sendipv6pkt(NEIGHBS, bufmac, bufip);
+
 }
