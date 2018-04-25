@@ -81,23 +81,26 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             }
             break;
 
+            // packet crafting
         case NEIGHBS:
             kprintf("sendipv6pkt: Sending neighbor solicit...\n");
             totalOptLen = 8;
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
-            fillEthernet(packet, link_dest);
+            fillEthernet(packet, router_macsnm);
             //caller has to pass in which dest to use. probably lookup routing
             //table first
-            fillIPdatagram(packet, link_local, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
+            if(ip_dest == NULL)
+                ip_dest = allnIPmulti;
+            fillIPdatagram(packet, link_local, router, NSOLSIZE + totalOptLen, IPV6_ICMP);
             uint8 nopt[1] = {1};
             fillICMP(packet, NEIGHBS, nopt,1);
-            
+
             if (!nsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor solicit constructed, aborting!\n");
                 freebuf((char *) packet);
                 return 0;
             }
-            
+
             break;
 
         case NEIGHBA://should add a case for unsolicited
@@ -108,14 +111,14 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillIPdatagram(packet, link_local, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             uint8 nadops[1] = {1};
             fillICMP(packet, NEIGHBA, nadops, 1);
-            
+
             if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor advert constructed, aborting!\n");
                 freebuf((char *) packet);
                 return 0;
             }
             break;
-        
+
         case ECHOREQ:
             kprintf("Sending echo request...\n");
 
@@ -129,8 +132,9 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillICMP(packet, ECHOREQ, NULL, 0);
             break;
     }
-    //print6(packet);
+    print6(packet);
     //fire off packet
+
     if( write(ETHER0, (char *) packet, len) == SYSERR) {
         kprintf("THE WORLD IS BURNING\n");
         kill(getpid());
@@ -204,7 +208,7 @@ uint8 fill_option_one(void * pkt) {
 void fillEthernet(struct netpacket * pkt, byte* dest) {
     memcpy(pkt->net_dst, dest, ETH_ADDR_LEN);
     memcpy(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
-        
+
     pkt->net_type = htons(ETH_IPv6);
 }
 
@@ -254,11 +258,12 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             break;
 
         case NEIGHBS: ;
+            char buffer[IPV6_ASIZE] = {0};
             totalOptLen = 8;
             pkt_icmp->type = NEIGHBS;
             pkt_icmp->code = 0;
             pkt_icmp->checksum = 0;
-            memcpy((void *) pkt_icmp + 8, src, IPV6_ASIZE);
+            memcpy((void *) pkt_icmp + 8, buffer, IPV6_ASIZE);
             fillOptions((char *) pkt_icmp + NSOLSIZE, option_types, option_types_length);
             pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;
             break;

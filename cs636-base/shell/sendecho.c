@@ -9,7 +9,7 @@ shellcmd sendecho(int nargs, char * args[]) {
         kprintf("USAGE: sendecho <destination>\n");
         return 0;
     }
-    
+
     char * ptr = args[1];
     uint32 len = 0;
 
@@ -32,6 +32,6 @@ shellcmd sendecho(int nargs, char * args[]) {
     }
     //TODO: add the routing table lookup here, given an ip address, return a mac
     sendipv6pkt(ECHOREQ, router_link_addr, dest);
-    
+
     return 1;
 }

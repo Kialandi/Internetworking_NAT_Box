@@ -41,7 +41,7 @@ void    ipv6_in (
             break;
 	case NEXT_HEADER_FRAGMENT:
 		kprintf("======A fragment packet received========\n");
-		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);		
+		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
 		reassembly(pkt);
         	break;
 	default:
@@ -61,16 +61,16 @@ syscall ipv6_init() {
         kill(getpid());
     }
     // make reassembly fragments descriptor buffer pool
-  // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )    
-    
+  // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )
+
     // make the datagram buffer pool
     /*
     datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
     if(datagram_buf_pool == SYSERR) {
-	
+
         kprintf("ipv6_init cannot allocate ddatagram buffer pool\n");
         kill(getpid());
-   
+
      }
     */
     //set prefix stuff to 0
@@ -83,8 +83,8 @@ syscall ipv6_init() {
 
     //no ipv6 address yet
     hasIPv6Addr = 0;
-    print_ipv6_info(); 
-    
+    print_ipv6_info();
+
     //tell hardware to listen to your own MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
 
@@ -102,7 +102,7 @@ syscall ipv6_init() {
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)allnMACmulti, 0);
 
     buf[5] = 0x02;
-    memcpy(allrMACmulti, buf, ETH_ADDR_LEN); 
+    memcpy(allrMACmulti, buf, ETH_ADDR_LEN);
 
     //this doesn't solve the problem because the default router is
     //sending a router advertisement to all nodes
@@ -140,7 +140,6 @@ syscall ipv6_init() {
 	print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
     }
-
     NDCache_init();
     fwdipv6_init();
     return OK;

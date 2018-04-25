@@ -14,8 +14,8 @@
 #define IPV6_VH		    0x45 	/* IP version and hdr length 	*/
 
 #define IPV6OUTNBUFS    40      /* number of buffers */
-#define DATAGRAM_ASIZE  98312   
-#define DATAGRAMNBUFS   10	/*number of buffers */ 
+#define DATAGRAM_ASIZE  98312
+#define DATAGRAMNBUFS   10	/*number of buffers */
 
 struct base_header {
     //4bit    version;
@@ -41,8 +41,12 @@ extern byte     allrIPmulti[];//All routers IP
 extern byte     allnIPmulti[];//All nodes IP
 extern bpid32   ipv6bufpool;
 extern bpid32	datagram_buf_pool;
+
 extern byte 	router_link_addr[];//default router's MAC address?
 extern byte     router_ip_addr[];//default router ip addr
+extern byte     router_snm[];
+extern byte     router_macsnm[];
+
 extern uint32	MTU;
 extern byte	prefix_default[];
 
@@ -59,7 +63,7 @@ struct fragment_header {
 	//uint13 frag_offset;
 	uint16 offset; // 13 bits for frag_offset, 2 bites for res, 1 bit for M flag
 	//byte M_flag;
-	uint32 identif;		
+	uint32 identif;
 };
 
 struct udp_header{

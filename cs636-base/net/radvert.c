@@ -2,7 +2,11 @@
 
 byte router_link_addr[ETH_ADDR_LEN];
 //TODO: add support for this
+
 byte router_ip_addr[IPV6_ASIZE];
+byte     router_snm[IPV6_ASIZE];
+byte     router_macsnm[ETH_ADDR_LEN];
+
 uint32  MTU;
 byte prefix_default[64];
 uint16 get_router_link_addr(char*);
@@ -12,6 +16,11 @@ struct option_prefix option_prefix_default;
 struct option_prefix option_prefix_oth1;
 struct option_prefix option_prefix_oth2;
 struct radvert radvert_from_router;
+
+void get_link_local1(byte * mac);
+void get_snm_addr1(byte * unicast);
+void get_mac_snm1(byte * snm_addr);
+
 
 //assigned ipv6 prefix
 struct prefix_ipv6 prefix_ipv6_default;
@@ -76,7 +85,11 @@ uint16 get_router_link_addr(char* option) {
     //kprintf("curr_option_len_octets: %d\n", curr_option_len_octets);
     uint16 option_payload_len = curr_option_len_octets * 8 - 2;
 
-    memcpy(router_link_addr, option + 2, option_payload_len);
+    memcpy(router_link_addr, option + 2, option_payload_len); // eth
+    get_link_local1(router_link_addr); //eth -> link
+    get_mac_snm1(router_ip_addr); // link local -> snm
+    get_snm_addr1(router_snm); //snm -> mac
+
     //	kprintf("src link addr:");
     //	print_mac_addr(router_link_addr);
     return curr_option_len_octets * 8;
@@ -142,3 +155,56 @@ bool8 radvert_valid(struct base_header * ipdatagram) {
 
     return TRUE;
 }
+
+
+void  get_link_local1(byte* mac) {
+    byte res[IPV6_ASIZE];
+
+    memset(res, NULLCH, 8); // for 64 bits prefix
+    res[0] = 0xFE;
+    res[1] = 0x80;
+
+    // insert 0xFFFE in the middle of mac addr
+    byte  temp[8];
+    memset(temp, NULLCH, 8);
+    memcpy(temp, mac, 3);
+    temp[3] = 0xFF;
+    temp[4] = 0xFE;
+    memcpy(temp + 5, mac + 3, 3);
+
+    // flip the 7th bit
+    temp[0] = temp[0] ^ 0x02;
+    memcpy(res + 8, temp, 8);
+    print_ipv6_addr(res);
+
+
+    memcpy(router_ip_addr, res, IPV6_ASIZE);
+}
+
+void get_snm_addr1(byte* unicast){
+    byte res[IPV6_ASIZE];
+    memset(res, NULLCH, IPV6_ASIZE);
+
+    // 104 bit prefix :FF02:0::01:FF
+    res[0] = 0xFF;
+    res[1] = 0x02;
+    res[11] = 0x01;
+    res[12] = 0xFF;
+
+    // last 24 bit of unicast addr
+    memcpy(res + 13, unicast + 13, 3);
+    print_ipv6_addr(res);
+
+    memcpy(router_snm, res, IPV6_ASIZE);
+}
+
+void get_mac_snm1(byte* snm_addr) {
+    byte res[ETH_ADDR_LEN];
+    memset(res, NULLCH, 6);
+    res[0] = 0x33;
+    res[1] = 0x33;
+    memcpy(res + 2, snm_addr + 12, 4);
+    print_mac_addr(res);
+    memcpy(router_macsnm, res, ETH_ADDR_LEN);
+}
+

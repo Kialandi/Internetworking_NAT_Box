@@ -1,4 +1,5 @@
 
+extern  shellcmd     allurbase(int nargs, char * args[]);
 extern  shellcmd    printFWD(int32, char *[]);
 extern  shellcmd    addFwdEntry(int32, char *[]);
 extern  shellcmd    printNAT(int32, char *[]);

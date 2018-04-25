@@ -8,13 +8,18 @@ shellcmd sendnsolicit(int nargs, char * args[]) {
         printf("USAGE: sendnsolicit\n");
         return 0;
     }
+/*
+        sendipv6pkt(NEIGHBS, allnMACmulti, NULL);
+        sleep(1);
+        sendipv6pkt(NEIGHBS, allrMACmulti, NULL);
+*/
 
-    /*
-        sendipv6pkt(NEIGHBS, mac_snm, NULL);
-    */
+        sendipv6pkt(NEIGHBS, router_snm, NULL);
+
+        /*
         sendipv6pkt(NEIGHBS, if_tab[1].if_macbcast, NULL);
         sendipv6pkt(NEIGHBS, if_tab[2].if_macbcast, NULL);
-
+*/
 
  /*
   *
