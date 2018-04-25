@@ -31,18 +31,24 @@ struct base_header {
 };
 
 extern uint8    hasIPv6Addr;
-extern byte     ipv6_addr[];//you own global ip address
-extern byte     link_local[];
-extern byte     snm_addr[];
-extern byte     mac_snm[];
+extern byte     ipv6_addr[];//your own global ip address
+extern byte     link_local[];//your own link local IP address: FE80::\64 + EUI64(mac)
+extern byte     link_local_mac[];//mac version of link local, 3333:<link local last 32>
+extern byte     snm_addr[];//multicast group ff02::1:ff<last 24 from link local>
+extern byte     mac_snm[];//3333:<mac last 32>
 extern byte     allrMACmulti[];//All routers MAC
 extern byte     allnMACmulti[];//All nodes MAC
 extern byte     allrIPmulti[];//All routers IP
 extern byte     allnIPmulti[];//All nodes IP
 extern bpid32   ipv6bufpool;
 extern bpid32	datagram_buf_pool;
-extern byte 	router_link_addr[];//default router's MAC address?
-extern byte     router_ip_addr[];//default router ip addr
+extern byte     router_link_local[];//default router link local
+extern byte     router_link_local_mac[];//default router transformed mac from link local
+extern byte     router_ip_addr[];//default router global unicast
+extern byte 	router_mac_addr[];//default router's MAC address
+extern byte 	router_snm_addr[];//default router's SNM address
+extern byte 	router_mac_snm[];//default router's MAC SNM address
+
 extern uint32	MTU;
 extern byte	prefix_default[];
 

@@ -130,7 +130,7 @@ void printNATTab() {
 
     for (i = 0; i < MAXFWDTABENTRIES; i++) {
         //done
-        //if (fwdTabPTR[i]->prefixLen == 0) return;
+        if (fwdTabPTR[i]->prefixLen == 0) return;
         print_ipv6(natTab[i].src);
         kprintf(" ");
         kprintf("  %3d  ", natTab[i].srcID);

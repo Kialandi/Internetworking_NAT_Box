@@ -32,6 +32,37 @@ void icmpv6_in(struct netpacket * pkt) {
             //just process if host
             radvert_handler((struct radvert *) msg, ip_payload_len);
 
+            //create the default router's global ip 
+            memcpy(router_ip_addr, prefix_ipv6_default.ipv6, IPV6_ASIZE);
+            memcpy(router_ip_addr + 8, &(ipdatagram->src[8]), IPV6_ASIZE);
+
+            //create default router's link local
+            memset(router_link_local, NULLCH, IPV6_ASIZE);
+            router_link_local[0] = 0xFE;
+            router_link_local[1] = 0x80;
+            memcpy(router_link_local + 8, &(ipdatagram->src[8]), IPV6_ASIZE);
+
+            //set default router's SNM address
+            byte res[IPV6_ASIZE];
+            memset(res, NULLCH, IPV6_ASIZE);
+            res[0] = 0xFF;
+            res[1] = 0x02;
+            res[11] = 0x01;
+            res[12] = 0xFF;
+            // last 24 bit of unicast addr
+            memcpy(res + 13, router_link_local + 13, 3);
+            memcpy(router_snm_addr, res, IPV6_ASIZE);
+
+            //set default router's MAC SNM
+            memset(res, 0, 6);
+            res[0] = 0x33;
+            res[1] = 0x33;
+            memcpy(res + 2, router_snm_addr + 12, 4);
+            memcpy(router_mac_snm, res, ETH_ADDR_LEN);
+
+            //set default router's transformed link local
+            memcpy(res + 2, router_link_local + 12, 4);
+            memcpy(router_link_local_mac, res, ETH_ADDR_LEN);
 
             if (!host) {//if nat box, send out updated advert too
                 //consider adding a check to see if prefix changed

@@ -143,7 +143,7 @@ void printNDTab() {
     for (i = 0; i < MAXNDENTRY; i++) {
         if (NDCache[i]->state == NDNOENTRY) {
             //TODO: change this later to only print relevant entries
-            //continue;
+            continue;
         }
         print_ipv6(NDCache[i]->ipAddr);
         kprintf("     ");

@@ -4,18 +4,31 @@ void print_ipv6_info() {
     /* Print ipv6 info */
     kprintf("\n======================= IPv6 addresses =======================\n\n");
     
-    kprintf("Link local address   : ");
+    kprintf("MAC address           : ");
+    print_mac_addr(if_tab[ifprime].if_macucast);
+    kprintf("Link local address    : ");
     print_ipv6_addr(link_local);
-    kprintf("SNM address          : ");
+    kprintf("SNM address           : ");
     print_ipv6_addr(snm_addr);
-    kprintf("MAC SNM address      : ");
+    kprintf("MAC SNM address       : ");
     print_mac_addr(mac_snm);
     
     if (hasIPv6Addr) {
-        kprintf("IPv6 unicast address : ");
+        kprintf("IPv6 unicast address  : ");
         print_ipv6_addr(ipv6_addr);
+        kprintf("Router link local     : ");
+        print_ipv6_addr(router_link_local);
+        kprintf("Router global address : ");
+        print_ipv6_addr(router_ip_addr);
+        kprintf("Router SNM address    : ");
+        print_ipv6_addr(router_snm_addr);
+        kprintf("Router MAC SNM        : ");
+        print_mac_addr(router_mac_snm);
+        
+        kprintf("Router MAC address    : ");
+        print_mac_addr(router_mac_addr);
     }
-    kprintf("Default interface    : %d\n", ifprime);
+    kprintf("Default interface     : %d\n", ifprime);
     
     kprintf("\n==============================================================\n");
 

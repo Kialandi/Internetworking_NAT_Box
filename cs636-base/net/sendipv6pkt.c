@@ -128,7 +128,7 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
 
             //TODO: add fwding table and nat table
             //for now, send to default router
-            fillEthernet(packet, router_link_addr);
+            fillEthernet(packet, router_mac_addr);
             
             fillIPdatagram(packet, ipv6_addr, ip_dest, ECHOREQSIZE, IPV6_ICMP);
             //fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);

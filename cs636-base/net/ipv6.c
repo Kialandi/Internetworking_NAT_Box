@@ -3,6 +3,7 @@
 uint8   hasIPv6Addr;
 byte    ipv6_addr[IPV6_ASIZE];
 byte    link_local[IPV6_ASIZE];
+byte    link_local_mac[ETH_ADDR_LEN];
 byte    snm_addr[IPV6_ASIZE];
 byte    mac_snm[ETH_ADDR_LEN];
 byte    allrMACmulti[ETH_ADDR_LEN];
@@ -49,12 +50,12 @@ void    ipv6_in (
             //payload_hexdump((char *) ad, 64);
             icmpv6_in(pkt);
             break;
-	case NEXT_HEADER_FRAGMENT:
-		kprintf("======A fragment packet received========\n");
-		hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
-		reassembly(pkt);
-        	break;
-	default:
+        case NEXT_HEADER_FRAGMENT:
+            kprintf("======A fragment packet received========\n");
+            hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
+            reassembly(pkt);
+            break;
+        default:
             kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);
             break;
     }
@@ -71,17 +72,17 @@ syscall ipv6_init() {
         kill(getpid());
     }
     // make reassembly fragments descriptor buffer pool
-  // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )
+    // frag_desc_pool = mkbufpool(sizeof(struct frag_desc), )
 
     // make the datagram buffer pool
     /*
-    datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
-    */
+       datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
+       */
     // initialize frag_list of each reassembly entry to be NULL
     uint8 i;
     for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
-	reassembly_table[i].frag_list = NULL;
-	reassembly_table[i].timestamp = 0;
+        reassembly_table[i].frag_list = NULL;
+        reassembly_table[i].timestamp = 0;
     }
     // make a thread check reassembly table every REASSEMBLY_MAC_TIME * 2
     resume(create((void*) check_reassembly_time_out_task, 2048, 30, "reassembly_time_out_task", 0));
@@ -100,6 +101,14 @@ syscall ipv6_init() {
 
     //tell hardware to listen to your own MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
+    
+    //tell hardware to listen to your link local transformed MAC
+    link_local_mac[0] = 0x33;
+    link_local_mac[1] = 0x33;
+    //copy the last 32 bits
+    memcpy(link_local_mac + 2, link_local + 12, 4);
+    
+    control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)link_local_mac, 0);
 
     //listen to all router and all node multicast MAC address
     byte buf[IPV6_ASIZE];
@@ -136,22 +145,14 @@ syscall ipv6_init() {
 
     if (!host) {
         kprintf("NAT Box autoconfiguration...\nSending solicitation...\n");
-        /*
-           char ch;
-           while(1) {
-           kprintf("Press enter to send a RSOLICIT, c to continue\n");
-           read(CONSOLE, &ch, 5);
-           if (ch == 'c') break;
-           sendipv6pkt(ROUTERS, allrMACmulti, NULL);
-           }*/
+        
         sendipv6pkt(ROUTERS, allrMACmulti, NULL);
-        solicitrouter();
     }
     else {
         kprintf("Host online... Sending solicitation...\n");
         sendipv6pkt(ROUTERS, allrMACmulti, NULL);
-	kprintf("in ipv6_init ifacer macbcast");
-	print_mac_addr(if_tab[ifprime].if_macbcast);
+        kprintf("in ipv6_init ifacer macbcast");
+        print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
     }
 
@@ -163,6 +164,13 @@ syscall ipv6_init() {
         natTab_init();
     }
 
+    //have to make sure that ipv6 information is successfull before we can send
+    //neighbor stuff
+    while(!hasIPv6Addr) {
+        sleep(1);
+    }
+    
+    sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local);
     return OK;
 }
 
@@ -214,78 +222,48 @@ void get_mac_snm(byte* snm_addr) {
 }
 
 void check_reassembly_time_out_task(){
-	while(1) {
-		//kprintf("checking time out....");
-		check_reassembly_time_out();
-		sleep(REASSEMBLY_MAX_TIME);
-	}
+    while(1) {
+        //kprintf("checking time out....");
+        check_reassembly_time_out();
+        sleep(REASSEMBLY_MAX_TIME);
+    }
 
 }
 
 void check_reassembly_time_out(){
-	kprintf("I am in check_reassembly_time_out.\n");
-	uint8 i;
-	for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
-		struct reassembly_entry * entry = reassembly_table + i;
-		if (entry->frag_list != NULL && entry->timestamp != 0) {
-			kprintf("clktime now: %u\n", clktime);
-			kprintf("entry timestamp: %u\n", entry->timestamp);
-			if (clktime - entry->timestamp >= REASSEMBLY_MAX_TIME) {
-				removeReaEntry(entry);
-			}
-
-		}
-
+    //kprintf("I am in check_reassembly_time_out.\n");
+    uint8 i;
+    for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
+        struct reassembly_entry * entry = reassembly_table + i;
+        if (entry->frag_list != NULL && entry->timestamp != 0) {
+            kprintf("clktime now: %u\n", clktime);
+            kprintf("entry timestamp: %u\n", entry->timestamp);
+            if (clktime - entry->timestamp >= REASSEMBLY_MAX_TIME) {
+                removeReaEntry(entry);
+            }
         }
-
+    }
 }
 
 void removeReaEntry(struct reassembly_entry * entry) {
-	// we will deal with the hole later, currently remove the fragment list
-	struct frag_desc * frag_list = entry->frag_list;
-	if (frag_list != NULL) {
-		struct frag_desc * node = frag_list-> next;
-		while (node != NULL && node->payload != NULL) {
-			struct frag_desc * next = node -> next;
-			freemem((char*) (node->payload), (uint32) node->payload_len);
-			freemem( (char*)node, sizeof(struct frag_desc));
-			node = next;
-		}
-		// free the dummy sentinal node
-		if (node != NULL) {
-			freemem( (char*)node, sizeof(struct frag_desc));
-		}
+    // we will deal with the hole later, currently remove the fragment list
+    struct frag_desc * frag_list = entry->frag_list;
+    if (frag_list != NULL) {
+        struct frag_desc * node = frag_list-> next;
+        while (node != NULL && node->payload != NULL) {
+            struct frag_desc * next = node -> next;
+            freemem((char*) (node->payload), (uint32) node->payload_len);
+            freemem( (char*)node, sizeof(struct frag_desc));
+            node = next;
+        }
+        // free the dummy sentinal node
+        if (node != NULL) {
+            freemem( (char*)node, sizeof(struct frag_desc));
+        }
 
-	}
-	entry->frag_list = NULL;
-	entry->timestamp = 0;
-	reassembly_tab_size--;
+    }
+    entry->frag_list = NULL;
+    entry->timestamp = 0;
+    reassembly_tab_size--;
 }
-void solicitrouter(){
 
-    byte bufmac[ETH_ADDR_LEN];
-    bufmac[0] = 0x33;
-    bufmac[1] = 0x33;
-    bufmac[2] = 0xfe;
-    bufmac[3] = 0xdc;
-    bufmac[4] = 0xcb;
-    bufmac[5] = 0xc0;
-
-    byte bufip[IPV6_ASIZE];
-    memset(bufip, NULLCH, IPV6_ASIZE);
-    bufip[0] = 0xfe;
-    bufip[1] = 0x80;
-
-    bufip[8] = 0x02;
-    bufip[9] = 0x24;
-    bufip[10] = 0xc4;
-    bufip[11] = 0xff;
-
-    bufip[12] = 0xfe;
-    bufip[13] = 0xdc;
-    bufip[14] = 0xcb;
-    bufip[15] = 0xc0;
-
-    sendipv6pkt(NEIGHBS, bufmac, bufip);
-
-}
