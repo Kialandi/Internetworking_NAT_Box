@@ -2,6 +2,7 @@
 extern  void    printFWDTab();
 extern  void    fwdipv6_init();
 extern  void    printNATTab();
+extern  void    natTab_init();
 extern  void    print_ipv6(byte *);
 
 

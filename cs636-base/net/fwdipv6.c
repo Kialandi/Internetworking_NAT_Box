@@ -148,7 +148,7 @@ void printFWDTab() {
     kprintf("\nPrinting Forwarding Table\n");
     kprintf("IPv6 Address                              ");
     kprintf("Len   ");
-    kprintf("Next Hop                                 ");
+    kprintf("Next Hop IPv6 Address                    ");
     kprintf("Iface\n");
     kprintf("----------------------------------------  ");
     kprintf("---  ");
