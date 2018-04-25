@@ -1,5 +1,5 @@
 #include <xinu.h>
-
+#include <stdlib.h>
 uint8   hasIPv6Addr;
 byte    ipv6_addr[IPV6_ASIZE];
 byte    link_local[IPV6_ASIZE];
@@ -12,9 +12,15 @@ byte    allnIPmulti[IPV6_ASIZE];
 bpid32  ipv6bufpool;
 bpid32 	datagram_buf_pool;
 
+struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
+uint8 reassembly_tab_size = 0;  // check later
+
 void get_link_local(byte *);
 void get_snm_addr(byte *);
 void get_mac_snm(byte *);
+//void removeReaEntry(struct reassembly_entry * entry);
+void check_reassembly_time_out_task();
+void check_reassembly_time_out();
 
 void    ipv6_in (
         struct netpacket * pkt
@@ -66,13 +72,16 @@ syscall ipv6_init() {
     // make the datagram buffer pool
     /*
     datagram_buf_pool = mkbufpool(DATAGRAM_ASIZE, DATAGRAMNBUFS);
-    if(datagram_buf_pool == SYSERR) {
-	
-        kprintf("ipv6_init cannot allocate ddatagram buffer pool\n");
-        kill(getpid());
-   
-     }
     */
+    // initialize frag_list of each reassembly entry to be NULL
+    uint8 i;
+    for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
+	reassembly_table[i].frag_list = NULL;
+	reassembly_table[i].timestamp = 0;
+    } 
+    // make a thread check reassembly table every REASSEMBLY_MAC_TIME * 2
+    resume(create((void*) check_reassembly_time_out_task, 2048, 30, "reassembly_time_out_task", 0));    
+    
     //set prefix stuff to 0
     memset(&option_prefix_default, NULLCH, sizeof(option_prefix));
 
@@ -143,6 +152,12 @@ syscall ipv6_init() {
 
     NDCache_init();
     fwdipv6_init();
+
+    if(!host) {
+        //only initialize nat table if you're a NAT box
+        natTab_init();
+    }
+
     return OK;
 }
 
@@ -193,3 +208,51 @@ void get_mac_snm(byte* snm_addr) {
     memcpy(mac_snm, res, ETH_ADDR_LEN);
 }
 
+void check_reassembly_time_out_task(){
+	while(1) {
+		//kprintf("checking time out....");
+		check_reassembly_time_out();
+		sleep(REASSEMBLY_MAX_TIME);
+	}
+
+}
+
+void check_reassembly_time_out(){
+	kprintf("I am in check_reassembly_time_out.\n");
+	uint8 i;
+	for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
+		struct reassembly_entry * entry = reassembly_table + i;
+		if (entry->frag_list != NULL && entry->timestamp != 0) {
+			kprintf("clktime now: %u\n", clktime);
+			kprintf("entry timestamp: %u\n", entry->timestamp);	
+			if (clktime - entry->timestamp >= REASSEMBLY_MAX_TIME) {
+				removeReaEntry(entry);
+			}
+	
+		}
+	
+        }
+
+}
+
+void removeReaEntry(struct reassembly_entry * entry) {
+	// we will deal with the hole later, currently remove the fragment list 
+	struct frag_desc * frag_list = entry->frag_list;
+	if (frag_list != NULL) {
+		struct frag_desc * node = frag_list-> next;
+		while (node != NULL && node->payload != NULL) {
+			struct frag_desc * next = node -> next;
+			freemem((char*) (node->payload), (uint32) node->payload_len);
+			freemem( (char*)node, sizeof(struct frag_desc));
+			node = next;
+		} 
+		// free the dummy sentinal node
+		if (node != NULL) {
+			freemem( (char*)node, sizeof(struct frag_desc));
+		}
+
+	}
+	entry->frag_list = NULL;
+	entry->timestamp = 0;
+	reassembly_tab_size--;
+}

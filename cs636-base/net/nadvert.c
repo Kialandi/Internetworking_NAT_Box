@@ -9,6 +9,9 @@ bool8 nadvert_valid(struct base_header * ipdatagram) {
     if (ipdatagram->payload_len < 24) 
         return FALSE;
 
+    //TODO: figure out if there's options using packet size instead of hard
+    //coding
+/*    kprintf("ckpt1\n");
     //this is in bytes
     int16 opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nadvert);
     int16 src_link_layer_opt = 0;
@@ -26,16 +29,17 @@ bool8 nadvert_valid(struct base_header * ipdatagram) {
         }
     }
 
+    kprintf("ckpt2\n");
     //reset back to actual length
     opt_len = ntohs(ipdatagram->payload_len) - sizeof(struct nadvert);
-    byte buf[IPV6_ASIZE];
+  */  byte buf[IPV6_ASIZE];
     memset(buf, NULLCH, IPV6_ASIZE);
 
     //if unspecified ip sourcce
     if (match(ipdatagram->src, buf, IPV6_ASIZE)) {
         //make sure there's no source link layer option
-        if (src_link_layer_opt)
-            return FALSE;
+  //      if (src_link_layer_opt)
+    //        return FALSE;
 
         //check ip dest is SNM address
         if (!match(ipdatagram->dest, snm_addr, IPV6_ASIZE))
@@ -76,7 +80,6 @@ byte * getmac_ad(struct nadvert * advert) {
     struct icmpopt * opt = (struct icmpopt *) advert->opt;
     //make sure the option is 01
     if (opt->type != 1) {
-        kprintf("getmac: Invalid option type\n");
         return NULL;
     }
 

@@ -1,10 +1,12 @@
 #include <xinu.h>
 
-struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
+//struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
 
-uint8 reassembly_tab_size = 0;  // check later
+//uint8 reassembly_tab_size = 0;  // check later
 
+//void removeReaEntry(struct reassembly_entry* entry);
 void print_list(struct frag_desc * list);
+int16 find_hole();
 void updateDatagramHeaders(char* headers, uint16 payload_len, byte next_header_in_fragment_header);
 bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram);
 bool8 isLastFragment(struct fragment_header * frag_header);
@@ -31,13 +33,24 @@ status reassembly(struct netpacket*  pkt){
 
 	if (entry == NULL) {
 		//kprintf("frag_list is NULL after check\n");	 
-		appendReaTable(ipv6_header);
+		//TODO: check M Flag if it is zero and offset is not zero, we will drop the packet. since it is part of time out packet.We have removed the entry.
+		// get the offset of fragment
+		uint16 offset = ntohs(frag_header->offset);
+		// zero out last bit of offset to remove influence of M flag.         
+		offset = offset & 0xFFFE;
+		kprintf("Could not find entry in reassembly table. The fragemnt is with offset: %u\n", offset);
+		if (offset != 0) {
+			kprintf("I am dropping a fragment with identif: %u\n", ntohl(frag_header->identif)); 
+			return 0; // If the offset is not zero, which mean it is not first fragment, we drop it. Because it could be timed out fragmenbe timed out fragments, which means the entry in reassembly has been removed. 	
+		} else {  // if it is the first fragment
+			appendReaTable((byte *) ipv6_header);
+		}
         //	print_list(frag_list); 
 	} else {
-		//kprintf("frag_list is NOT NULL\n");
+		kprintf("frag_list is NOT NULL\n");
 		struct frag_desc * frag_list = entry->frag_list;
 		// insert into frag_list in the ascending order of offset		
-		insert_frag_list(frag_list, ipv6_header); 
+		insert_frag_list(frag_list, (byte*) ipv6_header); 
 		// check M flag of fragment_header , if it is 0.  then we try to put all nodes into datagram. 
 		print_list(frag_list);
 		if (isLastFragment(frag_header) == TRUE) { // If this packet is not last fragment
@@ -53,25 +66,45 @@ status reassembly(struct netpacket*  pkt){
 			} else {
 			
 				kprintf("copy successfully to datagram.\n");
+				// TODO: free up this entry in reassembly queue. It will generate a hole. 
+				removeReaEntry(entry);
 				kprintf("Printing datagram headers with headers_len:%u\n", datagram->headers_len); // TESTING purpose
 				payload_hexdump((char*)datagram->headers, datagram->headers_len);
 				kprintf("printing datagram payload with payload length: %u\n", datagram->payload_len);
-				byte* len = (byte *) (&(datagram->payload_len));
+				//byte* len = (byte *) (&(datagram->payload_len));
 				//kprintf("the first byte : 0x%x\n", *len);
 				payload_hexdump((char*)datagram->payload, 32);
 				kprintf("the fisrt 10 bytes of data in payload: %s\n", (char*) datagram->payload);
 			}
 	        }
 
-
-
 	 }
    	
 // TO DO:
-// check whether it has  memory problem	
 // enable specify IPV6 addresss. It can be dealt later. 	
 	return 0;
 }
+
+/*
+void removeReaEntry(struct reassembly_entry* entry) {
+	// we will deal with the hole later, currently remove the fragment list 
+	struct frag_desc * frag_list = entry->frag_list;
+	if (frag_list != NULL) {
+		struct frag_desc * node = frag_list-> next;
+		while (node != NULL && node->payload != NULL) {
+			struct frag_desc * next = node -> next;
+			freemem((char*) (node->payload), (uint32) node->payload_len);
+			freemem( (char*)node, sizeof(struct frag_desc));
+			node = next;
+		} 
+		// free the dummy sentinal node
+		if (node != NULL) {
+			freemem( (char*)node, sizeof(struct frag_desc));
+		}
+
+	}
+}
+*/
 
 bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datagram){
 	struct frag_desc * frag_list = entry -> frag_list;
@@ -93,7 +126,7 @@ bool8  copy_to_datagram(struct reassembly_entry * entry, struct Datagram * datag
 	datagram->headers_len = entry->headers_len;  // if headers in datagram containes extentions headers after fragment header, it will be different.
 	datagram->payload_len = payload_len_datagram;
 	// update payload length and next header value in headers of datagram
-	updateDatagramHeaders(datagram->headers, payload_len_datagram, entry->next_header_in_fragment_header);
+	updateDatagramHeaders((char*)datagram->headers, payload_len_datagram, entry->next_header_in_fragment_header);
 	return TRUE; 
 }
 
@@ -134,8 +167,13 @@ void appendReaTable(byte * ipv6_header) {
 	byte * src_addr = temp_ipv6->src;
 	byte * dest_addr = temp_ipv6->dest;
 	uint32 identif = ntohl(frag_header->identif);
-
-	struct reassembly_entry * entry = reassembly_table + reassembly_tab_size;
+	
+	int16 hole_index = find_hole();
+	if (hole_index == -1) {
+		kprintf("The reassembly table is full. So we drop the packet.\n");
+		return;
+	}
+	struct reassembly_entry * entry = reassembly_table + hole_index;
 	memcpy(&(entry->src_addr), src_addr, IPV6_ASIZE);
 	memcpy(&(entry->dest_addr), dest_addr, IPV6_ASIZE);
 	entry->identif = identif;
@@ -153,9 +191,25 @@ void appendReaTable(byte * ipv6_header) {
 	insert_frag_list(frag_list, ipv6_header) ;
     
         entry->frag_list = frag_list;	
-       	
+       	entry->timestamp = clktime; 
+	kprintf("timestamp: %u\n", entry->timestamp);
 	reassembly_tab_size++;
 	//kprintf("I am in append table, table size: %d\n", reassembly_tab_size);
+}
+
+int16 find_hole() {
+
+	int16 i;
+	for (i = 0; i < REASSEMBLY_TABLE_MAX_SIZE; i++) {
+
+		struct reassembly_entry * entry = reassembly_table + i;
+		if (entry->frag_list == NULL && entry->timestamp == 0) { // it is same with only one condition
+			return i;
+		}
+
+	}
+	return -1;
+
 }
 
 struct frag_desc *  initialize_frag_list() {
@@ -186,7 +240,7 @@ void insert_frag_list(struct frag_desc * frag_list, byte* ipv6_header){
 	struct frag_desc * new_node = (struct frag_desc* ) getmem(sizeof(struct frag_desc));
         new_node->offset = offset;
 	new_node->payload_len = payload_len;
-	new_node->payload = (char*) getmem(payload_len);
+	new_node->payload = (byte*) getmem(payload_len);
 	memcpy(new_node->payload, payload_from, payload_len);	
 	new_node->prev = NULL;
 	new_node->next = NULL;    
@@ -257,7 +311,7 @@ struct reassembly_entry * checkReassemblyTable(byte* src_addr, byte * dest_addr,
 	uint8 i;
 	for (i = 0 ; i < reassembly_tab_size; i ++){
 		struct reassembly_entry * temp = reassembly_table + i;
-		if (byteComp(src_addr, temp->src_addr, IPV6_ASIZE) == TRUE && byteComp(dest_addr, temp->dest_addr, IPV6_ASIZE) == TRUE  && identif == temp->identif) {
+		if (temp->frag_list != NULL && byteComp(src_addr, temp->src_addr, IPV6_ASIZE) == TRUE && byteComp(dest_addr, temp->dest_addr, IPV6_ASIZE) == TRUE  && identif == temp->identif) {
 	
     			kprintf("I find reassembly entry with identif : %u\n", temp->identif);
 			//return temp->frag_list;

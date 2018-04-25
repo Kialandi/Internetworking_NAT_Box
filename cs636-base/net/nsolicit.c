@@ -116,20 +116,7 @@ void nsolicit_handler(struct netpacket * pkt){
         return;
     }
     memcpy(entry->macAddr, mac, ETH_ADDR_LEN);
-
-    
-    
-    
-    //struct icmpv6general * msg = (struct icmpv6general *) ((char *) ipdatagram + IPV6_HDR_LEN);
-
-        //send back to the host requesting it from
-        //TODO: check if it's unspecified. if it
         
-        sendipv6pkt(NEIGHBA, pkt->net_src, ipdatagram->src);
-        //sendipv6pkt(NEIGHBA, pkt->net_src, buf);
-        //sendipv6pkt(NEIGHBA, if_tab[0].if_macbcast);
-        //sendipv6pkt(NEIGHBA, payload + 26);
-        //sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast);
-        //sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast);
+    //since we did a 2 way handshake, should probably look at nd table for dest
+    sendipv6pkt(NEIGHBA, pkt->net_src, ipdatagram->src);
 }
-

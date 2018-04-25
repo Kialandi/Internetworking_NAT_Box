@@ -1,14 +1,14 @@
 // net.h, ipv6.h should be defined before this file
 
 #define REASSEMBLY_TABLE_MAX_SIZE 16
-
+#define REASSEMBLY_MAX_TIME 15  // in seconds, change to 2000 later. maxmum time for packets to reassembly, the reassembly entry will be removed if time out. 
 struct frag_desc {
 	uint16 offset;
 	byte* payload; // the payload following after fragment header
 	uint16 payload_len; // real payload length excluding the fragment header
 	struct frag_desc * prev;
 	struct frag_desc * next;
-};
+}frag_desc;
 
 struct reassembly_entry {
 	byte src_addr[IPV6_ASIZE]; // IVP6 src addr
@@ -18,7 +18,8 @@ struct reassembly_entry {
 	uint16 headers_len; // perfragment headers real length
 	struct frag_desc * frag_list;  // a list of frag_desc 
 	byte next_header_in_fragment_header;  // save next header in fragment header to replace fragment header value 44 (or 0x2c) in perfrag_headers
-};
+	uint32 timestamp;  // time stamp in seconds of the first fragment coming in
+}reassembly_entry;
 
 
 extern struct reassembly_entry  reassembly_table[];
