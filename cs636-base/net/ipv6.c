@@ -170,7 +170,20 @@ syscall ipv6_init() {
         sleep(1);
     }
     
-    sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local);
+    //make a new entry for default router right away
+    struct NDCacheEntry * entry = getAvailNDEntry();
+
+    //add ipaddr to the entry
+    memcpy(entry->ipAddr, router_link_local, IPV6_ASIZE);
+    entry->ttl = MAXNDTTL;
+    entry->state = NDINCOMPLETE;
+    
+    
+    //sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local);
+    sendNSOL(link_local, router_link_local_mac, router_link_local, router_link_local);
+    sleep(2);
+    sendNSOL(ipv6_addr, router_link_local_mac, router_link_local, router_link_local);
+    
     return OK;
 }
 

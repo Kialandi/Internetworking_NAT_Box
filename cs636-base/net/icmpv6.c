@@ -115,6 +115,8 @@ void icmpv6_in(struct netpacket * pkt) {
 
         case ECHOREQ:
             kprintf("icmpv6_in: Echo Request received\n");
+            //send a response back
+            sendipv6pkt(ECHORESP, pkt->net_src, ipdatagram->src);
             print6(pkt);
             break;
 

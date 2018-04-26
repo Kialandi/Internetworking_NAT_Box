@@ -154,11 +154,10 @@ void nadvert_handler(struct netpacket * pkt){
     struct NDCacheEntry * entry = lookupNDEntry(ipdatagram->src);
     //assumes the packet has been validated by the time it gets here 
     if (entry == NULL) {
-        //entry doesnt exist, make a new one
-        
-        kprintf("nadvert_handler: entry doesnt exist, silently dropping\n");
-        return;
 
+        kprintf("nadvert_handler: no entry exists, silently dropping\n");
+        return;
+/*
         entry = getAvailNDEntry();
 
         if (entry == NULL) {
@@ -167,11 +166,11 @@ void nadvert_handler(struct netpacket * pkt){
         }
         //add ipaddr to the entry
         memcpy(entry->ipAddr, ipdatagram->src, IPV6_ASIZE);
+*/    
     }
     else {
         //entry does exist
-        kprintf("nadvert_handler: entry exists, silently dropping\n");
-        return;
+        kprintf("nadvert_handler: entry exists, updating\n");
     }
 
     entry->ttl = MAXNDTTL;

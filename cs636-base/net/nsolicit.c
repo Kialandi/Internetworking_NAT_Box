@@ -3,7 +3,6 @@
 //third step in handshake
 //only gets called if you were solicited in the first place
 void sendNSOL(byte * ip_src, byte * mac_dest, byte * ip_dest, byte * target) {
-    kprintf("sendNSOL: sending nsol as 3rd step\n");
     struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
     memset((char *) packet, NULLCH, PACKLEN);
 
@@ -176,17 +175,17 @@ void nsolicit_handler(struct netpacket * pkt){
     //multcast    
 
     //TODO: i'm not sure which packet is right but they're still all not working
-    sendNAD(msg->target, pkt->net_src, ipdatagram->src, msg->target);
     
-    sendNAD(ipdatagram->dest, pkt->net_src, ipdatagram->src, msg->target);
-    sendNAD(link_local, pkt->net_src, ipdatagram->src, msg->target);
+    sendNAD(msg->target, pkt->net_src, ipdatagram->src, msg->target);
+    //sendNAD(link_local, pkt->net_src, ipdatagram->src, msg->target);
 
     //if this is a new pairing, have to do 4 waay handshake
     if (!exists) {
+        //give it a chance to process before sending sol
+        sleep(3);
         //target is now the the ip address of what first solicited us
         sendNSOL(ipdatagram->dest, pkt->net_src, ipdatagram->src, ipdatagram->src);
         kprintf("should get advert back\n");
-        //should get an advertisement back
     }
 }
 

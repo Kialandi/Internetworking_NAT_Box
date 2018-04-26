@@ -154,6 +154,24 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             //fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
             fillICMP(packet, ECHOREQ, NULL, 0);
             break;
+
+
+        case ECHORESP:
+            kprintf("Sending echo request...\n");
+
+            //response struct is the same as request
+            //entire packet length
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + ECHOREQSIZE;
+
+            //TODO: add fwding table and nat table
+            //for now, send to default router
+            fillEthernet(packet, link_dest);
+            
+            fillIPdatagram(packet, ipv6_addr, ip_dest, ECHOREQSIZE, IPV6_ICMP);
+            //fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
+            fillICMP(packet, ECHORESP, NULL, 0);
+            break;
+
     }
     //print6(packet);
     //fire off packet
@@ -321,6 +339,15 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
                       echo_pkt->seqNumber = htons(x);
                       pseudoSize = PSEUDOLEN + ECHOREQSIZE;
                       break;
+
+         case ECHORESP: ;
+                      //struct icmpv6echoreq * echo_pkt = (struct icmpv6echoreq *) pkt_icmp;
+                      //uint16 x = 15;
+                      //echo_pkt->identifier = htons(x);
+                      //echo_pkt->seqNumber = htons(x);
+                      pseudoSize = PSEUDOLEN + ECHOREQSIZE;
+                      break;
+
 
         default:
                       kprintf("fillICMP: invalid type\n");
