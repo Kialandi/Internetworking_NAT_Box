@@ -3,7 +3,8 @@
 shellcmd chats(int nargs, char * args[]){
     struct chat * makechat = (struct chat*) getbuf(ipv6bufpool);
     uint32 chatlength = sizeof(args)/sizeof(char);
-    char chatbuffer[chatlength] =
+    char chatbuff[chatlength];
+    memset(chatbuff, NULLCH, chatlength);
     for(int32 i=0; i<chatlength;i++){
 
     }
