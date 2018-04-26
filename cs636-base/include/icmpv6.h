@@ -22,6 +22,7 @@
 // network byte order
 //
 #define  IPLEN 16
+#define  MAXCHATSIZE 1472
 
 #define ECHOREQSIZE     sizeof(icmpv6echoreq)
 #define PSEUDOLEN       sizeof(pseudoHdr)
@@ -29,6 +30,7 @@
 #define RADVERTSIZE     sizeof(radvert)
 #define NADSIZE         sizeof(nadvert)
 #define NSOLSIZE        sizeof(nsolicit)
+#define CHATSIZE        sizeof(chat)
 #define MAX_PAYLOAD     1472
 #define DESTUNREACH     1
 #define PKT_BIG         2
@@ -174,4 +176,6 @@ typedef struct icmpv6echoreq{
     byte body[0]; //gives easy access to message body
 } icmpv6echoreq;
 
-
+typedef struct chat{
+    char [MAXCHATSIZE];
+}chat;
