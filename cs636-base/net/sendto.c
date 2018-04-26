@@ -201,7 +201,7 @@ void sendFragment(struct Datagram * datagram, uint16 payload_len_ipv6_header, ui
 	}	
 	// fillEthnet header
   	
-	fillEthernet(pkt, entry->macAddr); // send to netbox for now
+	fillEthernet(pkt, entry->macAddr, ETH_HDR_LEN); // send to netbox for now
 	kprintf("filling Ethernet header:\n");
 	payload_hexdump((char*)pkt, ETH_HDR_LEN);
 	// write to interface
