@@ -36,6 +36,17 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
     uint16 totalOptLen;
 
     switch (type) {
+        /*
+        case CHAT:
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + CHATSIZE ;
+            //unspecified address
+            byte src_ip[IPV6_ASIZE];
+            memset(src_ip, NULLCH, IPV6_ASIZE);
+
+            fillEthernet(packet, link_dest);
+            fillIPdatagram(packet, src_ip, dest, MAX_PAYLOAD, NULL);
+            */
+
         case ROUTERS:
             kprintf("Sending Router Solicitation...\n");
 
@@ -92,13 +103,13 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillIPdatagram(packet, ipv6_addr, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
             uint8 nopt[1] = {1};
             fillICMP(packet, NEIGHBS, nopt,1);
-            
+
             if (!nsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor solicit constructed, aborting!\n");
                 freebuf((char *) packet);
                 return 0;
             }
-            
+
             break;
 
             //TODO: this is working right now for
@@ -111,14 +122,14 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             //uint8 nadops[1] = {1};
             //fillICMPNAD(packet, NEIGHBA, target);
-            
+
             if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor advert constructed, aborting!\n");
                 freebuf((char *) packet);
                 return 0;
             }
             break;
-       
+
         case NEIGHBASOLI:
             kprintf("sendipv6pkt: Sending neighbor advert...\n");
             //TODO: if solicited, no options
@@ -130,7 +141,7 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             uint8 nadsoliops[1] = {1};
             fillICMP(packet, NEIGHBA, nadsoliops, 1);
-            
+
             if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor advert constructed, aborting!\n");
                 freebuf((char *) packet);
@@ -149,7 +160,7 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             //TODO: add fwding table and nat table
             //for now, send to default router
             fillEthernet(packet, router_mac_addr);
-            
+
             fillIPdatagram(packet, ipv6_addr, ip_dest, ECHOREQSIZE, IPV6_ICMP);
             //fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
             fillICMP(packet, ECHOREQ, NULL, 0);
@@ -234,7 +245,7 @@ uint8 fill_option_one(void * pkt) {
 void fillEthernet(struct netpacket * pkt, byte* dest) {
     memcpy(pkt->net_dst, dest, ETH_ADDR_LEN);
     memcpy(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
-        
+
     pkt->net_type = htons(ETH_IPv6);
 }
 
@@ -290,7 +301,7 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             pkt_icmp_nsol->code = 0;
             pkt_icmp_nsol->checksum = 0;
             //target is any address associated with recipient interface
-            
+
             memcpy((void *) pkt_icmp_nsol->target, router_link_local, IPV6_ASIZE);
             fillOptions((char *) pkt_icmp_nsol->opt, option_types, option_types_length);
             pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;

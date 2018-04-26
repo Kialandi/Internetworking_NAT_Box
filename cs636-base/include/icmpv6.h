@@ -29,6 +29,7 @@
 #define RADVERTSIZE     sizeof(radvert)
 #define NADSIZE         sizeof(nadvert)
 #define NSOLSIZE        sizeof(nsolicit)
+#define CHATSIZE        sizeof(chat)
 #define MAX_PAYLOAD     1472
 #define DESTUNREACH     1
 #define PKT_BIG         2
@@ -176,3 +177,6 @@ typedef struct icmpv6echoreq{
 } icmpv6echoreq;
 
 
+typedef struct chat{
+    char chatbox[MAX_PAYLOAD];
+}chatbox;

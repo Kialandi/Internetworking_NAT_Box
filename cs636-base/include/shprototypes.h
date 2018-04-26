@@ -1,4 +1,4 @@
-
+extern  shellcmd    chat(int32, char *[]);
 extern  shellcmd    printFWD(int32, char *[]);
 extern  shellcmd    addFwdEntry(int32, char *[]);
 extern  shellcmd    printNAT(int32, char *[]);
