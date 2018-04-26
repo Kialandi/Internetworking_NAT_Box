@@ -3,7 +3,7 @@
 uint8   fill_option_prefix(void * pkt);
 uint8   fill_option_MTU(void * pkt) ;
 uint8   fill_option_one(void * pkt) ;
-void    fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
+//void    fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
 
 void    fill_dest_ip_all_routers(byte* dest) ;
 void    fill_dest_mac_all_router(byte* dest) ;
@@ -101,7 +101,25 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             
             break;
 
+            //TODO: this is working right now for
         case NEIGHBA://should add a case for unsolicited
+            kprintf("sendipv6pkt: Sending neighbor advert...\n");
+            //totalOptLen = 8;
+            totalOptLen = 0;
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
+            fillEthernet(packet, link_dest);
+            fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
+            //uint8 nadops[1] = {1};
+            //fillICMPNAD(packet, NEIGHBA, target);
+            
+            if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
+                kprintf("Invalid neighbor advert constructed, aborting!\n");
+                freebuf((char *) packet);
+                return 0;
+            }
+            break;
+       
+        case NEIGHBASOLI:
             kprintf("sendipv6pkt: Sending neighbor advert...\n");
             //TODO: if solicited, no options
             //totalOptLen = 8;
@@ -110,8 +128,8 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             fillEthernet(packet, link_dest);
             //fillIPdatagram(packet, link_local, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
-            uint8 nadops[1] = {1};
-            fillICMP(packet, NEIGHBA, nadops, 1);
+            uint8 nadsoliops[1] = {1};
+            fillICMP(packet, NEIGHBA, nadsoliops, 1);
             
             if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor advert constructed, aborting!\n");
@@ -119,7 +137,9 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
                 return 0;
             }
             break;
-        
+
+
+
         case ECHOREQ:
             kprintf("Sending echo request...\n");
 
@@ -147,7 +167,11 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
        print6(packet);
        kprintf("OUTGOING PKT DONE PRINTING\n");
     }
-
+    if (type == NEIGHBS) {
+       kprintf("OUTGOING PKT PRINTING\n");
+       print6(packet);
+       kprintf("OUTGOING PKT DONE PRINTING\n");
+    }
     freebuf((char *) packet);
     return 1;
 }
@@ -266,28 +290,13 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             pkt_icmp_nsol->code = 0;
             pkt_icmp_nsol->checksum = 0;
             //target is any address associated with recipient interface
-            byte bufip[IPV6_ASIZE];
-            memset(bufip, NULLCH, IPV6_ASIZE);
-            bufip[0] = 0xfe;
-            bufip[1] = 0x80;
-
-            bufip[8] = 0x02;
-            bufip[9] = 0x24;
-            bufip[10] = 0xc4;
-            bufip[11] = 0xff;
-
-            bufip[12] = 0xfe;
-            bufip[13] = 0xdc;
-            bufip[14] = 0xcb;
-            bufip[15] = 0xc0;
-
-            memcpy((void *) pkt_icmp_nsol->target, bufip, IPV6_ASIZE);
+            
+            memcpy((void *) pkt_icmp_nsol->target, router_link_local, IPV6_ASIZE);
             fillOptions((char *) pkt_icmp_nsol->opt, option_types, option_types_length);
             pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;
             break;
 
         case NEIGHBA: ;
-                      //totalOptLen = 8;
                       pkt_icmp->type = NEIGHBA;
                       pkt_icmp->code = 0;
                       pkt_icmp->checksum = 0;

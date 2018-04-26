@@ -30,8 +30,8 @@ shellcmd sendnadvert(int nargs, char * args[]) {
     buf2[15] = 0xC0;
     
     sendipv6pkt(NEIGHBA, buf, buf2);
-   freemem(buf, ETH_ADDR_LEN); 
-   freemem(buf2, IPV6_ASIZE); 
+   freemem((char *) buf, ETH_ADDR_LEN); 
+   freemem((char *) buf2, IPV6_ASIZE); 
     /*
     if (!host){ //nat goes to all routers
         //sendipv6pkt(NEIGHBA, allnMACmulti);

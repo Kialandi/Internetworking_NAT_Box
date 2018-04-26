@@ -1,5 +1,6 @@
 #include <xinu.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 shellcmd addFwdEntry(int nargs, char * args[]) {
     printf("\nAdding forwarding entry...\n");

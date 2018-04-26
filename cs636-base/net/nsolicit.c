@@ -1,5 +1,57 @@
 #include "xinu.h"
 
+//third step in handshake
+//only gets called if you were solicited in the first place
+void sendNSOL(byte * ip_src, byte * mac_dest, byte * ip_dest, byte * target) {
+    kprintf("sendNSOL: sending nsol as 3rd step\n");
+    struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
+    memset((char *) packet, NULLCH, PACKLEN);
+
+    uint16 totalOptLen = 8;
+    uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
+    
+    fillEthernet(packet, mac_dest);
+    fillIPdatagram(packet, ip_src, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
+    uint8 nopt[1] = {1};
+
+    struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
+    struct nsolicit * solicit = (struct nsolicit *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
+
+    uint32 pseudoSize = 0;
+    byte src[IPV6_ASIZE]; 
+    byte dest[IPV6_ASIZE];
+    memcpy(src, pkt_ip->src, IPV6_ASIZE);
+    memcpy(dest, pkt_ip->dest, IPV6_ASIZE);
+
+    solicit->type = NEIGHBS;
+    solicit->code = 0;
+    solicit->checksum = 0;
+    
+    memcpy((void *) solicit->target, target, IPV6_ASIZE);
+    
+    fillOptions((char *) solicit->opt, nopt, 1);
+    pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;
+    
+    //set up pseudo header for checksum
+    void * pseudo = (void *) getmem(pseudoSize);
+    makePseudoHdr((struct pseudoHdr *) pseudo, src, dest, (void *) solicit, pseudoSize - PSEUDOLEN);
+    uint16 sum = checksumv6(pseudo, pseudoSize);
+    solicit->checksum = htons(sum);
+    freemem(pseudo, pseudoSize);
+
+    //fire off packet
+    if( write(ETHER0, (char *) packet, len) == SYSERR) {
+        kprintf("THE WORLD IS BURNING\n");
+        kill(getpid());
+    }   
+
+    kprintf("OUTGOING PKT PRINTING\n");
+    print6(packet);
+    kprintf("OUTGOING PKT DONE PRINTING\n");
+
+    freebuf((char *) packet);
+}
+
 bool8 nsolicit_valid(struct base_header * ipdatagram) {
     struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
     if (ipdatagram->hop_limit != 255) 
@@ -89,6 +141,8 @@ void nsolicit_handler(struct netpacket * pkt){
     struct nsolicit * msg = (struct nsolicit *) ((char *) ipdatagram + IPV6_HDR_LEN);
 
     struct NDCacheEntry * entry = lookupNDEntry(ipdatagram->src);
+    uint8 exists = 0;
+
     //assumes the packet has been validated by the time it gets here 
     if (entry == NULL) {
         //entry doesnt exist, make a new one
@@ -102,6 +156,7 @@ void nsolicit_handler(struct netpacket * pkt){
         memcpy(entry->ipAddr, ipdatagram->src, IPV6_ASIZE);
     }
     else {
+        exists = 1;
         //entry does exist
         //kprintf("nsolicit_handler: entry exists, updating!\n");
     }
@@ -116,7 +171,23 @@ void nsolicit_handler(struct netpacket * pkt){
         return;
     }
     memcpy(entry->macAddr, mac, ETH_ADDR_LEN);
-        
-    //since we did a 2 way handshake, should probably look at nd table for dest
-    sendipv6pkt(NEIGHBA, pkt->net_src, ipdatagram->src);
+
+    //TODO: check if unspecified address, if unspecified, send to all nodes
+    //multcast    
+
+    //TODO: i'm not sure which packet is right but they're still all not working
+    sendNAD(msg->target, pkt->net_src, ipdatagram->src, msg->target);
+    
+    sendNAD(ipdatagram->dest, pkt->net_src, ipdatagram->src, msg->target);
+    sendNAD(link_local, pkt->net_src, ipdatagram->src, msg->target);
+
+    //if this is a new pairing, have to do 4 waay handshake
+    if (!exists) {
+        //target is now the the ip address of what first solicited us
+        sendNSOL(ipdatagram->dest, pkt->net_src, ipdatagram->src, ipdatagram->src);
+        kprintf("should get advert back\n");
+        //should get an advertisement back
+    }
 }
+
+

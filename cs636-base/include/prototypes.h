@@ -6,14 +6,17 @@ extern  void    natTab_init();
 extern  void    print_ipv6(byte *);
 
 
+void fillOptions(void * , uint8* , uint8);
 
 //ND cache functions
 extern  void    createEntry(uint32, byte *, byte *, uint8);
-extern void  removeReaEntry(struct reassembly_entry *);
+extern  void    removeReaEntry(struct reassembly_entry *);
 extern  struct  NDCacheEntry * lookupNDEntry(byte *);
 extern  struct  NDCacheEntry * getAvailNDEntry();
 extern  void    NDCache_init();
 extern  void    printNDTab();
+extern  void    sendNAD(byte *, byte *, byte *, byte *);
+extern  void    sendNSOL(byte *, byte *, byte *, byte *);
 
 extern  status  reassembly(struct netpacket *);
 extern status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len, bool8 timeout_flag);

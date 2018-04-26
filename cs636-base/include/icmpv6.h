@@ -44,6 +44,7 @@
 #define ROUTERA     0x86
 #define NEIGHBS     0x87
 #define NEIGHBA     0x88
+#define NEIGHBASOLI     0x63
 
 /*informational messages */
 #define PVT3        200
