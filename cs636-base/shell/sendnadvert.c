@@ -16,7 +16,7 @@ shellcmd sendnadvert(int nargs, char * args[]) {
     buf[3] = 0xDC;
     buf[4] = 0xCB;
     buf[5] = 0xC0;
-     
+
     memset(buf2, NULLCH, IPV6_ASIZE);
     buf2[0] = 0xFF;
     buf2[1] = 0x02;
@@ -28,18 +28,9 @@ shellcmd sendnadvert(int nargs, char * args[]) {
     buf2[13] = 0xDC;
     buf2[14] = 0xCB;
     buf2[15] = 0xC0;
-    
-    sendipv6pkt(NEIGHBA, buf, buf2);
-   freemem((char *) buf, ETH_ADDR_LEN); 
-   freemem((char *) buf2, IPV6_ASIZE); 
-    /*
-    if (!host){ //nat goes to all routers
-        //sendipv6pkt(NEIGHBA, allnMACmulti);
-        sendipv6pkt(NEIGHBA, if_tab[1].if_macbcast, NULL);
-        sendipv6pkt(NEIGHBA, if_tab[2].if_macbcast, NULL);
 
-     }else //hosts go to your own bcast
-        sendipv6pkt(NEIGHBA, allnMACmulti, allnIPmulti);
-    */
-     return 1;
+    sendipv6pkt(NEIGHBA, buf, buf2, ifprime);
+    freemem((char *) buf, ETH_ADDR_LEN); 
+    freemem((char *) buf2, IPV6_ASIZE); 
+    return 1;
 }

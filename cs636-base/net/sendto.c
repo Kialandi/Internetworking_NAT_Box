@@ -275,7 +275,7 @@ char*  fillPreFragmentHeader(char * pkt, byte* dest_ipv6, byte next_header) {
 
        // fill Ethenet header	
  	//fillEthernet((char *)pkt, if_tab[1].if_macbcast);
-	fillEthernet((struct netpacket *) pkt, allrMACmulti);
+	fillEthernet((struct netpacket *) pkt, allrMACmulti, ifprime);
        // fill IP header
         fillIPdatagram((struct netpacket *) pkt, link_local, dest_ipv6, MTU - ETH_HDR_LEN -IPV6_HDR_LEN, next_header);
 	kprintf("======printing preFragment  header: =========\n");

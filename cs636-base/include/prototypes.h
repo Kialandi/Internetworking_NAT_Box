@@ -1,12 +1,17 @@
 
 extern  void    printFWDTab();
 extern  void    fwdipv6_init();
+extern  void    fwdIPDatagram(struct netpacket *, uint32); 
+
 extern  void    printNATTab();
 extern  void    natTab_init();
+extern  int32   incPktRW(struct netpacket *);
+extern  int32   outPktRW(uint8, struct netpacket *);
+
 extern  void    print_ipv6(byte *);
 
 
-void fillOptions(void * , uint8* , uint8);
+void fillOptions(void * , uint8*, uint8, uint8);
 
 //ND cache functions
 extern  void    createEntry(uint32, byte *, byte *, uint8);
@@ -15,8 +20,8 @@ extern  struct  NDCacheEntry * lookupNDEntry(byte *);
 extern  struct  NDCacheEntry * getAvailNDEntry();
 extern  void    NDCache_init();
 extern  void    printNDTab();
-extern  void    sendNAD(byte *, byte *, byte *, byte *);
-extern  void    sendNSOL(byte *, byte *, byte *, byte *);
+extern  void    sendNAD(byte *, byte *, byte *, byte *, uint8);
+extern  void    sendNSOL(byte *, byte *, byte *, byte *, uint8);
 
 extern  status  reassembly(struct netpacket *);
 extern status sendto(byte* dest_ipv6, byte next_header, byte * buffer, uint16 buf_len, bool8 timeout_flag);
@@ -28,7 +33,7 @@ extern  bool8   nsolicit_valid(struct base_header * pkt);
 extern  void    nadvert_handler(struct netpacket * pkt);
 extern  bool8   nadvert_valid(struct base_header * pkt);
 
-extern  void    fillEthernet(struct netpacket *, byte *);
+extern  void    fillEthernet(struct netpacket *, byte *, uint8);
 extern  void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16, byte);
 
 //in lib folder
@@ -63,7 +68,7 @@ extern  void    ipv6_in(struct netpacket *);
 extern  void    radvert_handler(struct radvert *, uint32);
 extern  void    rsolicit_handler(struct netpacket *);
 
-extern  status  sendipv6pkt(byte, byte *, byte *);
+extern  status  sendipv6pkt(byte, byte *, byte *, uint8);
 extern  void    print6(struct netpacket *);
 
 /* in file addargs.c */

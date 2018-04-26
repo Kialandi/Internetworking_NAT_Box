@@ -9,9 +9,7 @@ void rsolicit_handler(struct netpacket * pkt) {
     kprintf("rsolicit from iface: %d\n", iface);
     print_mac_addr(if_tab[iface].if_macbcast);    
     if (!host)//nat box sends out radverts
-        //TODO: probably should check if it's border router before sending
-        //adverts
-    	sendipv6pkt(ROUTERA, if_tab[iface].if_macbcast, NULL);
+    	sendipv6pkt(ROUTERA, if_tab[iface].if_macbcast, NULL, iface);
 }
 
 bool8 rsolicit_valid(struct base_header * ipdatagram) {

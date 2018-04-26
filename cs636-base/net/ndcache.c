@@ -3,6 +3,22 @@
 //forwarding table
 struct NDCacheEntry * NDCache[MAXNDENTRY];
 
+struct NDCacheEntry * lookupMACNDEntry(byte * macAddr) {
+    struct NDCacheEntry * ptr = NULL;
+    int i;
+
+    for(i = 0; i < MAXNDENTRY; i++) {
+        if (match(macAddr, NDCache[i]->macAddr, ETH_ADDR_LEN)) {
+            //found an existing entry
+            kprintf("lookupNDEntry: found matching entry\n");
+            ptr = NDCache[i];
+            break;
+        }
+    }
+
+    return ptr;
+}
+
 struct NDCacheEntry * lookupNDEntry(byte * ipAddr) {
     struct NDCacheEntry * ptr = NULL;
     int i;

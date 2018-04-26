@@ -2,14 +2,13 @@
 
 uint8   fill_option_prefix(void * pkt);
 uint8   fill_option_MTU(void * pkt) ;
-uint8   fill_option_one(void * pkt) ;
-//void    fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
+uint8   fill_option_one(void * pkt, uint8 iface) ;
 
 void    fill_dest_ip_all_routers(byte* dest) ;
 void    fill_dest_mac_all_router(byte* dest) ;
-void    fillEthernet(struct netpacket *, byte *);
+void    fillEthernet(struct netpacket *, byte *, uint8);
 void    fillIPdatagram(struct netpacket *, byte *, byte *, uint16, byte);
-void 	fillICMP(struct netpacket * pkt, byte type, uint8* option_types, uint8 option_types_length);
+void 	fillICMP(struct netpacket * pkt, byte type, uint8* option_types, uint8 option_types_length, uint8 iface);
 bpid32  ipv6bufpool; //pool of buffers for IPV6
 
 void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
@@ -29,7 +28,7 @@ void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
     memcpy(pseudo->icmppayload, pkt, pktLen);
 }
 
-status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
+status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest, uint8 iface) {
     struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
     memset((char *) packet, NULLCH, PACKLEN);
     uint32 len;
@@ -45,9 +44,9 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             byte src_ip[IPV6_ASIZE];
             memset(src_ip, NULLCH, IPV6_ASIZE);
 
-            fillEthernet(packet, link_dest);
+            fillEthernet(packet, link_dest, iface);
             fillIPdatagram(packet, src_ip, allrIPmulti, RSOLSIZE, IPV6_ICMP);
-            fillICMP(packet, ROUTERS, NULL, 0);
+            fillICMP(packet, ROUTERS, NULL, 0, iface);
 
             if (!rsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid router solicitation constructed, aborting!\n");
@@ -70,9 +69,9 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             //entire packet length
             len = ETH_HDR_LEN + IPV6_HDR_LEN + RADVERTSIZE + totalOptLen;
 
-            fillEthernet(packet, link_dest);
-            fillIPdatagram(packet, link_local, ip_dest, RADVERTSIZE + totalOptLen, IPV6_ICMP);
-            fillICMP(packet, ROUTERA, option_types, 3);
+            fillEthernet(packet, link_dest, iface);
+            fillIPdatagram(packet, link_local, allnIPmulti, RADVERTSIZE + totalOptLen, IPV6_ICMP);
+            fillICMP(packet, ROUTERA, option_types, 3, iface);
 
             if (!radvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid router advert constructed, aborting!\n");
@@ -85,13 +84,13 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             kprintf("sendipv6pkt: Sending neighbor solicit...\n");
             totalOptLen = 8;
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NSOLSIZE + totalOptLen;
-            fillEthernet(packet, link_dest);
+            fillEthernet(packet, link_dest, iface);
             //caller has to pass in which dest to use. probably lookup routing
             //table first
             //fillIPdatagram(packet, link_local, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
             fillIPdatagram(packet, ipv6_addr, ip_dest, NSOLSIZE + totalOptLen, IPV6_ICMP);
             uint8 nopt[1] = {1};
-            fillICMP(packet, NEIGHBS, nopt,1);
+            fillICMP(packet, NEIGHBS, nopt,1, iface);
             
             if (!nsolicit_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
                 kprintf("Invalid neighbor solicit constructed, aborting!\n");
@@ -107,7 +106,7 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
             //totalOptLen = 8;
             totalOptLen = 0;
             len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
-            fillEthernet(packet, link_dest);
+            fillEthernet(packet, link_dest, iface);
             fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
             //uint8 nadops[1] = {1};
             //fillICMPNAD(packet, NEIGHBA, target);
@@ -118,27 +117,6 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
                 return 0;
             }
             break;
-       
-        case NEIGHBASOLI:
-            kprintf("sendipv6pkt: Sending neighbor advert...\n");
-            //TODO: if solicited, no options
-            //totalOptLen = 8;
-            totalOptLen = 0;
-            len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
-            fillEthernet(packet, link_dest);
-            //fillIPdatagram(packet, link_local, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
-            fillIPdatagram(packet, ipv6_addr, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
-            uint8 nadsoliops[1] = {1};
-            fillICMP(packet, NEIGHBA, nadsoliops, 1);
-            
-            if (!nadvert_valid((struct base_header *) ((char *) packet + ETH_HDR_LEN))) {
-                kprintf("Invalid neighbor advert constructed, aborting!\n");
-                freebuf((char *) packet);
-                return 0;
-            }
-            break;
-
-
 
         case ECHOREQ:
             kprintf("Sending echo request...\n");
@@ -148,11 +126,11 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
 
             //TODO: add fwding table and nat table
             //for now, send to default router
-            fillEthernet(packet, router_mac_addr);
+            fillEthernet(packet, router_mac_addr, iface);
             
             fillIPdatagram(packet, ipv6_addr, ip_dest, ECHOREQSIZE, IPV6_ICMP);
             //fillIPdatagram(packet, link_local, ip_dest, ECHOREQSIZE, IPV6_ICMP);
-            fillICMP(packet, ECHOREQ, NULL, 0);
+            fillICMP(packet, ECHOREQ, NULL, 0, iface);
             break;
     }
     //print6(packet);
@@ -176,13 +154,13 @@ status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
     return 1;
 }
 
-void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length) {
+void fillOptions(void * pkt, uint8* option_types, uint8 option_types_length, uint8 iface) {
     uint8 i = 0;
     uint8 length = 0;
     while (i < option_types_length) {
         switch(option_types[i]) {
             case 1:
-                length = fill_option_one(pkt);
+                length = fill_option_one(pkt, iface);
                 //kprintf("option_one:\n");
                 //payload_hexdump(pkt, length);
                 break;
@@ -223,18 +201,18 @@ uint8 fill_option_MTU(void * pkt) {
 }
 
 //source link-layer address
-uint8 fill_option_one(void * pkt) {
+uint8 fill_option_one(void * pkt, uint8 iface) {
     struct option_one* temp = pkt;
     temp->type = 0x01;
     temp->length = 0x01;
-    memcpy((char*)temp + 2, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
+    memcpy((char*)temp + 2, if_tab[iface].if_macucast, ETH_ADDR_LEN);
     return sizeof(struct option_one); // equal to length(1) * 8 bytes
 }
 
-void fillEthernet(struct netpacket * pkt, byte* dest) {
+void fillEthernet(struct netpacket * pkt, byte* dest, uint8 iface) {
     memcpy(pkt->net_dst, dest, ETH_ADDR_LEN);
-    memcpy(pkt->net_src, if_tab[ifprime].if_macucast, ETH_ADDR_LEN);
-        
+    memcpy(pkt->net_src, if_tab[iface].if_macucast, ETH_ADDR_LEN);
+    
     pkt->net_type = htons(ETH_IPv6);
 }
 
@@ -254,7 +232,7 @@ void fillIPdatagram(struct netpacket * packet, byte* src_ip, byte* dest_ip, uint
     memcpy(pkt->dest, dest_ip, IPV6_ASIZE);
 }
 
-void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 option_types_length) {
+void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 option_types_length, uint8 iface) {
     struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
     struct icmpv6general * pkt_icmp = (struct icmpv6general *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
     pkt_icmp->type = type;
@@ -279,7 +257,7 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             //zero out the checksum after copying
             pkt_icmp->checksum = 0;
             //handle options
-            fillOptions((char*) pkt_icmp + RADVERTSIZE,  option_types, totalOptLen);
+            fillOptions((char*) pkt_icmp + RADVERTSIZE,  option_types, totalOptLen, iface);
             pseudoSize = PSEUDOLEN + RADVERTSIZE + totalOptLen;
             break;
 
@@ -292,7 +270,7 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
             //target is any address associated with recipient interface
             
             memcpy((void *) pkt_icmp_nsol->target, router_link_local, IPV6_ASIZE);
-            fillOptions((char *) pkt_icmp_nsol->opt, option_types, option_types_length);
+            fillOptions((char *) pkt_icmp_nsol->opt, option_types, option_types_length, ifprime);
             pseudoSize = PSEUDOLEN + NSOLSIZE + totalOptLen;
             break;
 

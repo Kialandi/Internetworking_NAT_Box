@@ -31,7 +31,7 @@ shellcmd sendecho(int nargs, char * args[]) {
         return 1;
     }
     //TODO: add the routing table lookup here, given an ip address, return a mac
-    sendipv6pkt(ECHOREQ, router_mac_addr, dest);
+    sendipv6pkt(ECHOREQ, router_mac_addr, dest, ifprime);
     
     return 1;
 }
