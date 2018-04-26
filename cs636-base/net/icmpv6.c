@@ -41,6 +41,7 @@ void sendEchoResp(byte * ip_src, byte * mac_dest, byte * ip_dest, uint16 identif
     }   
 
     kprintf("OUTGOING PKT PRINTING\n");
+    kprintf("echo reply\n");
     print6(packet);
     kprintf("OUTGOING PKT DONE PRINTING\n");
 
@@ -166,8 +167,10 @@ void icmpv6_in(struct netpacket * pkt) {
             kprintf("icmpv6_in: Echo Request received\n");
             struct icmpv6echoreq * req = (struct icmpv6echoreq *) msg;
             //send a response back
-            sendEchoResp(ipdatagram->dest, pkt->net_src, ipdatagram->src, ntohs(req->identifier), ntohs(req->seqNumber));
-            print6(pkt);
+            kprintf("checking echo request") ;
+	    print6(pkt);
+	    sendEchoResp(ipdatagram->dest, pkt->net_src, ipdatagram->src, ntohs(req->identifier), ntohs(req->seqNumber));
+            //print6(pkt);
             break;
 
         case ECHORESP:

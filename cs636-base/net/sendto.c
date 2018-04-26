@@ -103,6 +103,7 @@ void fragmentDatagram(struct Datagram * datagram, bool8 timeout_flag){
 		max_payload_len = checkLength(max_payload_len); // check length in multiple of 8 octets.
 		kprintf("datagram headers len: %d\n", datagram->headers_len);
 		kprintf("datagram payload len:%d\n", datagram->payload_len);
+		
 		while(remain_len > 0) {
 			uint16 payload_len = (remain_len > max_payload_len) ? max_payload_len : remain_len;		
 			kprintf("payload_len: %d\n", payload_len);
@@ -144,6 +145,8 @@ void fragmentDatagram(struct Datagram * datagram, bool8 timeout_flag){
 
 void writeToInterface(char*  pkt){
 
+	kprintf("sending fragments\n");
+	print6(pkt);
 	if( write(ETHER0, (char *) pkt, sizeof(struct netpacket)) == SYSERR) {
 		kprintf("THE WORLD IS BURNING\n");
 		kill(getpid());
@@ -178,8 +181,10 @@ void sendFragment(struct Datagram * datagram, uint16 payload_len_ipv6_header, ui
 	char * payload = fillFragmentHeader(frag_header, identif, next_header_in_fragment_header, frag_offset, M_flag);
 
 	// copy payload
-	fillPayload(payload, (char * ) datagram->payload, payload_len);
+	fillPayload(payload, (char * ) datagram->payload + frag_offset, payload_len);
 	
+        kprintf("in sendto : print payload: \n");
+	payload_hexdump(payload, 32);
         //TODO: get mac of dest_ipv6	
 	struct base_header* ipv6_header = (struct base_header *) (datagram->headers);
 	kprintf("printing dest address\n");
