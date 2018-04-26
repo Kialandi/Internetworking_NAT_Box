@@ -8,9 +8,9 @@ struct NDCacheEntry * lookupNDEntry(byte * ipAddr) {
     int i;
 
     for(i = 0; i < MAXNDENTRY; i++) {
-        if (match(ipAddr, NDCache[i]->ipAddr, IPV6_ASIZE)) {
+        if (match(ipAddr, NDCache[i]->ipAddr, IPV6_ASIZE) == 1) {
             //found an existing entry
-            //kprintf("lookupNDEntry: found matching entry\n");
+            kprintf("lookupNDEntry: found matching entry\n");
             ptr = NDCache[i];
             break;
         }

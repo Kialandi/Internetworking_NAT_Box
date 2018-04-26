@@ -180,10 +180,23 @@ void sendFragment(struct Datagram * datagram, uint16 payload_len_ipv6_header, ui
 	// copy payload
 	fillPayload(payload, (char * ) datagram->payload, payload_len);
 	
-        //TODO: get mac of dest_ipv6
-	
-	// fillEthnet header  
-	fillEthernet(pkt, allrMACmulti); // send to netbox for now
+        //TODO: get mac of dest_ipv6	
+	struct base_header* ipv6_header = (struct base_header *) (datagram->headers);
+	kprintf("printing dest address\n");
+	payload_hexdump(ipv6_header->dest, IPV6_ASIZE);
+    	struct NDCacheEntry * entry = lookupNDEntry(ipv6_header->dest);
+	if (entry == NULL) {
+		kprintf("lookupNDEntry return NULL\n");
+		sendnsolicit(ipv6_header->src);
+		entry = lookupNDEntry(ipv6_header->src);
+	} 
+	if (entry == NULL) {
+		kprintf("sendnsolicit does not work. no mac addr in neighbor cache table, so not sending anything.\n");
+		return;
+	}	
+	// fillEthnet header
+  	
+	fillEthernet(pkt, entry->macAddr); // send to netbox for now
 	kprintf("filling Ethernet header:\n");
 	payload_hexdump((char*)pkt, ETH_HDR_LEN);
 	// write to interface
