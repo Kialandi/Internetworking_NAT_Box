@@ -1,5 +1,54 @@
 #include "xinu.h"
 
+
+void sendEchoResp(byte * ip_src, byte * mac_dest, byte * ip_dest, uint16 identifier, uint16 seqNumber) {
+    struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
+    memset((char *) packet, NULLCH, PACKLEN);
+
+    uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ECHOREQSIZE;
+    
+    fillEthernet(packet, mac_dest);
+    fillIPdatagram(packet, ip_src, ip_dest, ECHOREQSIZE, IPV6_ICMP);
+
+    struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
+    struct icmpv6echoreq * req = (struct icmpv6echoreq *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
+
+    uint32 pseudoSize = 0;
+    byte src[IPV6_ASIZE]; 
+    byte dest[IPV6_ASIZE];
+    memcpy(src, pkt_ip->src, IPV6_ASIZE);
+    memcpy(dest, pkt_ip->dest, IPV6_ASIZE);
+
+    req->type = ECHORESP;
+    req->code = 0;
+    req->checksum = 0;
+    req->identifier = htons(identifier);
+    req->seqNumber = htons(seqNumber);
+    
+    pseudoSize = PSEUDOLEN + ECHOREQSIZE;
+    
+    //set up pseudo header for checksum
+    void * pseudo = (void *) getmem(pseudoSize);
+    makePseudoHdr((struct pseudoHdr *) pseudo, src, dest, (void *) req, pseudoSize - PSEUDOLEN);
+    uint16 sum = checksumv6(pseudo, pseudoSize);
+    req->checksum = htons(sum);
+    freemem(pseudo, pseudoSize);
+
+    //fire off packet
+    if( write(ETHER0, (char *) packet, len) == SYSERR) {
+        kprintf("THE WORLD IS BURNING\n");
+        kill(getpid());
+    }   
+
+    kprintf("OUTGOING PKT PRINTING\n");
+    print6(packet);
+    kprintf("OUTGOING PKT DONE PRINTING\n");
+
+    freebuf((char *) packet);
+
+}
+
+
 //validate the advertisement, as per RFC 4861: 6.1.2
 void icmpv6_in(struct netpacket * pkt) {
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
@@ -115,8 +164,9 @@ void icmpv6_in(struct netpacket * pkt) {
 
         case ECHOREQ:
             kprintf("icmpv6_in: Echo Request received\n");
+            struct icmpv6echoreq * req = (struct icmpv6echoreq *) msg;
             //send a response back
-            sendipv6pkt(ECHORESP, pkt->net_src, ipdatagram->src);
+            sendEchoResp(ipdatagram->dest, pkt->net_src, ipdatagram->src, ntohs(req->identifier), ntohs(req->seqNumber));
             print6(pkt);
             break;
 

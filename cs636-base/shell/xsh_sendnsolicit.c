@@ -37,6 +37,8 @@ shellcmd sendnsolicit(int nargs, char * args[]) {
     memcpy(buf + 2, dest + 12, 4);
     
     sendNSOL(link_local, buf, dest, dest);
+    sleep(1);
+    sendNSOL(ipv6_addr, buf, dest, dest);
        
     return 1;
 }
