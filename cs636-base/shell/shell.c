@@ -40,6 +40,7 @@ const	struct	cmdent	cmdtab[] = {
     {"printndcache", FALSE, printND},
     {"printfwd", FALSE, printFWD},
     {"addfwd", FALSE, addFwdEntry},
+    {"addnd", FALSE, addNDEntry},
     {"printnat", FALSE, printNAT},
     {"ipv6info", FALSE, ipv6info},
 	{"?",		FALSE,	xsh_help}

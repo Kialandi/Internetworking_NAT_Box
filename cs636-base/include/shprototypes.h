@@ -3,6 +3,7 @@ extern  shellcmd    printFWD(int32, char *[]);
 extern  shellcmd    addFwdEntry(int32, char *[]);
 extern  shellcmd    printNAT(int32, char *[]);
 
+extern  shellcmd    addNDEntry(int nargs, char * args[]);
 
 extern  shellcmd    printND(int32, char *[]);
 extern  shellcmd    sendnsolicit(int32, char*[]);
