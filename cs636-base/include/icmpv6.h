@@ -46,6 +46,7 @@
 #define NEIGHBS     0x87
 #define NEIGHBA     0x88
 #define NEIGHBASOLI     0x63
+#define CHAT        0x64
 
 /*informational messages */
 #define PVT3        200
@@ -179,4 +180,4 @@ typedef struct icmpv6echoreq{
 
 typedef struct chat{
     char chatbox[MAX_PAYLOAD];
-}chatbox;
+}chat;

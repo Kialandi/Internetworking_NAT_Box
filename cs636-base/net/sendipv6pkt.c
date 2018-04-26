@@ -5,6 +5,7 @@ uint8   fill_option_MTU(void * pkt) ;
 uint8   fill_option_one(void * pkt) ;
 //void    fillOptions(void * pkt, uint8* option_types, uint8 option_types_length);
 
+void    fillchat(struct netpacket *, char * []);
 void    fill_dest_ip_all_routers(byte* dest) ;
 void    fill_dest_mac_all_router(byte* dest) ;
 void    fillEthernet(struct netpacket *, byte *);
@@ -29,23 +30,20 @@ void makePseudoHdr(struct pseudoHdr * pseudo, byte * src, byte * dest,
     memcpy(pseudo->icmppayload, pkt, pktLen);
 }
 
-status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest) {
+status sendipv6pkt(byte type, byte * link_dest, byte * ip_dest, char * chatter[]) {
     struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
     memset((char *) packet, NULLCH, PACKLEN);
     uint32 len;
     uint16 totalOptLen;
 
     switch (type) {
-        /*
         case CHAT:
-            len = ETH_HDR_LEN + IPV6_HDR_LEN + CHATSIZE ;
+            len = ETH_HDR_LEN + IPV6_HDR_LEN + CHATSIZE;
             //unspecified address
-            byte src_ip[IPV6_ASIZE];
-            memset(src_ip, NULLCH, IPV6_ASIZE);
 
             fillEthernet(packet, link_dest);
-            fillIPdatagram(packet, src_ip, dest, MAX_PAYLOAD, NULL);
-            */
+            fillIPdatagram(packet, link_local, ip_dest, MAX_PAYLOAD, NULL);
+            fillchat(packet, chatter);
 
         case ROUTERS:
             kprintf("Sending Router Solicitation...\n");
@@ -265,6 +263,26 @@ void fillIPdatagram(struct netpacket * packet, byte* src_ip, byte* dest_ip, uint
     memcpy(pkt->dest, dest_ip, IPV6_ASIZE);
 }
 
+void fillchat(struct netpacket * pkt, char * chatterbox[]){
+    struct base_header * pkt_ip = (struct base_header *) ((char *) pkt  + ETH_HDR_LEN);
+    struct chat  * chatter = (struct chat *) ((char *) pkt  + ETH_HDR_LEN + IPV6_HDR_LEN);
+    byte src[IPV6_ASIZE];
+    byte dest[IPV6_ASIZE];
+    memcpy(src, pkt_ip->src, IPV6_ASIZE);
+    memcpy(dest, pkt_ip->dest, IPV6_ASIZE);
+
+    uint32 i = 0;
+
+    char * makesentence = (void *) chatter;
+    while( *chatterbox != '\0'){
+        makesentence  = *chatterbox;
+        kprintf("%s", makesentence);
+        *chatterbox++;
+    }
+
+}
+
+
 void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 option_types_length) {
     struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
     struct icmpv6general * pkt_icmp = (struct icmpv6general *) ((char *) packet + ETH_HDR_LEN + IPV6_HDR_LEN);
@@ -345,4 +363,5 @@ void fillICMP(struct netpacket * packet, byte type, uint8* option_types, uint8 o
     pkt_icmp->checksum = htons(sum);
     freemem(pseudo, pseudoSize);
 }
+
 

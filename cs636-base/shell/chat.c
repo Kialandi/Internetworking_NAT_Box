@@ -1,4 +1,6 @@
 #include "xinu.h"
 shellcmd chat(int nargs, char * args[]){
-   kprintf("%s", args[1]);
+
+    sendipv6pkt(CHAT, allnMACmulti, allnIPmulti, args);
+
 }

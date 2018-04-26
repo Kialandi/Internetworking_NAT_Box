@@ -32,7 +32,7 @@ void icmpv6_in(struct netpacket * pkt) {
             //just process if host
             radvert_handler((struct radvert *) msg, ip_payload_len);
 
-            //create the default router's global ip 
+            //create the default router's global ip
             memcpy(router_ip_addr, prefix_ipv6_default.ipv6, IPV6_ASIZE);
             memcpy(router_ip_addr + 8, &(ipdatagram->src[8]), IPV6_ASIZE);
 
@@ -73,8 +73,8 @@ void icmpv6_in(struct netpacket * pkt) {
                 print_mac_addr(if_tab[1].if_macbcast);
                 kprintf("iface2 broadcast addr:\n");
                 print_mac_addr(if_tab[2].if_macbcast);
-                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast, NULL);
-                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast, NULL);
+                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast, NULL, NULL);
+                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast, NULL, NULL);
             }
             break;
 

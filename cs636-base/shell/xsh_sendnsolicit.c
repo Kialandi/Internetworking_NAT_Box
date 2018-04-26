@@ -8,8 +8,8 @@ shellcmd sendnsolicit(int nargs, char * args[]) {
         printf("USAGE: sendnsolicit\n");
         return 0;
     }
-    
-    sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local);
-       
+
+    sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local, NULL);
+
     return 1;
 }

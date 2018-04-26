@@ -63,7 +63,7 @@ extern  void    ipv6_in(struct netpacket *);
 extern  void    radvert_handler(struct radvert *, uint32);
 extern  void    rsolicit_handler(struct netpacket *);
 
-extern  status  sendipv6pkt(byte, byte *, byte *);
+extern  status  sendipv6pkt(byte, byte *, byte *, char * []);
 extern  void    print6(struct netpacket *);
 
 /* in file addargs.c */

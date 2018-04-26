@@ -10,9 +10,9 @@ shellcmd sendrsolicit(int nargs, char * args[]) {
     }
 
     if (!host) //nat goes to all routers
-        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL, NULL);
     else //hosts go to your own bcast
-        sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
+        sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL, NULL);
 
     return 1;
 }

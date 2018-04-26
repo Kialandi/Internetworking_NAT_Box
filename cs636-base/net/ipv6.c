@@ -101,13 +101,13 @@ syscall ipv6_init() {
 
     //tell hardware to listen to your own MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
-    
+
     //tell hardware to listen to your link local transformed MAC
     link_local_mac[0] = 0x33;
     link_local_mac[1] = 0x33;
     //copy the last 32 bits
     memcpy(link_local_mac + 2, link_local + 12, 4);
-    
+
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)link_local_mac, 0);
 
     //listen to all router and all node multicast MAC address
@@ -145,12 +145,12 @@ syscall ipv6_init() {
 
     if (!host) {
         kprintf("NAT Box autoconfiguration...\nSending solicitation...\n");
-        
-        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
+
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL, NULL);
     }
     else {
         kprintf("Host online... Sending solicitation...\n");
-        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL, NULL);
         kprintf("in ipv6_init ifacer macbcast");
         print_mac_addr(if_tab[ifprime].if_macbcast);
         //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
@@ -169,8 +169,8 @@ syscall ipv6_init() {
     while(!hasIPv6Addr) {
         sleep(1);
     }
-    
-    sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local);
+
+    sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local, NULL);
     return OK;
 }
 
