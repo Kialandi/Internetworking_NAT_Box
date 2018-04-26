@@ -7,7 +7,7 @@ void sendEchoResp(byte * ip_src, byte * mac_dest, byte * ip_dest, uint16 identif
 
     uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + ECHOREQSIZE;
     
-    fillEthernet(packet, mac_dest);
+    fillEthernet(packet, mac_dest, ifprime);
     fillIPdatagram(packet, ip_src, ip_dest, ECHOREQSIZE, IPV6_ICMP);
 
     struct base_header * pkt_ip = (struct base_header *) ((char *) packet + ETH_HDR_LEN);
@@ -122,8 +122,8 @@ void icmpv6_in(struct netpacket * pkt) {
                 print_mac_addr(if_tab[1].if_macbcast);
                 kprintf("iface2 broadcast addr:\n");
                 print_mac_addr(if_tab[2].if_macbcast);
-                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast, NULL);
-                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast, NULL);
+                sendipv6pkt(ROUTERA, if_tab[1].if_macbcast, NULL, 1);
+                sendipv6pkt(ROUTERA, if_tab[2].if_macbcast, NULL, 2);
             }
             break;
 
@@ -142,12 +142,13 @@ void icmpv6_in(struct netpacket * pkt) {
 
         case NEIGHBS:
 
+            print6(pkt);
             kprintf("icmpv6_in: Neighbor Sol received\n");
             if (!nsolicit_valid(ipdatagram)) {
                 kprintf("neigh sol invalid, dropping pkt\n");
                 return;
             }
-            print6(pkt);
+
             nsolicit_handler(pkt);
             break;
 
@@ -166,8 +167,8 @@ void icmpv6_in(struct netpacket * pkt) {
             kprintf("icmpv6_in: Echo Request received\n");
             struct icmpv6echoreq * req = (struct icmpv6echoreq *) msg;
             //send a response back
-            sendEchoResp(ipdatagram->dest, pkt->net_src, ipdatagram->src, ntohs(req->identifier), ntohs(req->seqNumber));
             print6(pkt);
+            sendEchoResp(ipdatagram->dest, pkt->net_src, ipdatagram->src, ntohs(req->identifier), ntohs(req->seqNumber));
             break;
 
         case ECHORESP:

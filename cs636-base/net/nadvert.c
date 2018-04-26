@@ -1,6 +1,6 @@
 #include "xinu.h"
 
-void sendNAD(byte * ip_src, byte * mac_dest, byte * ip_dest, byte * target) {
+void sendNAD(byte * ip_src, byte * mac_dest, byte * ip_dest, byte * target, uint8 iface) {
     uint8 flag =1;
     kprintf("sendNAD: sending nadvert\n");
     struct netpacket * packet = (struct netpacket *) getbuf(ipv6bufpool);
@@ -13,7 +13,7 @@ void sendNAD(byte * ip_src, byte * mac_dest, byte * ip_dest, byte * target) {
     
     uint32 len = ETH_HDR_LEN + IPV6_HDR_LEN + NADSIZE + totalOptLen;
     
-    fillEthernet(packet, mac_dest);
+    fillEthernet(packet, mac_dest, iface);
     fillIPdatagram(packet, ip_src, ip_dest, NADSIZE + totalOptLen, IPV6_ICMP);
     uint8 nopt[1] = {1};
 
@@ -34,7 +34,7 @@ void sendNAD(byte * ip_src, byte * mac_dest, byte * ip_dest, byte * target) {
     memcpy((void *) advert->target, target, IPV6_ASIZE);
     
     if (flag)
-        fillOptions((char *) advert->opt, nopt, 1);
+        fillOptions((char *) advert->opt, nopt, 1, ifprime);
 
     pseudoSize = PSEUDOLEN + NADSIZE + totalOptLen;
     
@@ -170,7 +170,8 @@ void nadvert_handler(struct netpacket * pkt){
     }
     else {
         //entry does exist
-        kprintf("nadvert_handler: entry exists, updating\n");
+        kprintf("nadvert_handler: solicited advert received\n");
+        kprintf("nadvert_handler: entry added to neighbor cache\n");
     }
 
     entry->ttl = MAXNDTTL;

@@ -13,12 +13,13 @@ int16 getNextHop(byte * ipdest) {
     int i;
     for (i = 0; i < MAXFWDTABENTRIES; i++) {
 
-        //assume that it's sorted and if it's 0 then no need to check
+                //assume that it's sorted and if it's 0 then no need to check
         if (fwdTabPTR[i]->prefixLen == 0)
             break;
 
         //longest to shortest
-        if (match(ipdest, fwdTabPTR[i]->ipAddr, fwdTabPTR[i]->prefixLen)) {
+        if (match(ipdest, fwdTabPTR[i]->ipAddr, fwdTabPTR[i]->prefixLen / 8)) {
+            kprintf("found nexthop\n");
             //entry found
             //TODO: eventually add check here for ttl
             return i;
@@ -30,10 +31,12 @@ int16 getNextHop(byte * ipdest) {
 }
 
 uint8 match (byte * a, byte * b, uint32 len) {
+    
     uint32 i;
     for (i = 0; i < len; i++) {
-        if (a[i] != b[i]) 
+        if (a[i] != b[i]) { 
             return 0;
+        }
     }
     return 1;
 }
@@ -57,11 +60,15 @@ void fwdIPDatagram(struct netpacket * pkt, uint32 len) {
     uint8 iface;
 
     if (index == -1) {
+        kprintf("fwdipdatagram: Next hop is default router\n");
         //default router
-        nextHopIP = defaultRouterEntry.nextHop;
-        iface = defaultRouterEntry.iface;
+        //nextHopIP = defaultRouterEntry.nextHop;
+        //iface = defaultRouterEntry.iface;
+        nextHopIP = router_ip_addr;
+        iface = ifprime;
     }
     else {
+        kprintf("entry exists already, forward that way\n");
         //next hop is at entry index
         nextHopIP = fwdTabPTR[index]->nextHop;
         iface = fwdTabPTR[index]->iface;
@@ -69,6 +76,16 @@ void fwdIPDatagram(struct netpacket * pkt, uint32 len) {
 
     //get the MAC address of the next hop
     struct NDCacheEntry * ndentry = lookupNDEntry(nextHopIP);
+    
+    kprintf("nextHopIP: ");
+    print_ipv6_addr(nextHopIP);
+    kprintf("nextHopIP's MAC: ");
+    print_mac_addr(ndentry->macAddr);
+
+    if (ndentry == NULL) {
+        kprintf("no entry in neighbor cache found\n");
+        return;
+    }
 
     //rewrite ethernet frame
     memcpy(pkt->net_dst, ndentry->macAddr, ETH_ADDR_LEN);
@@ -80,6 +97,10 @@ void fwdIPDatagram(struct netpacket * pkt, uint32 len) {
         kprintf("THE WORLD IS BURNING\n");
         kill(getpid());
     }
+    kprintf("FORWARDED OUTGOING PKT PRINTING\n");
+    print6(pkt);
+    kprintf("FORWARDED OUTGOING PKT DONE PRINTING\n");
+
 }
 
 void sortFwdTab() {
@@ -98,11 +119,14 @@ void sortFwdTab() {
     }
 }
 
+
 int16 insertNewFwdTabEntry(byte * ipAddr, uint8 prefixLen, byte * nextHop, uint8 interface) {
     //find an empty spot
     //then add in the info
     //assumes the caller already checked if the entry already exists
     //sort to make sure things are from longest prefix to shortest
+    //TODO: dont add duplicates into table
+
 
     int16 index = getNextAvailFwdIndex();
     if (index == -1) {

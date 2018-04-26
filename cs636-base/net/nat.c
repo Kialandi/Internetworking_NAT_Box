@@ -1,12 +1,14 @@
 #include "xinu.h"
 
 //forwarding table
-//TODO: REFACTOR CODE TO USE OBJECTS INSTEAD OF PTRS
 struct natEntry natTab[MAXNATENTRIES];
 uint16 NATIDCOUNTER;
 
-uint16 getNewID() {
+int16 getNewID() {
+    //TODO: 
     NATIDCOUNTER++;
+    
+    if (NATIDCOUNTER == MAXNATENTRIES) return -1;
 
     return NATIDCOUNTER - 1;
 }
@@ -35,9 +37,13 @@ int32 incPktRW(struct netpacket * pkt) {
         //perhaps check if dest is yourself
 
         if (ptr->transID == msgID && match(ptr->dest, ipdatagram->src, IPV6_ASIZE)) {
+            kprintf("found a match on incoming pkt!\n");
+            kprintf("rewriting to %d\n", ptr->srcID);
+            print_ipv6_addr(ptr->src);
+            //found a match!
             //rewrite id;
-            msg->identifier = htons(ptr->transID);
-            memcpy(ipdatagram->src, ptr->src, IPV6_ASIZE);
+            msg->identifier = htons(ptr->srcID);
+            memcpy(ipdatagram->dest, ptr->src, IPV6_ASIZE);
 
             //recompute checksum
             msg->checksum = 0;
@@ -65,7 +71,7 @@ int32 outPktRW(uint8 interface, struct netpacket * pkt) {
     struct natEntry * ptr;
 
     //get next available entry, if non, maybe block or return fail
-    uint16 newID = getNewID();
+    int16 newID = getNewID();
 
     if (newID == -1) {
         kprintf("No valid entries in NAT table\n");
@@ -78,10 +84,11 @@ int32 outPktRW(uint8 interface, struct netpacket * pkt) {
     memcpy(ptr->src, ipdatagram->src, IPV6_ASIZE);
     memcpy(ptr->dest, ipdatagram->dest, IPV6_ASIZE);
     ptr->iface = interface;
-    ptr->srcID = msg->identifier;
+    ptr->srcID = ntohs(msg->identifier);
     ptr->transID = newID;
 
     //rewrite the ID and src ip
+    kprintf("outpktrw: rewriting %d to %d\n", ptr->srcID, newID);
     memcpy(ipdatagram->src, ipv6_addr, IPV6_ASIZE);
     msg->identifier = htons(newID);
 
@@ -93,6 +100,9 @@ int32 outPktRW(uint8 interface, struct netpacket * pkt) {
     uint16 sum = checksumv6(pseudo, PSEUDOLEN + ECHOREQSIZE);
     msg->checksum = htons(sum);
     freemem(pseudo, PSEUDOLEN + ECHOREQSIZE);
+
+    insertNewFwdTabEntry(ptr->src, 128, ptr->src, ptr->iface);
+    
 
     return 0;
 }
@@ -111,6 +121,8 @@ void natTab_init() {
 }
 
 void printNATTab() {
+    if (host) { kprintf("Hosts do not have NAT tables!\n"); return; }
+
     kprintf("\nPrinting NAT Table\n\n");
     kprintf("Internal                                 ");
     kprintf("Internal   ");
@@ -128,9 +140,9 @@ void printNATTab() {
     kprintf("-----  \n");
     int i;
 
-    for (i = 0; i < MAXFWDTABENTRIES; i++) {
+    for (i = 0; i < MAXNATENTRIES; i++) {
         //done
-        if (fwdTabPTR[i]->prefixLen == 0) return;
+        //if (natTab[i]->prefixLen == 0) return;
         print_ipv6(natTab[i].src);
         kprintf(" ");
         kprintf("  %3d  ", natTab[i].srcID);

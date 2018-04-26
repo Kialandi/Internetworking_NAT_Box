@@ -16,10 +16,6 @@ bpid32 	datagram_buf_pool;
 struct reassembly_entry  reassembly_table[REASSEMBLY_TABLE_MAX_SIZE];
 uint8 reassembly_tab_size = 0;  // check later
 
-//TODO: make this general with negotiation
-//band aid
-void solicitrouter();
-//band aid
 void get_link_local(byte *);
 void get_snm_addr(byte *);
 void get_mac_snm(byte *);
@@ -27,6 +23,28 @@ void get_mac_snm(byte *);
 void check_reassembly_time_out_task();
 void check_reassembly_time_out();
 
+bool8 isItMine(struct base_header * datagram) {
+    //check against global ip address
+    //link local
+    //SNM address
+    //maybe all nodes multicast too?
+    bool8 res = FALSE;
+
+    if (match(datagram->dest, ipv6_addr, IPV6_ASIZE))
+        res = TRUE;
+    if (match(datagram->dest, link_local, IPV6_ASIZE))
+        res = TRUE;
+    if (match(datagram->dest, snm_addr, IPV6_ASIZE))
+        res = TRUE;
+    if (match(datagram->dest, allrIPmulti, IPV6_ASIZE))
+        res = TRUE;
+    if (match(datagram->dest, allnIPmulti, IPV6_ASIZE))
+        res = TRUE;
+
+    return res;
+}
+
+//handles all incoming ipv6 packets
 void    ipv6_in (
         struct netpacket * pkt
         )
@@ -41,23 +59,83 @@ void    ipv6_in (
     //print6(pkt);
 
     struct base_header * ipdatagram = (struct base_header *) &(pkt->net_payload);
-    //kprintf("received ipv6 pkt from iface: %d\n", pkt->net_iface);
+    
+    if (hasIPv6Addr && isItMine(ipdatagram) == FALSE) {
+        kprintf("ipv6_in: not mine, forwarding...\nfrom iface: %d, ifprime: %d\n", pkt->net_iface, ifprime);
+        print6(pkt);
+        //forward it along or NAT it
+        //if you're a NAT box, nat before sending it forward
 
-    switch (ipdatagram->next_header) {
-        //TODO: add other cases such as UDP and fragments
-        case IPV6_ICMP:
-            //kprintf("ipv6icmp found\n");
-            //payload_hexdump((char *) ad, 64);
-            icmpv6_in(pkt);
-            break;
-        case NEXT_HEADER_FRAGMENT:
-            kprintf("======A fragment packet received========\n");
-            hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
-            reassembly(pkt);
-            break;
-        default:
-            kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);
-            break;
+        if (!host) {
+            //NAT box
+            //NAT
+            //add Nat entry
+            //rewrite packet
+            //recompute checksum
+            //wrap with ethernet frame
+            //send it out to default router
+            
+            //figure out what iface it came from
+            
+            if (pkt->net_iface == ifprime) {
+                //it came from the outside world/internet
+                if (incPktRW(pkt) == -1) {
+                    kprintf("No entry found in NAT table, dropping pkt\n");
+                    freebuf((char *) pkt);
+                    return;
+                }
+            }
+            else {
+                //it came from oth1 or oth2
+                if (outPktRW(pkt->net_iface, pkt)) {
+                    kprintf("Failed to make an entry to NAT table\n");
+                    freebuf((char *) pkt);
+                    return;
+                }
+            }
+        }
+        
+        //check forwarding table and trust it to send
+        //TODO: calculate length and pass it into function perhaps? might not
+        //have enough information
+        fwdIPDatagram(pkt, PACKLEN);
+    }
+    else {
+        //for nat box this is always true if it's from ether0
+        if (!host) {
+            if (incPktRW(pkt) != -1) {
+                //reaching here means forwarding
+                kprintf("rw incoming pkt\n");
+                
+                fwdIPDatagram(pkt, PACKLEN);
+
+                freebuf((char *) pkt);
+                return;
+            }
+        }
+
+
+        kprintf("ipv6_in: for me! processing...\n");
+        //you are the intended destination
+
+        //kprintf("received ipv6 pkt from iface: %d\n", pkt->net_iface);
+
+        switch (ipdatagram->next_header) {
+            //TODO: add other cases such as UDP and fragments
+            case IPV6_ICMP:
+                //kprintf("ipv6icmp found\n");
+                //payload_hexdump((char *) ad, 64);
+                icmpv6_in(pkt);
+                break;
+            case NEXT_HEADER_FRAGMENT:
+                kprintf("======A fragment packet received========\n");
+                hexdump((char *) pkt, ETH_HDR_LEN + IPV6_HDR_LEN + 8 + 8 + 16);
+                reassembly(pkt);
+                break;
+            default:
+                kprintf("Unhandled next header type: 0x%02X\n", ipdatagram->next_header);
+                break;
+        }
     }
 
     freebuf((char *) pkt);
@@ -101,13 +179,13 @@ syscall ipv6_init() {
 
     //tell hardware to listen to your own MAC SNM
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)mac_snm, 0);
-    
+
     //tell hardware to listen to your link local transformed MAC
     link_local_mac[0] = 0x33;
     link_local_mac[1] = 0x33;
     //copy the last 32 bits
     memcpy(link_local_mac + 2, link_local + 12, 4);
-    
+
     control(ETHER0, ETH_CTRL_ADD_MCAST, (int32)link_local_mac, 0);
 
     //listen to all router and all node multicast MAC address
@@ -145,23 +223,30 @@ syscall ipv6_init() {
 
     if (!host) {
         kprintf("NAT Box autoconfiguration...\nSending solicitation...\n");
-        
-        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
+
+        print_mac_addr(if_tab[0].if_macucast);
+        print_mac_addr(if_tab[1].if_macucast);
+        print_mac_addr(if_tab[2].if_macucast);
+
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL, ifprime);
     }
     else {
         kprintf("Host online... Sending solicitation...\n");
-        sendipv6pkt(ROUTERS, allrMACmulti, NULL);
-        kprintf("in ipv6_init ifacer macbcast");
-        print_mac_addr(if_tab[ifprime].if_macbcast);
-        //sendipv6pkt(ROUTERS, if_tab[ifprime].if_macbcast, NULL);
+        print_mac_addr(if_tab[0].if_macucast);
+        print_mac_addr(if_tab[1].if_macucast);
+        print_mac_addr(if_tab[2].if_macucast);
+        sendipv6pkt(ROUTERS, allrMACmulti, NULL, ifprime);
+        kprintf("Waiting for router advertisement...\n");
     }
 
     NDCache_init();
     fwdipv6_init();
+    kprintf("ND Cache and Fwd table initialized\n");
 
     if(!host) {
         //only initialize nat table if you're a NAT box
         natTab_init();
+        kprintf("NAT table initialized\n");
     }
 
     //have to make sure that ipv6 information is successfull before we can send
@@ -169,21 +254,32 @@ syscall ipv6_init() {
     while(!hasIPv6Addr) {
         sleep(1);
     }
-    
+
     //make a new entry for default router right away
-    struct NDCacheEntry * entry = getAvailNDEntry();
+    struct NDCacheEntry * entry1 = getAvailNDEntry();
+
 
     //add ipaddr to the entry
-    memcpy(entry->ipAddr, router_link_local, IPV6_ASIZE);
-    entry->ttl = MAXNDTTL;
-    entry->state = NDINCOMPLETE;
-    
-    
-    //sendipv6pkt(NEIGHBS, router_link_local_mac, router_link_local);
-    sendNSOL(link_local, router_link_local_mac, router_link_local, router_link_local);
-    sleep(2);
-    sendNSOL(ipv6_addr, router_link_local_mac, router_link_local, router_link_local);
-    
+    memcpy(entry1->ipAddr, router_link_local, IPV6_ASIZE);
+    entry1->ttl = MAXNDTTL;
+    entry1->state = NDINCOMPLETE;
+
+    //global ip address of default router
+    struct NDCacheEntry * entry2 = getAvailNDEntry();
+    memcpy(entry2->ipAddr, router_ip_addr, IPV6_ASIZE);
+    entry2->ttl = MAXNDTTL;
+    entry2->state = NDINCOMPLETE;
+
+
+    sendNSOL(link_local, router_link_local_mac, router_link_local, router_link_local, ifprime);
+    sleep(1);
+    sendNSOL(ipv6_addr, router_link_local_mac, router_link_local, router_link_local, ifprime);
+    sleep(1);
+
+    //manually enter default router's global ip address entry
+    memcpy(entry2->macAddr, router_mac_addr, ETH_ADDR_LEN);
+    entry2->state = NDREACHABLE;
+
     return OK;
 }
 
