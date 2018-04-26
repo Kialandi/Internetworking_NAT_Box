@@ -5,6 +5,7 @@
 //uint8 reassembly_tab_size = 0;  // check later
 
 //void removeReaEntry(struct reassembly_entry* entry);
+void processDatagram(struct Datagram * datagram);
 void print_list(struct frag_desc * list);
 int16 find_hole();
 void updateDatagramHeaders(char* headers, uint16 payload_len, byte next_header_in_fragment_header);
@@ -75,16 +76,61 @@ status reassembly(struct netpacket*  pkt){
 				//kprintf("the first byte : 0x%x\n", *len);
 				payload_hexdump((char*)datagram->payload, 32);
 				kprintf("the fisrt 10 bytes of data in payload: %s\n", (char*) datagram->payload);
+				
+				processDatagram(datagram);
 			}
 	        }
 
 	 }
    	
-// TO DO:
-// enable specify IPV6 addresss. It can be dealt later. 	
 	return 0;
 }
 
+void processDatagram(struct Datagram * datagram) {
+	struct base_header * ipv6_header = (struct base_header *) (datagram->headers);
+	if (ipv6_header->next_header == IPV6_ICMP) {
+		byte* type = datagram->payload;
+		kprintf("print datagram paylaod\n");
+		payload_hexdump((char*)datagram->payload, 32);
+		if (*type  == ECHOREQ ) {
+			struct icmpv6echoreq * req = (struct icmpv6echoreq *) (datagram->payload);
+			req->type = ECHORESP;
+			//req->checksum = 0;
+			 
+			switchAddr(ipv6_header->src, ipv6_header->dest, IPV6_ASIZE); 
+			uint16 checksum = ntohs(req->checksum);
+			checksum = checksum  - 256; // since type increase by 1 , but checksum calculated by 16 byte once s time
+			//req->checksum = htons(checksum); 
+			kprintf("first checksum : %u\n", checksum);
+			// set up pseduheader for checksum
+			uint32 pseudoSize = PSEUDOLEN + datagram->payload_len;
+			//uint32 pseudoSize = PSEUDOLEN + ECHOREQSIZE;
+
+			//set up pseudo header for checksum
+			void * pseudo = (void *) getmem(pseudoSize);
+			makePseudoHdr((struct pseudoHdr *) pseudo, ipv6_header->src, ipv6_header->dest, (void *) datagram->payload, (uint32)datagram->payload_len);
+			//makePseudoHdr((struct pseudoHdr *) pseudo, ipv6_header->src, ipv6_header->dest, (void *) datagram->payload, pseudoSize - PSEUDOLEN);
+			uint16 sum = checksumv6(pseudo, pseudoSize);
+			req->checksum = htons(sum);
+			freemem(pseudo, pseudoSize);
+			kprintf("another check sum: %u\n", sum);
+
+			sendto(ipv6_header->dest, IPV6_ICMP, datagram->payload, datagram->payload_len, 0);
+			//sendto(ipv6_header->dest, IPV6_ICMP, datagram->payload, 8, 0);
+			
+ 		}
+
+        }
+
+}
+
+void switchAddr(byte* src, byte* dest, uint8 len) {
+
+	byte temp[len];
+	memcpy(temp, src, len);
+	memcpy(src, dest, len);
+	memcpy(dest, temp, len);
+}
 /*
 void removeReaEntry(struct reassembly_entry* entry) {
 	// we will deal with the hole later, currently remove the fragment list 
